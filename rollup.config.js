@@ -1,24 +1,24 @@
-import resolve from "@rollup/plugin-node-resolve";
-import commonjs from "@rollup/plugin-commonjs";
-import typescript from "@rollup/plugin-typescript";
-import peerDepsExternal from "rollup-plugin-peer-deps-external";
-import postcss from "rollup-plugin-postcss";
+import resolve from '@rollup/plugin-node-resolve';
+import commonjs from '@rollup/plugin-commonjs';
+import typescript from '@rollup/plugin-typescript';
+import peerDepsExternal from 'rollup-plugin-peer-deps-external';
+import postcss from 'rollup-plugin-postcss';
 
-import tailwindcss from "tailwindcss";
-import autoprefixer from "autoprefixer";
+import tailwindcss from 'tailwindcss';
+import autoprefixer from 'autoprefixer';
 
 export default {
-  input: "src/index.ts",
+  input: 'src/index.ts',
   output: [
     {
-      file: "dist/index.cjs.js",
-      format: "cjs",
+      file: 'dist/index.cjs.js',
+      format: 'cjs',
       sourcemap: true,
-      exports: "named",
+      exports: 'named',
     },
     {
-      file: "dist/index.esm.js",
-      format: "esm",
+      file: 'dist/index.esm.js',
+      format: 'esm',
       sourcemap: true,
     },
   ],
@@ -27,8 +27,9 @@ export default {
     resolve(),
     commonjs(),
     typescript({
-      tsconfig: "./tsconfig.json",
-      jsx: "react",
+      tsconfig: './tsconfig.json',
+      jsx: 'react',
+      exclude: 'node_modules/**',
     }),
     postcss({
       extract: true,
@@ -38,5 +39,5 @@ export default {
       plugins: [tailwindcss, autoprefixer],
     }),
   ],
-  external: ["react", "react-dom"],
+  external: ['react', 'react-dom', 'motion'],
 };

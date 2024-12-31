@@ -1,16 +1,25 @@
 {
   "compilerOptions": {
-    "target": "es5",
-    "module": "esnext",
     "jsx": "react-jsx",
+    "outDir": "./dist",
     "declaration": true,
-    "declarationDir": "./dist/types",
-    "esModuleInterop": true,
-    "skipLibCheck": true,
     "moduleResolution": "node",
+    "declarationDir": "./dist/types",
+    "tsBuildInfoFile": "./node_modules/.tmp/tsconfig.app.tsbuildinfo",
+
+    "target": "ES2022",
+    "lib": ["ES2023", "dom"],
+    "module": "ESNext",
+
     "strict": true,
-    "outDir": "./dist"
+    "skipLibCheck": true,
+    "noUnusedLocals": true,
+    "esModuleInterop": true,
+    "resolveJsonModule": true,
+    "noUnusedParameters": true,
+    "noFallthroughCasesInSwitch": true,
+    "noUncheckedSideEffectImports": true
   },
-  "include": ["src/**/*.ts", "src/**/*.tsx"],
-  "exclude": ["node_modules", "build"]
+  "include": ["src/**/*.ts", "src/**/*.d.ts", "src/**/*.tsx", "src/**/*.css", "types/**/*.d.ts"],
+  "exclude": ["node_modules"]
 }

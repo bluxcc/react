@@ -1,3 +1,4 @@
-import "./styles/index.css";
+import './styles/index.css';
 
-export { default as ConnectButton } from "./components/ConnectButton";
+export { WalletProvider as BluxProvider } from './wallets/useWallet';
+export { default as ConnectButton } from './components/ConnectButton';
