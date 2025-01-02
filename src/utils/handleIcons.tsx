@@ -1,9 +1,8 @@
 import React from 'react';
 
-import { SupportedWallets } from '../types';
 import { AlbedoIcon, FreighterIcon, LobstrIcon, RabetIcon, XBullIcon } from '../assets/walletsLogo';
 
-export const handleIcons = (walletName: SupportedWallets | string) => {
+export const handleIcons = (walletName: string) => {
   switch (walletName) {
     case 'Rabet':
       return <RabetIcon />;

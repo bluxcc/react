@@ -1,11 +1,8 @@
-import React, { JSX } from 'react';
-import { SupportedWallets } from '../../types';
+import React from 'react';
 import { handleIcons } from '../../utils/handleIcons';
 
 export type Wallet = {
-  wallet: SupportedWallets;
   name: string;
-  icon: () => JSX.Element;
   available: boolean;
 };
 
@@ -20,10 +17,6 @@ export const WalletButton = ({ name, available, onClick }: Wallet & { onClick: (
       <div className="h-8 w-8 mr-4 flex justify-center items-center">{handleIcons(name)}</div>
       {name}
     </div>
-    {available && (
-      <p className="text-slate-700 bg-slate-200 text-center text-sm py-1 px-2 rounded-md">
-        Available
-      </p>
-    )}
+    {!available && <span className="text-sm text-red-500">Unavailable</span>}
   </button>
 );

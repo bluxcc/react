@@ -26,11 +26,6 @@ export default {
     peerDepsExternal(),
     resolve(),
     commonjs(),
-    typescript({
-      tsconfig: './tsconfig.json',
-      jsx: 'react',
-      exclude: 'node_modules/**',
-    }),
     postcss({
       extract: true,
       inject: true,
@@ -38,6 +33,10 @@ export default {
       sourceMap: true,
       plugins: [tailwindcss, autoprefixer],
     }),
+    typescript({
+      tsconfig: './tsconfig.json',
+      exclude: ['node_modules/**', 'motion/dist/**'],
+    }),
   ],
-  external: ['react', 'react-dom', 'motion'],
+  external: ['react', 'react-dom', 'motion', 'framer-motion'],
 };

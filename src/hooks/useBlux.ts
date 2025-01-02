@@ -1,9 +1,8 @@
 import React, { useContext } from 'react';
-import { SupportedWallets } from '../types';
-import { walletConfigs } from './walletsConfig';
-import { ProviderContext } from './provider';
+import { ProviderContext } from '../context/provider';
+import { IUser } from '../types';
 
-const useBlux = () => {
+export const useBlux = () => {
   const context = useContext(ProviderContext);
 
   const connect = async () => {
@@ -14,11 +13,10 @@ const useBlux = () => {
       },
     });
   };
-  const user = () => {
-    return context?.value.user;
+
+  const user = (): IUser | null => {
+    return context?.value.user || null;
   };
 
   return { connect, user };
 };
-
-export default useBlux;

@@ -1,11 +1,12 @@
-import React, { useState, useEffect } from 'react';
-import { useWallet } from '../../wallets/useWallet';
-import { SupportedWallets } from '../../types';
-import { initializeRabetMobile } from '../../utils/initializeRabetMobile';
+import React, { useContext, useEffect, useState } from 'react';
+
 import Modal from '../../components/Modal';
+import { WalletButton } from './walletButton';
 import { handleIcons } from '../../utils/handleIcons';
-import { Wallet, WalletButton } from './walletButton';
-import useBlux from '../../wallets/useBlux';
+import { ProviderContext } from '../../context/provider';
+import { SupportedWallets, WalletActions } from '../../types';
+import { useWalletConfigs } from '../../wallets/useWalletConfigs';
+import { initializeRabetMobile } from '../../utils/initializeRabetMobile';
 
 type ChooseWalletProps = {
   isOpen: boolean;
@@ -13,119 +14,94 @@ type ChooseWalletProps = {
 };
 
 export default function ChooseWallet({ isOpen, closeModal }: ChooseWalletProps) {
-  // const { walletsList, errorMessage, connect, connectedWallet } = useWallet();
-  const { connect, user } = useBlux();
+  const context = useContext(ProviderContext);
+  const walletConfigs = useWalletConfigs();
+
   const [selectedWallet, setSelectedWallet] = useState<SupportedWallets | null>(null);
-  const [recentWallets, setRecentWallets] = useState<SupportedWallets[]>([]);
-  const [availableWallets, setAvailableWallets] = useState<Wallet[]>([]);
+  const [availableWallets, setAvailableWallets] = useState<WalletActions[]>([]);
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
-    const resolveAvailability = async () => {
+    const detectWallet = async () => {
       setLoading(true);
       try {
-        const resolvedWallets = await Promise.all(
-          walletsList.map(async (wallet) => {
-            try {
-              return {
-                wallet: wallet.type as SupportedWallets,
-                name: wallet.name,
-                icon: wallet.icon,
-                available: await wallet.isAvailable(),
-              };
-            } catch (error) {
-              console.error(`Error checking availability for ${wallet.name}:`, error);
-              return {
-                wallet: wallet.type as SupportedWallets,
-                name: wallet.name,
-                icon: wallet.icon,
-                available: false,
-              };
-            }
-          }),
+        const results = await Promise.all(
+          Object.values(walletConfigs).map(async (wallet) => ({
+            ...wallet,
+            available: await wallet.isAvailable().catch(() => false),
+          })),
         );
-        setAvailableWallets(resolvedWallets);
+        setAvailableWallets(results);
       } catch (error) {
-        console.error('Error resolving wallet availability:', error);
+        console.error('Error detecting wallet availability:', error);
+      } finally {
+        setLoading(false);
       }
-      setLoading(false);
     };
-    resolveAvailability();
-    return;
-  }, [walletsList]);
 
-  const handleConnect = async (wallet: SupportedWallets) => {
-    if (wallet === selectedWallet && (await user.address)) {
-      return;
-    }
+    detectWallet();
+  }, []);
 
-    setSelectedWallet(wallet);
-    initializeRabetMobile();
-
+  const handleConnect = async (wallet: WalletActions) => {
+    setSelectedWallet(wallet.name);
     try {
-      await connect();
-      setRecentWallets((prev) => [wallet, ...prev.filter((w) => w !== wallet)]);
-      closeModal();
-    } catch (error) {
-      console.error('Connection failed:', error);
+      const { publicKey } = await wallet.connect();
+      context?.setValue((prev) => ({
+        ...prev,
+        user: {
+          address: publicKey,
+        },
+        modal: {
+          isOpen: false,
+        },
+      }));
+    } catch (e) {
+      context?.setValue((prev) => ({
+        ...prev,
+        modal: {
+          isOpen: false,
+        },
+      }));
+      console.error('Error connecting to wallet:', e);
     }
+
+    initializeRabetMobile();
   };
 
-  if (loading) {
-    return (
-      <Modal isOpen={isOpen} onClose={closeModal} className="!w-[360px]">
+  return (
+    <Modal isOpen={isOpen} onClose={closeModal} className="!w-[360px]">
+      {loading ? (
         <div className="flex flex-col items-center justify-center h-40">
           <div className="loader mb-4"></div>
           <p className="text-lg font-medium">Loading wallets...</p>
         </div>
-      </Modal>
-    );
-  }
-
-  return (
-    <Modal isOpen={isOpen} onClose={closeModal} className="!w-[360px]">
-      <div className="flex flex-col items-center">
-        {!selectedWallet ? (
-          <>
-            {recentWallets.length > 0 && (
-              <div className="w-full">
-                <h3 className="text-lg font-bold mb-2">Recent Wallets</h3>
-                {recentWallets.map((wallet) => (
-                  <WalletButton
-                    key={wallet}
-                    {...availableWallets.find((w) => w.wallet === wallet)!}
-                    onClick={() => handleConnect(wallet)}
-                  />
-                ))}
-              </div>
-            )}
-
+      ) : (
+        <div className="flex flex-col items-center">
+          {!selectedWallet ? (
             <div className="w-full">
               <h3 className="text-lg font-bold text-start mb-2">All Wallets</h3>
               {availableWallets.map((wallet) => (
                 <WalletButton
-                  key={wallet.wallet}
                   {...wallet}
-                  onClick={() => handleConnect(wallet.wallet)}
+                  available={!!wallet.isAvailable()}
+                  key={wallet.name}
+                  onClick={() => handleConnect(wallet)}
                 />
               ))}
             </div>
-          </>
-        ) : (
-          <div className="flex flex-col items-center justify-center h-40">
-            <div className="h-12 w-12 flex justify-center items-center mb-4">
-              {handleIcons(
-                availableWallets.find((w) => w.wallet === selectedWallet)?.name || selectedWallet,
-              )}
+          ) : (
+            <div className="flex flex-col items-center justify-center h-40">
+              <div className="h-12 w-12 flex justify-center items-center mb-4">
+                {handleIcons(selectedWallet)}
+              </div>
+              <p className="text-lg font-medium mb-4">
+                Connecting to {selectedWallet}
+                ...
+              </p>
             </div>
-            <p className="text-lg font-medium mb-4">
-              Connecting to {availableWallets.find(({ wallet }) => wallet === selectedWallet)?.name}
-              ...
-            </p>
-          </div>
-        )}
-        {errorMessage && <div className="p-4 text-red-500">{errorMessage}</div>}
-      </div>
+          )}
+        </div>
+      )}
     </Modal>
   );
 }
