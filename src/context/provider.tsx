@@ -14,7 +14,7 @@ export const BluxProvider = ({
   const [value, setValue] = useState<MergeConfigs>({
     config,
     user: { address: null },
-    modal: { isOpen: true },
+    modal: { isOpen: false },
   });
 
   const closeModal = () => {
