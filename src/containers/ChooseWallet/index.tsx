@@ -5,7 +5,7 @@ import { WalletButton } from './walletButton';
 import { handleIcons } from '../../utils/handleIcons';
 import { ProviderContext } from '../../context/provider';
 import { SupportedWallets, WalletActions } from '../../types';
-import { useWalletConfigs } from '../../wallets/useWalletConfigs';
+import { walletConfigs } from '../../wallets/walletConfigs';
 import { initializeRabetMobile } from '../../utils/initializeRabetMobile';
 
 type ChooseWalletProps = {
@@ -15,7 +15,6 @@ type ChooseWalletProps = {
 
 export default function ChooseWallet({ isOpen, closeModal }: ChooseWalletProps) {
   const context = useContext(ProviderContext);
-  const walletConfigs = useWalletConfigs();
 
   const [loading, setLoading] = useState(true);
   // todo fix isConnected logic

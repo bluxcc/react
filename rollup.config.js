@@ -27,7 +27,7 @@ export default {
     resolve(),
     commonjs(),
     postcss({
-      extract: true,
+      extract: false,
       inject: true,
       minimize: true,
       sourceMap: true,
