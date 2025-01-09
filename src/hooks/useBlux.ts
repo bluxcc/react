@@ -1,4 +1,4 @@
-import React, { useContext } from 'react';
+import { useContext } from 'react';
 import { ProviderContext } from '../context/provider';
 import { IUser } from '../types';
 

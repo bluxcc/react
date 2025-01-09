@@ -58,7 +58,7 @@ export default function ChooseWallet({ isOpen, closeModal }: ChooseWalletProps) 
         },
       }));
       closeModal();
-
+      setIsConnected(true);
       // temporary setting selected wallet null for test until we implement profile of user
       setSelectedWallet(null);
     } catch (e) {
@@ -69,7 +69,7 @@ export default function ChooseWallet({ isOpen, closeModal }: ChooseWalletProps) 
         },
       }));
       closeModal();
-
+      setIsConnected(false);
       console.error('Error connecting to wallet:', e);
     }
 

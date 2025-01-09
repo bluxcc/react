@@ -24,10 +24,13 @@ export default {
   ],
   plugins: [
     peerDepsExternal(),
-    resolve(),
+    resolve({
+      browser: true,
+      preferBuiltins: false,
+    }),
     commonjs(),
     postcss({
-      extract: true,
+      extract: false,
       inject: true,
       minimize: true,
       sourceMap: true,
@@ -35,8 +38,17 @@ export default {
     }),
     typescript({
       tsconfig: './tsconfig.json',
-      exclude: ['node_modules/**', 'motion/dist/**'],
+      exclude: ['node_modules', 'motion'],
     }),
   ],
-  external: ['react', 'react-dom', 'motion', 'framer-motion'],
+  external: [
+    'react',
+    'react-dom',
+    'motion',
+    'node_modules/motion',
+    '@albedo-link/intent',
+    '@stellar/freighter-api',
+    '@lobstrco/signer-extension-api',
+    '@creit.tech/xbull-wallet-connect',
+  ],
 };
