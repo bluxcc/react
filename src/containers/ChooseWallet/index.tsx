@@ -27,7 +27,7 @@ export default function ChooseWallet({ isOpen, closeModal }: ChooseWalletProps) 
       setLoading(true);
       try {
         const results = await Promise.all(
-          Object.values(walletConfigs).map(async (wallet) => ({
+          Object.values(walletConfigs).map(async wallet => ({
             ...wallet,
             available: await wallet.isAvailable().catch(() => false),
           })),
@@ -47,7 +47,7 @@ export default function ChooseWallet({ isOpen, closeModal }: ChooseWalletProps) 
     setSelectedWallet(wallet.name);
     try {
       const { publicKey } = await wallet.connect();
-      context?.setValue((prev) => ({
+      context?.setValue(prev => ({
         ...prev,
         user: {
           address: publicKey,
@@ -57,18 +57,18 @@ export default function ChooseWallet({ isOpen, closeModal }: ChooseWalletProps) 
         },
       }));
       closeModal();
-
+      setIsConnected(true);
       // temporary setting selected wallet null for test until we implement profile of user
       setSelectedWallet(null);
     } catch (e) {
-      context?.setValue((prev) => ({
+      context?.setValue(prev => ({
         ...prev,
         modal: {
           isOpen: false,
         },
       }));
       closeModal();
-
+      setIsConnected(false);
       console.error('Error connecting to wallet:', e);
     }
 
@@ -97,7 +97,7 @@ export default function ChooseWallet({ isOpen, closeModal }: ChooseWalletProps) 
           {!selectedWallet ? (
             <div className="w-full">
               <h3 className="text-lg font-bold text-start mb-2">All Wallets</h3>
-              {availableWallets.map((wallet) => (
+              {availableWallets.map(wallet => (
                 <WalletButton
                   {...wallet}
                   available={!!wallet.isAvailable()}
