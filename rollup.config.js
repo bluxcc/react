@@ -1,8 +1,9 @@
-import resolve from '@rollup/plugin-node-resolve';
+import postcss from 'rollup-plugin-postcss';
+import terser from '@rollup/plugin-terser';
 import commonjs from '@rollup/plugin-commonjs';
+import resolve from '@rollup/plugin-node-resolve';
 import typescript from '@rollup/plugin-typescript';
 import peerDepsExternal from 'rollup-plugin-peer-deps-external';
-import postcss from 'rollup-plugin-postcss';
 
 import tailwindcss from 'tailwindcss';
 import autoprefixer from 'autoprefixer';
@@ -13,17 +14,29 @@ export default {
     {
       file: 'dist/index.cjs.js',
       format: 'cjs',
-      sourcemap: true,
+      sourcemap: false,
       exports: 'named',
     },
     {
       file: 'dist/index.esm.js',
       format: 'esm',
-      sourcemap: true,
+      sourcemap: false,
     },
   ],
+  treeshake: {
+    moduleSideEffects: false,
+  },
   plugins: [
     peerDepsExternal(),
+    terser({
+      compress: {
+        drop_console: true,
+        drop_debugger: true,
+      },
+      format: {
+        comments: false,
+      },
+    }),
     resolve({
       browser: true,
       preferBuiltins: false,
