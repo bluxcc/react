@@ -12,15 +12,9 @@ export default {
   input: 'src/index.ts',
   output: [
     {
-      file: 'dist/index.cjs.js',
-      format: 'cjs',
-      sourcemap: false,
-      exports: 'named',
-    },
-    {
       file: 'dist/index.esm.js',
       format: 'esm',
-      sourcemap: false,
+      sourcemap: true,
     },
   ],
   treeshake: {
