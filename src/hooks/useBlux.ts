@@ -18,5 +18,13 @@ export const useBlux = () => {
     return context?.value.user || null;
   };
 
-  return { connect, user };
+  const disconnect = async () => {
+    context?.setValue({
+      ...context.value,
+      user: { address: null },
+      modal: { isOpen: false },
+    });
+  };
+
+  return { connect, user, disconnect };
 };
