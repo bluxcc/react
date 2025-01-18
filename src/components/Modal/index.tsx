@@ -37,7 +37,10 @@ const Modal = ({ isOpen, onClose = () => {}, children, className }: ModalProps) 
           >
             <motion.div
               layout
-              className={clsx('relative p-6 mobile:p-4 bg-white rounded-2xl shadow-lg', className)}
+              className={clsx(
+                'relative px-6 py-4 mobile:p-4 bg-white rounded-2xl border border-[#CDCEEE] font-sans',
+                className,
+              )}
               transition={{
                 type: 'spring',
                 stiffness: 300,
