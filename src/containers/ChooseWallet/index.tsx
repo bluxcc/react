@@ -5,7 +5,7 @@ import { WalletButton } from './walletButton';
 import { handleIcons } from '../../utils/handleIcons';
 import { ProviderContext } from '../../context/provider';
 import { SupportedWallets, WalletActions } from '../../types';
-import { useWalletConfigs } from '../../wallets/useWalletConfigs';
+import { walletsConfig } from '../../wallets/walletsConfig';
 import { initializeRabetMobile } from '../../utils/initializeRabetMobile';
 import { InfoIcon } from '../../assets/infoIcon';
 
@@ -16,7 +16,6 @@ type ChooseWalletProps = {
 
 export default function ChooseWallet({ isOpen, closeModal }: ChooseWalletProps) {
   const context = useContext(ProviderContext);
-  const walletConfigs = useWalletConfigs();
 
   const [loading, setLoading] = useState(true);
   const [isConnected, setIsConnected] = useState(false);
@@ -28,7 +27,7 @@ export default function ChooseWallet({ isOpen, closeModal }: ChooseWalletProps) 
       setLoading(true);
       try {
         const results = await Promise.all(
-          Object.values(walletConfigs).map(async (wallet) => ({
+          Object.values(walletsConfig).map(async (wallet) => ({
             ...wallet,
             available: await wallet.isAvailable().catch(() => false),
           })),
