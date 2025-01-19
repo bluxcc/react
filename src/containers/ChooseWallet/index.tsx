@@ -7,6 +7,7 @@ import { ProviderContext } from '../../context/provider';
 import { SupportedWallets, WalletActions } from '../../types';
 import { useWalletConfigs } from '../../wallets/useWalletConfigs';
 import { initializeRabetMobile } from '../../utils/initializeRabetMobile';
+import { InfoIcon } from '../../assets/infoIcon';
 
 type ChooseWalletProps = {
   isOpen: boolean;
@@ -18,7 +19,6 @@ export default function ChooseWallet({ isOpen, closeModal }: ChooseWalletProps) 
   const walletConfigs = useWalletConfigs();
 
   const [loading, setLoading] = useState(true);
-  // todo fix isConnected logic
   const [isConnected, setIsConnected] = useState(false);
   const [selectedWallet, setSelectedWallet] = useState<SupportedWallets | null>(null);
   const [availableWallets, setAvailableWallets] = useState<WalletActions[]>([]);
@@ -40,6 +40,9 @@ export default function ChooseWallet({ isOpen, closeModal }: ChooseWalletProps) 
         setLoading(false);
       }
     };
+    if (context?.value.user.address === null) {
+      setIsConnected(false);
+    }
 
     detectWallet();
   }, []);
@@ -57,10 +60,10 @@ export default function ChooseWallet({ isOpen, closeModal }: ChooseWalletProps) 
           isOpen: false,
         },
       }));
-      closeModal();
-      setIsConnected(true);
-      // temporary setting selected wallet null for test until we implement profile of user
-      setSelectedWallet(null);
+      handleCloseModal();
+      if (publicKey) {
+        setIsConnected(true);
+      }
     } catch (e) {
       context?.setValue((prev) => ({
         ...prev,
@@ -68,18 +71,19 @@ export default function ChooseWallet({ isOpen, closeModal }: ChooseWalletProps) 
           isOpen: false,
         },
       }));
-      closeModal();
-      setIsConnected(false);
+      handleCloseModal();
       console.error('Error connecting to wallet:', e);
     }
-
     initializeRabetMobile();
   };
 
-  // isConnected is currently not showing
+  const handleCloseModal = () => {
+    setSelectedWallet(null);
+    closeModal();
+  };
 
   return (
-    <Modal isOpen={isOpen} onClose={closeModal} className="!w-[360px]">
+    <Modal isOpen={isOpen} onClose={handleCloseModal} className="!w-[360px]">
       {loading ? (
         <div className="flex flex-col items-center justify-center h-40">
           <div className="loader mb-4"></div>
@@ -89,7 +93,10 @@ export default function ChooseWallet({ isOpen, closeModal }: ChooseWalletProps) 
         <div className="flex flex-col items-center justify-center h-40">
           <p className="text-lg font-medium">Connected to wallet</p>
           <p className="text-sm text-gray-600">{context?.value.user.address}</p>
-          <button className="mt-4 px-4 py-2 bg-blue-500 text-white rounded" onClick={closeModal}>
+          <button
+            className="mt-4 px-4 py-2 bg-blue-500 text-white rounded"
+            onClick={handleCloseModal}
+          >
             Close
           </button>
         </div>
@@ -97,7 +104,13 @@ export default function ChooseWallet({ isOpen, closeModal }: ChooseWalletProps) 
         <div className="flex flex-col items-center">
           {!selectedWallet ? (
             <div className="w-full">
-              <h3 className="text-lg font-bold text-start mb-2">All Wallets</h3>
+              <div className="w-full flex items-center justify-between mb-3">
+                <div className="flex items-center">
+                  <InfoIcon />
+                </div>
+                <p className="text-lg font-semibold text-center flex-1">Connect Wallet</p>
+                <div className="w-4"></div>
+              </div>
               {availableWallets.map((wallet) => (
                 <WalletButton
                   {...wallet}
@@ -106,6 +119,9 @@ export default function ChooseWallet({ isOpen, closeModal }: ChooseWalletProps) 
                   onClick={() => handleConnect(wallet)}
                 />
               ))}
+              <div className="text-center font-medium text-sm text-[#0D1292CC] mt-3">
+                I don&apos;t have a wallet
+              </div>
             </div>
           ) : (
             <div className="flex flex-col items-center justify-center h-40">
