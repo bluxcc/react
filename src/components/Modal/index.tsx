@@ -15,7 +15,7 @@ const Modal = ({ isOpen, onClose = () => {}, children, className }: ModalProps) 
       {isOpen && (
         <>
           <motion.div
-            className="fixed inset-0 bg-black bg-opacity-[0.15] z-40"
+            className="fixed inset-0 bg-black bg-opacity-[0.15] z-40 overflow-hidden"
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
             exit={{ opacity: 0 }}
@@ -24,7 +24,7 @@ const Modal = ({ isOpen, onClose = () => {}, children, className }: ModalProps) 
           />
 
           <motion.div
-            className="fixed inset-0 flex items-center justify-center z-50"
+            className="absolute inset-0 flex items-center justify-center z-50"
             initial={{ scale: 0.9, opacity: 0 }}
             animate={{ scale: 1, opacity: 1 }}
             exit={{ scale: 0.9, opacity: 0 }}
@@ -33,12 +33,17 @@ const Modal = ({ isOpen, onClose = () => {}, children, className }: ModalProps) 
               stiffness: 300,
               damping: 20,
             }}
+            style={{
+              backfaceVisibility: 'hidden',
+              transform: 'translateZ(0)',
+              willChange: 'transform, opacity',
+            }}
             onClick={(e) => e.target === e.currentTarget && onClose()}
           >
             <motion.div
               layout
               className={clsx(
-                'relative px-6 py-4 mobile:p-4 bg-white rounded-2xl border border-[#CDCEEE] font-sans',
+                'px-6 py-4 bg-white rounded-2xl border border-[#CDCEEE] font-sans',
                 className,
               )}
               transition={{
