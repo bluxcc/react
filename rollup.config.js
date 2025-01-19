@@ -8,6 +8,8 @@ import peerDepsExternal from 'rollup-plugin-peer-deps-external';
 import tailwindcss from 'tailwindcss';
 import autoprefixer from 'autoprefixer';
 
+import pkg from './package.json' assert { type: 'json' };
+
 export default {
   input: 'src/index.ts',
   output: [
@@ -48,14 +50,19 @@ export default {
       exclude: ['node_modules', 'motion'],
     }),
   ],
-  external: [
-    'react',
-    'react-dom',
-    'motion',
-    'node_modules/motion',
-    '@albedo-link/intent',
-    '@stellar/freighter-api',
-    '@lobstrco/signer-extension-api',
-    '@creit.tech/xbull-wallet-connect',
-  ],
+  external: [...Object.keys(pkg.dependencies || {}), ...Object.keys(pkg.peerDependencies || {})],
+  onwarn(warning, warn) {
+    // Suppress "Module level directives" warnings
+    if (warning.code === 'MODULE_LEVEL_DIRECTIVE') {
+      return;
+    }
+
+    // Call the default warning handler for other warnings
+    warn(warning);
+  },
+  watch: {
+    clearScreen: false, // Avoid clearing the terminal screen on each rebuild
+    include: 'src/**', // Watch all files in the "src" directory
+    exclude: 'node_modules/**', // Don't watch files in node_modules
+  },
 };
