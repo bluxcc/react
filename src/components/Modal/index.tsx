@@ -2,20 +2,31 @@ import React from 'react';
 import clsx from 'clsx';
 import { motion, AnimatePresence } from 'motion/react';
 
+import { InfoIcon } from '../../assets/Icons';
+
 interface ModalProps {
   isOpen: boolean;
   className?: string;
   onClose?: () => void;
   children: React.ReactNode;
+  showInfoIcon?: boolean;
+  modalStatus: 'connected' | 'notConnected';
 }
 
-const Modal = ({ isOpen, onClose = () => {}, children, className }: ModalProps) => {
+const Modal = ({
+  isOpen,
+  onClose = () => {},
+  children,
+  className,
+  modalStatus,
+  showInfoIcon = true,
+}: ModalProps) => {
   return (
     <AnimatePresence>
       {isOpen && (
         <>
           <motion.div
-            className="fixed inset-0 bg-black bg-opacity-[0.15] z-40 overflow-hidden"
+            className="fixed inset-0 bg-black bg-opacity-[0.05] z-40 overflow-hidden"
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
             exit={{ opacity: 0 }}
@@ -52,7 +63,28 @@ const Modal = ({ isOpen, onClose = () => {}, children, className }: ModalProps) 
                 damping: 40,
               }}
             >
+              <div className="w-full flex items-center justify-between pt-0.5 pb-[18px]">
+                {showInfoIcon ? (
+                  <div className="w-7 h-7 flex justify-center items-center hover:bg-[#CDCEEE] border rounded-full transition duration-300 cursor-pointer">
+                    <InfoIcon />
+                  </div>
+                ) : (
+                  <div className="w-4"></div>
+                )}
+
+                <p className="text-lg font-semibold text-center flex-1 select-none">
+                  {modalStatus == 'connected' ? 'Connected' : 'Connect Wallet'}
+                </p>
+
+                <div className="w-4"></div>
+              </div>
               {children}
+              <div className="font-semibold text-[10px] text-center w-full">
+                Powered by{' '}
+                <a href="https://blux.cc" className=" text-[#0D1292]" target="blank">
+                  Blux.cc
+                </a>
+              </div>
             </motion.div>
           </motion.div>
         </>

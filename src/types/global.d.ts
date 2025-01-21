@@ -5,6 +5,7 @@ declare module '*.css' {
 
 declare global {
   interface Window {
+    xBullSDK?: any;
     rabet?: {
       sign(xdr: string, network: networksEnum): Promise<SignResult>;
       connect: () => Promise<ConnectResult>;

@@ -14,6 +14,10 @@ export const useBlux = () => {
     });
   };
 
+  const ready = () => {
+    return context?.value.ready;
+  };
+
   const user = (): IUser | null => {
     return context?.value.user || null;
   };
@@ -21,10 +25,10 @@ export const useBlux = () => {
   const disconnect = async () => {
     context?.setValue({
       ...context.value,
-      user: { address: null },
+      user: { wallet: null },
       modal: { isOpen: false },
     });
   };
 
-  return { connect, user, disconnect };
+  return { connect, user, disconnect, ready };
 };

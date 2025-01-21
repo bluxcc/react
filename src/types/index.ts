@@ -20,7 +20,10 @@ export interface IProviderConfig {
 }
 
 export interface IUser {
-  address: string | null;
+  wallet: {
+    name: SupportedWallets | null;
+    address: string | null;
+  } | null;
 }
 
 export interface MergeConfigs {
@@ -29,6 +32,7 @@ export interface MergeConfigs {
   modal: {
     isOpen: boolean;
   };
+  ready: boolean;
 }
 
 export interface StateValue {
@@ -52,7 +56,7 @@ export enum networksEnum {
 export interface WalletActions {
   name: SupportedWallets; // The name of the wallet
   website: string; // Official website or documentation link
-  isAvailable: () => Promise<boolean>; // Checks if the wallet is available
+  isAvailable: () => Promise<boolean> | boolean; // Checks if the wallet is available
   connect: () => Promise<{ publicKey: string }>; // Connects to the wallet and retrieves the public key
   getAddress?: (options?: { path?: string }) => Promise<{ address: string }>; // Fetches an address with optional path
   signTransaction?: (

@@ -13,3 +13,16 @@ export const InfoIcon = () => (
     </g>
   </svg>
 );
+export const ArrowRight = () => (
+  <svg width="20" height="20" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg">
+    <mask id="mask0_117_204" maskUnits="userSpaceOnUse" x="0" y="0" width="20" height="20">
+      <rect width="20" height="20" fill="#D9D9D9" />
+    </mask>
+    <g mask="url(#mask0_117_204)">
+      <path
+        d="M6.67929 18.0448L5.49658 16.862L12.3587 9.99996L5.49658 3.13788L6.67929 1.95517L14.7241 9.99996L6.67929 18.0448Z"
+        fill="#5F6367"
+      />
+    </g>
+  </svg>
+);
