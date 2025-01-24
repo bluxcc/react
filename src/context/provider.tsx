@@ -16,6 +16,7 @@ export const BluxProvider = ({
     user: { wallet: null },
     modal: { isOpen: false },
     ready: false,
+    isAuthenticated: false,
   });
 
   const closeModal = () => {

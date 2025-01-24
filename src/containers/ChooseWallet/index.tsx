@@ -66,6 +66,16 @@ export default function ChooseWallet({ isOpen, closeModal }: ChooseWalletProps) 
     };
   }, []);
 
+  useEffect(() => {
+    if (context?.value.user.wallet?.address && context.value.user.wallet.name) {
+      setIsConnected(true);
+      context?.setValue((prev) => ({
+        ...prev,
+        isAuthenticated: true,
+      }));
+    }
+  }, [selectedWallet]);
+
   const handleConnect = async (wallet: WalletActions) => {
     setSelectedWallet(wallet.name);
     try {
@@ -83,9 +93,6 @@ export default function ChooseWallet({ isOpen, closeModal }: ChooseWalletProps) 
         },
       }));
       handleCloseModal();
-      if (publicKey) {
-        setIsConnected(true);
-      }
     } catch (e) {
       context?.setValue((prev) => ({
         ...prev,
@@ -134,8 +141,8 @@ export default function ChooseWallet({ isOpen, closeModal }: ChooseWalletProps) 
               })}
               {availableWallets.length > 2 && !showAllWallets && (
                 <WalletButton
-                  name="All Stellar wallets"
                   hasArrow
+                  name="All Stellar wallets"
                   customIcon={<StellarIcon />}
                   onClick={() => setShowAllWallets(true)}
                 />
