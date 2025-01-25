@@ -1,29 +1,25 @@
 import React, { useContext, useEffect, useState } from 'react';
 
-import Modal from '../../components/Modal';
-import { WalletButton } from '../../components/WalletButton';
 import { ProviderContext } from '../../context/provider';
-import { SupportedWallets, WalletActions } from '../../types';
 import { walletsConfig } from '../../wallets/walletsConfig';
+import { WalletButton } from '../../components/WalletButton';
 import { initializeRabetMobile } from '../../utils/initializeRabetMobile';
 
 import BluxLogo from '../../assets/bluxLogo';
-import Connected from '../connected';
-import Connecting from '../connecting';
 import { StellarIcon } from '../../assets/walletsLogo';
 
+import { WalletActions } from '../../types';
+
 type ChooseWalletProps = {
-  isOpen: boolean;
   closeModal: () => void;
 };
 
-export default function ChooseWallet({ isOpen, closeModal }: ChooseWalletProps) {
+const ChooseWallet = ({ closeModal }: ChooseWalletProps) => {
   const context = useContext(ProviderContext);
 
-  const [isConnected, setIsConnected] = useState(false);
-  const [selectedWallet, setSelectedWallet] = useState<SupportedWallets | null>(null);
   const [availableWallets, setAvailableWallets] = useState<WalletActions[]>([]);
   const [showAllWallets, setShowAllWallets] = useState(false);
+  const [hiddenWallets, setHiddenWallets] = useState<WalletActions[]>([]);
 
   const detectWallet = async () => {
     try {
@@ -44,6 +40,10 @@ export default function ChooseWallet({ isOpen, closeModal }: ChooseWalletProps) 
         .map(({ wallet }) => wallet);
 
       setAvailableWallets(available);
+
+      if (available.length > 2) {
+        setHiddenWallets(available.slice(2));
+      }
     } catch (error) {
       console.error('Error detecting wallet availability:', error);
     }
@@ -66,33 +66,34 @@ export default function ChooseWallet({ isOpen, closeModal }: ChooseWalletProps) 
     };
   }, []);
 
-  useEffect(() => {
-    if (context?.value.user.wallet?.address && context.value.user.wallet.name) {
-      setIsConnected(true);
-      context?.setValue((prev) => ({
-        ...prev,
-        isAuthenticated: true,
-      }));
-    }
-  }, [selectedWallet]);
-
   const handleConnect = async (wallet: WalletActions) => {
-    setSelectedWallet(wallet.name);
+    context?.setValue((prev) => ({
+      ...prev,
+      user: {
+        wallet: {
+          name: wallet.name,
+          address: null,
+        },
+      },
+      isConnecting: true,
+    }));
+
     try {
       const { publicKey } = await wallet.connect();
       context?.setValue((prev) => ({
         ...prev,
         user: {
           wallet: {
-            name: selectedWallet,
+            name: wallet.name,
             address: publicKey,
           },
         },
+        isAuthenticated: true,
         modal: {
           isOpen: false,
         },
       }));
-      handleCloseModal();
+      closeModal();
     } catch (e) {
       context?.setValue((prev) => ({
         ...prev,
@@ -100,62 +101,35 @@ export default function ChooseWallet({ isOpen, closeModal }: ChooseWalletProps) 
           isOpen: false,
         },
       }));
-      handleCloseModal();
+      closeModal();
       console.error('Error connecting to wallet:', e);
     }
     initializeRabetMobile();
   };
 
-  const handleCloseModal = () => {
-    setSelectedWallet(null);
-    closeModal();
-  };
-
-  const visibleWallets = showAllWallets ? availableWallets : availableWallets.slice(0, 2);
+  const visibleWallets = showAllWallets ? hiddenWallets : availableWallets.slice(0, 2);
 
   return (
-    <Modal
-      isOpen={isOpen}
-      onClose={handleCloseModal}
-      className="!w-[360px]"
-      modalStatus={isConnected ? 'connected' : 'notConnected'}
-      showInfoIcon={isConnected ? false : true}
-    >
-      {isConnected ? (
-        <Connected closeModal={handleCloseModal} />
-      ) : (
-        <div className="flex flex-col items-center">
-          {!selectedWallet ? (
-            <div className="w-full">
-              <div className="flex justify-center items-center w-full py-4">
-                <BluxLogo />
-              </div>
-              {visibleWallets.map((wallet) => {
-                return (
-                  <WalletButton
-                    {...wallet}
-                    key={wallet.name}
-                    onClick={() => handleConnect(wallet)}
-                  />
-                );
-              })}
-              {availableWallets.length > 2 && !showAllWallets && (
-                <WalletButton
-                  hasArrow
-                  name="All Stellar wallets"
-                  customIcon={<StellarIcon />}
-                  onClick={() => setShowAllWallets(true)}
-                />
-              )}
-              <div className="text-center font-medium text-sm text-[#0D1292CC] mt-3 mb-[6px]">
-                I don&apos;t have a wallet
-              </div>
-            </div>
-          ) : (
-            <Connecting />
-          )}
-        </div>
+    <div className="w-full">
+      <div className="flex justify-center items-center w-full py-4">
+        <BluxLogo />
+      </div>
+      {visibleWallets.map((wallet) => {
+        return <WalletButton {...wallet} key={wallet.name} onClick={() => handleConnect(wallet)} />;
+      })}
+      {hiddenWallets.length > 0 && !showAllWallets && (
+        <WalletButton
+          hasArrow
+          name="All Stellar wallets"
+          customIcon={<StellarIcon />}
+          onClick={() => setShowAllWallets(true)}
+        />
       )}
-    </Modal>
+      <div className="text-center font-medium text-sm text-[#0D1292CC] mt-3 mb-[6px]">
+        I don&apos;t have a wallet
+      </div>
+    </div>
   );
-}
+};
+
+export default ChooseWallet;

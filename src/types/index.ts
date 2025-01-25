@@ -33,7 +33,9 @@ export interface MergeConfigs {
     isOpen: boolean;
   };
   ready: boolean;
+  isDemo: boolean;
   isAuthenticated: boolean;
+  isConnecting: boolean;
 }
 
 export interface StateValue {

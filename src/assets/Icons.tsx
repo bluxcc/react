@@ -26,3 +26,29 @@ export const ArrowRight = () => (
     </g>
   </svg>
 );
+export const ArrowLeft = () => (
+  <svg width="24" height="25" viewBox="0 0 24 25" fill="none" xmlns="http://www.w3.org/2000/svg">
+    <mask id="mask0_170_30135" maskUnits="userSpaceOnUse" x="0" y="0" width="24" height="25">
+      <rect y="0.5" width="24" height="24" fill="#D9D9D9" />
+    </mask>
+    <g mask="url(#mask0_170_30135)">
+      <path
+        d="M16 22.5L6 12.5L16 2.5L17.775 4.275L9.55 12.5L17.775 20.725L16 22.5Z"
+        fill="#5F6367"
+      />
+    </g>
+  </svg>
+);
+export const Close = () => (
+  <svg width="24" height="25" viewBox="0 0 24 25" fill="none" xmlns="http://www.w3.org/2000/svg">
+    <mask id="mask0_170_30138" maskUnits="userSpaceOnUse" x="0" y="0" width="24" height="25">
+      <rect y="0.5" width="24" height="24" fill="#D9D9D9" />
+    </mask>
+    <g mask="url(#mask0_170_30138)">
+      <path
+        d="M4.8 21.5L3 19.7L10.2 12.5L3 5.3L4.8 3.5L12 10.7L19.2 3.5L21 5.3L13.8 12.5L21 19.7L19.2 21.5L12 14.3L4.8 21.5Z"
+        fill="#5F6367"
+      />
+    </g>
+  </svg>
+);

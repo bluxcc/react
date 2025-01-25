@@ -1,16 +1,18 @@
-import React from 'react';
+import React, { useContext } from 'react';
 import clsx from 'clsx';
 import { motion, AnimatePresence } from 'motion/react';
 
-import { InfoIcon } from '../../assets/Icons';
+import { ArrowLeft, Close, InfoIcon } from '../../assets/Icons';
+import { ProviderContext } from '../../context/provider';
 
 interface ModalProps {
   isOpen: boolean;
   className?: string;
   onClose?: () => void;
   children: React.ReactNode;
-  showInfoIcon?: boolean;
-  modalStatus: 'connected' | 'notConnected';
+  icon: 'info' | 'back';
+  closeButton?: boolean;
+  modalHeader: string;
 }
 
 const Modal = ({
@@ -18,20 +20,25 @@ const Modal = ({
   onClose = () => {},
   children,
   className,
-  modalStatus,
-  showInfoIcon = true,
+  modalHeader,
+  icon,
+  closeButton = false,
 }: ModalProps) => {
+  const context = useContext(ProviderContext);
+
   return (
     <AnimatePresence>
       {isOpen && (
         <>
           <motion.div
-            className="fixed inset-0 bg-black bg-opacity-[0.05] z-40 overflow-hidden"
+            className={`fixed inset-0 ${
+              !context?.value.isDemo && 'bg-black bg-opacity-[0.05]'
+            }  z-40 overflow-hidden`}
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
             exit={{ opacity: 0 }}
             transition={{ duration: 0.2 }}
-            onClick={onClose}
+            onClick={context?.value.isDemo ? undefined : onClose}
           />
 
           <motion.div
@@ -63,20 +70,28 @@ const Modal = ({
                 damping: 40,
               }}
             >
-              <div className="w-full flex items-center justify-between pt-0.5 pb-[18px]">
-                {showInfoIcon ? (
-                  <div className="w-7 h-7 flex justify-center items-center hover:bg-[#CDCEEE] border rounded-full transition duration-300 cursor-pointer">
+              <div className="w-full flex items-center justify-between pt-0.5 pb-[18px] cursor-pointer">
+                {icon === 'info' ? (
+                  <div className="w-6 h-6 flex justify-center items-center hover:bg-[#cdceee48] rounded-full transition duration-300">
                     <InfoIcon />
                   </div>
                 ) : (
-                  <div className="w-4"></div>
+                  <div>
+                    <ArrowLeft />
+                  </div>
                 )}
 
                 <p className="text-lg font-semibold text-center flex-1 select-none">
-                  {modalStatus == 'connected' ? 'Connected' : 'Connect Wallet'}
+                  {modalHeader}
                 </p>
 
-                <div className="w-4"></div>
+                {closeButton ? (
+                  <div className="cursor-pointer">
+                    <Close />
+                  </div>
+                ) : (
+                  <div className="w-4"> </div>
+                )}
               </div>
               {children}
               <div className="font-semibold text-[10px] text-center w-full">

@@ -25,25 +25,18 @@ export const useBlux = () => {
     });
   };
 
-  const show = () => {
+  const openDemo = () => {
     setValue({
       ...value,
+      isDemo: true,
       modal: { isOpen: true },
-    });
-  };
-
-  const hide = () => {
-    setValue({
-      ...value,
-      modal: { isOpen: false },
     });
   };
 
   return {
     connect,
     disconnect,
-    show,
-    hide,
+    openDemo,
     isReady: value?.ready || false,
     user: value?.user || null,
     isAuthenticated: value?.isAuthenticated || false,
