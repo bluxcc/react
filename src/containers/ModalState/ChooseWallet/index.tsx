@@ -1,24 +1,25 @@
 import React, { useContext, useEffect, useState } from 'react';
 
-import { ProviderContext } from '../../context/provider';
-import { walletsConfig } from '../../wallets/walletsConfig';
-import { WalletButton } from '../../components/WalletButton';
-import { initializeRabetMobile } from '../../utils/initializeRabetMobile';
+import { ProviderContext } from '../../../context/provider';
+import { walletsConfig } from '../../../wallets/walletsConfig';
+import { WalletButton } from '../../../components/WalletButton';
+import { initializeRabetMobile } from '../../../utils/initializeRabetMobile';
 
-import BluxLogo from '../../assets/bluxLogo';
-import { StellarIcon } from '../../assets/walletsLogo';
+import BluxLogo from '../../../assets/bluxLogo';
+import { StellarIcon } from '../../../assets/walletsLogo';
 
-import { WalletActions } from '../../types';
+import { WalletActions } from '../../../types';
 
 type ChooseWalletProps = {
   closeModal: () => void;
+  showAllWallets: boolean;
+  setShowAllWallets: (value: boolean) => void;
 };
 
-const ChooseWallet = ({ closeModal }: ChooseWalletProps) => {
+const ChooseWallet = ({ closeModal, showAllWallets, setShowAllWallets }: ChooseWalletProps) => {
   const context = useContext(ProviderContext);
 
   const [availableWallets, setAvailableWallets] = useState<WalletActions[]>([]);
-  const [showAllWallets, setShowAllWallets] = useState(false);
   const [hiddenWallets, setHiddenWallets] = useState<WalletActions[]>([]);
 
   const detectWallet = async () => {
@@ -50,18 +51,10 @@ const ChooseWallet = ({ closeModal }: ChooseWalletProps) => {
   };
 
   useEffect(() => {
-    const initializeWalletDetection = async () => {
-      await detectWallet();
-    };
-
-    initializeWalletDetection();
+    detectWallet();
     window.addEventListener('load', detectWallet, false);
 
     return () => {
-      context?.setValue((prev) => ({
-        ...prev,
-        ready: true,
-      }));
       window.removeEventListener('load', detectWallet, false);
     };
   }, []);
@@ -125,6 +118,7 @@ const ChooseWallet = ({ closeModal }: ChooseWalletProps) => {
           onClick={() => setShowAllWallets(true)}
         />
       )}
+
       <div className="text-center font-medium text-sm text-[#0D1292CC] mt-3 mb-[6px]">
         I don&apos;t have a wallet
       </div>

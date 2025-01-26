@@ -1,6 +1,6 @@
 import React, { useContext } from 'react';
 
-import { ProviderContext } from '../../context/provider';
+import { ProviderContext } from '../../../context/provider';
 
 type ConnectedProps = {
   closeModal: () => void;
