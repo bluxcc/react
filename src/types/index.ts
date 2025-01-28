@@ -26,21 +26,34 @@ export interface IUser {
   } | null;
 }
 
-export interface MergeConfigs {
+export interface ContextValues {
   config: IProviderConfig;
   user: IUser;
-  modal: {
-    isOpen: boolean;
-  };
+  openModal: boolean;
   ready: boolean;
   isDemo: boolean;
   isAuthenticated: boolean;
   isConnecting: boolean;
 }
+export enum ModalView {
+  CHOOSE_WALLET = 'CHOOSE_WALLET',
+  CONNECTING = 'CONNECTING',
+  PROFILE = 'PROFILE',
+}
 
+export interface ModalState {
+  view: ModalView;
+  showAllWallets: boolean;
+}
+
+export interface ModalHeights {
+  [ModalView.PROFILE]: number;
+  [ModalView.CONNECTING]: number;
+  [ModalView.CHOOSE_WALLET]: number;
+}
 export interface StateValue {
-  value: MergeConfigs;
-  setValue: React.Dispatch<React.SetStateAction<MergeConfigs>>;
+  value: ContextValues;
+  setValue: React.Dispatch<React.SetStateAction<ContextValues>>;
 }
 
 export interface ConnectResult {

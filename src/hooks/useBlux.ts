@@ -13,7 +13,7 @@ export const useBlux = () => {
   const connect = async () => {
     setValue({
       ...value,
-      modal: { isOpen: true },
+      openModal: true,
     });
   };
 
@@ -21,7 +21,7 @@ export const useBlux = () => {
     setValue({
       ...value,
       user: { wallet: null },
-      modal: { isOpen: false },
+      openModal: false,
     });
   };
 
@@ -29,7 +29,7 @@ export const useBlux = () => {
     setValue({
       ...value,
       isDemo: true,
-      modal: { isOpen: true },
+      openModal: true,
     });
   };
 

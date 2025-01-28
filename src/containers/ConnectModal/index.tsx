@@ -1,38 +1,42 @@
-import React, { useContext, useEffect, useState } from 'react';
-
+import React from 'react';
 import Modal from '../../components/Modal';
-
-import Connected from '../ModalState/Connected';
+import Profile from '../ModalState/Profile';
 import Connecting from '../ModalState/Connecting';
-import ChooseWallet from '../ModalState/ChooseWallet';
-import { ProviderContext } from '../../context/provider';
+import OnBoarding from '../ModalState/OnBoarding';
+import { useConnectModal } from '../../hooks/useConnectModal';
+import { ModalView } from '../../types';
 
-type ConnectModalProps = {
+interface ConnectModalProps {
   isOpen: boolean;
-  closeModal: () => void;
-};
+}
 
-export default function ConnectModal({ isOpen, closeModal }: ConnectModalProps) {
-  const context = useContext(ProviderContext);
+export default function ConnectModal({ isOpen }: ConnectModalProps) {
+  const {
+    modalState,
+    handleGoBack,
+    setShowAllWallets,
+    modalHeader,
+    showBackButton,
+    showCloseButton,
+    initialHeight,
+    closeModal,
+  } = useConnectModal();
 
-  const [isConnecting, setIsConnecting] = useState(false);
-  const [isConnected, setIsConnected] = useState(false);
-  const [showAllWallets, setShowAllWallets] = useState(false); // State to manage hidden wallets view
-
-  useEffect(() => {
-    if (context?.value.isAuthenticated) {
-      setIsConnected(true);
-    }
-    if (context?.value.isConnecting) {
-      setIsConnecting(true);
-    }
-  }, [context?.value.isAuthenticated, context?.value.isConnecting]);
-
-  const handleGoBack = () => {
-    if (isConnecting) {
-      setIsConnecting(false);
-    } else if (showAllWallets) {
-      setShowAllWallets(false);
+  const renderContent = () => {
+    switch (modalState.view) {
+      case ModalView.PROFILE:
+        return <Profile />;
+      case ModalView.CONNECTING:
+        return <Connecting />;
+      default:
+        return (
+          <div className="flex flex-col items-center">
+            <OnBoarding
+              showAllWallets={modalState.showAllWallets}
+              setShowAllWallets={setShowAllWallets}
+            />
+          </div>
+        );
     }
   };
 
@@ -40,27 +44,14 @@ export default function ConnectModal({ isOpen, closeModal }: ConnectModalProps) 
     <Modal
       isOpen={isOpen}
       onClose={closeModal}
-      className="!w-[360px]"
-      modalHeader={isConnecting ? '' : 'Connect Wallet'}
-      icon={isConnecting || showAllWallets ? 'back' : 'info'}
-      closeButton={isConnecting ? true : false}
+      className={`!w-[360px]`}
+      modalHeader={modalHeader}
+      icon={showBackButton ? 'back' : 'info'}
+      closeButton={showCloseButton}
       onBack={handleGoBack}
+      initialHeight={initialHeight}
     >
-      {isConnected ? (
-        <Connected closeModal={closeModal} />
-      ) : (
-        <div className="flex flex-col items-center">
-          {isConnecting ? (
-            <Connecting />
-          ) : (
-            <ChooseWallet
-              closeModal={closeModal}
-              showAllWallets={showAllWallets}
-              setShowAllWallets={setShowAllWallets}
-            />
-          )}
-        </div>
-      )}
+      {renderContent()}
     </Modal>
   );
 }

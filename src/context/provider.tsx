@@ -1,6 +1,6 @@
 import React, { createContext, useState } from 'react';
 import ConnectModal from '../containers/ConnectModal';
-import { StateValue, IProviderConfig, MergeConfigs } from '../types';
+import { StateValue, IProviderConfig, ContextValues } from '../types';
 
 export const ProviderContext = createContext<StateValue | null>(null);
 
@@ -11,22 +11,15 @@ export const BluxProvider = ({
   config: IProviderConfig;
   children: React.ReactNode;
 }) => {
-  const [value, setValue] = useState<MergeConfigs>({
+  const [value, setValue] = useState<ContextValues>({
     config,
     user: { wallet: null },
-    modal: { isOpen: false },
+    openModal: false,
     ready: false,
     isDemo: false,
     isAuthenticated: false,
     isConnecting: false,
   });
-
-  const closeModal = () => {
-    setValue((prev) => ({
-      ...prev,
-      modal: { isOpen: false },
-    }));
-  };
 
   return (
     <ProviderContext.Provider
@@ -36,7 +29,7 @@ export const BluxProvider = ({
       }}
     >
       {children}
-      <ConnectModal isOpen={value.modal.isOpen} closeModal={closeModal} />
+      <ConnectModal isOpen={value.openModal} />
     </ProviderContext.Provider>
   );
 };

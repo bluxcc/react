@@ -1,7 +1,5 @@
 import React, { useContext, useState, useRef, useEffect } from 'react';
 import clsx from 'clsx';
-import { motion, AnimatePresence } from 'framer-motion';
-
 import { ArrowLeft, Close, InfoIcon } from '../../assets/Icons';
 import { ProviderContext } from '../../context/provider';
 
@@ -15,6 +13,7 @@ interface ModalProps {
   onInfo?: () => void;
   closeButton?: boolean;
   modalHeader: string;
+  initialHeight: number;
 }
 
 const Modal = ({
@@ -26,113 +25,164 @@ const Modal = ({
   className,
   modalHeader,
   icon,
+  initialHeight,
   closeButton = false,
 }: ModalProps) => {
   const context = useContext(ProviderContext);
-  const [contentHeight, setContentHeight] = useState(0);
+  const [isOpening, setIsOpening] = useState(true);
+  const [isClosing, setIsClosing] = useState(false);
+  const [hasTransition, setHasTransition] = useState(false);
+  const [contentHeight, setContentHeight] = useState<number | null>(null);
+  const isFirstRender = useRef(true);
+  const previousChildrenRef = useRef(children);
   const contentRef = useRef<HTMLDivElement>(null);
+  const previousHeightRef = useRef<number>(initialHeight);
 
   useEffect(() => {
-    if (contentRef.current) {
-      const resizeObserver = new ResizeObserver((entries) => {
-        for (const entry of entries) {
-          setContentHeight(entry.contentRect.height);
-        }
-      });
-
-      resizeObserver.observe(contentRef.current);
-
-      return () => resizeObserver.disconnect();
+    if (isOpen && isOpening) {
+      const timer = setTimeout(() => {
+        setIsOpening(false);
+      }, 300);
+      return () => clearTimeout(timer);
     }
-  }, [children]);
+  }, [isOpen]);
+
+  useEffect(() => {
+    if (!isOpen) {
+      setContentHeight(null);
+      setHasTransition(false);
+      previousChildrenRef.current = children;
+      isFirstRender.current = true;
+      setIsOpening(true);
+      previousHeightRef.current = initialHeight;
+      return;
+    }
+  }, [isOpen, initialHeight]);
+
+  useEffect(() => {
+    if (!isOpen || !contentRef.current) return;
+
+    const updateHeight = () => {
+      const newHeight = contentRef.current?.offsetHeight;
+      if (!newHeight) return;
+
+      if (isFirstRender.current) {
+        previousHeightRef.current = newHeight;
+        isFirstRender.current = false;
+        return;
+      }
+
+      if (newHeight !== previousHeightRef.current) {
+        setContentHeight(newHeight);
+        setHasTransition(true);
+        previousHeightRef.current = newHeight;
+      }
+    };
+
+    const resizeObserver = new ResizeObserver(() => {
+      updateHeight();
+    });
+
+    resizeObserver.observe(contentRef.current);
+
+    updateHeight();
+
+    return () => {
+      resizeObserver.disconnect();
+    };
+  }, [isOpen, children]);
+
+  const handleClose = () => {
+    setIsClosing(true);
+    setTimeout(() => {
+      setIsClosing(false);
+      onClose();
+    }, 300);
+  };
+
+  const handleBack = () => {
+    if (onBack) {
+      previousHeightRef.current = contentHeight ?? initialHeight;
+      onBack();
+    }
+  };
+
+  const currentHeight = isFirstRender.current
+    ? initialHeight
+    : contentHeight ?? previousHeightRef.current;
 
   return (
-    <AnimatePresence>
-      {isOpen && (
-        <>
-          {/* Backdrop */}
-          <motion.div
-            className={`fixed inset-0 ${
-              !context?.value.isDemo && 'bg-black bg-opacity-[0.05]'
-            } z-40 overflow-hidden`}
-            initial={{ opacity: 0 }}
-            animate={{ opacity: 1 }}
-            exit={{ opacity: 0 }}
-            transition={{ duration: 0.2 }}
-            onClick={context?.value.isDemo ? undefined : onClose}
-          />
+    isOpen && (
+      <>
+        <div
+          className={clsx(
+            'fixed inset-0 z-40',
+            !context?.value.isDemo && 'bg-black bg-opacity-[0.05]',
+            isClosing ? 'animate-fadeOut' : 'animate-fadeIn',
+          )}
+          onClick={context?.value.isDemo ? undefined : handleClose}
+        />
 
-          {/* Modal Container */}
-          <motion.div
-            className="absolute inset-0 flex items-center justify-center z-50"
-            onClick={(e) => e.target === e.currentTarget && onClose()}
-            initial={{ scale: 0.95, opacity: 0 }}
-            animate={{ scale: 1, opacity: 1 }}
-            exit={{ scale: 0.95, opacity: 0 }}
-            transition={{ duration: 0.3, ease: 'easeInOut' }}
+        <div
+          className={clsx(
+            'absolute inset-0 flex items-center justify-center z-50',
+            isClosing && 'animate-fadeOut',
+          )}
+          onClick={(e) => e.target === e.currentTarget && handleClose}
+        >
+          <div
+            className={clsx(
+              'bg-white rounded-2xl border border-[#CDCEEE] font-sans overflow-hidden',
+              hasTransition && 'transition-all duration-300 ease-in-out',
+              className,
+            )}
+            style={{
+              height: `${currentHeight}px`,
+              transform: isOpening ? 'scale(0.98)' : 'scale(1)',
+              opacity: isOpening ? '0' : '1',
+              transition: isOpening
+                ? 'transform 300ms ease-out, opacity 300ms ease-out'
+                : hasTransition
+                ? 'height 300ms ease-in-out'
+                : 'none',
+            }}
           >
-            <div
-              className={clsx(
-                'bg-white rounded-2xl border border-[#CDCEEE] font-sans overflow-hidden px-6 pb-4',
-                className,
-              )}
-            >
-              {/* Animated Content Container */}
-              <motion.div
-                initial={{ height: contentHeight }}
-                animate={{ height: contentHeight }}
-                transition={{
-                  type: 'spring',
-                  stiffness: 300,
-                  damping: 30,
-                }}
-              >
-                <div ref={contentRef} className="">
-                  <div className="w-full flex items-center justify-between h-16">
-                    <div className="cursor-pointer">
-                      {icon === 'info' ? (
-                        <div
-                          onClick={onInfo}
-                          className="w-6 h-6 flex justify-center items-center hover:bg-[#cdceee48] rounded-full transition duration-300"
-                        >
-                          <InfoIcon />
-                        </div>
-                      ) : (
-                        <div onClick={onBack}>
-                          <ArrowLeft />
-                        </div>
-                      )}
+            <div ref={contentRef} className=" px-6 pb-4">
+              <div className="w-full flex items-center justify-between h-16">
+                <div className="cursor-pointer">
+                  {icon === 'info' ? (
+                    <div
+                      onClick={onInfo}
+                      className="w-6 h-6 flex justify-center items-center hover:bg-[#cdceee48] rounded-full transition duration-300"
+                    >
+                      <InfoIcon />
                     </div>
-
-                    <p className="text-lg font-semibold text-center flex-1 select-none">
-                      {modalHeader}
-                    </p>
-
-                    {closeButton ? (
-                      <div className="cursor-pointer" onClick={onClose}>
-                        <Close />
-                      </div>
-                    ) : (
-                      <div className="w-4"> </div>
-                    )}
-                  </div>
-                  {children}
-                  {/* Footer */}
-                  {!context?.value.isConnecting && (
-                    <div className="font-semibold text-[10px] text-center w-full py-2">
-                      Powered by{' '}
-                      <a href="https://blux.cc" className="text-[#0D1292]" target="blank">
-                        Blux.cc
-                      </a>
+                  ) : (
+                    <div onClick={handleBack}>
+                      <ArrowLeft />
                     </div>
                   )}
                 </div>
-              </motion.div>
+
+                <p className="text-lg font-semibold text-center flex-1 select-none">
+                  {modalHeader}
+                </p>
+
+                {closeButton ? (
+                  <div className="cursor-pointer" onClick={handleClose}>
+                    <Close />
+                  </div>
+                ) : (
+                  <div className="w-4"> </div>
+                )}
+              </div>
+
+              {children}
             </div>
-          </motion.div>
-        </>
-      )}
-    </AnimatePresence>
+          </div>
+        </div>
+      </>
+    )
   );
 };
 

@@ -10,13 +10,12 @@ import { StellarIcon } from '../../../assets/walletsLogo';
 
 import { WalletActions } from '../../../types';
 
-type ChooseWalletProps = {
-  closeModal: () => void;
+type OnBoardingProps = {
   showAllWallets: boolean;
   setShowAllWallets: (value: boolean) => void;
 };
 
-const ChooseWallet = ({ closeModal, showAllWallets, setShowAllWallets }: ChooseWalletProps) => {
+const OnBoarding = ({ showAllWallets, setShowAllWallets }: OnBoardingProps) => {
   const context = useContext(ProviderContext);
 
   const [availableWallets, setAvailableWallets] = useState<WalletActions[]>([]);
@@ -82,19 +81,13 @@ const ChooseWallet = ({ closeModal, showAllWallets, setShowAllWallets }: ChooseW
           },
         },
         isAuthenticated: true,
-        modal: {
-          isOpen: false,
-        },
+        openModal: false,
       }));
-      closeModal();
     } catch (e) {
       context?.setValue((prev) => ({
         ...prev,
-        modal: {
-          isOpen: false,
-        },
+        openModal: false,
       }));
-      closeModal();
       console.error('Error connecting to wallet:', e);
     }
     initializeRabetMobile();
@@ -119,11 +112,17 @@ const ChooseWallet = ({ closeModal, showAllWallets, setShowAllWallets }: ChooseW
         />
       )}
 
-      <div className="text-center font-medium text-sm text-[#0D1292CC] mt-3 mb-[6px]">
+      <div className="text-center font-medium text-sm text-[#0D1292CC] mt-3">
         I don&apos;t have a wallet
+      </div>
+      <div className="font-semibold text-[10px] text-center w-full py-2">
+        Powered by{' '}
+        <a href="https://blux.cc" className="text-[#0D1292]" target="blank">
+          Blux.cc
+        </a>
       </div>
     </div>
   );
 };
 
-export default ChooseWallet;
+export default OnBoarding;
