@@ -1,10 +1,10 @@
-import React, { useContext, useEffect } from 'react';
+import React, { useContext, useEffect, useRef, useState } from 'react';
 import clsx from 'clsx';
 import { ProviderContext } from '../../context/provider';
 import ModalHeader from './Header';
 import ModalBackdrop from './Backdrop';
 import { useModalAnimation } from '../../hooks/useModalAnimation';
-import { useModalHeight } from '../../hooks/useModalHeight';
+// import { useModalHeight } from '../../hooks/useModalHeight';
 
 interface ModalProps {
   isOpen: boolean;
@@ -34,17 +34,56 @@ const Modal = ({
   const context = useContext(ProviderContext);
   const { isOpening, isClosing, hasTransition, handleClose, setHasTransition } =
     useModalAnimation(isOpen);
-  const { contentRef, currentHeight, heightChanged } = useModalHeight(
-    isOpen,
-    initialHeight,
-    children,
-  );
+  const [contentHeight, setContentHeight] = useState<number | null>(null);
+  const [heightChanged, setHeightChanged] = useState(false);
+  const contentRef = useRef<HTMLDivElement>(null);
+  const isFirstRender = useRef(true);
+  const previousChildrenRef = useRef(children);
+  const previousHeightRef = useRef<number>(initialHeight);
 
   useEffect(() => {
+    if (!isOpen) {
+      setContentHeight(null);
+      setHeightChanged(false);
+      isFirstRender.current = true;
+      previousChildrenRef.current = children;
+      previousHeightRef.current = initialHeight;
+      return;
+    }
+  }, [isOpen, initialHeight, children]);
+
+  useEffect(() => {
+    if (!isOpen || !contentRef.current) return;
+
+    const updateHeight = () => {
+      const newHeight = contentRef.current?.offsetHeight;
+      if (!newHeight) return;
+
+      if (isFirstRender.current) {
+        previousHeightRef.current = newHeight;
+        isFirstRender.current = false;
+        return;
+      }
+
+      if (newHeight !== previousHeightRef.current) {
+        setContentHeight(newHeight);
+        setHeightChanged(true);
+        previousHeightRef.current = newHeight;
+      }
+    };
     if (heightChanged) {
       setHasTransition(true);
     }
-  }, [heightChanged, setHasTransition]);
+    const resizeObserver = new ResizeObserver(updateHeight);
+    resizeObserver.observe(contentRef.current);
+    updateHeight();
+
+    return () => resizeObserver.disconnect();
+  }, [isOpen, children]);
+
+  const currentHeight = isFirstRender.current
+    ? initialHeight
+    : contentHeight ?? previousHeightRef.current;
 
   if (!isOpen) return null;
 

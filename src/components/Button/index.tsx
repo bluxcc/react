@@ -25,12 +25,12 @@ const Button = ({
     disabled={disabled}
     onClick={onClick}
     className={clsx(
-      `w-full flex items-center justify-between h-14 border border-[#CDCEEE] rounded-full my-2 pl-2 pr-4`,
+      `w-full relative flex items-center h-14 border border-[#CDCEEE] rounded-full my-2 pl-2 pr-4`,
       className,
     )}
   >
     {customIcon && (
-      <div className="flex items-center font-medium">
+      <div className="flex items-center justify-between font-medium">
         <div className="flex justify-center items-center border border-transparent rounded-full h-10 w-10 mr-4">
           {customIcon}
         </div>
@@ -39,7 +39,7 @@ const Button = ({
     )}
     {children}
     {hasArrow && (
-      <div>
+      <div className="absolute right-4">
         <ArrowRight />
       </div>
     )}

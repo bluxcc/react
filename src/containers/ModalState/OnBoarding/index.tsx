@@ -3,7 +3,6 @@ import React, { useContext, useEffect, useState } from 'react';
 import { ProviderContext } from '../../../context/provider';
 import { walletsConfig } from '../../../wallets/walletsConfig';
 import Button from '../../../components/Button';
-import { initializeRabetMobile } from '../../../utils/initializeRabetMobile';
 
 import BluxLogo from '../../../assets/bluxLogo';
 import { StellarIcon } from '../../../assets/walletsLogo';
@@ -70,28 +69,6 @@ const OnBoarding = ({ showAllWallets, setShowAllWallets }: OnBoardingProps) => {
       },
       isConnecting: true,
     }));
-
-    try {
-      const { publicKey } = await wallet.connect();
-      context?.setValue((prev) => ({
-        ...prev,
-        user: {
-          wallet: {
-            name: wallet.name,
-            address: publicKey,
-          },
-        },
-        isAuthenticated: true,
-        openModal: false,
-      }));
-    } catch (e) {
-      context?.setValue((prev) => ({
-        ...prev,
-        openModal: false,
-      }));
-      console.error('Error connecting to wallet:', e);
-    }
-    initializeRabetMobile();
   };
 
   const visibleWallets = showAllWallets ? hiddenWallets : availableWallets.slice(0, 2);

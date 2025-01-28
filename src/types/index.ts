@@ -19,11 +19,13 @@ export interface IProviderConfig {
   networkPassphrase: string;
 }
 
+export interface WalletInfo {
+  name: SupportedWallets | null;
+  address: string | null;
+}
+
 export interface IUser {
-  wallet: {
-    name: SupportedWallets | null;
-    address: string | null;
-  } | null;
+  wallet: WalletInfo | null;
 }
 
 export interface ContextValues {
