@@ -1,8 +1,8 @@
 import React, { createContext, useState } from 'react';
 import ConnectModal from '../containers/ConnectModal';
-import { StateValue, IProviderConfig, ContextValues } from '../types';
+import { ContextState, IProviderConfig, ContextValues } from '../types';
 
-export const ProviderContext = createContext<StateValue | null>(null);
+export const ProviderContext = createContext<ContextState | null>(null);
 
 export const BluxProvider = ({
   config,

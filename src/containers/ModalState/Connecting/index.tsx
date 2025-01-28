@@ -1,5 +1,4 @@
-import React, { useContext, useEffect, useState } from 'react';
-
+import React, { useContext, useEffect, useState, useRef } from 'react';
 import { ProviderContext } from '../../../context/provider';
 import { handleIcons } from '../../../utils/handleIcons';
 import { Loading } from '../../../assets/Icons';
@@ -10,8 +9,22 @@ import { mappedWallets } from '../../../utils/mappedWallets';
 
 const Connecting = () => {
   const context = useContext(ProviderContext);
-  const chosenWallet = context?.value.user.wallet;
+  const { user, isAuthenticated, isConnecting } = context?.value || {};
+  const chosenWallet = user?.wallet;
   const [error, setError] = useState(false);
+  const hasConnected = useRef(false); // Tracks if handleConnect has been called
+
+  const matchedWallet = mappedWallets.find(
+    ({ wallet }) => wallet.name === chosenWallet?.name,
+  )?.wallet;
+
+  useEffect(() => {
+    if (!hasConnected.current && matchedWallet) {
+      handleConnect(matchedWallet as WalletActions);
+      hasConnected.current = true; // Set to true to prevent duplicate calls
+    }
+    console.log(isAuthenticated, isConnecting); // Now works correctly
+  }, [matchedWallet, isAuthenticated]); // Only run when matchedWallet or isAuthenticated changes
 
   const handleConnect = async (wallet: WalletActions) => {
     try {
@@ -24,38 +37,36 @@ const Connecting = () => {
             address: publicKey,
           },
         },
-        isAuthenticated: true,
+        isConnecting: false,
+        isAuthenticated: true, // Trigger re-render correctly
       }));
     } catch {
+      context?.setValue((prev) => ({
+        ...prev,
+        isAuthenticated: false,
+      }));
       setError(true);
     }
     initializeRabetMobile();
   };
 
-  const matchedWallet = mappedWallets.find(
-    ({ wallet }) => wallet.name === chosenWallet?.name,
-  )?.wallet;
-
   const handleRetry = () => {
+    setError(false);
     handleConnect(matchedWallet as WalletActions);
   };
-
-  useEffect(() => {
-    handleConnect(matchedWallet as WalletActions);
-  }, []);
 
   return (
     <div className="flex flex-col items-center justify-center w-full select-none mt-8">
       <div
-        className={`h-20 w-20 flex justify-center items-center mb-4 ${
-          error && 'border-2 border-red-600 rounded-full'
+        className={`h-20 w-20 flex justify-center border-2 rounded-full items-center mb-4 ${
+          error ? ' border-red-600 ' : 'border-[#CDCEEE]'
         }`}
       >
-        {handleIcons(context?.value.user.wallet?.name as string)}
+        {handleIcons(user?.wallet?.name as string)}
       </div>
       <div className="space-y-3 flex-col text-center font-semibold">
         <p className="text-xl">
-          {error ? 'Failed Connecting to' : 'Waiting for'} {context?.value.user.wallet?.name}
+          {error ? 'Failed Connecting to' : 'Waiting for'} {user?.wallet?.name}
         </p>
         <p className="text-sm">
           {error ? 'Please try connecting again.' : 'Accept connection request in the wallet.'}
@@ -64,7 +75,7 @@ const Connecting = () => {
       {error ? (
         <Button
           onClick={handleRetry}
-          className="mt-8 font-medium w-full inline-flex justify-center items-center gap-[10px] border none text-white bg-red-600 rounded-full cursor-default"
+          className="mt-8 font-medium w-full inline-flex justify-center items-center gap-[10px] border-none text-white bg-red-600 rounded-full cursor-default"
         >
           Try again
         </Button>

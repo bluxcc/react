@@ -5,7 +5,7 @@ export const lobstrConfig: WalletActions = {
   name: SupportedWallets.Lobstr,
   website: 'https://lobstr.co',
 
-  isAvailable: () => false,
+  isAvailable: () => true,
 
   connect: async () => {
     try {

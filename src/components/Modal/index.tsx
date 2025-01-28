@@ -50,7 +50,7 @@ const Modal = ({
       previousHeightRef.current = initialHeight;
       return;
     }
-  }, [isOpen, initialHeight, children]);
+  }, [isOpen, initialHeight]);
 
   useEffect(() => {
     if (!isOpen || !contentRef.current) return;
@@ -89,11 +89,9 @@ const Modal = ({
 
   return (
     <>
-      <ModalBackdrop
-        isDemo={context?.value.isDemo}
-        isClosing={isClosing}
-        onClose={() => handleClose(onClose)}
-      />
+      {!context?.value.isDemo && (
+        <ModalBackdrop isClosing={isClosing} onClose={() => handleClose(onClose)} />
+      )}
 
       <div
         className={clsx(

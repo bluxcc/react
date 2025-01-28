@@ -5,7 +5,7 @@ import { walletsConfig } from '../../../wallets/walletsConfig';
 import Button from '../../../components/Button';
 
 import BluxLogo from '../../../assets/bluxLogo';
-import { StellarIcon } from '../../../assets/walletsLogo';
+import { StellarIcon } from '../../../assets/logos';
 
 import { WalletActions } from '../../../types';
 import { handleIcons } from '../../../utils/handleIcons';

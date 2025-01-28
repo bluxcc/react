@@ -28,6 +28,11 @@ export interface IUser {
   wallet: WalletInfo | null;
 }
 
+export interface ContextState {
+  value: ContextValues;
+  setValue: React.Dispatch<React.SetStateAction<ContextValues>>;
+}
+
 export interface ContextValues {
   config: IProviderConfig;
   user: IUser;
@@ -52,10 +57,6 @@ export interface ModalHeights {
   [ModalView.PROFILE]: number;
   [ModalView.CONNECTING]: number;
   [ModalView.CHOOSE_WALLET]: number;
-}
-export interface StateValue {
-  value: ContextValues;
-  setValue: React.Dispatch<React.SetStateAction<ContextValues>>;
 }
 
 export interface ConnectResult {

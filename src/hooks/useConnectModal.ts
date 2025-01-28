@@ -1,4 +1,3 @@
-// hooks/useConnectModal.ts
 import { useContext, useEffect, useState } from 'react';
 import { ProviderContext } from '../context/provider';
 import { ModalState, ModalView } from '../types';
@@ -57,8 +56,9 @@ export const useConnectModal = (): UseConnectModalReturn => {
   };
 
   const showBackButton = modalState.view === ModalView.CONNECTING || modalState.showAllWallets;
-  const showCloseButton = modalState.view === ModalView.CONNECTING;
-  const modalHeader = modalState.view === ModalView.CONNECTING ? '' : MODAL_CONFIG.defaultHeader;
+  const showCloseButton =
+    modalState.view === ModalView.CONNECTING || modalState.view === ModalView.PROFILE;
+  const modalHeader = modalState.view === ModalView.CHOOSE_WALLET ? MODAL_CONFIG.defaultHeader : '';
 
   const closeModal = () => {
     context?.setValue((prev) => ({

@@ -31,7 +31,7 @@ const Button = ({
   >
     {customIcon && (
       <div className="flex items-center justify-between font-medium">
-        <div className="flex justify-center items-center border border-transparent rounded-full h-10 w-10 mr-4">
+        <div className="flex justify-center items-center border border-[#CDCEEE] rounded-full h-10 w-10 mr-4">
           {customIcon}
         </div>
         {name}
