@@ -2,7 +2,7 @@ import React, { useContext, useEffect, useState } from 'react';
 
 import { ProviderContext } from '../../../context/provider';
 import { walletsConfig } from '../../../wallets/walletsConfig';
-import { WalletButton } from '../../../components/WalletButton';
+import Button from '../../../components/Button';
 import { initializeRabetMobile } from '../../../utils/initializeRabetMobile';
 
 import BluxLogo from '../../../assets/bluxLogo';
@@ -101,10 +101,10 @@ const OnBoarding = ({ showAllWallets, setShowAllWallets }: OnBoardingProps) => {
         <BluxLogo />
       </div>
       {visibleWallets.map((wallet) => {
-        return <WalletButton {...wallet} key={wallet.name} onClick={() => handleConnect(wallet)} />;
+        return <Button {...wallet} key={wallet.name} onClick={() => handleConnect(wallet)} />;
       })}
       {hiddenWallets.length > 0 && !showAllWallets && (
-        <WalletButton
+        <Button
           hasArrow
           name="All Stellar wallets"
           customIcon={<StellarIcon />}

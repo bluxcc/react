@@ -2,14 +2,14 @@ import React from 'react';
 import { handleIcons } from '../../utils/handleIcons';
 import { ArrowRight } from '../../assets/Icons';
 
-export type Wallet = {
+type Wallet = {
   name: string;
   onClick: () => void;
   customIcon?: React.JSX.Element;
   hasArrow?: boolean;
 };
 
-export const WalletButton = ({ name, onClick, customIcon, hasArrow = false }: Wallet) => (
+const Button = ({ name, onClick, customIcon, hasArrow = false }: Wallet) => (
   <button
     onClick={onClick}
     className={`w-full flex items-center justify-between h-14 border border-[#CDCEEE] rounded-full my-2 pl-2 pr-4`}
@@ -27,3 +27,5 @@ export const WalletButton = ({ name, onClick, customIcon, hasArrow = false }: Wa
     )}
   </button>
 );
+
+export default Button;
