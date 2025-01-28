@@ -3,6 +3,7 @@ import React, { useContext } from 'react';
 import { ProviderContext } from '../../../context/provider';
 import { handleIcons } from '../../../utils/handleIcons';
 import { Loading } from '../../../assets/Icons';
+import Button from '../../../components/Button';
 
 const Connecting = () => {
   const context = useContext(ProviderContext);
@@ -16,13 +17,13 @@ const Connecting = () => {
         <p className="text-sm">Accept connection request in the wallet</p>
       </div>
 
-      <button
+      <Button
         disabled
-        className="mt-8 w-full h-14 inline-flex justify-center items-center gap-[10px] border border-[#CDCEEE] rounded-full cursor-default"
+        className="mt-8 font-medium w-full inline-flex justify-center items-center gap-[10px] border border-[#CDCEEE] rounded-full cursor-default"
       >
         <Loading />
-        <p className="font-medium">Connecting</p>
-      </button>
+        <p>Connecting</p>
+      </Button>
     </div>
   );
 };

@@ -1,25 +1,43 @@
 import React from 'react';
-import { handleIcons } from '../../utils/handleIcons';
 import { ArrowRight } from '../../assets/Icons';
+import clsx from 'clsx';
 
-type Wallet = {
-  name: string;
-  onClick: () => void;
-  customIcon?: React.JSX.Element;
+type ButtonProps = {
+  name?: string;
+  onClick?: () => void;
+  customIcon?: React.JSX.Element | React.ReactNode;
+  children?: React.ReactNode;
   hasArrow?: boolean;
+  className?: string;
+  disabled?: boolean;
 };
 
-const Button = ({ name, onClick, customIcon, hasArrow = false }: Wallet) => (
+const Button = ({
+  name,
+  onClick,
+  customIcon,
+  hasArrow = false,
+  className,
+  disabled,
+  children,
+}: ButtonProps) => (
   <button
+    disabled={disabled}
     onClick={onClick}
-    className={`w-full flex items-center justify-between h-14 border border-[#CDCEEE] rounded-full my-2 pl-2 pr-4`}
+    className={clsx(
+      `w-full flex items-center justify-between h-14 border border-[#CDCEEE] rounded-full my-2 pl-2 pr-4`,
+      className,
+    )}
   >
-    <div className="flex items-center font-medium">
-      <div className="flex justify-center items-center border border-transparent rounded-full h-10 w-10 mr-4">
-        {customIcon ? customIcon : handleIcons(name)}
+    {customIcon && (
+      <div className="flex items-center font-medium">
+        <div className="flex justify-center items-center border border-transparent rounded-full h-10 w-10 mr-4">
+          {customIcon}
+        </div>
+        {name}
       </div>
-      {name}
-    </div>
+    )}
+    {children}
     {hasArrow && (
       <div>
         <ArrowRight />

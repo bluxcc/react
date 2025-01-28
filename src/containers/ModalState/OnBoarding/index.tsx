@@ -9,6 +9,7 @@ import BluxLogo from '../../../assets/bluxLogo';
 import { StellarIcon } from '../../../assets/walletsLogo';
 
 import { WalletActions } from '../../../types';
+import { handleIcons } from '../../../utils/handleIcons';
 
 type OnBoardingProps = {
   showAllWallets: boolean;
@@ -101,7 +102,14 @@ const OnBoarding = ({ showAllWallets, setShowAllWallets }: OnBoardingProps) => {
         <BluxLogo />
       </div>
       {visibleWallets.map((wallet) => {
-        return <Button {...wallet} key={wallet.name} onClick={() => handleConnect(wallet)} />;
+        return (
+          <Button
+            {...wallet}
+            customIcon={handleIcons(wallet.name)}
+            key={wallet.name}
+            onClick={() => handleConnect(wallet)}
+          />
+        );
       })}
       {hiddenWallets.length > 0 && !showAllWallets && (
         <Button
