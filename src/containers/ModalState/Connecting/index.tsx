@@ -9,10 +9,10 @@ import { mappedWallets } from '../../../utils/mappedWallets';
 
 const Connecting = () => {
   const context = useContext(ProviderContext);
-  const { user, isAuthenticated, isConnecting } = context?.value || {};
+  const { user, isAuthenticated } = context?.value || {};
   const chosenWallet = user?.wallet;
   const [error, setError] = useState(false);
-  const hasConnected = useRef(false); // Tracks if handleConnect has been called
+  const hasConnected = useRef(false);
 
   const matchedWallet = mappedWallets.find(
     ({ wallet }) => wallet.name === chosenWallet?.name,
@@ -21,10 +21,9 @@ const Connecting = () => {
   useEffect(() => {
     if (!hasConnected.current && matchedWallet) {
       handleConnect(matchedWallet as WalletActions);
-      hasConnected.current = true; // Set to true to prevent duplicate calls
+      hasConnected.current = true;
     }
-    console.log(isAuthenticated, isConnecting); // Now works correctly
-  }, [matchedWallet, isAuthenticated]); // Only run when matchedWallet or isAuthenticated changes
+  }, [matchedWallet, isAuthenticated]);
 
   const handleConnect = async (wallet: WalletActions) => {
     try {
@@ -38,7 +37,7 @@ const Connecting = () => {
           },
         },
         isConnecting: false,
-        isAuthenticated: true, // Trigger re-render correctly
+        isAuthenticated: true,
       }));
     } catch {
       context?.setValue((prev) => ({
