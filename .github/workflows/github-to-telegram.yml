@@ -15,6 +15,9 @@ jobs:
   notify_telegram:
     runs-on: ubuntu-latest
     steps:
+      - name: Checkout Repository
+        uses: actions/checkout@v4
+
       - name: Send GitHub update to Telegram
         run: |
           MESSAGE="🚀 *GitHub Update!*\n\n"
