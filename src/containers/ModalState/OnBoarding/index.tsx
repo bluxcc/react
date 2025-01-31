@@ -2,13 +2,13 @@ import React, { useContext, useEffect, useState } from 'react';
 
 import { ProviderContext } from '../../../context/provider';
 import { walletsConfig } from '../../../wallets/walletsConfig';
-import Button from '../../../components/Button';
 
 import BluxLogo from '../../../assets/bluxLogo';
 import { StellarIcon } from '../../../assets/logos';
 
 import { WalletActions } from '../../../types';
 import { handleIcons } from '../../../utils/handleIcons';
+import { ButtonWithIcon, ButtonWithIconAndArrow } from '../../../components/Button/buttonVariants';
 
 type OnBoardingProps = {
   showAllWallets: boolean;
@@ -80,19 +80,18 @@ const OnBoarding = ({ showAllWallets, setShowAllWallets }: OnBoardingProps) => {
       </div>
       {visibleWallets.map((wallet) => {
         return (
-          <Button
+          <ButtonWithIcon
             {...wallet}
-            customIcon={handleIcons(wallet.name)}
+            icon={handleIcons(wallet.name)}
             key={wallet.name}
             onClick={() => handleConnect(wallet)}
           />
         );
       })}
       {hiddenWallets.length > 0 && !showAllWallets && (
-        <Button
-          hasArrow
+        <ButtonWithIconAndArrow
           name="All Stellar wallets"
-          customIcon={<StellarIcon />}
+          icon={<StellarIcon />}
           onClick={() => setShowAllWallets(true)}
         />
       )}

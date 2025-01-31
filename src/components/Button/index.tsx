@@ -1,26 +1,16 @@
 import React from 'react';
-import { ArrowRight } from '../../assets/Icons';
+
 import clsx from 'clsx';
 
-type ButtonProps = {
+export type ButtonProps = {
   name?: string;
   onClick?: () => void;
-  customIcon?: React.JSX.Element | React.ReactNode;
   children?: React.ReactNode;
-  hasArrow?: boolean;
   className?: string;
   disabled?: boolean;
 };
 
-const Button = ({
-  name,
-  onClick,
-  customIcon,
-  hasArrow = false,
-  className,
-  disabled,
-  children,
-}: ButtonProps) => (
+const Button = ({ onClick, className, disabled, children }: ButtonProps) => (
   <button
     disabled={disabled}
     onClick={onClick}
@@ -29,20 +19,7 @@ const Button = ({
       className,
     )}
   >
-    {customIcon && (
-      <div className="flex items-center justify-between font-medium">
-        <div className="flex justify-center items-center border border-[#CDCEEE] rounded-full h-10 w-10 mr-4">
-          {customIcon}
-        </div>
-        {name}
-      </div>
-    )}
     {children}
-    {hasArrow && (
-      <div className="absolute right-4">
-        <ArrowRight />
-      </div>
-    )}
   </button>
 );
 
