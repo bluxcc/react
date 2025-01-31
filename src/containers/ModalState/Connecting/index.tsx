@@ -8,14 +8,15 @@ import { initializeRabetMobile } from '../../../utils/initializeRabetMobile';
 import { mappedWallets } from '../../../utils/mappedWallets';
 
 const Connecting = () => {
-  const context = useContext(ProviderContext);
-  const { user, isAuthenticated } = context?.value || {};
-  const chosenWallet = user?.wallet;
   const [error, setError] = useState(false);
   const hasConnected = useRef(false);
+  const context = useContext(ProviderContext);
+
+  const { user, isAuthenticated } = context?.value || {};
+  const userWallet = user?.wallet;
 
   const matchedWallet = mappedWallets.find(
-    ({ wallet }) => wallet.name === chosenWallet?.name,
+    ({ wallet }) => wallet.name === userWallet?.name,
   )?.wallet;
 
   useEffect(() => {
