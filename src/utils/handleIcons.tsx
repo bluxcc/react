@@ -1,6 +1,6 @@
 import React from 'react';
 
-import { AlbedoIcon, FreighterIcon, LobstrIcon, RabetIcon, XBullIcon } from '../assets/walletsLogo';
+import { AlbedoIcon, FreighterIcon, LobstrIcon, RabetIcon, XBullIcon } from '../assets/logos';
 
 export const handleIcons = (walletName: string) => {
   switch (walletName) {

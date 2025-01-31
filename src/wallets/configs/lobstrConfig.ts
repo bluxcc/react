@@ -1,24 +1,34 @@
 import { isConnected, getPublicKey, signTransaction } from '@lobstrco/signer-extension-api';
-
 import { SupportedWallets, WalletActions } from '../../types';
-
-const isBrowser = typeof window !== 'undefined';
 
 export const lobstrConfig: WalletActions = {
   name: SupportedWallets.Lobstr,
   website: 'https://lobstr.co',
-  isAvailable: async () => isBrowser && !!(await isConnected()),
+
+  isAvailable: () => true,
+
   connect: async () => {
-    if (!(await isConnected())) {
-      throw new Error('LOBSTR Wallet is not installed or connected.');
+    try {
+      if (!(await isConnected())) {
+        throw new Error('LOBSTR Wallet is not installed or connected.');
+      }
+      const publicKey = await getPublicKey();
+      return { publicKey };
+    } catch (error) {
+      console.error('Error connecting to LOBSTR:', error);
+      throw new Error('Failed to connect to LOBSTR.');
     }
-    const publicKey = await getPublicKey();
-    return { publicKey };
   },
-  signTransaction: async (xdr: string) => {
-    if (!signTransaction) {
-      throw new Error('LOBSTR Wallet does not support signing transactions.');
+
+  signTransaction: async (xdr: string): Promise<string> => {
+    try {
+      if (!signTransaction) {
+        throw new Error('LOBSTR Wallet does not support signing transactions.');
+      }
+      return await signTransaction(xdr);
+    } catch (error) {
+      console.error('Error signing transaction with LOBSTR:', error);
+      throw new Error('Failed to sign the transaction with LOBSTR.');
     }
-    return await signTransaction(xdr);
   },
 };

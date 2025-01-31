@@ -1,30 +1,44 @@
 import { useContext } from 'react';
 import { ProviderContext } from '../context/provider';
-import { IUser } from '../types';
 
 export const useBlux = () => {
   const context = useContext(ProviderContext);
 
-  const connect = async () => {
-    context?.setValue({
-      ...context.value,
-      modal: {
-        isOpen: true,
-      },
-    });
-  };
+  if (!context) {
+    throw new Error('useBlux must be used within a ProviderContext.');
+  }
 
-  const user = (): IUser | null => {
-    return context?.value.user || null;
+  const { value, setValue } = context;
+
+  const connect = async () => {
+    setValue({
+      ...value,
+      openModal: true,
+    });
   };
 
   const disconnect = async () => {
-    context?.setValue({
-      ...context.value,
-      user: { address: null },
-      modal: { isOpen: false },
+    setValue({
+      ...value,
+      user: { wallet: null },
+      openModal: false,
     });
   };
 
-  return { connect, user, disconnect };
+  const openDemo = () => {
+    setValue({
+      ...value,
+      isDemo: true,
+      openModal: true,
+    });
+  };
+
+  return {
+    connect,
+    disconnect,
+    openDemo,
+    isReady: value?.ready || false,
+    user: value?.user || null,
+    isAuthenticated: value?.isAuthenticated || false,
+  };
 };

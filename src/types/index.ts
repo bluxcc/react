@@ -19,21 +19,44 @@ export interface IProviderConfig {
   networkPassphrase: string;
 }
 
-export interface IUser {
+export interface WalletInfo {
+  name: SupportedWallets | null;
   address: string | null;
 }
 
-export interface MergeConfigs {
-  config: IProviderConfig;
-  user: IUser;
-  modal: {
-    isOpen: boolean;
-  };
+export interface IUser {
+  wallet: WalletInfo | null;
 }
 
-export interface StateValue {
-  value: MergeConfigs;
-  setValue: React.Dispatch<React.SetStateAction<MergeConfigs>>;
+export interface ContextState {
+  value: ContextValues;
+  setValue: React.Dispatch<React.SetStateAction<ContextValues>>;
+}
+
+export interface ContextValues {
+  config: IProviderConfig;
+  user: IUser;
+  openModal: boolean;
+  ready: boolean;
+  isDemo: boolean;
+  isAuthenticated: boolean;
+  isConnecting: boolean;
+}
+export enum ModalView {
+  CHOOSE_WALLET = 'CHOOSE_WALLET',
+  CONNECTING = 'CONNECTING',
+  PROFILE = 'PROFILE',
+}
+
+export interface ModalState {
+  view: ModalView;
+  showAllWallets: boolean;
+}
+
+export interface ModalHeights {
+  [ModalView.PROFILE]: number;
+  [ModalView.CONNECTING]: number;
+  [ModalView.CHOOSE_WALLET]: number;
 }
 
 export interface ConnectResult {
@@ -52,7 +75,7 @@ export enum networksEnum {
 export interface WalletActions {
   name: SupportedWallets; // The name of the wallet
   website: string; // Official website or documentation link
-  isAvailable: () => Promise<boolean>; // Checks if the wallet is available
+  isAvailable: () => Promise<boolean> | boolean; // Checks if the wallet is available
   connect: () => Promise<{ publicKey: string }>; // Connects to the wallet and retrieves the public key
   getAddress?: (options?: { path?: string }) => Promise<{ address: string }>; // Fetches an address with optional path
   signTransaction?: (

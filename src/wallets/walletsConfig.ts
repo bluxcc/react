@@ -6,9 +6,9 @@ import { rabetConfig } from './configs/rabetConfig';
 import { xBullConfig } from './configs/xbullConfig';
 
 export const walletsConfig: Record<SupportedWallets, WalletActions> = {
-  [SupportedWallets.Rabet]: rabetConfig,
-  [SupportedWallets.Albedo]: albedoConfig,
   [SupportedWallets.Freighter]: freighterConfig,
-  [SupportedWallets.Lobstr]: lobstrConfig,
+  [SupportedWallets.Rabet]: rabetConfig,
   [SupportedWallets.Xbull]: xBullConfig,
+  [SupportedWallets.Albedo]: albedoConfig,
+  [SupportedWallets.Lobstr]: lobstrConfig,
 };
