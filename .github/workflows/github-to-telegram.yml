@@ -1,0 +1,54 @@
+name: GitHub to Telegram
+
+on:
+  push:
+    branches:
+      - master
+  issues:
+    types: [opened, closed]
+  release:
+    types: [published]
+  pull_request:
+    types: [opened, closed, synchronized]
+
+jobs:
+  notify_telegram:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout Repository
+        uses: actions/checkout@v4
+
+      - name: Send GitHub update to Telegram
+        run: |
+          MESSAGE="🚀 *GitHub Update!*\n\n"
+          MESSAGE+="📌 *Repository:* ${{ github.repository }}\n"
+          MESSAGE+="🛠 *Event:* ${{ github.event_name }}\n"
+
+          if [[ "${{ github.event_name }}" == "push" ]]; then
+            MESSAGE+="👤 *Pushed by:* ${{ github.actor }}\n"
+            MESSAGE+="🔹 *Commit Message:* $(git log -1 --pretty=%B)\n"
+          fi
+
+          if [[ "${{ github.event_name }}" == "issues" ]]; then
+            MESSAGE+="📌 *Issue:* ${{ github.event.issue.title }}\n"
+            MESSAGE+="🔗 [View Issue](${{ github.event.issue.html_url }})\n"
+          fi
+
+          if [[ "${{ github.event_name }}" == "release" ]]; then
+            MESSAGE+="🎉 *New Release:* ${{ github.event.release.name }}\n"
+            MESSAGE+="🔗 [View Release](${{ github.event.release.html_url }})\n"
+          fi
+
+          if [[ "${{ github.event_name }}" == "pull_request" ]]; then
+            PR_TITLE="${{ github.event.pull_request.title }}"
+            PR_URL="${{ github.event.pull_request.html_url }}"
+            PR_ACTION="${{ github.event.action }}"
+
+            MESSAGE+="🔄 *Pull Request:* [$PR_TITLE]($PR_URL)\n"
+            MESSAGE+="🔗 Status: $PR_ACTION\n"
+          fi
+
+          curl -s -X POST "https://api.telegram.org/bot${{ secrets.TELEGRAM_BOT_TOKEN }}/sendMessage" \
+            -d "chat_id=${{ secrets.TELEGRAM_CHAT_ID }}" \
+            --data-urlencode "text=$(echo -e "$MESSAGE")" \
+            -d "parse_mode=Markdown"
