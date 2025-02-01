@@ -9,6 +9,7 @@ import { StellarIcon } from '../../../assets/logos';
 import { WalletActions } from '../../../types';
 import { handleIcons } from '../../../utils/handleIcons';
 import { ButtonWithIcon, ButtonWithIconAndArrow } from '../../../components/Button/buttonVariants';
+import { defaultAppearance } from '../../../constants';
 
 type OnBoardingProps = {
   showAllWallets: boolean;
@@ -20,6 +21,8 @@ const OnBoarding = ({ showAllWallets, setShowAllWallets }: OnBoardingProps) => {
 
   const [availableWallets, setAvailableWallets] = useState<WalletActions[]>([]);
   const [hiddenWallets, setHiddenWallets] = useState<WalletActions[]>([]);
+
+  const modalStyle = context?.value.appearance || defaultAppearance;
 
   const detectWallet = async () => {
     try {
@@ -76,7 +79,11 @@ const OnBoarding = ({ showAllWallets, setShowAllWallets }: OnBoardingProps) => {
   return (
     <div className="w-full">
       <div className="flex justify-center items-center w-full py-4">
-        <BluxLogo />
+        {modalStyle.cover ? (
+          <img src={modalStyle.cover} alt={context?.value.config.appName} />
+        ) : (
+          <BluxLogo />
+        )}
       </div>
       {visibleWallets.map((wallet) => {
         return (
@@ -96,12 +103,23 @@ const OnBoarding = ({ showAllWallets, setShowAllWallets }: OnBoardingProps) => {
         />
       )}
 
-      <div className="text-center font-medium text-sm text-[#0D1292CC] mt-3">
+      <div
+        className="text-center font-medium text-sm mt-3"
+        style={{
+          color: modalStyle.accent,
+        }}
+      >
         I don&apos;t have a wallet
       </div>
       <div className="font-semibold text-[10px] text-center w-full py-2">
         Powered by{' '}
-        <a href="https://blux.cc" className="text-[#0D1292]" target="blank">
+        <a
+          href="https://blux.cc"
+          target="blank"
+          style={{
+            color: modalStyle.accent,
+          }}
+        >
           Blux.cc
         </a>
       </div>

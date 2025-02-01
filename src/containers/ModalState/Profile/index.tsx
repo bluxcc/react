@@ -3,10 +3,12 @@ import React, { useContext } from 'react';
 import { ProviderContext } from '../../../context/provider';
 import copyText from '../../../utils/copyText';
 import shortenAddress from '../../../utils/shortenAddress';
+import { defaultAppearance } from '../../../constants';
 
 const Profile = () => {
   const context = useContext(ProviderContext);
   const address = context?.value.user.wallet?.address || '';
+  const modalStyle = context?.value.appearance || defaultAppearance;
 
   return (
     <div className="flex flex-col items-center justify-center pb-5">
@@ -15,7 +17,8 @@ const Profile = () => {
         Connected to {context?.value.user.wallet?.name}
       </p>
       <p
-        className="text-base text-[#0d1192] cursor-pointer"
+        className="text-base cursor-pointer"
+        style={{ color: modalStyle.accent }}
         onClick={() => {
           copyText(address);
         }}

@@ -1,4 +1,4 @@
-import { ModalHeights, ModalView } from '../types';
+import { IAppearance, ModalHeights, ModalView } from '../types';
 
 export const MODAL_HEIGHTS: ModalHeights = {
   [ModalView.PROFILE]: 364,
@@ -9,3 +9,13 @@ export const MODAL_HEIGHTS: ModalHeights = {
 export const MODAL_CONFIG = {
   defaultHeader: 'Connect Wallet',
 } as const;
+
+export const defaultAppearance: IAppearance = {
+  theme: 'light',
+  background: '#FFFFFF',
+  accent: '#0D1292CC',
+  textColor: '#000000',
+  font: 'Inter',
+  cornerRadius: 'none',
+  cover: '',
+};

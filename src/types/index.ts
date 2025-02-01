@@ -33,8 +33,23 @@ export interface ContextState {
   setValue: React.Dispatch<React.SetStateAction<ContextValues>>;
 }
 
+export type SupportedFonts = 'Manrope' | 'Inter' | 'JetBrains Mono' | 'PP Editorial Sans';
+
+export type CornerRadius = 'none' | 'full' | 'sm' | 'md' | 'lg';
+
+export interface IAppearance {
+  theme?: 'light' | 'dark';
+  background?: string;
+  accent: string;
+  textColor: string;
+  font: SupportedFonts;
+  cornerRadius: CornerRadius;
+  cover: string;
+}
+
 export interface ContextValues {
   config: IProviderConfig;
+  appearance: IAppearance;
   user: IUser;
   openModal: boolean;
   ready: boolean;

@@ -1,17 +1,24 @@
 import React, { useContext, useEffect, useState, useRef } from 'react';
-import { ProviderContext } from '../../../context/provider';
-import { handleIcons } from '../../../utils/handleIcons';
-import { Loading } from '../../../assets/Icons';
+
 import Button from '../../../components/Button';
-import { WalletActions } from '../../../types';
-import { initializeRabetMobile } from '../../../utils/initializeRabetMobile';
+
+import { handleIcons } from '../../../utils/handleIcons';
 import { mappedWallets } from '../../../utils/mappedWallets';
+import { initializeRabetMobile } from '../../../utils/initializeRabetMobile';
+
+import { ProviderContext } from '../../../context/provider';
+
+import { WalletActions } from '../../../types';
+import { Loading } from '../../../assets/Icons';
+import { defaultAppearance } from '../../../constants';
+import { getBorderRadius } from '../../../utils/getBorderRadius';
 
 const Connecting = () => {
   const [error, setError] = useState(false);
   const hasConnected = useRef(false);
   const context = useContext(ProviderContext);
 
+  const modalStyle = context?.value.appearance || defaultAppearance;
   const { user, isAuthenticated } = context?.value || {};
   const userWallet = user?.wallet;
 
@@ -58,9 +65,13 @@ const Connecting = () => {
   return (
     <div className="flex flex-col items-center justify-center w-full select-none mt-8">
       <div
-        className={`h-20 w-20 flex justify-center border-2 rounded-full items-center mb-4 ${
+        className={`h-20 w-20 flex justify-center border-2 items-center mb-4 ${
           error ? ' border-red-600 ' : 'border-[#CDCEEE]'
-        }`}
+        }
+          `}
+        style={{
+          borderRadius: getBorderRadius(modalStyle.cornerRadius),
+        }}
       >
         {handleIcons(user?.wallet?.name as string)}
       </div>
@@ -75,14 +86,14 @@ const Connecting = () => {
       {error ? (
         <Button
           onClick={handleRetry}
-          className="mt-8 font-medium w-full inline-flex justify-center items-center gap-[10px] border-none text-white bg-red-600 rounded-full cursor-default"
+          className="mt-8 font-medium w-full inline-flex justify-center items-center gap-[10px] border-none text-white bg-red-600 cursor-default"
         >
           Try again
         </Button>
       ) : (
         <Button
           disabled
-          className="mt-8 font-medium w-full inline-flex justify-center items-center gap-[10px] border border-[#CDCEEE] rounded-full cursor-default"
+          className="mt-8 font-medium w-full inline-flex justify-center items-center gap-[10px] cursor-default"
         >
           <Loading />
           <p>Connecting</p>

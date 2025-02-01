@@ -4,6 +4,8 @@ import { ProviderContext } from '../../context/provider';
 import ModalHeader from './Header';
 import ModalBackdrop from './Backdrop';
 import { useModalAnimation } from '../../hooks/useModalAnimation';
+import { defaultAppearance } from '../../constants';
+import { getBorderRadius } from '../../utils/getBorderRadius';
 // import { useModalHeight } from '../../hooks/useModalHeight';
 
 interface ModalProps {
@@ -40,6 +42,8 @@ const Modal = ({
   const isFirstRender = useRef(true);
   const previousChildrenRef = useRef(children);
   const previousHeightRef = useRef<number>(initialHeight);
+
+  const modalStyle = context?.value.appearance || defaultAppearance;
 
   useEffect(() => {
     if (!isOpen) {
@@ -102,9 +106,9 @@ const Modal = ({
       >
         <div
           className={clsx(
-            'bg-white rounded-2xl border border-[#CDCEEE] font-sans overflow-hidden',
-            hasTransition && 'transition-all duration-300 ease-in-out',
+            'overflow-hidden border',
             className,
+            modalStyle.font && `!font-[${modalStyle.font}]`,
           )}
           style={{
             height: `${currentHeight}px`,
@@ -115,6 +119,10 @@ const Modal = ({
               : hasTransition
               ? 'height 300ms ease-in-out'
               : 'none',
+            backgroundColor: modalStyle.background,
+            color: modalStyle.textColor,
+            fontFamily: modalStyle.font,
+            borderRadius: getBorderRadius(modalStyle.cornerRadius),
           }}
         >
           <div ref={contentRef} className="px-6 pb-4">
