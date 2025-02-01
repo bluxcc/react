@@ -38,8 +38,8 @@ export type SupportedFonts = 'Manrope' | 'Inter' | 'JetBrains Mono' | 'PP Editor
 export type CornerRadius = 'none' | 'full' | 'sm' | 'md' | 'lg';
 
 export interface IAppearance {
-  theme?: 'light' | 'dark';
-  background?: string;
+  theme: 'light' | 'dark';
+  background: string;
   accent: string;
   textColor: string;
   font: SupportedFonts;
