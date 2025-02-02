@@ -58,7 +58,7 @@ export const ButtonWithIconAndArrow: React.FC<IconButtonProps> = ({
 
   return (
     <Button className={className} {...props}>
-      <div className="flex items-center font-medium relative w-full">
+      <div className="flex items-center font-medium w-full">
         <IconContainer cornerRadius={appearance.cornerRadius}>{icon}</IconContainer>
         {name}
         <div className="absolute right-4">

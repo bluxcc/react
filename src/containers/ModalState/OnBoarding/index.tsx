@@ -104,7 +104,7 @@ const OnBoarding = ({ showAllWallets, setShowAllWallets }: OnBoardingProps) => {
       )}
 
       <div
-        className="text-center font-medium text-sm mt-3"
+        className="text-center font-medium text-sm mt-3 cursor-pointer"
         style={{
           color: modalStyle.accent,
         }}
