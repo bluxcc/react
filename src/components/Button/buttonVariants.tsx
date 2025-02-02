@@ -2,8 +2,7 @@ import React, { useContext } from 'react';
 
 import Button, { ButtonProps } from './index';
 import { ArrowRight } from '../../assets/Icons';
-import { defaultAppearance } from '../../constants';
-import { ProviderContext } from '../../context/provider';
+import { ProviderContext, defaultAppearance } from '../../context/provider';
 import { getBorderRadius } from '../../utils/getBorderRadius';
 
 import { CornerRadius } from '../../types';
@@ -19,9 +18,10 @@ const IconContainer: React.FC<{
 }> = ({ children, cornerRadius = 'md' }) => {
   return (
     <div
-      className={`flex justify-center items-center border border-slate-200 h-10 w-10 mr-4 rounded-${getBorderRadius(
-        cornerRadius,
-      )}`}
+      style={{
+        borderRadius: getBorderRadius(cornerRadius),
+      }}
+      className={`flex justify-center items-center border border-slate-200 h-10 w-10 mr-4`}
     >
       {children}
     </div>

@@ -1,12 +1,12 @@
 import React, { useContext, useEffect, useRef, useState } from 'react';
 import clsx from 'clsx';
-import { ProviderContext } from '../../context/provider';
+
+import { getBorderRadius } from '../../utils/getBorderRadius';
+import { useModalAnimation } from '../../hooks/useModalAnimation';
+import { ProviderContext, defaultAppearance } from '../../context/provider';
+
 import ModalHeader from './Header';
 import ModalBackdrop from './Backdrop';
-import { useModalAnimation } from '../../hooks/useModalAnimation';
-import { defaultAppearance } from '../../constants';
-import { getBorderRadius } from '../../utils/getBorderRadius';
-// import { useModalHeight } from '../../hooks/useModalHeight';
 
 interface ModalProps {
   isOpen: boolean;

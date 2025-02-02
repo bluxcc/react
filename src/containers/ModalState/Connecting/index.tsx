@@ -6,11 +6,10 @@ import { handleIcons } from '../../../utils/handleIcons';
 import { mappedWallets } from '../../../utils/mappedWallets';
 import { initializeRabetMobile } from '../../../utils/initializeRabetMobile';
 
-import { ProviderContext } from '../../../context/provider';
+import { ProviderContext, defaultAppearance } from '../../../context/provider';
 
 import { WalletActions } from '../../../types';
 import { Loading } from '../../../assets/Icons';
-import { defaultAppearance } from '../../../constants';
 import { getBorderRadius } from '../../../utils/getBorderRadius';
 
 const Connecting = () => {

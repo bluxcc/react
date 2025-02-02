@@ -1,9 +1,8 @@
 import React, { useContext } from 'react';
 
-import { ProviderContext } from '../../../context/provider';
+import { ProviderContext, defaultAppearance } from '../../../context/provider';
 import copyText from '../../../utils/copyText';
 import shortenAddress from '../../../utils/shortenAddress';
-import { defaultAppearance } from '../../../constants';
 
 const Profile = () => {
   const context = useContext(ProviderContext);

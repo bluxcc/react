@@ -1,10 +1,19 @@
 import React, { createContext, useState } from 'react';
 
-import { defaultAppearance } from '../constants';
 import ConnectModal from '../containers/ConnectModal';
 import { ContextState, IProviderConfig, ContextValues, IAppearance } from '../types';
 
 export const ProviderContext = createContext<ContextState | null>(null);
+
+export const defaultAppearance: IAppearance = {
+  theme: 'light',
+  background: '#FFFFFF',
+  accent: '#0D1292CC',
+  textColor: '#000000',
+  font: 'PP Editorial Sans',
+  cornerRadius: 'full',
+  cover: '',
+};
 
 export const BluxProvider = ({
   config,

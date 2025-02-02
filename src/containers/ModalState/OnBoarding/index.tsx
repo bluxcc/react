@@ -1,6 +1,6 @@
 import React, { useContext, useEffect, useState } from 'react';
 
-import { ProviderContext } from '../../../context/provider';
+import { ProviderContext, defaultAppearance } from '../../../context/provider';
 import { walletsConfig } from '../../../wallets/walletsConfig';
 
 import BluxLogo from '../../../assets/bluxLogo';
@@ -9,7 +9,6 @@ import { StellarIcon } from '../../../assets/logos';
 import { WalletActions } from '../../../types';
 import { handleIcons } from '../../../utils/handleIcons';
 import { ButtonWithIcon, ButtonWithIconAndArrow } from '../../../components/Button/buttonVariants';
-import { defaultAppearance } from '../../../constants';
 
 type OnBoardingProps = {
   showAllWallets: boolean;
