@@ -26,11 +26,11 @@ export default {
     peerDepsExternal(),
     terser({
       compress: {
-        drop_console: true,
-        drop_debugger: true,
+        // drop_console: true,
+        // drop_debugger: true,
       },
       format: {
-        comments: false,
+        // comments: false,
       },
     }),
     resolve({

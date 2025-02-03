@@ -11,9 +11,11 @@ export const useBlux = () => {
   const { value, setValue } = context;
 
   const connect = async () => {
-    setValue({
-      ...value,
-      openModal: true,
+    setValue((prev) => {
+      if (prev.openModal) {
+        return prev;
+      }
+      return { ...prev, openModal: true };
     });
   };
 
@@ -25,18 +27,9 @@ export const useBlux = () => {
     });
   };
 
-  const openDemo = () => {
-    setValue({
-      ...value,
-      isDemo: true,
-      openModal: true,
-    });
-  };
-
   return {
     connect,
     disconnect,
-    openDemo,
     isReady: value?.ready || false,
     user: value?.user || null,
     isAuthenticated: value?.isAuthenticated || false,

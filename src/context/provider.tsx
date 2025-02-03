@@ -1,5 +1,4 @@
-import React, { createContext, useState } from 'react';
-
+import React, { createContext, useState, useEffect } from 'react';
 import ConnectModal from '../containers/ConnectModal';
 import { ContextState, IProviderConfig, ContextValues, IAppearance } from '../types';
 
@@ -17,36 +16,35 @@ export const defaultAppearance: IAppearance = {
 
 export const BluxProvider = ({
   config,
+  isDemo,
   appearance,
   children,
 }: {
-  appearance?: Partial<IAppearance>;
+  isDemo?: boolean;
+  appearance?: IAppearance;
   config: IProviderConfig;
   children: React.ReactNode;
 }) => {
-  const mergedAppearance: IAppearance = {
-    ...defaultAppearance,
-    ...appearance,
-  };
-
   const [value, setValue] = useState<ContextValues>({
     config,
-    appearance: mergedAppearance,
+    appearance: appearance ?? defaultAppearance,
+    isDemo: isDemo ?? false,
     user: { wallet: null },
     openModal: false,
     ready: false,
-    isDemo: false,
     isAuthenticated: false,
     isConnecting: false,
   });
 
+  useEffect(() => {
+    setValue((prev) => ({
+      ...prev,
+      appearance: appearance ?? defaultAppearance,
+    }));
+  }, [appearance]);
+
   return (
-    <ProviderContext.Provider
-      value={{
-        value,
-        setValue,
-      }}
-    >
+    <ProviderContext.Provider value={{ value, setValue }}>
       {children}
       <ConnectModal isOpen={value.openModal} />
     </ProviderContext.Provider>
