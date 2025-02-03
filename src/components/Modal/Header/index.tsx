@@ -23,7 +23,7 @@ const ModalHeader: React.FC<HeaderProps> = ({
       return (
         <button
           onClick={onInfo}
-          className="w-6 h-6 flex justify-center items-center hover:bg-[#cdceee48] rounded-full transition duration-300"
+          className="size-6 flex justify-center items-center hover:bg-[#cdceee48] rounded-full transition duration-300"
         >
           <InfoIcon />
         </button>
