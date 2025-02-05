@@ -16,7 +16,7 @@ Blux is a **comprehensive authentication and wallet connect kit** designed for S
 Blux can be installed via npm:
 
 ```sh
-npm install @bluxcc/react
+npm i @bluxcc/react
 ```
 
 or using yarn:
@@ -61,21 +61,20 @@ Configuration options can be set via the `BluxProvider` config or environment va
 
 ## Supported Wallets
 
-Currently supported hot wallets:
+Currently supported connection methods:
 
-- **Rabet**
-- **xBull**
-- **Lobstr**
-- **Freighter**
-- **Albedo**
-
-More wallets, including **cold wallets like Ledger and Trezor**, will be added soon.
-
-## Security
-
-- **Secure Key Generation**: Users logging in via email, phone, or OAuth receive a **public and secret key**.
-- **Local Storage for Private Keys**: Secret keys are stored **securely in local sessions**, ensuring user control.
-- **Ongoing Enhancements**: We continuously improve security measures for authentication and key management.
+- [x] **Rabet**
+- [x] **xBull**
+- [x] **Lobstr**
+- [x] **Freighter**
+- [x] **Albedo**
+- [ ] **Ledger**
+- [ ] **Trezor**
+- [ ] **Hana**
+- [ ] **WalletConnect**
+- [ ] **OAuth**
+- [ ] **Email**
+- [ ] **Phone**
 
 ## License & Usage Restrictions
 
@@ -87,7 +86,7 @@ More wallets, including **cold wallets like Ledger and Trezor**, will be added s
 
 For support, licensing, or inquiries, reach out via:
 
-- **Email**: [support@blux.cc](mailto:support@blux.cc), [info@blux.cc](mailto:info@blux.cc)
+- **Email**: [support@blux.cc](mailto:support@blux.cc)
 - **X (Twitter)**: [@BluxOfficial](https://twitter.com/BluxOfficial)
 
 ## Roadmap & Future Plans
@@ -99,4 +98,4 @@ Blux is evolving. Follow our updates on [X (Twitter)](https://twitter.com/BluxOf
 - **More Wallet Integrations**
 - **Enhanced Customization & Security Features**
 
-Stay tuned—we have many exciting developments ahead!
+Stay tuned. We have many exciting developments ahead!
