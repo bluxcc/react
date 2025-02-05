@@ -1,0 +1,80 @@
+Business Source License 1.1
+
+License text copyright (c) 2025 Blux Team, All Rights Reserved.
+"Business Source License" is a trademark of MariaDB Corporation Ab.
+
+-----------------------------------------------------------------------------
+
+Parameters
+
+Licensor: Blux Team
+
+Licensed Work: Blux Kit
+The Licensed Work is (c) 2025 Blux Team
+
+Additional Use Grant: None
+
+Change Date: The earlier of 2028-02-05 or a date specified by the Licensor.
+
+Change License: GNU Affero General Public License v3.0 (AGPL-3.0)
+
+-----------------------------------------------------------------------------
+
+Terms
+
+1. Grant of Rights
+The Licensor grants you the right to modify, create derivative works, and contribute changes to the Licensed Work through official channels (e.g., pull requests).
+
+2. Copying and Redistribution Restriction
+You may not copy, redistribute, or publicly share the Licensed Work in any form. The Licensed Work may only be used within the scope of contribution to the official repository.
+
+3. Production Use Restriction
+Production use is strictly prohibited before the Change Date.
+For the purposes of this License, "Production Use" means any deployment of the Licensed Work that:
+- Provides services to third parties (commercial or non-commercial).
+- Generates revenue, directly or indirectly.
+- Supports business operations in any capacity, including internal use.
+
+If you wish to use the Licensed Work in production before the Change Date, you must obtain a commercial license from the Licensor at support@blux.cc.
+
+4. Derivative Works and Contributions
+- You may not modify or remove references to "Blux Team" in any derivative works, copies, or modified versions of the Licensed Work.
+- Any modifications must be submitted as pull requests to the official repository.
+
+5. Change License and Change Date
+- On the Change Date, or the fourth anniversary of a specific version’s first public distribution, whichever comes first, this License terminates, and the Licensed Work will be available under the Change License (AGPL-3.0).
+- Only the latest version of the Licensed Work at the Change Date will be subject to AGPL-3.0.
+- The Licensor reserves the right to extend the Change Date for future versions of the Licensed Work.
+
+6. License Compliance and Enforcement
+- If your use of the Licensed Work does not comply with the requirements of this License, your rights to use all versions of the Licensed Work terminate immediately.
+- Violations may result in legal action, including but not limited to seeking injunctive relief and damages.
+
+7. Trademark and Branding
+- This License does not grant any rights to use the "Blux Team" name, logo, or trademarks, except where expressly required by this License.
+
+8. Warranty Disclaimer
+TO THE EXTENT PERMITTED BY APPLICABLE LAW, THE LICENSED WORK IS PROVIDED "AS IS" WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND.
+
+MariaDB hereby grants you permission to use this License’s text to license
+your works, and to refer to it using the trademark "Business Source License",
+as long as you comply with the Covenants of Licensor below.
+
+-----------------------------------------------------------------------------
+
+Covenants of Licensor
+In consideration of the right to use this License’s text and the "Business
+Source License" name and trademark, Licensor covenants to MariaDB, and to all
+other recipients of the licensed work to be provided by Licensor:
+
+1. Use GNU Affero General Public License Version 3.0 (AGPL-3.0) or a later version as the Change License.
+2. Either specify an Additional Use Grant that does not impose additional restrictions, or insert "None".
+3. Specify a Change Date for each version.
+4. Provide commercial or special-use licenses upon request at support@blux.cc.
+5. Not modify this License in any way that conflicts with the above terms.
+
+-----------------------------------------------------------------------------
+
+Notice
+The Business Source License (this document, or the "License") is not an Open Source license. However, the Licensed Work will eventually be made available under an Open Source License, as stated in this License.
+
