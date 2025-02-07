@@ -6,7 +6,7 @@
   "description": "Connecting to the Stellar Ecosystem and Beyond",
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/bluxcc"
+    "url": "git+https://github.com/bluxcc/blux"
   },
   "type": "module",
   "main": "dist/index.esm.js",
