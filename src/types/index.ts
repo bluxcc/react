@@ -18,7 +18,7 @@ export interface IProviderConfig {
   appName: string;
   appLogo?: string;
   networkPassphrase: string;
-  network: WalletNetwork;
+  network: 'mainnet' | 'testnet' | 'futurenet' | 'sandbox' | 'standalone';
 }
 
 export interface WalletInfo {
@@ -82,11 +82,6 @@ export interface ConnectResult {
 
 export interface SignResult {
   signedXdr: string;
-}
-
-export enum networksEnum {
-  PUBLIC = 'mainnet',
-  TESTNET = 'testnet',
 }
 
 export interface WalletActions {

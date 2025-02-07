@@ -4,7 +4,7 @@ export const getNetworkPassphrase = (network: string): string => {
   const normalizedNetwork = network.trim().toLowerCase();
 
   switch (normalizedNetwork) {
-    case 'public':
+    case 'mainnet':
       return WalletNetwork.PUBLIC;
     case 'testnet':
       return WalletNetwork.TESTNET;

@@ -1,5 +1,4 @@
-import { SupportedWallets, WalletActions } from '../../types';
-import { getNetworkByPassphrase } from '../../utils/getNetworkByPassphrase';
+import { SupportedWallets, WalletActions, WalletNetwork } from '../../types';
 
 export const rabetConfig: WalletActions = {
   name: SupportedWallets.Rabet,
@@ -23,7 +22,7 @@ export const rabetConfig: WalletActions = {
       if (!window.rabet) throw new Error('Rabet Wallet is not installed.');
       const result = await window.rabet.sign(
         xdr,
-        options?.networkPassphrase && getNetworkByPassphrase(options?.networkPassphrase),
+        options.networkPassphrase === WalletNetwork.PUBLIC ? 'mainnet' : 'testnet',
       );
       return result.signedXdr;
     } catch (error) {
