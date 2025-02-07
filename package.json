@@ -1,7 +1,7 @@
 {
-  "name": "blux",
-  "author": "Blux.cc",
-  "version": "0.0.1",
+  "name": "@bluxcc/react",
+  "author": "Blux team",
+  "version": "0.1.1",
   "homepage": "https://blux.cc",
   "description": "Connecting to the Stellar Ecosystem and Beyond",
   "repository": {
