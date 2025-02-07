@@ -9,7 +9,7 @@ export const defaultAppearance: IAppearance = {
   background: '#FFFFFF',
   accent: '#0D1292CC',
   textColor: '#000000',
-  font: 'PP Editorial Sans',
+  font: 'Inter',
   cornerRadius: 'full',
   cover: '',
 };

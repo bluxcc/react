@@ -1,16 +1,24 @@
-import { useEffect, useState } from 'react';
+import { useEffect, useContext } from 'react';
+import { ProviderContext } from '../context/provider'; // Assuming this manages UI settings
 import { SupportedFonts } from '../types';
 
+// Google Fonts only supports these
+const googleFonts: Record<SupportedFonts, string | null> = {
+  Manrope: 'Manrope',
+  Inter: 'Inter',
+  'JetBrains Mono': 'JetBrains+Mono',
+  Roboto: 'Roboto',
+};
+
 export function useGoogleFonts() {
-  const [selectedFont, setSelectedFont] = useState<SupportedFonts | null>(null);
+  const context = useContext(ProviderContext);
+  const selectedFont = context?.value?.appearance?.font as SupportedFonts; // Assuming font is stored here
 
   useEffect(() => {
-    if (selectedFont) {
+    if (selectedFont && googleFonts[selectedFont]) {
+      const encodedFont = googleFonts[selectedFont];
       const link = document.createElement('link');
-      link.href = `https://fonts.googleapis.com/css2?family=${selectedFont.replace(
-        /\s+/g,
-        '+',
-      )}&display=swap`;
+      link.href = `https://fonts.googleapis.com/css2?family=${encodedFont}&display=swap`;
       link.rel = 'stylesheet';
       document.head.appendChild(link);
 
@@ -20,5 +28,5 @@ export function useGoogleFonts() {
     }
   }, [selectedFont]);
 
-  return { selectedFont, setSelectedFont };
+  return selectedFont;
 }

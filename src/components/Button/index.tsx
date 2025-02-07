@@ -25,7 +25,7 @@ const Button = ({ onClick, className, disabled, children }: ButtonProps) => {
         borderRadius: getBorderRadius(modalStyle.cornerRadius),
       }}
       className={clsx(
-        `w-full relative flex items-center h-14 border border-[#CDCEEE] my-2 pl-2 pr-4`,
+        `w-full relative flex items-center h-14 border border-primary-100 my-2 pl-2 pr-4`,
         className,
       )}
     >

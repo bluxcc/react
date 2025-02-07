@@ -5,7 +5,7 @@ export const freighterConfig: WalletActions = {
   name: SupportedWallets.Freighter,
   website: 'https://freighter.app',
 
-  isAvailable: async () => typeof window !== 'undefined' && !!freighterApi.isConnected(),
+  isAvailable: () => typeof window !== 'undefined' && !!freighterApi.isConnected(),
 
   connect: async () => {
     try {

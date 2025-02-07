@@ -5,6 +5,7 @@ import Connecting from '../ModalState/Connecting';
 import OnBoarding from '../ModalState/OnBoarding';
 import { useConnectModal } from '../../hooks/useConnectModal';
 import { ModalView } from '../../types';
+import { useGoogleFonts } from '../../hooks/useGoogleFont';
 
 interface ConnectModalProps {
   isOpen: boolean;
@@ -22,6 +23,8 @@ export default function ConnectModal({ isOpen }: ConnectModalProps) {
     closeModal,
   } = useConnectModal();
 
+  const selectedFont = useGoogleFonts();
+  console.log(selectedFont);
   const renderContent = () => {
     switch (modalState.view) {
       case ModalView.PROFILE:

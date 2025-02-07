@@ -17,9 +17,14 @@ export default {
       file: 'dist/index.esm.js',
       format: 'esm',
       sourcemap: true,
-      target: 'es2022',
+    },
+    {
+      file: 'dist/index.cjs.js',
+      format: 'cjs',
+      sourcemap: true,
     },
   ],
+
   treeshake: {
     moduleSideEffects: false,
   },
@@ -27,11 +32,11 @@ export default {
     peerDepsExternal(),
     terser({
       compress: {
-        drop_console: true,
-        drop_debugger: true,
+        // drop_console: true,
+        // drop_debugger: true,
       },
       format: {
-        comments: false,
+        // comments: false,
       },
     }),
     resolve({

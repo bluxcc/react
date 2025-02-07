@@ -1,12 +1,13 @@
 import albedo from '@albedo-link/intent';
 
-import { SupportedWallets, WalletActions, WalletNetwork, networksEnum } from '../../types';
+import { SupportedWallets, WalletActions } from '../../types';
+import { getNetworkByPassphrase } from '../../utils/getNetworkByPassphrase';
 
 export const albedoConfig: WalletActions = {
   name: SupportedWallets.Albedo,
   website: 'https://albedo.link',
 
-  isAvailable: async () => typeof albedo !== 'undefined',
+  isAvailable: () => typeof albedo !== 'undefined',
 
   connect: async () => {
     try {
@@ -20,13 +21,12 @@ export const albedoConfig: WalletActions = {
 
   signTransaction: async (xdr: string, options = {}): Promise<string> => {
     try {
-      const { address, networkPassphrase, submit } = options;
+      const { address, submit } = options;
 
       const result = await albedo.tx({
         xdr,
         pubkey: address,
-        network:
-          networkPassphrase === WalletNetwork.PUBLIC ? networksEnum.PUBLIC : networksEnum.TESTNET,
+        network: options?.networkPassphrase && getNetworkByPassphrase(options?.networkPassphrase),
         submit,
       });
 

@@ -3,7 +3,7 @@ import React, { useContext, useEffect, useState, useRef } from 'react';
 import Button from '../../../components/Button';
 
 import { handleIcons } from '../../../utils/handleIcons';
-import { mappedWallets } from '../../../utils/mappedWallets';
+import { getMappedWallets } from '../../../utils/mappedWallets';
 import { initializeRabetMobile } from '../../../utils/initializeRabetMobile';
 
 import { ProviderContext, defaultAppearance } from '../../../context/provider';
@@ -14,6 +14,10 @@ import { getBorderRadius } from '../../../utils/getBorderRadius';
 
 const Connecting = () => {
   const [error, setError] = useState(false);
+  const [mappedWallets, setMappedWallets] = useState<
+    { wallet: WalletActions; isAvailable: boolean }[]
+  >([]);
+  const [matchedWallet, setMatchedWallet] = useState<WalletActions | null>(null);
   const hasConnected = useRef(false);
   const context = useContext(ProviderContext);
 
@@ -21,13 +25,26 @@ const Connecting = () => {
   const { user, isAuthenticated } = context?.value || {};
   const userWallet = user?.wallet;
 
-  const matchedWallet = mappedWallets.find(
-    ({ wallet }) => wallet.name === userWallet?.name,
-  )?.wallet;
+  useEffect(() => {
+    const fetchWallets = async () => {
+      const wallets = await getMappedWallets();
+      setMappedWallets(wallets);
+    };
+    fetchWallets();
+  }, []);
+
+  useEffect(() => {
+    if (mappedWallets.length > 0 && userWallet?.name) {
+      const foundWallet = mappedWallets.find(
+        ({ wallet }) => wallet.name === userWallet.name,
+      )?.wallet;
+      setMatchedWallet(foundWallet || null);
+    }
+  }, [mappedWallets, userWallet]);
 
   useEffect(() => {
     if (!hasConnected.current && matchedWallet) {
-      handleConnect(matchedWallet as WalletActions);
+      handleConnect(matchedWallet);
       hasConnected.current = true;
     }
   }, [matchedWallet, isAuthenticated]);
@@ -58,16 +75,15 @@ const Connecting = () => {
 
   const handleRetry = () => {
     setError(false);
-    handleConnect(matchedWallet as WalletActions);
+    if (matchedWallet) handleConnect(matchedWallet);
   };
 
   return (
     <div className="flex flex-col items-center justify-center w-full select-none mt-8">
       <div
         className={`h-20 w-20 flex justify-center border-2 items-center mb-4 ${
-          error ? ' border-red-600 ' : 'border-[#CDCEEE]'
-        }
-          `}
+          error ? 'border-lightRed-300' : 'border-primary-100'
+        }`}
         style={{
           borderRadius: getBorderRadius(modalStyle.cornerRadius),
         }}
@@ -85,7 +101,7 @@ const Connecting = () => {
       {error ? (
         <Button
           onClick={handleRetry}
-          className="mt-8 font-medium w-full inline-flex justify-center items-center gap-[10px] border-none text-white bg-red-600 cursor-default"
+          className="mt-8 font-medium w-full inline-flex justify-center items-center gap-[10px] border-none text-white bg-red-500 cursor-default"
         >
           Try again
         </Button>

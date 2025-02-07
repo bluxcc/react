@@ -78,8 +78,8 @@ const OnBoarding = ({ showAllWallets, setShowAllWallets }: OnBoardingProps) => {
   return (
     <div className="w-full">
       <div className="flex justify-center items-center w-full py-4">
-        {modalStyle.cover ? (
-          <img src={modalStyle.cover} alt={context?.value.config.appName} />
+        {context?.value.config.appLogo ? (
+          <img src={context?.value.config.appLogo} alt={context?.value.config.appName} />
         ) : (
           <BluxLogo />
         )}
