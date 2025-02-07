@@ -23,8 +23,8 @@ export default function ConnectModal({ isOpen }: ConnectModalProps) {
     closeModal,
   } = useConnectModal();
 
-  const selectedFont = useGoogleFonts();
-  console.log(selectedFont);
+  useGoogleFonts();
+
   const renderContent = () => {
     switch (modalState.view) {
       case ModalView.PROFILE:
