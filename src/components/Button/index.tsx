@@ -25,9 +25,15 @@ const Button = ({ onClick, className, disabled, children }: ButtonProps) => {
         borderRadius: getBorderRadius(modalStyle.cornerRadius),
       }}
       className={clsx(
-        `w-full relative flex items-center h-14 border border-primary-100 my-2 pl-2 pr-4`,
+        `w-full relative flex items-center h-14 border border-primary-100 transition-colors duration-200 my-2 pl-2 pr-4`,
         className,
       )}
+      onMouseEnter={(e) => {
+        e.currentTarget.style.borderColor = modalStyle.accent;
+      }}
+      onMouseLeave={(e) => {
+        e.currentTarget.style.borderColor = '#cdceee';
+      }}
     >
       {children}
     </button>

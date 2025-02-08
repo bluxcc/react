@@ -12,7 +12,7 @@ const googleFonts: Record<SupportedFonts, string | null> = {
 
 export function useGoogleFonts() {
   const context = useContext(ProviderContext);
-  const selectedFont = context?.value?.appearance?.font as SupportedFonts; // Assuming font is stored here
+  const selectedFont = context?.value?.appearance?.font as SupportedFonts;
 
   useEffect(() => {
     if (selectedFont && googleFonts[selectedFont]) {

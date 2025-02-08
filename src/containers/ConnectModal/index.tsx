@@ -1,11 +1,14 @@
 import React from 'react';
+
 import Modal from '../../components/Modal';
 import Profile from '../ModalState/Profile';
 import Connecting from '../ModalState/Connecting';
 import OnBoarding from '../ModalState/OnBoarding';
+
 import { useConnectModal } from '../../hooks/useConnectModal';
-import { ModalView } from '../../types';
 import { useGoogleFonts } from '../../hooks/useGoogleFont';
+
+import { ModalView } from '../../types';
 
 interface ConnectModalProps {
   isOpen: boolean;

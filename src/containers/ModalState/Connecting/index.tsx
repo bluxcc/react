@@ -3,7 +3,7 @@ import React, { useContext, useEffect, useState, useRef } from 'react';
 import Button from '../../../components/Button';
 
 import { handleIcons } from '../../../utils/handleIcons';
-import { getMappedWallets } from '../../../utils/mappedWallets';
+import { getMappedWallets, MappedWallet } from '../../../utils/mappedWallets';
 import { initializeRabetMobile } from '../../../utils/initializeRabetMobile';
 
 import { ProviderContext, defaultAppearance } from '../../../context/provider';
@@ -14,9 +14,7 @@ import { getBorderRadius } from '../../../utils/getBorderRadius';
 
 const Connecting = () => {
   const [error, setError] = useState(false);
-  const [mappedWallets, setMappedWallets] = useState<
-    { wallet: WalletActions; isAvailable: boolean }[]
-  >([]);
+  const [mappedWallets, setMappedWallets] = useState<MappedWallet[]>([]);
   const [matchedWallet, setMatchedWallet] = useState<WalletActions | null>(null);
   const hasConnected = useRef(false);
   const context = useContext(ProviderContext);

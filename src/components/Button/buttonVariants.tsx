@@ -15,51 +15,38 @@ interface IconButtonProps extends ButtonProps {
 const IconContainer: React.FC<{
   children: React.ReactNode;
   cornerRadius?: CornerRadius;
-}> = ({ children, cornerRadius = 'md' }) => {
+}> = ({ children }) => {
+  const context = useContext(ProviderContext);
+  const appearance = context?.value?.appearance || defaultAppearance;
+
   return (
     <div
       style={{
-        borderRadius: getBorderRadius(cornerRadius),
+        borderRadius: getBorderRadius(appearance.cornerRadius),
       }}
-      className={`flex justify-center items-center border border-slate-200 h-10 w-10 mr-4`}
+      className={`flex justify-center items-center border border-primary-100 h-10 w-10 mr-4`}
     >
       {children}
     </div>
   );
 };
 
-export const ButtonWithIcon: React.FC<IconButtonProps> = ({
-  icon,
-  name,
-  className = '',
-  ...props
-}) => {
-  const context = useContext(ProviderContext);
-  const appearance = context?.value?.appearance || defaultAppearance;
-
+export const ButtonWithIcon = ({ icon, name, ...props }: IconButtonProps) => {
   return (
-    <Button className={className} {...props}>
+    <Button {...props}>
       <div className="flex items-center font-medium">
-        <IconContainer cornerRadius={appearance.cornerRadius}>{icon}</IconContainer>
+        <IconContainer>{icon}</IconContainer>
         {name}
       </div>
     </Button>
   );
 };
 
-export const ButtonWithIconAndArrow: React.FC<IconButtonProps> = ({
-  icon,
-  name,
-  className = '',
-  ...props
-}) => {
-  const context = useContext(ProviderContext);
-  const appearance = context?.value?.appearance || defaultAppearance;
-
+export const ButtonWithIconAndArrow = ({ icon, name, ...props }: IconButtonProps) => {
   return (
-    <Button className={className} {...props}>
+    <Button {...props}>
       <div className="flex items-center font-medium w-full">
-        <IconContainer cornerRadius={appearance.cornerRadius}>{icon}</IconContainer>
+        <IconContainer>{icon}</IconContainer>
         {name}
         <div className="absolute right-4">
           <ArrowRight />

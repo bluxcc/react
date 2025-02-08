@@ -7,7 +7,7 @@ export const ProviderContext = createContext<ContextState | null>(null);
 export const defaultAppearance: IAppearance = {
   theme: 'light',
   background: '#FFFFFF',
-  accent: '#0D1292CC',
+  accent: '#0C1083',
   textColor: '#000000',
   font: 'Inter',
   cornerRadius: 'full',

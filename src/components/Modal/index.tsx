@@ -99,7 +99,7 @@ const Modal = ({
 
       <div
         className={clsx(
-          'absolute inset-0 flex items-center justify-center z-50',
+          'absolute inset-0 flex items-center justify-center z-[9999]',
           isClosing && 'animate-fadeOut',
         )}
         onClick={(e) => e.target === e.currentTarget && handleClose(onClose)}
