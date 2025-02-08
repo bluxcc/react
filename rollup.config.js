@@ -18,7 +18,13 @@ export default {
       format: 'esm',
       sourcemap: true,
     },
+    {
+      file: 'dist/index.cjs.js',
+      format: 'cjs',
+      sourcemap: true,
+    },
   ],
+
   treeshake: {
     moduleSideEffects: false,
   },
@@ -47,22 +53,20 @@ export default {
     }),
     typescript({
       tsconfig: './tsconfig.json',
+      target: 'es2022',
       exclude: ['node_modules', 'motion'],
     }),
   ],
   external: [...Object.keys(pkg.dependencies || {}), ...Object.keys(pkg.peerDependencies || {})],
   onwarn(warning, warn) {
-    // Suppress "Module level directives" warnings
     if (warning.code === 'MODULE_LEVEL_DIRECTIVE') {
       return;
     }
-
-    // Call the default warning handler for other warnings
     warn(warning);
   },
   watch: {
-    clearScreen: false, // Avoid clearing the terminal screen on each rebuild
-    include: 'src/**', // Watch all files in the "src" directory
-    exclude: 'node_modules/**', // Don't watch files in node_modules
+    clearScreen: false,
+    include: 'src/**',
+    exclude: 'node_modules/**',
   },
 };

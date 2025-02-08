@@ -1,5 +1,6 @@
 import { xBullWalletConnect } from '@creit.tech/xbull-wallet-connect';
 import { SupportedWallets, WalletActions } from '../../types';
+import { getNetworkByPassphrase } from '../../utils/getNetworkByPassphrase';
 
 export const xBullConfig: WalletActions = {
   name: SupportedWallets.Xbull,
@@ -25,7 +26,7 @@ export const xBullConfig: WalletActions = {
       const signedXdr = await bridge.sign({
         xdr,
         publicKey: options?.address,
-        network: options?.networkPassphrase,
+        network: options?.networkPassphrase && getNetworkByPassphrase(options?.networkPassphrase),
       });
       bridge.closeConnections();
       return signedXdr;

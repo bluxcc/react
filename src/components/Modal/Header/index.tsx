@@ -23,14 +23,14 @@ const ModalHeader: React.FC<HeaderProps> = ({
       return (
         <button
           onClick={onInfo}
-          className="size-6 flex justify-center items-center hover:bg-[#cdceee48] rounded-full transition duration-300"
+          className="size-6 flex justify-center items-center hover:bg-primary-100 rounded-full transition duration-300"
         >
           <InfoIcon />
         </button>
       );
     }
     return (
-      <button onClick={onBack} className="cursor-pointer">
+      <button onClick={onBack} className="cursor-pointer flex justify-center items-center">
         <ArrowLeft />
       </button>
     );

@@ -7,7 +7,7 @@ declare global {
   interface Window {
     xBullSDK?: any;
     rabet?: {
-      sign(xdr: string, network: networksEnum): Promise<SignResult>;
+      sign(xdr: string, network: 'mainnet' | 'testnet'): Promise<SignResult>;
       connect: () => Promise<ConnectResult>;
       disconnect(): Promise<void>;
     };

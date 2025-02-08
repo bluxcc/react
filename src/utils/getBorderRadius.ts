@@ -2,8 +2,8 @@ import { CornerRadius } from '../types';
 
 const radiusMap: Record<CornerRadius, string> = {
   none: '0px',
-  full: '44px',
-  sm: '3.42px',
+  full: '32px',
+  sm: '4px',
   md: '8px',
   lg: '12px',
 };

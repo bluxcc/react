@@ -16,7 +16,9 @@ export enum WalletNetwork {
 
 export interface IProviderConfig {
   appName: string;
+  appLogo?: string;
   networkPassphrase: string;
+  network: 'mainnet' | 'testnet' | 'futurenet' | 'sandbox' | 'standalone';
 }
 
 export interface WalletInfo {
@@ -33,7 +35,7 @@ export interface ContextState {
   setValue: React.Dispatch<React.SetStateAction<ContextValues>>;
 }
 
-export type SupportedFonts = 'Manrope' | 'Inter' | 'JetBrains Mono' | 'PP Editorial Sans';
+export type SupportedFonts = 'Manrope' | 'Inter' | 'JetBrains Mono' | 'Roboto';
 
 export type CornerRadius = 'none' | 'full' | 'sm' | 'md' | 'lg';
 
@@ -80,11 +82,6 @@ export interface ConnectResult {
 
 export interface SignResult {
   signedXdr: string;
-}
-
-export enum networksEnum {
-  PUBLIC = 'mainnet',
-  TESTNET = 'testnet',
 }
 
 export interface WalletActions {

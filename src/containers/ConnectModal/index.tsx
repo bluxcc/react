@@ -1,9 +1,13 @@
 import React from 'react';
+
 import Modal from '../../components/Modal';
 import Profile from '../ModalState/Profile';
 import Connecting from '../ModalState/Connecting';
 import OnBoarding from '../ModalState/OnBoarding';
+
 import { useConnectModal } from '../../hooks/useConnectModal';
+import { useGoogleFonts } from '../../hooks/useGoogleFont';
+
 import { ModalView } from '../../types';
 
 interface ConnectModalProps {
@@ -21,6 +25,8 @@ export default function ConnectModal({ isOpen }: ConnectModalProps) {
     initialHeight,
     closeModal,
   } = useConnectModal();
+
+  useGoogleFonts();
 
   const renderContent = () => {
     switch (modalState.view) {

@@ -1,12 +1,12 @@
 {
-  "name": "blux",
-  "author": "Blux.cc",
-  "version": "0.0.1",
+  "name": "@bluxcc/react",
+  "author": "Blux team",
+  "version": "0.1.1",
   "homepage": "https://blux.cc",
   "description": "Connecting to the Stellar Ecosystem and Beyond",
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/bluxcc"
+    "url": "git+https://github.com/bluxcc/blux"
   },
   "type": "module",
   "main": "dist/index.esm.js",
@@ -20,7 +20,7 @@
     }
   },
   "engines": {
-    "node": ">=16.0.0"
+    "node": ">=14.0.0"
   },
   "files": [
     "dist"
@@ -36,8 +36,8 @@
     "@creit.tech/xbull-wallet-connect": "^0.3.0",
     "@lobstrco/signer-extension-api": "^1.0.0-beta.0",
     "@stellar/freighter-api": "^3.0.0",
-    "react": "^19.0.0",
-    "react-dom": "^19.0.0"
+    "react": ">=17.0.0",
+    "react-dom": ">=17.0.0"
   },
   "devDependencies": {
     "@eslint/js": "^9.17.0",
