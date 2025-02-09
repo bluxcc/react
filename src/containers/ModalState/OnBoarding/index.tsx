@@ -1,14 +1,14 @@
-import React, { useContext, useEffect, useState } from 'react';
+import React, { useContext, useEffect, useState, useMemo } from 'react';
 
-import { ProviderContext, defaultAppearance } from '../../../context/provider';
-import { walletsConfig } from '../../../wallets/walletsConfig';
+import { ProviderContext } from '../../../context/provider';
+import { ButtonWithIcon, ButtonWithIconAndArrow } from '../../../components/Button/buttonVariants';
 
-import BluxLogo from '../../../assets/bluxLogo';
-import { StellarIcon } from '../../../assets/logos';
+import { handleIcons } from '../../../utils/handleIcons';
+import { getMappedWallets } from '../../../utils/mappedWallets';
 
 import { WalletActions } from '../../../types';
-import { handleIcons } from '../../../utils/handleIcons';
-import { ButtonWithIcon, ButtonWithIconAndArrow } from '../../../components/Button/buttonVariants';
+import BluxLogo from '../../../assets/bluxLogo';
+import { StellarIcon } from '../../../assets/logos';
 
 type OnBoardingProps = {
   showAllWallets: boolean;
@@ -17,63 +17,50 @@ type OnBoardingProps = {
 
 const OnBoarding = ({ showAllWallets, setShowAllWallets }: OnBoardingProps) => {
   const context = useContext(ProviderContext);
+  const [wallets, setWallets] = useState<WalletActions[]>([]);
 
-  const [availableWallets, setAvailableWallets] = useState<WalletActions[]>([]);
-  const [hiddenWallets, setHiddenWallets] = useState<WalletActions[]>([]);
-
-  const modalStyle = context?.value.appearance || defaultAppearance;
-
-  const detectWallet = async () => {
-    try {
-      const walletChecks = await Promise.all(
-        Object.values(walletsConfig).map(async (wallet) => {
-          try {
-            const isAvailable = await wallet.isAvailable();
-            return { wallet, isAvailable };
-          } catch (error) {
-            console.error(`Error checking availability for ${wallet.name}:`, error);
-            return { wallet, isAvailable: false };
-          }
-        }),
-      );
-
-      const available = walletChecks
+  useEffect(() => {
+    const loadWallets = async () => {
+      const mappedWallets = await getMappedWallets();
+      const available = mappedWallets
         .filter(({ isAvailable }) => isAvailable)
         .map(({ wallet }) => wallet);
 
-      setAvailableWallets(available);
-
-      if (available.length > 2) {
-        setHiddenWallets(available.slice(2));
-      }
-    } catch (error) {
-      console.error('Error detecting wallet availability:', error);
-    }
-  };
-
-  useEffect(() => {
-    detectWallet();
-    window.addEventListener('load', detectWallet, false);
-
-    return () => {
-      window.removeEventListener('load', detectWallet, false);
+      setWallets(available);
+      context?.setValue((prev) => ({ ...prev, isReady: true }));
     };
+
+    loadWallets();
+    window.addEventListener('load', loadWallets);
+
+    return () => window.removeEventListener('load', loadWallets);
   }, []);
 
-  const handleConnect = async (wallet: WalletActions) => {
+  const hiddenWallets = useMemo(() => (wallets.length > 3 ? wallets.slice(2) : []), [wallets]);
+
+  const visibleWallets = useMemo(
+    () => (wallets.length > 3 ? (showAllWallets ? hiddenWallets : wallets.slice(0, 2)) : wallets),
+    [wallets, showAllWallets, hiddenWallets],
+  );
+
+  useEffect(() => {
+    if (context?.value.connectRejected) {
+      context?.setValue((prev) => ({
+        ...prev,
+        user: { wallet: null },
+        isConnecting: false,
+        connectRejected: false,
+      }));
+    }
+  }, [context?.value.connectRejected]);
+
+  const handleConnect = (wallet: WalletActions) => {
     context?.setValue((prev) => ({
       ...prev,
-      user: {
-        wallet: {
-          name: wallet.name,
-          address: null,
-        },
-      },
+      user: { wallet: { name: wallet.name, address: null } },
       isConnecting: true,
     }));
   };
-
-  const visibleWallets = showAllWallets ? hiddenWallets : availableWallets.slice(0, 2);
 
   return (
     <div className="w-full">
@@ -84,16 +71,16 @@ const OnBoarding = ({ showAllWallets, setShowAllWallets }: OnBoardingProps) => {
           <BluxLogo />
         )}
       </div>
-      {visibleWallets.map((wallet) => {
-        return (
-          <ButtonWithIcon
-            {...wallet}
-            icon={handleIcons(wallet.name)}
-            key={wallet.name}
-            onClick={() => handleConnect(wallet)}
-          />
-        );
-      })}
+
+      {visibleWallets.map((wallet) => (
+        <ButtonWithIcon
+          key={wallet.name}
+          {...wallet}
+          icon={handleIcons(wallet.name)}
+          onClick={() => handleConnect(wallet)}
+        />
+      ))}
+
       {hiddenWallets.length > 0 && !showAllWallets && (
         <ButtonWithIconAndArrow
           name="All Stellar wallets"
@@ -104,20 +91,18 @@ const OnBoarding = ({ showAllWallets, setShowAllWallets }: OnBoardingProps) => {
 
       <div
         className="text-center font-medium text-sm mt-3 cursor-pointer"
-        style={{
-          color: modalStyle.accent,
-        }}
+        style={{ color: context?.value.appearance?.accent }}
       >
         I don&apos;t have a wallet
       </div>
+
       <div className="font-semibold text-[10px] text-center w-full py-2">
         Powered by{' '}
         <a
           href="https://blux.cc"
-          target="blank"
-          style={{
-            color: modalStyle.accent,
-          }}
+          target="_blank"
+          rel="noreferrer"
+          style={{ color: context?.value.appearance?.accent }}
         >
           Blux.cc
         </a>

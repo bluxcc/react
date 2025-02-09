@@ -24,7 +24,7 @@ export default {
       sourcemap: true,
     },
   ],
-
+  preserveModules: true,
   treeshake: {
     moduleSideEffects: false,
   },

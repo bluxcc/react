@@ -31,9 +31,10 @@ export const BluxProvider = ({
     isDemo: isDemo ?? false,
     user: { wallet: null },
     openModal: false,
-    ready: false,
+    isReady: false,
     isAuthenticated: false,
     isConnecting: false,
+    connectRejected: false,
   });
 
   useEffect(() => {

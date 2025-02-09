@@ -30,7 +30,7 @@ export const useBlux = () => {
   return {
     connect,
     disconnect,
-    isReady: value?.ready || false,
+    isReady: value?.isReady || false,
     user: value?.user || null,
     isAuthenticated: value?.isAuthenticated || false,
   };

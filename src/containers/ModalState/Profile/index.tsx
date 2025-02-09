@@ -23,7 +23,12 @@ const Profile = () => {
 
   return (
     <div className="flex flex-col items-center justify-center pb-5">
-      <div className="w-20 h-20 bg-primary-200 rounded-full"></div>
+      <div
+        className="w-20 h-20 rounded-full"
+        style={{
+          background: modalStyle.accent,
+        }}
+      ></div>
       <p className="text-xl font-medium mt-3 mb-1">
         Connected to {context?.value.user.wallet?.name}
       </p>

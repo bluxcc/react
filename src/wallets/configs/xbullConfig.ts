@@ -6,13 +6,16 @@ export const xBullConfig: WalletActions = {
   name: SupportedWallets.Xbull,
   website: 'https://xbull.app',
 
-  isAvailable: () => typeof window !== 'undefined' && window.xBullSDK,
+  isAvailable: () =>
+    new Promise((resolve) => {
+      setTimeout(() => resolve(typeof window !== 'undefined' && !!window.xBullSDK), 250);
+    }),
 
   connect: async () => {
     try {
-      const bridge = new xBullWalletConnect();
-      const publicKey = await bridge.connect();
-      bridge.closeConnections();
+      const xbull = new xBullWalletConnect();
+      const publicKey = await xbull.connect();
+      xbull.closeConnections();
       return { publicKey };
     } catch (error) {
       console.error('Error connecting to xBull:', error);
@@ -22,13 +25,13 @@ export const xBullConfig: WalletActions = {
 
   signTransaction: async (xdr: string, options = {}): Promise<string> => {
     try {
-      const bridge = new xBullWalletConnect();
-      const signedXdr = await bridge.sign({
+      const xbull = new xBullWalletConnect();
+      const signedXdr = await xbull.sign({
         xdr,
         publicKey: options?.address,
         network: options?.networkPassphrase && getNetworkByPassphrase(options?.networkPassphrase),
       });
-      bridge.closeConnections();
+      xbull.closeConnections();
       return signedXdr;
     } catch (error) {
       console.error('Error signing transaction with xBull:', error);

@@ -54,8 +54,10 @@ export const useConnectModal = (): UseConnectModalReturn => {
   const setShowAllWallets = (show: boolean) => {
     setModalState((prev) => ({ ...prev, showAllWallets: show }));
   };
+  const showBackButton =
+    modalState.view === ModalView.CONNECTING ||
+    (modalState.showAllWallets && modalState.view !== ModalView.PROFILE);
 
-  const showBackButton = modalState.view === ModalView.CONNECTING || modalState.showAllWallets;
   const showCloseButton =
     modalState.view === ModalView.CONNECTING || modalState.view === ModalView.PROFILE;
   const modalHeader = modalState.view === ModalView.CHOOSE_WALLET ? MODAL_CONFIG.defaultHeader : '';
