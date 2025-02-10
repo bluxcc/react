@@ -48,12 +48,16 @@ const Connecting = () => {
   const handleConnect = async (wallet: WalletActions) => {
     try {
       const { publicKey } = await wallet.connect();
-      context?.setValue((prev) => ({
-        ...prev,
-        user: { wallet: { name: wallet.name, address: publicKey } },
-        isConnecting: false,
-        isAuthenticated: true,
-      }));
+
+      setTimeout(() => {
+        context?.setValue((prev) => ({
+          ...prev,
+          user: { wallet: { name: wallet.name, address: publicKey } },
+          isConnecting: false,
+          openModal: context.value.isDemo ? true : false,
+          isAuthenticated: true,
+        }));
+      }, 200);
     } catch {
       context?.setValue((prev) => ({
         ...prev,

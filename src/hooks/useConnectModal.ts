@@ -17,7 +17,7 @@ export interface UseConnectModalReturn {
 export const useConnectModal = (): UseConnectModalReturn => {
   const context = useContext(ProviderContext);
   const [modalState, setModalState] = useState<ModalState>({
-    view: ModalView.CHOOSE_WALLET,
+    view: ModalView.ONBOARDING,
     showAllWallets: false,
   });
 
@@ -28,7 +28,7 @@ export const useConnectModal = (): UseConnectModalReturn => {
       case ModalView.CONNECTING:
         return MODAL_HEIGHTS[ModalView.CONNECTING];
       default:
-        return MODAL_HEIGHTS[ModalView.CHOOSE_WALLET];
+        return MODAL_HEIGHTS[ModalView.ONBOARDING];
     }
   };
 
@@ -37,15 +37,16 @@ export const useConnectModal = (): UseConnectModalReturn => {
   useEffect(() => {
     if (context?.value.isAuthenticated) {
       setModalState((prev) => ({ ...prev, view: ModalView.PROFILE }));
-    }
-    if (context?.value.isConnecting) {
+    } else if (context?.value.isConnecting) {
       setModalState((prev) => ({ ...prev, view: ModalView.CONNECTING }));
+    } else {
+      setModalState((prev) => ({ ...prev, view: ModalView.ONBOARDING }));
     }
   }, [context?.value.isAuthenticated, context?.value.isConnecting]);
 
   const handleGoBack = () => {
     if (modalState.view === ModalView.CONNECTING) {
-      setModalState((prev) => ({ ...prev, view: ModalView.CHOOSE_WALLET }));
+      setModalState((prev) => ({ ...prev, view: ModalView.ONBOARDING }));
     } else if (modalState.showAllWallets) {
       setModalState((prev) => ({ ...prev, showAllWallets: false }));
     }
@@ -60,7 +61,7 @@ export const useConnectModal = (): UseConnectModalReturn => {
 
   const showCloseButton =
     modalState.view === ModalView.CONNECTING || modalState.view === ModalView.PROFILE;
-  const modalHeader = modalState.view === ModalView.CHOOSE_WALLET ? MODAL_CONFIG.defaultHeader : '';
+  const modalHeader = modalState.view === ModalView.ONBOARDING ? MODAL_CONFIG.defaultHeader : '';
 
   const closeModal = () => {
     context?.setValue((prev) => ({

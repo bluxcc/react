@@ -1,5 +1,4 @@
 import React, { useContext } from 'react';
-
 import { ProviderContext, defaultAppearance } from '../../../context/provider';
 import copyText from '../../../utils/copyText';
 import shortenAddress from '../../../utils/shortenAddress';
@@ -12,13 +11,21 @@ const Profile = () => {
   const handleDisconnect = () => {
     context?.setValue((prev) => ({
       ...prev,
-      user: {
-        wallet: null,
-      },
       openModal: false,
       isConnecting: false,
       isAuthenticated: false,
+      user: {
+        wallet: null,
+      },
     }));
+    if (context?.value.isDemo) {
+      setTimeout(() => {
+        context?.setValue((prev) => ({
+          ...prev,
+          openModal: true,
+        }));
+      }, 100);
+    }
   };
 
   return (
@@ -39,12 +46,14 @@ const Profile = () => {
           copyText(context?.value.user.wallet?.address as string);
         }}
       >
-        {shortenAddress(context?.value.user.wallet?.address as string)}
+        {shortenAddress(context?.value.user.wallet?.address || '', 5)}
       </p>
       <Button
-        disabled
         onClick={handleDisconnect}
-        className="mt-8 font-medium w-full inline-flex justify-center items-center gap-[10px] border-none text-white bg-gray-400 cursor-disabled"
+        style={{
+          background: modalStyle.accent,
+        }}
+        className="mt-8 font-medium w-full inline-flex justify-center items-center gap-[10px] border-none text-white"
       >
         Disconnect
       </Button>

@@ -1,5 +1,4 @@
 import postcss from 'rollup-plugin-postcss';
-import terser from '@rollup/plugin-terser';
 import commonjs from '@rollup/plugin-commonjs';
 import resolve from '@rollup/plugin-node-resolve';
 import typescript from '@rollup/plugin-typescript';
@@ -16,7 +15,7 @@ export default {
     {
       file: 'dist/index.esm.js',
       format: 'esm',
-      sourcemap: true,
+      sourcemap: true, // Enable source maps for debugging
     },
     {
       file: 'dist/index.cjs.js',
@@ -24,21 +23,9 @@ export default {
       sourcemap: true,
     },
   ],
-  preserveModules: true,
-  treeshake: {
-    moduleSideEffects: false,
-  },
+  preserveEntrySignatures: 'strict',
   plugins: [
     peerDepsExternal(),
-    terser({
-      compress: {
-        drop_console: true,
-        drop_debugger: true,
-      },
-      format: {
-        comments: false,
-      },
-    }),
     resolve({
       browser: true,
       preferBuiltins: false,
@@ -47,7 +34,7 @@ export default {
     postcss({
       extract: false,
       inject: true,
-      minimize: true,
+      minimize: false, // No minification in development
       sourceMap: true,
       plugins: [tailwindcss, autoprefixer],
     }),
@@ -58,12 +45,6 @@ export default {
     }),
   ],
   external: [...Object.keys(pkg.dependencies || {}), ...Object.keys(pkg.peerDependencies || {})],
-  onwarn(warning, warn) {
-    if (warning.code === 'MODULE_LEVEL_DIRECTIVE') {
-      return;
-    }
-    warn(warning);
-  },
   watch: {
     clearScreen: false,
     include: 'src/**',

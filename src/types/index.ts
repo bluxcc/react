@@ -95,7 +95,7 @@ export interface ContextValues {
  * Enum defining different modal views.
  */
 export enum ModalView {
-  CHOOSE_WALLET = 'CHOOSE_WALLET', // View for selecting a wallet
+  ONBOARDING = 'ONBOARDING', // View for selecting a wallet
   CONNECTING = 'CONNECTING', // View for connection process
   PROFILE = 'PROFILE', // User profile view
 }
@@ -114,7 +114,7 @@ export interface ModalState {
 export interface ModalHeights {
   [ModalView.PROFILE]: number;
   [ModalView.CONNECTING]: number;
-  [ModalView.CHOOSE_WALLET]: number;
+  [ModalView.ONBOARDING]: number;
 }
 
 /**

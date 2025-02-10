@@ -24,6 +24,8 @@ export const useBlux = () => {
       ...value,
       user: { wallet: null },
       openModal: false,
+      isConnecting: false,
+      isAuthenticated: false,
     });
   };
 

@@ -26,10 +26,8 @@
     "dist"
   ],
   "scripts": {
-    "dev": "rollup -c rollup.config.js --watch",
-    "build": "rollup -c rollup.config.js",
-    "prepare": "rollup -c rollup.config.js",
-    "lint": "eslint src -c eslint.config.js"
+    "build:dev": "rollup -c rollup.config.dev.js --watch",
+    "build:prod": "rollup -c rollup.config.prod.js"
   },
   "peerDependencies": {
     "@albedo-link/intent": "^0.12.0",

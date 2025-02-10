@@ -1,8 +1,8 @@
 import React, { useContext } from 'react';
-
 import clsx from 'clsx';
-import { ProviderContext, defaultAppearance } from '../../context/provider';
+
 import { getBorderRadius } from '../../utils/getBorderRadius';
+import { ProviderContext, defaultAppearance } from '../../context/provider';
 
 export type ButtonProps = {
   name?: string;
@@ -10,11 +10,11 @@ export type ButtonProps = {
   children?: React.ReactNode;
   className?: string;
   disabled?: boolean;
+  style?: React.CSSProperties;
 };
 
-const Button = ({ onClick, className, disabled, children }: ButtonProps) => {
+const Button = ({ onClick, className, disabled, children, style }: ButtonProps) => {
   const context = useContext(ProviderContext);
-
   const modalStyle = context?.value.appearance || defaultAppearance;
 
   return (
@@ -23,6 +23,7 @@ const Button = ({ onClick, className, disabled, children }: ButtonProps) => {
       onClick={onClick}
       style={{
         borderRadius: getBorderRadius(modalStyle.cornerRadius),
+        ...style,
       }}
       className={clsx(
         `w-full relative flex items-center h-14 border border-primary-100 transition-colors duration-200 my-2 pl-2 pr-4`,
