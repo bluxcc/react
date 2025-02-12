@@ -1,35 +1,30 @@
-import React, { useContext } from 'react';
-import { ProviderContext, defaultAppearance } from '../../../context/provider';
+import React, { useContext, useEffect, useState } from 'react';
+
 import copyText from '../../../utils/copyText';
-import shortenAddress from '../../../utils/shortenAddress';
 import Button from '../../../components/Button';
+import { useBlux } from '../../../hooks/useBlux';
+import shortenAddress from '../../../utils/shortenAddress';
+
+import { ProviderContext } from '../../../context/provider';
+import { defaultAppearance } from '../../../constants/defaultAppearance';
+import { getBorderRadius } from '../../../utils/getBorderRadius';
 
 const Profile = () => {
   const context = useContext(ProviderContext);
+  const { disconnect } = useBlux();
   const modalStyle = context?.value.appearance || defaultAppearance;
+  const [address, setAddress] = useState(context?.value.user.wallet?.address || '');
+
+  useEffect(() => {
+    setAddress(context?.value.user.wallet?.address as string);
+  }, [context?.value.user.wallet?.address]);
 
   const handleDisconnect = () => {
-    context?.setValue((prev) => ({
-      ...prev,
-      openModal: false,
-      isConnecting: false,
-      isAuthenticated: false,
-      user: {
-        wallet: null,
-      },
-    }));
-    if (context?.value.isDemo) {
-      setTimeout(() => {
-        context?.setValue((prev) => ({
-          ...prev,
-          openModal: true,
-        }));
-      }, 100);
-    }
+    disconnect();
   };
 
   return (
-    <div className="flex flex-col items-center justify-center pb-5">
+    <div className="flex flex-col items-center justify-center">
       <div
         className="w-20 h-20 rounded-full"
         style={{
@@ -46,12 +41,13 @@ const Profile = () => {
           copyText(context?.value.user.wallet?.address as string);
         }}
       >
-        {shortenAddress(context?.value.user.wallet?.address || '', 5)}
+        {shortenAddress(address, 5)}
       </p>
       <Button
         onClick={handleDisconnect}
         style={{
           background: modalStyle.accent,
+          borderRadius: getBorderRadius(modalStyle.cornerRadius),
         }}
         className="mt-8 font-medium w-full inline-flex justify-center items-center gap-[10px] border-none text-white"
       >

@@ -26,8 +26,8 @@
     "dist"
   ],
   "scripts": {
-    "build:dev": "rollup -c rollup.config.dev.js --watch",
-    "build:prod": "rollup -c rollup.config.prod.js"
+    "dev": "rollup -c rollup.config.dev.js --watch",
+    "build": "rollup -c rollup.config.prod.js"
   },
   "peerDependencies": {
     "@albedo-link/intent": "^0.12.0",

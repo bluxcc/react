@@ -2,7 +2,8 @@ import React, { useContext } from 'react';
 import clsx from 'clsx';
 
 import { getBorderRadius } from '../../utils/getBorderRadius';
-import { ProviderContext, defaultAppearance } from '../../context/provider';
+import { ProviderContext } from '../../context/provider';
+import { defaultAppearance } from '../../constants/defaultAppearance';
 
 export type ButtonProps = {
   name?: string;

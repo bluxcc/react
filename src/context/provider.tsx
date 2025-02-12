@@ -1,18 +1,10 @@
 import React, { createContext, useState, useEffect } from 'react';
+
 import ConnectModal from '../containers/ConnectModal';
 import { ContextState, IProviderConfig, ContextValues, IAppearance } from '../types';
+import { defaultAppearance } from '../constants/defaultAppearance';
 
 export const ProviderContext = createContext<ContextState | null>(null);
-
-export const defaultAppearance: IAppearance = {
-  theme: 'light',
-  background: '#FFFFFF',
-  accent: '#0C1083',
-  textColor: '#000000',
-  font: 'Inter',
-  cornerRadius: 'full',
-  cover: '',
-};
 
 export const BluxProvider = ({
   config,
@@ -35,6 +27,7 @@ export const BluxProvider = ({
     isAuthenticated: false,
     isConnecting: false,
     connectRejected: false,
+    availableWallets: [],
   });
 
   useEffect(() => {
@@ -44,6 +37,7 @@ export const BluxProvider = ({
     }));
   }, [appearance]);
 
+  console.log(value);
   return (
     <ProviderContext.Provider value={{ value, setValue }}>
       {children}

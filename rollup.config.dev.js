@@ -15,7 +15,7 @@ export default {
     {
       file: 'dist/index.esm.js',
       format: 'esm',
-      sourcemap: true, // Enable source maps for debugging
+      sourcemap: true,
     },
     {
       file: 'dist/index.cjs.js',
@@ -34,7 +34,7 @@ export default {
     postcss({
       extract: false,
       inject: true,
-      minimize: false, // No minification in development
+      minimize: false,
       sourceMap: true,
       plugins: [tailwindcss, autoprefixer],
     }),

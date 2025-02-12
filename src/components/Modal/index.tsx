@@ -3,10 +3,11 @@ import clsx from 'clsx';
 
 import { getBorderRadius } from '../../utils/getBorderRadius';
 import { useModalAnimation } from '../../hooks/useModalAnimation';
-import { ProviderContext, defaultAppearance } from '../../context/provider';
+import { ProviderContext } from '../../context/provider';
 
 import ModalHeader from './Header';
 import ModalBackdrop from './Backdrop';
+import { defaultAppearance } from '../../constants/defaultAppearance';
 
 interface ModalProps {
   isOpen: boolean;

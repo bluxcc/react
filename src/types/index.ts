@@ -89,6 +89,7 @@ export interface ContextValues {
   isAuthenticated: boolean; // User authentication status
   isConnecting: boolean; // Connection state flag
   connectRejected: boolean; // Indicates if the connection was rejected
+  availableWallets: WalletActions[]; // List of available wallets
 }
 
 /**

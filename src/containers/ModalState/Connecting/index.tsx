@@ -1,7 +1,8 @@
 import React, { useContext, useEffect, useState, useRef } from 'react';
 
 import Button from '../../../components/Button';
-import { ProviderContext, defaultAppearance } from '../../../context/provider';
+import { ProviderContext } from '../../../context/provider';
+import { defaultAppearance } from '../../../constants/defaultAppearance';
 
 import { handleIcons } from '../../../utils/handleIcons';
 import { getBorderRadius } from '../../../utils/getBorderRadius';
@@ -48,20 +49,20 @@ const Connecting = () => {
   const handleConnect = async (wallet: WalletActions) => {
     try {
       const { publicKey } = await wallet.connect();
-
-      setTimeout(() => {
-        context?.setValue((prev) => ({
-          ...prev,
-          user: { wallet: { name: wallet.name, address: publicKey } },
-          isConnecting: false,
-          openModal: context.value.isDemo ? true : false,
-          isAuthenticated: true,
-        }));
-      }, 200);
+      if (publicKey) {
+        setTimeout(() => {
+          context?.setValue((prev) => ({
+            ...prev,
+            user: { wallet: { name: wallet.name, address: publicKey } },
+            openModal: false,
+            isConnecting: false,
+            isAuthenticated: true,
+          }));
+        }, 500);
+      }
     } catch {
       context?.setValue((prev) => ({
         ...prev,
-        isAuthenticated: false,
         connectRejected: true,
       }));
       setError(true);

@@ -30,10 +30,10 @@ export default function ConnectModal({ isOpen }: ConnectModalProps) {
 
   const renderContent = () => {
     switch (modalState.view) {
-      case ModalView.PROFILE:
-        return <Profile />;
       case ModalView.CONNECTING:
         return <Connecting />;
+      case ModalView.PROFILE:
+        return <Profile />;
       default:
         return (
           <div className="flex flex-col items-center">

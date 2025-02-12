@@ -1,4 +1,4 @@
-import React, { useContext, useEffect, useState, useMemo } from 'react';
+import React, { useContext, useEffect, useState } from 'react';
 
 import { ProviderContext } from '../../../context/provider';
 import { ButtonWithIcon, ButtonWithIconAndArrow } from '../../../components/Button/buttonVariants';
@@ -17,9 +17,24 @@ type OnBoardingProps = {
 
 const OnBoarding = ({ showAllWallets, setShowAllWallets }: OnBoardingProps) => {
   const context = useContext(ProviderContext);
-  const [wallets, setWallets] = useState<WalletActions[]>([]);
+  const [wallets, setWallets] = useState<WalletActions[]>(context?.value.availableWallets || []);
+
+  const [hiddenWallets, setHiddenWallets] = useState<WalletActions[]>([]);
+  const [visibleWallets, setVisibleWallets] = useState<WalletActions[]>([]);
 
   useEffect(() => {
+    if (wallets.length > 3) {
+      setHiddenWallets(wallets.slice(2));
+      setVisibleWallets(showAllWallets ? wallets.slice(2) : wallets.slice(0, 2));
+    } else {
+      setHiddenWallets([]);
+      setVisibleWallets(wallets);
+    }
+  }, [wallets, showAllWallets]);
+
+  useEffect(() => {
+    if (wallets.length > 0) return;
+
     const loadWallets = async () => {
       const mappedWallets = await getMappedWallets();
       const available = mappedWallets
@@ -27,21 +42,15 @@ const OnBoarding = ({ showAllWallets, setShowAllWallets }: OnBoardingProps) => {
         .map(({ wallet }) => wallet);
 
       setWallets(available);
-      context?.setValue((prev) => ({ ...prev, isReady: true }));
+      context?.setValue((prev) => ({
+        ...prev,
+        availableWallets: available,
+        isReady: true,
+      }));
     };
 
     loadWallets();
-    window.addEventListener('load', loadWallets);
-
-    return () => window.removeEventListener('load', loadWallets);
-  }, []);
-
-  const hiddenWallets = useMemo(() => (wallets.length > 3 ? wallets.slice(2) : []), [wallets]);
-
-  const visibleWallets = useMemo(
-    () => (wallets.length > 3 ? (showAllWallets ? hiddenWallets : wallets.slice(0, 2)) : wallets),
-    [wallets, showAllWallets, hiddenWallets],
-  );
+  }, [wallets]);
 
   useEffect(() => {
     if (context?.value.connectRejected) {

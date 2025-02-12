@@ -2,10 +2,11 @@ import React, { useContext } from 'react';
 
 import Button, { ButtonProps } from './index';
 import { ArrowRight } from '../../assets/Icons';
-import { ProviderContext, defaultAppearance } from '../../context/provider';
+import { ProviderContext } from '../../context/provider';
 import { getBorderRadius } from '../../utils/getBorderRadius';
 
 import { CornerRadius } from '../../types';
+import { defaultAppearance } from '../../constants/defaultAppearance';
 
 interface IconButtonProps extends ButtonProps {
   icon: React.ReactNode;

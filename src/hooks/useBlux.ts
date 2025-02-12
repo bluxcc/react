@@ -10,7 +10,7 @@ export const useBlux = () => {
 
   const { value, setValue } = context;
 
-  const connect = async () => {
+  const connect = () => {
     setValue((prev) => {
       if (prev.openModal) {
         return prev;
@@ -19,7 +19,7 @@ export const useBlux = () => {
     });
   };
 
-  const disconnect = async () => {
+  const disconnect = () => {
     setValue({
       ...value,
       user: { wallet: null },
@@ -29,9 +29,21 @@ export const useBlux = () => {
     });
   };
 
+  const profile = () => {
+    if (context?.value.isAuthenticated) {
+      setValue({
+        ...value,
+        openModal: true,
+      });
+    } else {
+      throw new Error('user is not authenticated');
+    }
+  };
+
   return {
     connect,
     disconnect,
+    profile,
     isReady: value?.isReady || false,
     user: value?.user || null,
     isAuthenticated: value?.isAuthenticated || false,
