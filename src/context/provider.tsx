@@ -37,7 +37,6 @@ export const BluxProvider = ({
     }));
   }, [appearance]);
 
-  console.log(value);
   return (
     <ProviderContext.Provider value={{ value, setValue }}>
       {children}

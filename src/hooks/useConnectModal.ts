@@ -40,7 +40,7 @@ export const useConnectModal = (): UseConnectModalReturn => {
     } else if (context?.value.isConnecting) {
       setModalState((prev) => ({ ...prev, view: ModalView.CONNECTING }));
     } else {
-      setModalState((prev) => ({ ...prev, view: ModalView.ONBOARDING }));
+      setModalState((prev) => ({ ...prev, view: ModalView.ONBOARDING, showAllWallets: false }));
     }
   }, [context?.value.isAuthenticated, context?.value.isConnecting]);
 
@@ -53,6 +53,7 @@ export const useConnectModal = (): UseConnectModalReturn => {
   };
 
   const setShowAllWallets = (show: boolean) => {
+    console.log(show);
     setModalState((prev) => ({ ...prev, showAllWallets: show }));
   };
   const showBackButton =

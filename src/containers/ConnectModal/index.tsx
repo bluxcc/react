@@ -50,7 +50,6 @@ export default function ConnectModal({ isOpen }: ConnectModalProps) {
     <Modal
       isOpen={isOpen}
       onClose={closeModal}
-      className={`!w-[360px]`}
       modalHeader={modalHeader}
       icon={showBackButton ? 'back' : 'info'}
       closeButton={showCloseButton}

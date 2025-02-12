@@ -11,7 +11,6 @@ import { defaultAppearance } from '../../constants/defaultAppearance';
 
 interface ModalProps {
   isOpen: boolean;
-  className?: string;
   onClose?: () => void;
   onBack?: () => void;
   children: React.ReactNode;
@@ -28,7 +27,6 @@ const Modal = ({
   onBack,
   onInfo,
   children,
-  className,
   modalHeader,
   icon,
   initialHeight,
@@ -42,7 +40,7 @@ const Modal = ({
   const contentRef = useRef<HTMLDivElement>(null);
   const isFirstRender = useRef(true);
   const previousChildrenRef = useRef(children);
-  const previousHeightRef = useRef<number>(initialHeight);
+  const previousHeightRef = useRef<number>(380);
 
   const modalStyle = context?.value.appearance || defaultAppearance;
 
@@ -55,7 +53,7 @@ const Modal = ({
       previousHeightRef.current = initialHeight;
       return;
     }
-  }, [isOpen, initialHeight]);
+  }, [isOpen]);
 
   useEffect(() => {
     if (!isOpen || !contentRef.current) return;
@@ -100,15 +98,14 @@ const Modal = ({
 
       <div
         className={clsx(
-          'absolute inset-0 flex items-center justify-center z-[9999]',
+          'absolute inset-0 flex items-center justify-center z-[9999] ',
           isClosing && 'animate-fadeOut',
         )}
         onClick={(e) => e.target === e.currentTarget && handleClose(onClose)}
       >
         <div
           className={clsx(
-            'overflow-hidden border',
-            className,
+            'overflow-hidden border !w-[360px]',
             modalStyle.font && `!font-[${modalStyle.font}]`,
           )}
           style={{
