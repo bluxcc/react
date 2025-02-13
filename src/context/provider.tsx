@@ -26,6 +26,7 @@ export const BluxProvider = ({
     isReady: false,
     isAuthenticated: false,
     isConnecting: false,
+    connectSuccess: false,
     connectRejected: false,
     availableWallets: [],
   });

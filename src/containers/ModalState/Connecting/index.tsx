@@ -54,11 +54,10 @@ const Connecting = () => {
           context?.setValue((prev) => ({
             ...prev,
             user: { wallet: { name: wallet.name, address: publicKey } },
-            openModal: false,
             isConnecting: false,
-            isAuthenticated: true,
+            connectSuccess: true,
           }));
-        }, 500);
+        }, 200);
       }
     } catch {
       context?.setValue((prev) => ({
@@ -78,7 +77,7 @@ const Connecting = () => {
   return (
     <div className="flex flex-col items-center justify-center w-full select-none mt-8">
       <div
-        className={`h-20 w-20 flex justify-center border-2 items-center mb-4 ${
+        className={`h-20 w-20 flex justify-center border-2 overflow-hidden items-center mb-4 ${
           error ? 'border-lightRed-300' : 'border-primary-100'
         }`}
         style={{ borderRadius: getBorderRadius(modalStyle.cornerRadius) }}

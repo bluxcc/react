@@ -7,7 +7,7 @@ const googleFonts: Record<SupportedFonts, string | null> = {
   Manrope: 'Manrope',
   Inter: 'Inter',
   'JetBrains Mono': 'JetBrains+Mono',
-  Roboto: 'Roboto',
+  Lora: 'Lora',
 };
 
 export function useGoogleFonts() {

@@ -56,7 +56,7 @@ export interface ContextState {
 /**
  * Supported font options for UI customization.
  */
-export type SupportedFonts = 'Manrope' | 'Inter' | 'JetBrains Mono' | 'Roboto';
+export type SupportedFonts = 'Manrope' | 'Inter' | 'JetBrains Mono' | 'Lora';
 
 /**
  * Supported corner radius styles for UI elements.
@@ -90,6 +90,7 @@ export interface ContextValues {
   isConnecting: boolean; // Connection state flag
   connectRejected: boolean; // Indicates if the connection was rejected
   availableWallets: WalletActions[]; // List of available wallets
+  connectSuccess: boolean; // Indicates if the connection was successful
 }
 
 /**
@@ -98,6 +99,7 @@ export interface ContextValues {
 export enum ModalView {
   ONBOARDING = 'ONBOARDING', // View for selecting a wallet
   CONNECTING = 'CONNECTING', // View for connection process
+  CONNECT_SUCCESS = 'CONNECT_SUCCESS', // View for connection process
   PROFILE = 'PROFILE', // User profile view
 }
 
@@ -116,6 +118,7 @@ export interface ModalHeights {
   [ModalView.PROFILE]: number;
   [ModalView.CONNECTING]: number;
   [ModalView.ONBOARDING]: number;
+  [ModalView.CONNECT_SUCCESS]: number;
 }
 
 /**

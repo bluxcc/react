@@ -5,7 +5,7 @@ const radiusMap: Record<CornerRadius, string> = {
   full: '32px',
   sm: '4px',
   md: '8px',
-  lg: '12px',
+  lg: '16px',
 };
 
 export const getBorderRadius = (cornerRadius: CornerRadius): string => {

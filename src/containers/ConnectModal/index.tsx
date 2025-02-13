@@ -4,6 +4,7 @@ import Modal from '../../components/Modal';
 import Profile from '../ModalState/Profile';
 import Connecting from '../ModalState/Connecting';
 import OnBoarding from '../ModalState/OnBoarding';
+import ConnectSuccess from '../ModalState/ConnectSuccess';
 
 import { useConnectModal } from '../../hooks/useConnectModal';
 import { useGoogleFonts } from '../../hooks/useGoogleFont';
@@ -32,6 +33,8 @@ export default function ConnectModal({ isOpen }: ConnectModalProps) {
     switch (modalState.view) {
       case ModalView.CONNECTING:
         return <Connecting />;
+      case ModalView.CONNECT_SUCCESS:
+        return <ConnectSuccess />;
       case ModalView.PROFILE:
         return <Profile />;
       default:

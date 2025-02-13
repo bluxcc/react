@@ -67,3 +67,11 @@ export const Loading = () => (
     />
   </svg>
 );
+export const WhiteCheck = () => (
+  <svg width="36" height="27" viewBox="0 0 36 27" fill="none" xmlns="http://www.w3.org/2000/svg">
+    <path
+      d="M13.5049 26.0982L35.4119 4.19127L31.588 0.419342L13.5049 18.5032L4.35994 9.35819L0.588013 13.1293L13.5049 26.0982Z"
+      fill="white"
+    />
+  </svg>
+);

@@ -25,7 +25,7 @@ const IconContainer: React.FC<{
       style={{
         borderRadius: getBorderRadius(appearance.cornerRadius),
       }}
-      className={`flex justify-center items-center border border-primary-100 h-10 w-10 mr-4`}
+      className={`flex justify-center items-center border border-primary-100 h-10 w-10 mr-4 overflow-hidden`}
     >
       {children}
     </div>
