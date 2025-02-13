@@ -16,8 +16,9 @@ const Connecting = () => {
         connectSuccess: true,
         isAuthenticated: true,
       }));
-    }, 700);
+    }, 1000);
   }, []);
+
   return (
     <div className="flex flex-col items-center justify-center w-full select-none mt-8">
       <div

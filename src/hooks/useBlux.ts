@@ -40,10 +40,23 @@ export const useBlux = () => {
     }
   };
 
+  const signTransaction = () => {
+    if (context?.value.isAuthenticated) {
+      setValue({
+        ...value,
+        openModal: true,
+        signTx: true,
+      });
+    } else {
+      throw new Error('user is not authenticated');
+    }
+  };
+
   return {
     connect,
     disconnect,
     profile,
+    signTransaction,
     isReady: value?.isReady || false,
     user: value?.user || null,
     isAuthenticated: value?.isAuthenticated || false,

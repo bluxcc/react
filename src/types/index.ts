@@ -91,6 +91,7 @@ export interface ContextValues {
   connectRejected: boolean; // Indicates if the connection was rejected
   availableWallets: WalletActions[]; // List of available wallets
   connectSuccess: boolean; // Indicates if the connection was successful
+  signTx: boolean; // Indicates if sign transaction modal should open
 }
 
 /**
@@ -99,8 +100,9 @@ export interface ContextValues {
 export enum ModalView {
   ONBOARDING = 'ONBOARDING', // View for selecting a wallet
   CONNECTING = 'CONNECTING', // View for connection process
-  CONNECT_SUCCESS = 'CONNECT_SUCCESS', // View for connection process
+  CONNECT_SUCCESS = 'CONNECT_SUCCESS', // View for connection success process
   PROFILE = 'PROFILE', // User profile view
+  SIGN_TRANSACTION = 'SIGN_TRANSACTION', // User sign transaction view
 }
 
 /**
@@ -119,6 +121,7 @@ export interface ModalHeights {
   [ModalView.CONNECTING]: number;
   [ModalView.ONBOARDING]: number;
   [ModalView.CONNECT_SUCCESS]: number;
+  [ModalView.SIGN_TRANSACTION]: number;
 }
 
 /**

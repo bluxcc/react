@@ -29,6 +29,8 @@ export const useConnectModal = (): UseConnectModalReturn => {
         return MODAL_HEIGHTS[ModalView.CONNECTING];
       case ModalView.CONNECT_SUCCESS:
         return MODAL_HEIGHTS[ModalView.CONNECT_SUCCESS];
+      case ModalView.SIGN_TRANSACTION:
+        return MODAL_HEIGHTS[ModalView.SIGN_TRANSACTION];
       default:
         return MODAL_HEIGHTS[ModalView.ONBOARDING];
     }
@@ -37,10 +39,12 @@ export const useConnectModal = (): UseConnectModalReturn => {
   const initialHeight = getInitialHeight();
 
   useEffect(() => {
-    if (context?.value.isAuthenticated) {
+    if (context?.value.isAuthenticated && !context.value.signTx) {
       setModalState((prev) => ({ ...prev, view: ModalView.PROFILE }));
     } else if (context?.value.isConnecting) {
       setModalState((prev) => ({ ...prev, view: ModalView.CONNECTING }));
+    } else if (context?.value.signTx) {
+      setModalState((prev) => ({ ...prev, view: ModalView.SIGN_TRANSACTION }));
     } else if (context?.value.connectSuccess) {
       setModalState((prev) => ({ ...prev, view: ModalView.CONNECT_SUCCESS }));
     } else {
@@ -68,6 +72,7 @@ export const useConnectModal = (): UseConnectModalReturn => {
     modalState.view === ModalView.CONNECTING ||
     modalState.view === ModalView.PROFILE ||
     modalState.view === ModalView.CONNECT_SUCCESS;
+
   const modalHeader = modalState.view === ModalView.ONBOARDING ? MODAL_CONFIG.defaultHeader : '';
 
   const closeModal = () => {

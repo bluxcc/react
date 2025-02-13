@@ -10,6 +10,7 @@ import { useConnectModal } from '../../hooks/useConnectModal';
 import { useGoogleFonts } from '../../hooks/useGoogleFont';
 
 import { ModalView } from '../../types';
+import SignTransaction from '../ModalState/SignTransaction';
 
 interface ConnectModalProps {
   isOpen: boolean;
@@ -37,6 +38,8 @@ export default function ConnectModal({ isOpen }: ConnectModalProps) {
         return <ConnectSuccess />;
       case ModalView.PROFILE:
         return <Profile />;
+      case ModalView.SIGN_TRANSACTION:
+        return <SignTransaction />;
       default:
         return (
           <div className="flex flex-col items-center">

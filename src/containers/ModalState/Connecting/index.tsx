@@ -57,7 +57,7 @@ const Connecting = () => {
             isConnecting: false,
             connectSuccess: true,
           }));
-        }, 200);
+        }, 400);
       }
     } catch {
       context?.setValue((prev) => ({
