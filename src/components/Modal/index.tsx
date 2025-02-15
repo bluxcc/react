@@ -88,7 +88,6 @@ const Modal = ({
 
   if (!isOpen) return null;
 
-  console.log(initialHeight, currentHeight);
   return (
     <>
       {!context?.value.isDemo && (
@@ -102,7 +101,7 @@ const Modal = ({
         onClick={(e) => e.target === e.currentTarget && handleClose(onClose)}
       >
         <div
-          className="relative overflow-hidden border border-primary-100"
+          className="relative overflow-hidden w-[360px] border border-primary-100 box-border"
           style={{
             height: `${currentHeight}px`,
             // transform: isOpening ? 'scale(0.98)' : 'scale(1)',
@@ -118,7 +117,7 @@ const Modal = ({
             borderRadius: getBorderRadius(modalStyle.cornerRadius),
           }}
         >
-          <div ref={contentRef} className="px-6 pb-4 !w-[360px] transition-all">
+          <div ref={contentRef} className="px-6 pb-4 transition-all">
             <ModalHeader
               icon={icon}
               onInfo={onInfo}

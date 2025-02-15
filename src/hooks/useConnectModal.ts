@@ -61,7 +61,6 @@ export const useConnectModal = (): UseConnectModalReturn => {
   };
 
   const setShowAllWallets = (show: boolean) => {
-    console.log(show);
     setModalState((prev) => ({ ...prev, showAllWallets: show }));
   };
   const showBackButton =

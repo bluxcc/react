@@ -81,7 +81,7 @@ const Connecting = () => {
         {handleIcons(user?.wallet?.name ?? '')}
       </div>
 
-      <div className="space-y-2 flex-col text-center font-semibold">
+      <div className="space-y-1 flex-col text-center font-semibold">
         <p className="text-xl">
           {error ? 'Failed connecting to' : 'Waiting for'} {user?.wallet?.name}
         </p>

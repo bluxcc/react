@@ -3,7 +3,7 @@ import React, { useContext, useEffect } from 'react';
 import Button from '../../../components/Button';
 import { ProviderContext } from '../../../context/provider';
 
-import { WhiteCheck } from '../../../assets/Icons';
+import { GreenCheck } from '../../../assets/Icons';
 
 const Connecting = () => {
   const context = useContext(ProviderContext);
@@ -20,16 +20,16 @@ const Connecting = () => {
   }, []);
 
   return (
-    <div className="flex flex-col items-center justify-center w-full select-none mt-8">
-      <div
-        className={`h-16 w-16 flex justify-center rounded-full overflow-hidden items-center bg-[#56C162] mb-4`}
-      >
-        <WhiteCheck />
+    <div className="flex flex-col items-center justify-center w-full select-none mt-4">
+      <div className={`size-12 flex justify-center rounded-full overflow-hidden items-center mb-6`}>
+        <GreenCheck />
       </div>
 
-      <div className="space-y-3 w-full flex-col text-center font-semibold">
-        <p className="text-xl">Connection Successful </p>
-        <p className="text-sm text-center">Your account has been successfully connected.</p>
+      <div className="space-y-1 w-full flex-col text-center tracking-[-2%]">
+        <p className="text-xl font-semibold">Connection Successful </p>
+        <p className="text-sm text-center font-medium leading-5">
+          Your account has been successfully connected.
+        </p>
       </div>
 
       <div className="w-full my-4">

@@ -39,7 +39,6 @@ export const BluxProvider = ({
     }));
   }, [appearance]);
 
-  console.log(value.signTx, value.isAuthenticated);
   return (
     <ProviderContext.Provider value={{ value, setValue }}>
       {children}
