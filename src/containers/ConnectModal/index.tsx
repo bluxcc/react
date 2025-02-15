@@ -1,16 +1,16 @@
 import React from 'react';
 
 import Modal from '../../components/Modal';
-import Profile from '../ModalState/Profile';
-import Connecting from '../ModalState/Connecting';
-import OnBoarding from '../ModalState/OnBoarding';
-import ConnectSuccess from '../ModalState/ConnectSuccess';
+import Profile from '../Pages/Profile';
+import Connecting from '../Pages/Connecting';
+import OnBoarding from '../Pages/OnBoarding';
+import ConnectSuccess from '../Pages/ConnectSuccess';
 
 import { useConnectModal } from '../../hooks/useConnectModal';
 import { useGoogleFonts } from '../../hooks/useGoogleFont';
 
 import { ModalView } from '../../types';
-import SignTransaction from '../ModalState/SignTransaction';
+import SignTransaction from '../Pages/SignTransaction';
 
 interface ConnectModalProps {
   isOpen: boolean;

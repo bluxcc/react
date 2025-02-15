@@ -39,20 +39,9 @@ const Modal = ({
   const contentRef = useRef<HTMLDivElement>(null);
   const isFirstRender = useRef(true);
   const previousChildrenRef = useRef(children);
-  const previousHeightRef = useRef<number>(380);
+  const previousHeightRef = useRef<number>(400);
 
   const modalStyle = context?.value.appearance || defaultAppearance;
-
-  useEffect(() => {
-    if (!isOpen) {
-      setContentHeight(null);
-      setHeightChanged(false);
-      isFirstRender.current = true;
-      previousChildrenRef.current = children;
-      previousHeightRef.current = initialHeight;
-      return;
-    }
-  }, [isOpen]);
 
   useEffect(() => {
     if (!isOpen || !contentRef.current) return;
@@ -66,8 +55,7 @@ const Modal = ({
         isFirstRender.current = false;
         return;
       }
-
-      if (newHeight !== previousHeightRef.current) {
+      if (!isFirstRender.current && newHeight !== previousHeightRef.current) {
         setContentHeight(newHeight);
         setHeightChanged(true);
         previousHeightRef.current = newHeight;
@@ -83,12 +71,24 @@ const Modal = ({
     return () => resizeObserver.disconnect();
   }, [isOpen, children]);
 
+  useEffect(() => {
+    if (!isOpen) {
+      setContentHeight(null);
+      setHeightChanged(false);
+      isFirstRender.current = true;
+      previousChildrenRef.current = children;
+      previousHeightRef.current = initialHeight;
+      return;
+    }
+  }, [isOpen]);
+
   const currentHeight = isFirstRender.current
     ? initialHeight
     : contentHeight ?? previousHeightRef.current;
 
   if (!isOpen) return null;
 
+  console.log(initialHeight, currentHeight);
   return (
     <>
       {!context?.value.isDemo && (
@@ -102,10 +102,10 @@ const Modal = ({
         onClick={(e) => e.target === e.currentTarget && handleClose(onClose)}
       >
         <div
-          className="overflow-hidden border border-primary-100 !w-[360px]"
+          className="relative overflow-hidden border border-primary-100"
           style={{
             height: `${currentHeight}px`,
-            transform: isOpening ? 'scale(0.98)' : 'scale(1)',
+            // transform: isOpening ? 'scale(0.98)' : 'scale(1)',
             opacity: isOpening ? '0' : '1',
             transition: isOpening
               ? 'transform 300ms ease-out, opacity 300ms ease-out'
@@ -118,7 +118,7 @@ const Modal = ({
             borderRadius: getBorderRadius(modalStyle.cornerRadius),
           }}
         >
-          <div ref={contentRef} className="px-6 pb-4">
+          <div ref={contentRef} className="px-6 pb-4 !w-[360px] transition-all">
             <ModalHeader
               icon={icon}
               onInfo={onInfo}

@@ -72,16 +72,16 @@ const Connecting = () => {
   };
 
   return (
-    <div className="flex flex-col items-center justify-center w-full select-none mt-8">
+    <div className="flex flex-col items-center justify-center w-full select-none mt-4">
       <div
-        className={`h-20 w-20 flex justify-center border-2 rounded-full overflow-hidden items-center mb-4 ${
+        className={`h-20 w-20 flex justify-center border-2 rounded-full overflow-hidden items-center mb-6 ${
           error ? 'border-lightRed-200' : 'border-primary-100'
         }`}
       >
         {handleIcons(user?.wallet?.name ?? '')}
       </div>
 
-      <div className="space-y-[8px] flex-col text-center font-semibold">
+      <div className="space-y-2 flex-col text-center font-semibold">
         <p className="text-xl">
           {error ? 'Failed connecting to' : 'Waiting for'} {user?.wallet?.name}
         </p>
