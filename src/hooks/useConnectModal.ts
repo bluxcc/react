@@ -50,7 +50,12 @@ export const useConnectModal = (): UseConnectModalReturn => {
     } else {
       setModalState((prev) => ({ ...prev, view: ModalView.ONBOARDING, showAllWallets: false }));
     }
-  }, [context?.value.isAuthenticated, context?.value.isConnecting]);
+  }, [
+    context?.value.isAuthenticated,
+    context?.value.isConnecting,
+    context?.value.signTx,
+    context?.value.connectSuccess,
+  ]);
 
   const handleGoBack = () => {
     if (modalState.view === ModalView.CONNECTING) {
@@ -70,13 +75,16 @@ export const useConnectModal = (): UseConnectModalReturn => {
   const showCloseButton =
     modalState.view === ModalView.CONNECTING ||
     modalState.view === ModalView.PROFILE ||
-    modalState.view === ModalView.CONNECT_SUCCESS;
+    modalState.view === ModalView.CONNECT_SUCCESS ||
+    modalState.view === ModalView.SIGN_TRANSACTION;
 
   const modalHeader =
     modalState.view === ModalView.ONBOARDING
       ? 'Log in or Signup'
       : modalState.view === 'PROFILE'
       ? 'Profile'
+      : modalState.view === 'SIGN_TRANSACTION'
+      ? 'Confirmation'
       : '';
 
   const closeModal = () => {

@@ -1,4 +1,4 @@
-import React, { useContext, useEffect, useState } from 'react';
+import React, { useContext, useEffect, useState, useMemo } from 'react';
 
 import { ProviderContext } from '../../../context/provider';
 
@@ -19,17 +19,12 @@ const OnBoarding = ({ showAllWallets, setShowAllWallets }: OnBoardingProps) => {
   const context = useContext(ProviderContext);
   const [wallets, setWallets] = useState<WalletActions[]>(context?.value.availableWallets || []);
 
-  const [hiddenWallets, setHiddenWallets] = useState<WalletActions[]>([]);
-  const [visibleWallets, setVisibleWallets] = useState<WalletActions[]>([]);
+  const hiddenWallets = useMemo(() => {
+    return wallets.length > 3 ? wallets.slice(2) : [];
+  }, [wallets]);
 
-  useEffect(() => {
-    if (wallets.length > 3) {
-      setHiddenWallets(wallets.slice(2));
-      setVisibleWallets(showAllWallets ? wallets.slice(2) : wallets.slice(0, 2));
-    } else {
-      setHiddenWallets([]);
-      setVisibleWallets(wallets);
-    }
+  const visibleWallets = useMemo(() => {
+    return showAllWallets ? wallets.slice(2) : wallets.slice(0, 2);
   }, [wallets, showAllWallets]);
 
   useEffect(() => {

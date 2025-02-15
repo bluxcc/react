@@ -13,7 +13,7 @@ interface ModalProps {
   onClose?: () => void;
   onBack?: () => void;
   children: React.ReactNode;
-  icon: 'info' | 'back';
+  icon?: 'info' | 'back';
   onInfo?: () => void;
   closeButton?: boolean;
   modalHeader: string;

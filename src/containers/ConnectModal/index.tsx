@@ -57,7 +57,7 @@ export default function ConnectModal({ isOpen }: ConnectModalProps) {
       isOpen={isOpen}
       onClose={closeModal}
       modalHeader={modalHeader}
-      icon={showBackButton ? 'back' : 'info'}
+      icon={showBackButton ? 'back' : modalState.view === ModalView.ONBOARDING ? 'info' : undefined}
       closeButton={showCloseButton}
       onBack={handleGoBack}
       initialHeight={initialHeight}
