@@ -1,5 +1,4 @@
 import React, { useContext, useEffect, useRef, useState } from 'react';
-import clsx from 'clsx';
 
 import { getBorderRadius } from '../../utils/getBorderRadius';
 import { useModalAnimation } from '../../hooks/useModalAnimation';
@@ -97,17 +96,13 @@ const Modal = ({
       )}
 
       <div
-        className={clsx(
-          'absolute inset-0 flex items-center justify-center z-[9999] ',
-          isClosing && 'animate-fadeOut',
-        )}
+        className={`absolute inset-0 flex items-center justify-center z-[9999] ${
+          isClosing && 'animate-fadeOut'
+        }`}
         onClick={(e) => e.target === e.currentTarget && handleClose(onClose)}
       >
         <div
-          className={clsx(
-            'overflow-hidden border !w-[360px]',
-            modalStyle.font && `!font-[${modalStyle.font}]`,
-          )}
+          className="overflow-hidden border !w-[360px]"
           style={{
             height: `${currentHeight}px`,
             transform: isOpening ? 'scale(0.98)' : 'scale(1)',
@@ -116,7 +111,7 @@ const Modal = ({
               ? 'transform 300ms ease-out, opacity 300ms ease-out'
               : hasTransition
               ? 'height 300ms ease-in-out'
-              : 'none',
+              : 'transition-all',
             backgroundColor: modalStyle.background,
             color: modalStyle.textColor,
             fontFamily: modalStyle.font,

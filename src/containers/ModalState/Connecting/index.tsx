@@ -2,10 +2,8 @@ import React, { useContext, useEffect, useState, useRef } from 'react';
 
 import Button from '../../../components/Button';
 import { ProviderContext } from '../../../context/provider';
-import { defaultAppearance } from '../../../constants/defaultAppearance';
 
 import { handleIcons } from '../../../utils/handleIcons';
-import { getBorderRadius } from '../../../utils/getBorderRadius';
 import { initializeRabetMobile } from '../../../utils/initializeRabetMobile';
 import { getMappedWallets, MappedWallet } from '../../../utils/mappedWallets';
 
@@ -19,7 +17,6 @@ const Connecting = () => {
   const hasConnected = useRef(false);
   const context = useContext(ProviderContext);
 
-  const modalStyle = context?.value.appearance || defaultAppearance;
   const { user } = context?.value || {};
   const userWallet = user?.wallet;
 
@@ -77,36 +74,32 @@ const Connecting = () => {
   return (
     <div className="flex flex-col items-center justify-center w-full select-none mt-8">
       <div
-        className={`h-20 w-20 flex justify-center border-2 overflow-hidden items-center mb-4 ${
-          error ? 'border-lightRed-300' : 'border-primary-100'
+        className={`h-20 w-20 flex justify-center border-2 rounded-full overflow-hidden items-center mb-4 ${
+          error ? 'border-lightRed-200' : 'border-primary-100'
         }`}
-        style={{ borderRadius: getBorderRadius(modalStyle.cornerRadius) }}
       >
         {handleIcons(user?.wallet?.name ?? '')}
       </div>
 
-      <div className="space-y-3 flex-col text-center font-semibold">
+      <div className="space-y-[8px] flex-col text-center font-semibold">
         <p className="text-xl">
-          {error ? 'Failed Connecting to' : 'Waiting for'} {user?.wallet?.name}
+          {error ? 'Failed connecting to' : 'Waiting for'} {user?.wallet?.name}
         </p>
         <p className="text-sm">
           {error ? 'Please try connecting again.' : 'Accept connection request in the wallet.'}
         </p>
       </div>
 
+      <div className="w-full my-3">
+        <div className="absolute left-0 right-0 bg-primary-100 h-[1px]" />
+      </div>
+
       {error ? (
-        <Button
-          onClick={handleRetry}
-          className="mt-8 font-medium w-full inline-flex justify-center items-center gap-[10px] border-none text-white bg-red-500 cursor-default"
-        >
+        <Button onClick={handleRetry} className="text-white bg-lightRed-300">
           Try again
         </Button>
       ) : (
-        <Button
-          disabled
-          className="mt-8 font-medium w-full inline-flex justify-center items-center gap-[10px] cursor-default"
-        >
-          <Loading />
+        <Button state="enabled" variant="outline" startIcon={<Loading />}>
           <p>Connecting</p>
         </Button>
       )}

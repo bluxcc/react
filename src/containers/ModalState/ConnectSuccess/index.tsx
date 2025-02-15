@@ -22,10 +22,7 @@ const Connecting = () => {
   return (
     <div className="flex flex-col items-center justify-center w-full select-none mt-8">
       <div
-        style={{
-          background: context?.value.appearance.accent,
-        }}
-        className={`h-16 w-16 flex justify-center rounded-full overflow-hidden items-center mb-4`}
+        className={`h-16 w-16 flex justify-center rounded-full overflow-hidden items-center bg-[#56C162] mb-4`}
       >
         <WhiteCheck />
       </div>
@@ -35,7 +32,15 @@ const Connecting = () => {
         <p className="text-sm text-center">Your account has been successfully connected.</p>
       </div>
 
-      <Button disabled className="cursor-default flex justify-center items-center mt-4">
+      <div className="w-full my-3">
+        <div className="absolute left-0 right-0 bg-primary-100 h-[1px]" />
+      </div>
+
+      <Button
+        state="enabled"
+        variant="outline"
+        className="cursor-default flex justify-center items-center"
+      >
         <p>Logging In</p>
       </Button>
     </div>

@@ -1,7 +1,6 @@
 import React, { useContext, useEffect, useState } from 'react';
 
 import { ProviderContext } from '../../../context/provider';
-import { ButtonWithIcon, ButtonWithIconAndArrow } from '../../../components/Button/buttonVariants';
 
 import { handleIcons } from '../../../utils/handleIcons';
 import { getMappedWallets } from '../../../utils/mappedWallets';
@@ -9,6 +8,8 @@ import { getMappedWallets } from '../../../utils/mappedWallets';
 import { WalletActions } from '../../../types';
 import BluxLogo from '../../../assets/bluxLogo';
 import { StellarIcon } from '../../../assets/logos';
+import CardItem from '../../../components/CardItem';
+import { ArrowRight } from '../../../assets/Icons';
 
 type OnBoardingProps = {
   showAllWallets: boolean;
@@ -80,29 +81,31 @@ const OnBoarding = ({ showAllWallets, setShowAllWallets }: OnBoardingProps) => {
           <BluxLogo />
         )}
       </div>
+      <div className="space-y-2">
+        {visibleWallets.map((wallet) => (
+          <CardItem
+            key={wallet.name}
+            {...wallet}
+            label={wallet.name}
+            startIcon={handleIcons(wallet.name)}
+            onClick={() => handleConnect(wallet)}
+          />
+        ))}
 
-      {visibleWallets.map((wallet) => (
-        <ButtonWithIcon
-          key={wallet.name}
-          {...wallet}
-          icon={handleIcons(wallet.name)}
-          onClick={() => handleConnect(wallet)}
-        />
-      ))}
-
-      {hiddenWallets.length > 0 && !showAllWallets && (
-        <ButtonWithIconAndArrow
-          name="All Stellar wallets"
-          icon={<StellarIcon />}
-          onClick={() => setShowAllWallets(true)}
-        />
-      )}
-
+        {hiddenWallets.length > 0 && !showAllWallets && (
+          <CardItem
+            label="All Stellar wallets"
+            startIcon={<StellarIcon />}
+            endIcon={<ArrowRight />}
+            onClick={() => setShowAllWallets(true)}
+          />
+        )}
+      </div>
       <div
         className="text-center font-medium text-sm mt-3 cursor-pointer"
         style={{ color: context?.value.appearance?.accent }}
       >
-        I don&apos;t have a wallet
+        I have a passKey
       </div>
 
       <div className="font-semibold text-[10px] text-center w-full py-2">

@@ -1,43 +1,73 @@
 import React, { useContext } from 'react';
-import clsx from 'clsx';
-
 import { getBorderRadius } from '../../utils/getBorderRadius';
 import { ProviderContext } from '../../context/provider';
 import { defaultAppearance } from '../../constants/defaultAppearance';
 
-export type ButtonProps = {
-  name?: string;
+type ButtonSize = 'small' | 'medium' | 'large';
+type ButtonVariant = 'outline' | 'text' | 'fill';
+type ButtonState = 'enabled' | 'disabled' | 'selected';
+
+interface ButtonProps {
+  size?: ButtonSize;
+  variant?: ButtonVariant;
+  state?: ButtonState;
+  children: React.ReactNode;
+  startIcon?: React.ReactNode;
+  endIcon?: React.ReactNode;
   onClick?: () => void;
-  children?: React.ReactNode;
-  className?: string;
-  disabled?: boolean;
   style?: React.CSSProperties;
+  className?: string;
+}
+
+const buttonBase =
+  'flex justify-center items-center px-[10px] transition-all disabled:cursor-not-allowed disabled:opacity-50 w-full';
+
+const sizeClasses: Record<ButtonSize, string> = {
+  small: 'h-8 text-sm gap-1',
+  medium: 'h-12 text-sm gap-2',
+  large: 'h-14 text-base gap-2',
 };
 
-const Button = ({ onClick, className, disabled, children, style }: ButtonProps) => {
+const variantClasses: Record<ButtonVariant, string> = {
+  outline:
+    'border border-primary-500 text-primary-600 hover:bg-primary-50 disabled:border-gray-300 disabled:text-gray-400',
+  text: 'text-primary-600 hover:bg-gray-50 disabled:text-gray-400',
+  fill: 'bg-primary-500 text-white hover:bg-primary-700 disabled:bg-gray-400',
+};
+
+const stateClasses: Record<ButtonState, string> = {
+  enabled: '!border-primary-100',
+  disabled: 'pointer-events-none',
+  selected: 'ring-2 ring-primary-600',
+};
+
+const Button = ({
+  size = 'large',
+  variant = 'outline',
+  state = 'enabled',
+  children,
+  startIcon,
+  endIcon,
+  onClick,
+  style,
+  className,
+}: ButtonProps) => {
   const context = useContext(ProviderContext);
   const modalStyle = context?.value.appearance || defaultAppearance;
 
   return (
     <button
-      disabled={disabled}
       onClick={onClick}
+      className={`${buttonBase} ${sizeClasses[size]} ${variantClasses[variant]} ${stateClasses[state]} ${className}`}
+      disabled={state === 'disabled'}
       style={{
         borderRadius: getBorderRadius(modalStyle.cornerRadius),
         ...style,
       }}
-      className={clsx(
-        `w-full relative flex items-center h-14 border border-primary-100 transition-colors duration-200 my-2 pl-2 pr-4`,
-        className,
-      )}
-      onMouseEnter={(e) => {
-        e.currentTarget.style.borderColor = modalStyle.accent;
-      }}
-      onMouseLeave={(e) => {
-        e.currentTarget.style.borderColor = '#cdceee';
-      }}
     >
-      {children}
+      {startIcon && <span>{startIcon}</span>}
+      <span>{children}</span>
+      {endIcon && <span>{endIcon}</span>}
     </button>
   );
 };

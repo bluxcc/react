@@ -25,12 +25,7 @@ const Profile = () => {
 
   return (
     <div className="flex flex-col items-center justify-center">
-      <div
-        className="w-20 h-20 rounded-full"
-        style={{
-          background: modalStyle.accent,
-        }}
-      ></div>
+      <div className="size-[73px] rounded-full bg-lightBlue-200" />
       <p className="text-xl font-medium mt-3 mb-1">
         Connected to {context?.value.user.wallet?.name}
       </p>
@@ -43,13 +38,20 @@ const Profile = () => {
       >
         {shortenAddress(address, 5)}
       </p>
+      <div className="w-full my-3">
+        <div className="absolute left-0 right-0 bg-primary-100 h-[1px]" />
+      </div>
+
       <Button
+        size="medium"
+        variant="text"
+        state="enabled"
         onClick={handleDisconnect}
         style={{
           background: modalStyle.accent,
           borderRadius: getBorderRadius(modalStyle.cornerRadius),
         }}
-        className="mt-8 font-medium w-full inline-flex justify-center items-center gap-[10px] border-none text-white"
+        className="font-medium w-full inline-flex justify-center items-center gap-[10px] border-none text-white"
       >
         Disconnect
       </Button>
