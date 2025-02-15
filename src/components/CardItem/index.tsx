@@ -3,16 +3,17 @@ import React, { useContext } from 'react';
 import { getBorderRadius } from '../../utils/getBorderRadius';
 import { defaultAppearance } from '../../constants/defaultAppearance';
 import { ProviderContext } from '../../context/provider';
+import { ArrowRight } from '../../assets/Icons';
 
 type CardItemProps = {
   variant?: 'social' | 'default';
   startIcon: React.ReactNode;
-  endIcon?: React.ReactNode;
+  endArrow?: boolean;
   label: string;
   onClick?: () => void;
 };
 
-const CardItem = ({ variant = 'default', startIcon, endIcon, label, onClick }: CardItemProps) => {
+const CardItem = ({ variant = 'default', startIcon, endArrow, label, onClick }: CardItemProps) => {
   const context = useContext(ProviderContext);
   const modalStyle = context?.value.appearance || defaultAppearance;
   return (
@@ -40,9 +41,11 @@ const CardItem = ({ variant = 'default', startIcon, endIcon, label, onClick }: C
       >
         {startIcon}
       </span>
-      <span className={`${variant === 'default' ? ' ml-2' : 'flex-1'}`}>{label}</span>
-      {endIcon ? (
-        <span className="ml-auto flex items-center">{endIcon}</span>
+      <span className={`${variant === 'default' ? ' ml-4' : 'flex-1'}`}>{label}</span>
+      {endArrow ? (
+        <span className="ml-auto flex items-center">
+          <ArrowRight />
+        </span>
       ) : (
         <span className="size-10" />
       )}

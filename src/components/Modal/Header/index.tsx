@@ -40,7 +40,7 @@ const ModalHeader: React.FC<HeaderProps> = ({
     <div className="w-full flex items-center justify-between h-16">
       <div>{renderIcon()}</div>
 
-      <p className="text-lg font-semibold text-center flex-1 select-none">{modalHeader}</p>
+      <p className="text-base font-semibold text-center flex-1 select-none">{modalHeader}</p>
 
       {closeButton ? (
         <button onClick={onClose} className="cursor-pointer">

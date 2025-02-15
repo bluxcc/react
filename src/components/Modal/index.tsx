@@ -102,7 +102,7 @@ const Modal = ({
         onClick={(e) => e.target === e.currentTarget && handleClose(onClose)}
       >
         <div
-          className="overflow-hidden border !w-[360px]"
+          className="overflow-hidden border border-primary-100 !w-[360px]"
           style={{
             height: `${currentHeight}px`,
             transform: isOpening ? 'scale(0.98)' : 'scale(1)',

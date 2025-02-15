@@ -6,13 +6,12 @@ import { useBlux } from '../../../hooks/useBlux';
 import shortenAddress from '../../../utils/shortenAddress';
 
 import { ProviderContext } from '../../../context/provider';
-import { defaultAppearance } from '../../../constants/defaultAppearance';
-import { getBorderRadius } from '../../../utils/getBorderRadius';
+import { Copy, History, LogOut, Send } from '../../../assets/Icons';
+import CardItem from '../../../components/CardItem';
 
 const Profile = () => {
   const context = useContext(ProviderContext);
   const { disconnect } = useBlux();
-  const modalStyle = context?.value.appearance || defaultAppearance;
   const [address, setAddress] = useState(context?.value.user.wallet?.address || '');
 
   useEffect(() => {
@@ -25,20 +24,25 @@ const Profile = () => {
 
   return (
     <div className="flex flex-col items-center justify-center">
-      <div className="size-[73px] rounded-full bg-lightBlue-200" />
-      <p className="text-xl font-medium mt-3 mb-1">
-        Connected to {context?.value.user.wallet?.name}
-      </p>
+      <div className="size-[73px] rounded-full bg-lightBlue-200 mt-4" />
       <p
-        className="text-base cursor-pointer"
-        style={{ color: modalStyle.accent }}
+        className="inline-flex gap-1 text-base cursor-pointer text-gray-700 mt-6 mb-4"
         onClick={() => {
           copyText(context?.value.user.wallet?.address as string);
         }}
       >
         {shortenAddress(address, 5)}
+        <Copy />
       </p>
-      <div className="w-full my-3">
+      <p className="text-primary-500 text-center">345.00 XLM</p>
+
+      <div className="space-y-2 mt-[16px] w-full">
+        <CardItem endArrow label="Send" startIcon={<Send />} onClick={() => {}} />
+        <CardItem endArrow label="Activity" startIcon={<History />} onClick={() => {}} />
+      </div>
+
+      {/* divider */}
+      <div className="w-full my-4">
         <div className="absolute left-0 right-0 bg-primary-100 h-[1px]" />
       </div>
 
@@ -46,11 +50,8 @@ const Profile = () => {
         size="medium"
         variant="text"
         state="enabled"
+        startIcon={<LogOut />}
         onClick={handleDisconnect}
-        style={{
-          background: modalStyle.accent,
-          borderRadius: getBorderRadius(modalStyle.cornerRadius),
-        }}
         className="font-medium w-full inline-flex justify-center items-center gap-[10px] border-none text-white"
       >
         Disconnect

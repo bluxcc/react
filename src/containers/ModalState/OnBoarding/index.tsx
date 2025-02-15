@@ -2,14 +2,13 @@ import React, { useContext, useEffect, useState } from 'react';
 
 import { ProviderContext } from '../../../context/provider';
 
+import CardItem from '../../../components/CardItem';
 import { handleIcons } from '../../../utils/handleIcons';
 import { getMappedWallets } from '../../../utils/mappedWallets';
 
 import { WalletActions } from '../../../types';
 import BluxLogo from '../../../assets/bluxLogo';
 import { StellarIcon } from '../../../assets/logos';
-import CardItem from '../../../components/CardItem';
-import { ArrowRight } from '../../../assets/Icons';
 
 type OnBoardingProps = {
   showAllWallets: boolean;
@@ -74,7 +73,7 @@ const OnBoarding = ({ showAllWallets, setShowAllWallets }: OnBoardingProps) => {
 
   return (
     <div className="w-full">
-      <div className="flex justify-center items-center w-full py-4">
+      <div className="flex justify-center items-center w-full my-6">
         {context?.value.config.appLogo ? (
           <img src={context?.value.config.appLogo} alt={context?.value.config.appName} />
         ) : (
@@ -94,9 +93,9 @@ const OnBoarding = ({ showAllWallets, setShowAllWallets }: OnBoardingProps) => {
 
         {hiddenWallets.length > 0 && !showAllWallets && (
           <CardItem
+            endArrow
             label="All Stellar wallets"
             startIcon={<StellarIcon />}
-            endIcon={<ArrowRight />}
             onClick={() => setShowAllWallets(true)}
           />
         )}
@@ -108,7 +107,7 @@ const OnBoarding = ({ showAllWallets, setShowAllWallets }: OnBoardingProps) => {
         I have a passKey
       </div>
 
-      <div className="font-semibold text-[10px] text-center w-full py-2">
+      <div className="font-semibold text-[10px] text-center w-full pt-2">
         Powered by{' '}
         <a
           href="https://blux.cc"

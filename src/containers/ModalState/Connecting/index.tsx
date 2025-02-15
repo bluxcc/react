@@ -90,7 +90,7 @@ const Connecting = () => {
         </p>
       </div>
 
-      <div className="w-full my-3">
+      <div className="w-full my-4">
         <div className="absolute left-0 right-0 bg-primary-100 h-[1px]" />
       </div>
 

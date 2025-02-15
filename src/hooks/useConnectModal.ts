@@ -1,7 +1,7 @@
 import { useContext, useEffect, useState } from 'react';
 import { ProviderContext } from '../context/provider';
 import { ModalState, ModalView } from '../types';
-import { MODAL_CONFIG, MODAL_HEIGHTS } from '../constants';
+import { MODAL_HEIGHTS } from '../constants';
 
 export interface UseConnectModalReturn {
   modalState: ModalState;
@@ -73,7 +73,12 @@ export const useConnectModal = (): UseConnectModalReturn => {
     modalState.view === ModalView.PROFILE ||
     modalState.view === ModalView.CONNECT_SUCCESS;
 
-  const modalHeader = modalState.view === ModalView.ONBOARDING ? MODAL_CONFIG.defaultHeader : '';
+  const modalHeader =
+    modalState.view === ModalView.ONBOARDING
+      ? 'Log in or Signup'
+      : modalState.view === 'PROFILE'
+      ? 'Profile'
+      : '';
 
   const closeModal = () => {
     context?.setValue((prev) => ({

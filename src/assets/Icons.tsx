@@ -80,3 +80,55 @@ export const WhiteCheck = () => (
     />
   </svg>
 );
+export const LogOut = () => (
+  <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+    <mask id="mask0_2054_469" maskUnits="userSpaceOnUse" x="0" y="0" width="24" height="24">
+      <rect width="24" height="24" fill="#D9D9D9" />
+    </mask>
+    <g mask="url(#mask0_2054_469)">
+      <path
+        d="M20.3713 12.75H8.577V11.25H20.3713L18.552 9.43075L19.6057 8.34625L23.2595 12L19.6057 15.6538L18.552 14.5693L20.3713 12.75ZM15.202 8.86525V5H5V19H15.202V15.1348H16.702V20.5H3.5V3.5H16.702V8.86525H15.202Z"
+        fill="#666666"
+      />
+    </g>
+  </svg>
+);
+export const Copy = () => (
+  <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+    <mask id="mask0_2054_791" maskUnits="userSpaceOnUse" x="0" y="0" width="24" height="24">
+      <rect width="24" height="24" fill="#D9D9D9" />
+    </mask>
+    <g mask="url(#mask0_2054_791)">
+      <path
+        d="M7.25 17.5V2.5H19.25V17.5H7.25ZM8.75 16H17.75V4H8.75V16ZM3.75 21V6.30775H5.25V19.5H15.4423V21H3.75Z"
+        fill="#4D4D4D"
+      />
+    </g>
+  </svg>
+);
+export const History = () => (
+  <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+    <mask id="mask0_2054_838" maskUnits="userSpaceOnUse" x="0" y="0" width="24" height="24">
+      <rect width="24" height="24" fill="#D9D9D9" />
+    </mask>
+    <g mask="url(#mask0_2054_838)">
+      <path
+        d="M12 21.5C9.54899 21.5 7.42215 20.6913 5.61949 19.074C3.81682 17.4567 2.79365 15.432 2.54999 13H4.07499C4.31865 15.0167 5.19557 16.6875 6.70574 18.0125C8.21607 19.3375 9.98082 20 12 20C14.2333 20 16.125 19.225 17.675 17.675C19.225 16.125 20 14.2333 20 12C20 9.76667 19.225 7.875 17.675 6.325C16.125 4.775 14.2333 4 12 4C10.4962 4 9.11249 4.38625 7.84899 5.15875C6.58549 5.93108 5.61149 6.99033 4.92699 8.3365H7.88449V9.8365H2.75774C3.26024 7.68267 4.37207 5.9215 6.09324 4.553C7.8144 3.18433 9.78332 2.5 12 2.5C13.3142 2.5 14.5492 2.74933 15.705 3.248C16.8608 3.74667 17.8662 4.42342 18.7212 5.27825C19.5762 6.13308 20.2531 7.13833 20.7517 8.294C21.2506 9.44967 21.5 10.6844 21.5 11.9983C21.5 13.3123 21.2506 14.5473 20.7517 15.7035C20.2531 16.8597 19.5762 17.8653 18.7212 18.7205C17.8662 19.5757 16.8608 20.2528 15.705 20.7518C14.5492 21.2506 13.3142 21.5 12 21.5ZM14.723 15.777L11.25 12.3025V7.3655H12.75V11.6962L15.7672 14.723L14.723 15.777Z"
+        fill="#0C1083"
+      />
+    </g>
+  </svg>
+);
+export const Send = () => (
+  <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+    <mask id="mask0_2054_817" maskUnits="userSpaceOnUse" x="0" y="0" width="24" height="24">
+      <rect width="24" height="24" fill="#D9D9D9" />
+    </mask>
+    <g mask="url(#mask0_2054_817)">
+      <path
+        d="M3.5 19.25V4.75L20.7115 12L3.5 19.25ZM5 17L16.85 12L5 7V10.6923L10.423 12L5 13.3077V17Z"
+        fill="#0C1083"
+      />
+    </g>
+  </svg>
+);
