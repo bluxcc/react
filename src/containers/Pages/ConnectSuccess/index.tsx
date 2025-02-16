@@ -25,7 +25,7 @@ const Connecting = () => {
         <GreenCheck />
       </div>
 
-      <div className="space-y-1 w-full flex-col text-center tracking-[-2%]">
+      <div className="space-y-1 w-full flex-col text-center">
         <p className="text-xl font-semibold">Connection Successful </p>
         <p className="text-sm text-center font-medium leading-5">
           Your account has been successfully connected.

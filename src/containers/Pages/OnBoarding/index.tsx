@@ -9,6 +9,7 @@ import { getMappedWallets } from '../../../utils/mappedWallets';
 import { WalletActions } from '../../../types';
 import BluxLogo from '../../../assets/bluxLogo';
 import { StellarIcon } from '../../../assets/logos';
+import { getContrastColor } from '../../../utils/getContrastColor';
 
 type OnBoardingProps = {
   showAllWallets: boolean;
@@ -72,7 +73,7 @@ const OnBoarding = ({ showAllWallets, setShowAllWallets }: OnBoardingProps) => {
         {context?.value.config.appLogo ? (
           <img src={context?.value.config.appLogo} alt={context?.value.config.appName} />
         ) : (
-          <BluxLogo />
+          <BluxLogo fill={getContrastColor(context?.value.appearance.background as string)} />
         )}
       </div>
       <div className="space-y-2">
@@ -90,7 +91,11 @@ const OnBoarding = ({ showAllWallets, setShowAllWallets }: OnBoardingProps) => {
           <CardItem
             endArrow
             label="All Stellar wallets"
-            startIcon={<StellarIcon />}
+            startIcon={
+              <StellarIcon
+                fill={getContrastColor(context?.value.appearance.background as string)}
+              />
+            }
             onClick={() => setShowAllWallets(true)}
           />
         )}
@@ -102,7 +107,12 @@ const OnBoarding = ({ showAllWallets, setShowAllWallets }: OnBoardingProps) => {
         Login with passkey
       </div>
 
-      <div className="font-semibold tracking-[-2%] text-[12px] text-center w-full pt-[6px]">
+      <div
+        className="font-semibold text-[12px] text-center w-full pt-[6px]"
+        style={{
+          color: context?.value.appearance?.textColor,
+        }}
+      >
         Powered by{' '}
         <a
           href="https://blux.cc"

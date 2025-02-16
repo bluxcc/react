@@ -31,11 +31,13 @@ const Modal = ({
   initialHeight,
   closeButton = false,
 }: ModalProps) => {
+  const [contentHeight, setContentHeight] = useState<number | null>(null);
+  const [heightChanged, setHeightChanged] = useState(false);
+
   const context = useContext(ProviderContext);
   const { isOpening, isClosing, hasTransition, handleClose, setHasTransition } =
     useModalAnimation(isOpen);
-  const [contentHeight, setContentHeight] = useState<number | null>(null);
-  const [heightChanged, setHeightChanged] = useState(false);
+
   const contentRef = useRef<HTMLDivElement>(null);
   const isFirstRender = useRef(true);
   const previousChildrenRef = useRef(children);
@@ -101,7 +103,7 @@ const Modal = ({
         onClick={(e) => e.target === e.currentTarget && handleClose(onClose)}
       >
         <div
-          className="relative overflow-hidden w-[360px] border border-primary-100 box-border"
+          className="relative overflow-hidden w-[360px] shadow-[0px_4px_80px_0px_#00000008] border border-primary-100 box-border"
           style={{
             height: `${currentHeight}px`,
             // transform: isOpening ? 'scale(0.98)' : 'scale(1)',
@@ -114,6 +116,7 @@ const Modal = ({
             backgroundColor: modalStyle.background,
             color: modalStyle.textColor,
             fontFamily: modalStyle.font,
+            letterSpacing: '-0.03px',
             borderRadius: getBorderRadius(modalStyle.cornerRadius),
           }}
         >

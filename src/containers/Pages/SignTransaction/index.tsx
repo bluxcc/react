@@ -1,54 +1,61 @@
-import React, { useContext, useEffect } from 'react';
+import React, { useContext } from 'react';
 
 import { ProviderContext } from '../../../context/provider';
-import { defaultAppearance } from '../../../constants/defaultAppearance';
 
 import shortenAddress from '../../../utils/shortenAddress';
 import { getBorderRadius } from '../../../utils/getBorderRadius';
 import Button from '../../../components/Button';
 import TransactionSummary from '../../../components/TransactionSummery';
+import { submitTransaction } from '../../../utils/submitTransaction';
+import { getTransactionDetails } from '../../../utils/getTransactionDetails';
+import { ContextState } from '../../../types';
 
 const SignTransaction = () => {
-  const context = useContext(ProviderContext);
-  const modalStyle = context?.value.appearance || defaultAppearance;
-
-  useEffect(() => {
-    handleSignTx();
-  }, [context?.value?.availableWallets, context?.value?.user?.wallet?.name]);
+  const context = useContext(ProviderContext) as ContextState;
+  const modalStyle = context.value.appearance;
+  const { xdr, resolver } = context.value.signTx;
+  const txDetails = getTransactionDetails(xdr, context.value.config.networkPassphrase);
 
   const handleSignTx = async () => {
+    context.setValue((prev) => ({
+      ...prev,
+      openModal: true,
+      signTx: { ...prev.signTx, openModal: true },
+    }));
     try {
-      if (!context?.value?.user?.wallet?.name || !context?.value?.availableWallets) return;
+      const walletName = context.value.user?.wallet?.name;
+      if (!walletName || !context.value.availableWallets) return;
 
       const userWallet = context.value.availableWallets.find(
-        (wallet) => wallet.name === context?.value?.user?.wallet?.name,
+        (wallet) => wallet.name === walletName,
       );
+      if (!userWallet || !userWallet.signTransaction) return;
 
-      if (userWallet?.signTransaction) {
-        const signedXdr = await userWallet.signTransaction('your_xdr_here', {
-          networkPassphrase: 'Test SDF Network ; September 2015', // Example
-        });
-
-        console.log('Signed XDR:', signedXdr);
-      }
+      const signedXdr = await userWallet.signTransaction(xdr, {
+        networkPassphrase: context.value.config.networkPassphrase,
+        address: context.value.user?.wallet?.address as string,
+      });
+      const result = await submitTransaction(signedXdr, context.value.config.networkPassphrase);
+      if (!resolver) return;
+      resolver(result);
     } catch (error) {
-      console.error('Error signing transaction:', error);
+      console.error('Transaction signing failed:', error);
+      throw error;
     }
   };
 
   return (
-    <div className="w-full tracking-[-2%]">
-      <div className="inline-flex my-4 px-4 text-sm font-medium text-center select-none">
-        <p className="font-semibold capitalize">{context?.value.config.appName} </p>
-        <p> wants your permission to approve the following transaction.</p>
-      </div>
+    <div className="w-full">
+      <p className="my-4 text-sm font-medium text-center select-none mx-3">
+        <span className="font-semibold capitalize">{context?.value.config.appName} </span>wants your
+        permission to approve the following transaction.
+      </p>
 
       <TransactionSummary
-        action="Approve"
-        operations={3}
-        sender={'GA5F63ORVJ3X4PMGGVCFDDLU6IH233WPREGM3PTPG5NODJTTYQSPWL3H'}
-        receiver={'GA5F63ORVJ3X4PMGGVCFDDLU6IH233WPREGM3PTPG5NODJTTYQSPWL3H'}
-        estimatedFee={'2.00'}
+        operations={txDetails.operations}
+        sender={txDetails.sender}
+        estimatedFee={txDetails.estimatedFee.toString()}
+        action={txDetails.action}
       />
 
       <div
@@ -69,7 +76,7 @@ const SignTransaction = () => {
             borderRadius: getBorderRadius(modalStyle.cornerRadius),
           }}
         >
-          <p className="text-primary-500 font-normal">234 XLM</p>
+          <p className="text-primary-500 text-xs font-normal">234 XLM</p>
         </div>
       </div>
 

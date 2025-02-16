@@ -66,5 +66,8 @@
   },
   "sideEffects": [
     "*.css"
-  ]
+  ],
+  "dependencies": {
+    "@stellar/stellar-sdk": "^13.1.0"
+  }
 }

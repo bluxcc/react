@@ -1,3 +1,5 @@
+import { HorizonApi } from '@stellar/stellar-sdk/lib/horizon';
+
 /**
  * Enum representing the supported wallets in the system.
  */
@@ -34,7 +36,7 @@ export interface IProviderConfig {
  * Information about the connected wallet.
  */
 export interface WalletInfo {
-  name: SupportedWallets | null; // Wallet name, if connected
+  name: SupportedWallets; // Wallet name, if connected
   address: string | null; // Wallet public address, if connected
 }
 
@@ -91,7 +93,11 @@ export interface ContextValues {
   connectRejected: boolean; // Indicates if the connection was rejected
   availableWallets: WalletActions[]; // List of available wallets
   connectSuccess: boolean; // Indicates if the connection was successful
-  signTx: boolean; // Indicates if sign transaction modal should open
+  signTx: {
+    openModal: boolean; // Indicates if sign transaction modal should open
+    xdr: string; // Transaction details for signing
+    resolver: ((value: HorizonApi.SubmitTransactionResponse) => void) | null; // Transaction signing resolver
+  };
 }
 
 /**

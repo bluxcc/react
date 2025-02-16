@@ -3,62 +3,58 @@ import { ProviderContext } from '../context/provider';
 
 export const useBlux = () => {
   const context = useContext(ProviderContext);
-
   if (!context) {
     throw new Error('useBlux must be used within a ProviderContext.');
   }
 
   const { value, setValue } = context;
+  const { isAuthenticated, user } = value;
 
   const connect = () => {
-    setValue((prev) => {
-      if (prev.openModal) {
-        return prev;
-      }
-      return { ...prev, openModal: true };
-    });
+    setValue((prev) => (prev.openModal ? prev : { ...prev, openModal: true }));
   };
 
   const disconnect = () => {
-    setValue({
-      ...value,
+    setValue((prev) => ({
+      ...prev,
       user: { wallet: null },
       openModal: false,
       isConnecting: false,
       isAuthenticated: false,
-    });
+    }));
   };
 
   const profile = () => {
-    if (context?.value.isAuthenticated) {
-      setValue({
-        ...value,
-        openModal: true,
-      });
-    } else {
-      throw new Error('user is not authenticated');
+    if (!isAuthenticated) {
+      throw new Error('User is not authenticated.');
     }
+    setValue((prev) => ({ ...prev, openModal: true }));
   };
 
-  const signTransaction = () => {
-    if (context?.value.isAuthenticated) {
-      setValue({
-        ...value,
+  const signTransaction = (xdr: string) =>
+    new Promise((resolve, reject) => {
+      if (!isAuthenticated) {
+        reject(new Error('User is not authenticated.'));
+      }
+
+      setValue((prev) => ({
+        ...prev,
         openModal: true,
-        signTx: true,
-      });
-    } else {
-      throw new Error('user is not authenticated');
-    }
-  };
+        signTx: {
+          openModal: true,
+          xdr,
+          resolver: resolve,
+        },
+      }));
+    });
 
   return {
     connect,
     disconnect,
     profile,
     signTransaction,
-    isReady: value?.isReady || false,
-    user: value?.user || null,
-    isAuthenticated: value?.isAuthenticated || false,
+    isReady: value.isReady ?? false,
+    user: user ?? null,
+    isAuthenticated: isAuthenticated ?? false,
   };
 };

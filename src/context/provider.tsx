@@ -28,7 +28,11 @@ export const BluxProvider = ({
     isConnecting: false,
     connectSuccess: false,
     connectRejected: false,
-    signTx: false,
+    signTx: {
+      openModal: false,
+      xdr: '',
+      resolver: null,
+    },
     availableWallets: [],
   });
 

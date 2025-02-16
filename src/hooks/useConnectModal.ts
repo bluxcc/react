@@ -39,11 +39,11 @@ export const useConnectModal = (): UseConnectModalReturn => {
   const initialHeight = getInitialHeight();
 
   useEffect(() => {
-    if (context?.value.isAuthenticated && !context.value.signTx) {
+    if (context?.value.isAuthenticated && !context.value.signTx.openModal) {
       setModalState((prev) => ({ ...prev, view: ModalView.PROFILE }));
     } else if (context?.value.isConnecting) {
       setModalState((prev) => ({ ...prev, view: ModalView.CONNECTING }));
-    } else if (context?.value.signTx) {
+    } else if (context?.value.signTx.openModal) {
       setModalState((prev) => ({ ...prev, view: ModalView.SIGN_TRANSACTION }));
     } else if (context?.value.connectSuccess) {
       setModalState((prev) => ({ ...prev, view: ModalView.CONNECT_SUCCESS }));
@@ -53,7 +53,7 @@ export const useConnectModal = (): UseConnectModalReturn => {
   }, [
     context?.value.isAuthenticated,
     context?.value.isConnecting,
-    context?.value.signTx,
+    context?.value.signTx.openModal,
     context?.value.connectSuccess,
   ]);
 

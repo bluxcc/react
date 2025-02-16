@@ -2,6 +2,7 @@ import React from 'react';
 
 import copyText from '../../utils/copyText';
 import shortenAddress from '../../utils/shortenAddress';
+import capitalizeFirstLetter from '../../utils/capitalizeFirstLetter';
 
 interface TransactionDetail {
   label: string;
@@ -13,23 +14,20 @@ interface TransactionDetail {
 interface TransactionSummaryProps {
   operations: number;
   sender: string;
-  receiver: string;
   estimatedFee: string;
   action: string;
 }
 
-const TransactionSummary: React.FC<TransactionSummaryProps> = ({
+const TransactionSummary = ({
   operations,
   sender,
-  receiver,
   estimatedFee,
   action,
-}) => {
+}: TransactionSummaryProps) => {
   const details: TransactionDetail[] = [
-    { label: action, value: action },
+    { label: 'Action', value: capitalizeFirstLetter(action) },
     { label: 'Operations', value: operations.toString() },
     { label: 'Sender', value: shortenAddress(sender, 5), isHighlighted: true, isCopyable: true },
-    { label: 'To', value: shortenAddress(receiver, 5), isHighlighted: true, isCopyable: true },
     { label: 'Estimated Fee', value: `${estimatedFee} XLM` },
   ];
 
@@ -47,7 +45,7 @@ const TransactionSummary: React.FC<TransactionSummaryProps> = ({
             className={`${isHighlighted ? 'text-primary-600' : 'text-gray-700'} ${
               isCopyable ? 'cursor-pointer' : ''
             }`}
-            onClick={() => isCopyable && copyText(label === 'Sender' ? sender : receiver)}
+            onClick={() => isCopyable && copyText(sender)}
           >
             {value}
           </span>
