@@ -23,6 +23,7 @@ const CardItem = ({ variant = 'default', startIcon, endArrow, label, onClick }: 
         ${variant === 'social' ? 'border border-gray-300' : 'border border-primary-100'}`}
       style={{
         borderRadius: getBorderRadius(modalStyle.cornerRadius),
+        color: modalStyle.textColor,
       }}
       onMouseEnter={(e) => {
         if (variant === 'default') {

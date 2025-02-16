@@ -96,13 +96,13 @@ const OnBoarding = ({ showAllWallets, setShowAllWallets }: OnBoardingProps) => {
         )}
       </div>
       <div
-        className="text-center font-medium text-sm mt-3 cursor-pointer"
+        className="text-center font-medium text-sm mt-3 leading-[32px] cursor-pointer"
         style={{ color: context?.value.appearance?.accent }}
       >
-        I have a passKey
+        Login with passkey
       </div>
 
-      <div className="font-semibold text-[10px] text-center w-full pt-2">
+      <div className="font-semibold tracking-[-2%] text-[12px] text-center w-full pt-[6px]">
         Powered by{' '}
         <a
           href="https://blux.cc"
