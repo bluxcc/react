@@ -1,6 +1,6 @@
 import React from 'react';
 
-export const InfoIcon = (fill: string = '#1C1B1F') => (
+export const InfoIcon = ({ fill = '#1C1B1F' }: { fill?: string }) => (
   <svg width="20" height="20" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg">
     <mask id="mask0_0_3021" maskUnits="userSpaceOnUse" x="0" y="0" width="20" height="20">
       <rect width="20" height="20" fill="#D9D9D9" />
