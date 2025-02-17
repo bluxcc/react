@@ -1,7 +1,7 @@
 import React from 'react';
 import Profile from '../Pages/Profile';
-import Connecting from '../Pages/Connecting';
-import ConnectSuccess from '../Pages/ConnectSuccess';
+import Waiting from '../Pages/Waiting';
+import Successful from '../Pages/Successful';
 import OnBoarding from '../Pages/OnBoarding';
 import SignTransaction from '../Pages/SignTransaction';
 import { Routes } from '../../types';
@@ -23,13 +23,13 @@ export const modalContent: Record<
     title: 'Profile',
     Component: () => <Profile />,
   },
-  [Routes.CONNECTING]: {
+  [Routes.WAITING]: {
     title: '',
-    Component: () => <Connecting />,
+    Component: () => <Waiting />,
   },
-  [Routes.CONNECT_SUCCESS]: {
+  [Routes.SUCCESSFUL]: {
     title: '',
-    Component: () => <ConnectSuccess />,
+    Component: () => <Successful />,
   },
   [Routes.SIGN_TRANSACTION]: {
     title: 'Confirmation',

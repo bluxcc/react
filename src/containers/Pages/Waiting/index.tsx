@@ -4,21 +4,22 @@ import Button from '../../../components/Button';
 import { useProvider } from '../../../context/provider';
 
 import { handleIcons } from '../../../utils/handleIcons';
-import { initializeRabetMobile } from '../../../utils/initializeRabetMobile';
 import { getMappedWallets, MappedWallet } from '../../../utils/mappedWallets';
 
 import { Loading } from '../../../assets/Icons';
 import { Routes, WalletActions } from '../../../types';
+import { signTransactionHandler } from '../../../utils/signTransactionHandler';
 
-const Connecting = () => {
+const Waiting = () => {
   const [error, setError] = useState(false);
   const [mappedWallets, setMappedWallets] = useState<MappedWallet[]>([]);
   const [matchedWallet, setMatchedWallet] = useState<WalletActions | null>(null);
   const hasConnected = useRef(false);
   const context = useProvider();
 
+  const modalState = context.value.modalState;
   const { user } = context.value || {};
-  const userWallet = user?.wallet;
+  const { xdr, resolver } = context.value.signTransaction;
 
   useEffect(() => {
     const fetchWallets = async () => {
@@ -29,41 +30,67 @@ const Connecting = () => {
   }, []);
 
   useEffect(() => {
-    if (!userWallet?.name) return;
+    if (!user?.wallet?.name) return;
 
-    const foundWallet = mappedWallets.find(({ wallet }) => wallet.name === userWallet.name)?.wallet;
+    const foundWallet = mappedWallets.find(
+      ({ wallet }) => wallet.name === user?.wallet?.name,
+    )?.wallet;
 
     if (foundWallet) setMatchedWallet(foundWallet);
-  }, [mappedWallets, userWallet]);
+  }, [mappedWallets, user?.wallet]);
 
   useEffect(() => {
     if (!hasConnected.current && matchedWallet) {
       hasConnected.current = true;
-      handleConnect(matchedWallet);
+      handleAssignment(matchedWallet);
     }
   }, [matchedWallet]);
 
-  const handleConnect = async (wallet: WalletActions) => {
+  const handleAssignment = async (wallet: WalletActions) => {
     try {
-      const { publicKey } = await wallet.connect();
-      if (publicKey) {
-        setTimeout(() => {
-          context.setValue((prev) => ({
-            ...prev,
-            user: { wallet: { name: wallet.name, address: publicKey } },
-          }));
-          context.setRoute(Routes.CONNECT_SUCCESS);
-        }, 400);
+      if (modalState === 'signing') {
+        const result = await signTransactionHandler(
+          wallet,
+          xdr,
+          context.value.user.wallet?.address as string,
+          context.value.config.networkPassphrase,
+          resolver,
+        );
+
+        context.setValue((prev) => ({
+          ...prev,
+          signTransaction: {
+            ...prev.signTransaction,
+            latestResults: result,
+          },
+        }));
+
+        if (result) {
+          context.setRoute(Routes.SUCCESSFUL);
+        } else {
+          setError(true);
+        }
+      } else {
+        const { publicKey } = await wallet.connect();
+        if (publicKey) {
+          setTimeout(() => {
+            context.setValue((prev) => ({
+              ...prev,
+              user: { wallet: { name: wallet.name, address: publicKey } },
+            }));
+            context.setRoute(Routes.SUCCESSFUL);
+          }, 400);
+        }
       }
-    } catch {
+    } catch (error) {
       setError(true);
+      throw error;
     }
-    initializeRabetMobile();
   };
 
   const handleRetry = () => {
     setError(false);
-    if (matchedWallet) handleConnect(matchedWallet);
+    if (matchedWallet) handleAssignment(matchedWallet);
   };
 
   return (
@@ -78,10 +105,17 @@ const Connecting = () => {
 
       <div className="space-y-1 flex-col text-center font-semibold">
         <p className="text-xl">
-          {error ? 'Failed connecting to' : 'Waiting for'} {user?.wallet?.name}
+          {error
+            ? `Failed ${modalState === 'connecting' ? 'connecting to' : 'signing with'}`
+            : `${modalState === 'connecting' ? 'Waiting for' : 'Signing with'}`}{' '}
+          {user?.wallet?.name}
         </p>
         <p className="text-sm">
-          {error ? 'Please try connecting again.' : 'Accept connection request in the wallet.'}
+          {error
+            ? `Please try ${modalState === 'connecting' ? 'connecting' : 'signing'} again.`
+            : `${
+                modalState === 'connecting' ? 'Accept connection' : 'Sign the'
+              } request in your wallet`}
         </p>
       </div>
 
@@ -96,11 +130,11 @@ const Connecting = () => {
         </Button>
       ) : (
         <Button state="enabled" variant="outline" startIcon={<Loading />}>
-          <p>Connecting</p>
+          {modalState === 'connecting' ? 'Connecting' : 'Signing'}
         </Button>
       )}
     </div>
   );
 };
 
-export default Connecting;
+export default Waiting;

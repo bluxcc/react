@@ -48,22 +48,12 @@ const OnBoarding = ({ showAllWallets, setShowAllWallets }: OnBoardingProps) => {
     loadWallets();
   }, [wallets]);
 
-  useEffect(() => {
-    if (context.value.connectRejected) {
-      context.setValue((prev) => ({
-        ...prev,
-        user: { wallet: null },
-        connectRejected: false,
-      }));
-    }
-  }, [context.value.connectRejected]);
-
   const handleConnect = (wallet: WalletActions) => {
     context.setValue((prev) => ({
       ...prev,
       user: { wallet: { name: wallet.name, address: null } },
     }));
-    context.setRoute(Routes.CONNECTING);
+    context.setRoute(Routes.WAITING);
   };
 
   return (

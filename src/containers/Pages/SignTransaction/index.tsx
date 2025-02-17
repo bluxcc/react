@@ -7,40 +7,22 @@ import { useProvider } from '../../../context/provider';
 
 import { shortenAddress } from '../../../utils/shortenAddress';
 import { getBorderRadius } from '../../../utils/getBorderRadius';
-import { submitTransaction } from '../../../utils/submitTransaction';
 import { getTransactionDetails } from '../../../utils/getTransactionDetails';
+import { Routes } from '../../../types';
 
 const SignTransaction = () => {
   const context = useProvider();
   const modalStyle = context.value.appearance;
-  const { xdr, resolver } = context.value.signTransaction;
+  const { xdr } = context.value.signTransaction;
   const txDetails = getTransactionDetails(xdr, context.value.config.networkPassphrase);
 
   const handleSignTx = async () => {
     context.setValue((prev) => ({
       ...prev,
       openModal: true,
+      modalState: 'signing',
     }));
-    try {
-      const walletName = context.value.user?.wallet?.name;
-      if (!walletName || !context.value.availableWallets) return;
-
-      const userWallet = context.value.availableWallets.find(
-        (wallet) => wallet.name === walletName,
-      );
-      if (!userWallet || !userWallet.signTransaction) return;
-
-      const signedXdr = await userWallet.signTransaction(xdr, {
-        networkPassphrase: context.value.config.networkPassphrase,
-        address: context.value.user?.wallet?.address as string,
-      });
-      const result = await submitTransaction(signedXdr, context.value.config.networkPassphrase);
-      if (!resolver) return;
-      resolver(result);
-    } catch (error) {
-      console.error('Transaction signing failed:', error);
-      throw error;
-    }
+    context.setRoute(Routes.WAITING);
   };
 
   return (

@@ -51,8 +51,8 @@ export interface IUser {
  * Context state management interface.
  */
 export interface ContextState {
-  value: BluxContextValues; // Current context values
-  setValue: React.Dispatch<React.SetStateAction<BluxContextValues>>; // Function to update context values
+  value: ContextValues; // Current context values
+  setValue: React.Dispatch<React.SetStateAction<ContextValues>>; // Function to update context values
   route: Routes;
   setRoute: React.Dispatch<React.SetStateAction<Routes>>;
 }
@@ -83,7 +83,7 @@ export interface IAppearance {
 /**
  * Structure of the global context values.
  */
-export interface BluxContextValues {
+export interface ContextValues {
   config: IProviderConfig; // Provider configuration
   appearance: IAppearance; // UI appearance settings
   user: IUser; // User-related information
@@ -91,11 +91,12 @@ export interface BluxContextValues {
   isReady: boolean; // Indicates if the system is ready
   isDemo: boolean; // Specifies if in demo mode
   isAuthenticated: boolean; // User authentication status
-  connectRejected: boolean; // Indicates if the connection was rejected
   availableWallets: WalletActions[]; // List of available wallets
+  modalState: 'connecting' | 'signing';
   signTransaction: {
     xdr: string; // Transaction details for signing
     resolver: ((value: HorizonApi.SubmitTransactionResponse) => void) | null; // Transaction signing resolver
+    latestResults: HorizonApi.SubmitTransactionResponse | null; // Latest transaction signing result
   };
 }
 
@@ -104,8 +105,8 @@ export interface BluxContextValues {
  */
 export enum Routes {
   ONBOARDING = 'ONBOARDING', // View for selecting a wallet
-  CONNECTING = 'CONNECTING', // View for connection process
-  CONNECT_SUCCESS = 'CONNECT_SUCCESS', // View for connection success process
+  WAITING = 'WAITING', // View for connection process
+  SUCCESSFUL = 'SUCCESSFUL', // View for connection success process
   PROFILE = 'PROFILE', // User profile view
   SIGN_TRANSACTION = 'SIGN_TRANSACTION', // User sign transaction view
 }
@@ -123,9 +124,9 @@ export interface ModalRoute {
  */
 export interface ModalHeights {
   [Routes.PROFILE]: number;
-  [Routes.CONNECTING]: number;
+  [Routes.WAITING]: number;
   [Routes.ONBOARDING]: number;
-  [Routes.CONNECT_SUCCESS]: number;
+  [Routes.SUCCESSFUL]: number;
   [Routes.SIGN_TRANSACTION]: number;
 }
 

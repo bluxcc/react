@@ -1,4 +1,5 @@
 import { SupportedWallets, WalletActions, WalletNetwork } from '../../types';
+import { initializeRabetMobile } from '../../utils/initializeRabetMobile';
 
 export const rabetConfig: WalletActions = {
   name: SupportedWallets.Rabet,
@@ -13,6 +14,7 @@ export const rabetConfig: WalletActions = {
     try {
       if (!window.rabet) throw new Error('Rabet Wallet is not installed.');
       const result = await window.rabet.connect();
+      initializeRabetMobile();
       return { publicKey: result.publicKey };
     } catch (error) {
       console.error('Error connecting to Rabet:', error);

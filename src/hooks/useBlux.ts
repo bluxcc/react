@@ -41,6 +41,7 @@ export const useBlux = () => {
         ...prev,
         openModal: true,
         signTransaction: {
+          ...prev.signTransaction,
           xdr,
           resolver: resolve,
         },
