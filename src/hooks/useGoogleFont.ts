@@ -1,6 +1,6 @@
 import { useEffect } from 'react';
 import { SupportedFonts } from '../types';
-import { useBluxProvider } from './useBluxProvider';
+import { useBluxProvider } from '../context/bluxProvider';
 
 // Google Fonts only supports these
 const googleFonts: Record<SupportedFonts, string | null> = {

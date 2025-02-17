@@ -1,4 +1,4 @@
-import { useBluxProvider } from './useBluxProvider';
+import { useBluxProvider } from '../context/bluxProvider';
 
 export const useBlux = () => {
   const context = useBluxProvider();

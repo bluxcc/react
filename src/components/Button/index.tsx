@@ -1,7 +1,7 @@
 import React from 'react';
 
 import { getBorderRadius } from '../../utils/getBorderRadius';
-import { useBluxProvider } from '../../hooks/useBluxProvider';
+import { useBluxProvider } from '../../context/bluxProvider';
 import { defaultAppearance } from '../../constants/defaultAppearance';
 
 type ButtonSize = 'small' | 'medium' | 'large';

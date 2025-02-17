@@ -1,6 +1,6 @@
 import React, { useEffect, useRef, useState } from 'react';
 
-import { useBluxProvider } from '../../hooks/useBluxProvider';
+import { useBluxProvider } from '../../context/bluxProvider';
 import { getBorderRadius } from '../../utils/getBorderRadius';
 import { useModalAnimation } from '../../hooks/useModalAnimation';
 
@@ -28,7 +28,7 @@ const Modal = ({
   modalHeader,
   icon,
   initialHeight,
-  closeButton = false,
+  closeButton = true,
 }: ModalProps) => {
   const [contentHeight, setContentHeight] = useState<number | null>(null);
   const [heightChanged, setHeightChanged] = useState(false);

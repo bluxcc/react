@@ -3,7 +3,7 @@ import React, { useEffect } from 'react';
 import Button from '../../../components/Button';
 
 import { GreenCheck } from '../../../assets/Icons';
-import { useBluxProvider } from '../../../hooks/useBluxProvider';
+import { useBluxProvider } from '../../../context/bluxProvider';
 
 const Connecting = () => {
   const context = useBluxProvider();

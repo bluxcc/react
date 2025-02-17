@@ -1,6 +1,6 @@
 import React, { useEffect, useState, useMemo } from 'react';
 
-import { useBluxProvider } from '../../../hooks/useBluxProvider';
+import { useBluxProvider } from '../../../context/bluxProvider';
 
 import CardItem from '../../../components/CardItem';
 import { handleIcons } from '../../../utils/handleIcons';

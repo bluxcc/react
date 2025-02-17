@@ -28,11 +28,11 @@ const ModalHeader: React.FC<HeaderProps> = ({
           <InfoIcon />
         </button>
       ) : icon === 'back' ? (
-        <button onClick={onBack} className="cursor-pointer flex justify-center items-center">
+        <button onClick={onBack} className="size-6 cursor-pointer flex justify-center items-center">
           <ArrowLeft />
         </button>
       ) : (
-        <div className="w-6 h-6" />
+        <div className="size-6" />
       )}
 
       <p className="text-base font-semibold text-center flex-grow select-none">{modalHeader}</p>

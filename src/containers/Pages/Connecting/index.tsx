@@ -1,7 +1,7 @@
 import React, { useEffect, useState, useRef } from 'react';
 
 import Button from '../../../components/Button';
-import { useBluxProvider } from '../../../hooks/useBluxProvider';
+import { useBluxProvider } from '../../../context/bluxProvider';
 
 import { handleIcons } from '../../../utils/handleIcons';
 import { initializeRabetMobile } from '../../../utils/initializeRabetMobile';

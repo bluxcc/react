@@ -3,7 +3,7 @@ import React from 'react';
 import Button from '../../../components/Button';
 import TransactionSummary from '../../../components/TransactionSummery';
 
-import { useBluxProvider } from '../../../hooks/useBluxProvider';
+import { useBluxProvider } from '../../../context/bluxProvider';
 
 import { shortenAddress } from '../../../utils/shortenAddress';
 import { getBorderRadius } from '../../../utils/getBorderRadius';

@@ -1,9 +1,9 @@
-import { ModalHeights, ModalView } from '../types';
+import { ModalHeights, Routes } from '../types';
 
 export const MODAL_HEIGHTS: ModalHeights = {
-  [ModalView.PROFILE]: 469,
-  [ModalView.CONNECTING]: 340,
-  [ModalView.SIGN_TRANSACTION]: 492,
-  [ModalView.CONNECT_SUCCESS]: 328,
-  [ModalView.ONBOARDING]: 399,
+  [Routes.PROFILE]: 469,
+  [Routes.CONNECTING]: 340,
+  [Routes.SIGN_TRANSACTION]: 492,
+  [Routes.CONNECT_SUCCESS]: 328,
+  [Routes.ONBOARDING]: 399,
 };

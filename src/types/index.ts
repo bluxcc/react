@@ -51,8 +51,8 @@ export interface IUser {
  * Context state management interface.
  */
 export interface ContextState {
-  value: ContextValues; // Current context values
-  setValue: React.Dispatch<React.SetStateAction<ContextValues>>; // Function to update context values
+  value: BluxContextValues; // Current context values
+  setValue: React.Dispatch<React.SetStateAction<BluxContextValues>>; // Function to update context values
 }
 
 /**
@@ -81,7 +81,7 @@ export interface IAppearance {
 /**
  * Structure of the global context values.
  */
-export interface ContextValues {
+export interface BluxContextValues {
   config: IProviderConfig; // Provider configuration
   appearance: IAppearance; // UI appearance settings
   user: IUser; // User-related information
@@ -103,7 +103,7 @@ export interface ContextValues {
 /**
  * Enum defining different modal views.
  */
-export enum ModalView {
+export enum Routes {
   ONBOARDING = 'ONBOARDING', // View for selecting a wallet
   CONNECTING = 'CONNECTING', // View for connection process
   CONNECT_SUCCESS = 'CONNECT_SUCCESS', // View for connection success process
@@ -114,8 +114,8 @@ export enum ModalView {
 /**
  * Modal state management interface.
  */
-export interface ModalState {
-  view: ModalView; // Current modal view
+export interface ModalRoute {
+  route: Routes; // Current modal view
   showAllWallets: boolean; // Whether to display all available wallets
 }
 
@@ -123,11 +123,11 @@ export interface ModalState {
  * Defines the heights for different modal views.
  */
 export interface ModalHeights {
-  [ModalView.PROFILE]: number;
-  [ModalView.CONNECTING]: number;
-  [ModalView.ONBOARDING]: number;
-  [ModalView.CONNECT_SUCCESS]: number;
-  [ModalView.SIGN_TRANSACTION]: number;
+  [Routes.PROFILE]: number;
+  [Routes.CONNECTING]: number;
+  [Routes.ONBOARDING]: number;
+  [Routes.CONNECT_SUCCESS]: number;
+  [Routes.SIGN_TRANSACTION]: number;
 }
 
 /**

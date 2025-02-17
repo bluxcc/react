@@ -4,7 +4,7 @@ import Button from '../../../components/Button';
 import CardItem from '../../../components/CardItem';
 
 import { useBlux } from '../../../hooks/useBlux';
-import { useBluxProvider } from '../../../hooks/useBluxProvider';
+import { useBluxProvider } from '../../../context/bluxProvider';
 
 import { copyText } from '../../../utils/copyText';
 import { shortenAddress } from '../../../utils/shortenAddress';

@@ -40,13 +40,13 @@ export const ArrowLeft = () => (
   </svg>
 );
 export const Close = () => (
-  <svg width="24" height="25" viewBox="0 0 24 25" fill="none" xmlns="http://www.w3.org/2000/svg">
-    <mask id="mask0_170_30138" maskUnits="userSpaceOnUse" x="0" y="0" width="24" height="25">
-      <rect y="0.5" width="24" height="24" fill="#D9D9D9" />
+  <svg width="22" height="22" viewBox="0 0 22 22" fill="none" xmlns="http://www.w3.org/2000/svg">
+    <mask id="mask0_150_17" maskUnits="userSpaceOnUse" x="0" y="0" width="22" height="22">
+      <rect width="22" height="22" fill="#D9D9D9" />
     </mask>
-    <g mask="url(#mask0_170_30138)">
+    <g mask="url(#mask0_150_17)">
       <path
-        d="M4.8 21.5L3 19.7L10.2 12.5L3 5.3L4.8 3.5L12 10.7L19.2 3.5L21 5.3L13.8 12.5L21 19.7L19.2 21.5L12 14.3L4.8 21.5Z"
+        d="M4.4 19.25L2.75 17.6L9.35 11L2.75 4.4L4.4 2.75L11 9.35L17.6 2.75L19.25 4.4L12.65 11L19.25 17.6L17.6 19.25L11 12.65L4.4 19.25Z"
         fill="#5F6367"
       />
     </g>
