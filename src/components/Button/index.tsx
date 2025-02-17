@@ -1,6 +1,7 @@
-import React, { useContext } from 'react';
+import React from 'react';
+
 import { getBorderRadius } from '../../utils/getBorderRadius';
-import { ProviderContext } from '../../context/provider';
+import { useBluxProvider } from '../../hooks/useBluxProvider';
 import { defaultAppearance } from '../../constants/defaultAppearance';
 
 type ButtonSize = 'small' | 'medium' | 'large';
@@ -52,8 +53,8 @@ const Button = ({
   style,
   className,
 }: ButtonProps) => {
-  const context = useContext(ProviderContext);
-  const modalStyle = context?.value.appearance || defaultAppearance;
+  const context = useBluxProvider();
+  const modalStyle = context.value.appearance || defaultAppearance;
 
   return (
     <button

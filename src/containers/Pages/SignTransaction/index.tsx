@@ -1,17 +1,17 @@
-import React, { useContext } from 'react';
+import React from 'react';
 
-import { ProviderContext } from '../../../context/provider';
-
-import shortenAddress from '../../../utils/shortenAddress';
-import { getBorderRadius } from '../../../utils/getBorderRadius';
 import Button from '../../../components/Button';
 import TransactionSummary from '../../../components/TransactionSummery';
+
+import { useBluxProvider } from '../../../hooks/useBluxProvider';
+
+import { shortenAddress } from '../../../utils/shortenAddress';
+import { getBorderRadius } from '../../../utils/getBorderRadius';
 import { submitTransaction } from '../../../utils/submitTransaction';
 import { getTransactionDetails } from '../../../utils/getTransactionDetails';
-import { ContextState } from '../../../types';
 
 const SignTransaction = () => {
-  const context = useContext(ProviderContext) as ContextState;
+  const context = useBluxProvider();
   const modalStyle = context.value.appearance;
   const { xdr, resolver } = context.value.signTx;
   const txDetails = getTransactionDetails(xdr, context.value.config.networkPassphrase);
@@ -47,7 +47,7 @@ const SignTransaction = () => {
   return (
     <div className="w-full">
       <p className="my-4 text-sm font-medium text-center select-none mx-3">
-        <span className="font-semibold capitalize">{context?.value.config.appName} </span>wants your
+        <span className="font-semibold capitalize">{context.value.config.appName} </span>wants your
         permission to approve the following transaction.
       </p>
 
@@ -67,7 +67,7 @@ const SignTransaction = () => {
         <div className="inline-flex items-center gap-2 font-medium">
           <p className="text-sm font-me">Your wallet</p>
           <p className="text-xs text-gray-700">
-            {shortenAddress(context?.value.user.wallet?.address as string, 5)}
+            {shortenAddress(context.value.user.wallet?.address as string, 5)}
           </p>
         </div>
         <div

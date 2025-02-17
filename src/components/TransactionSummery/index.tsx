@@ -1,7 +1,7 @@
 import React from 'react';
 
-import copyText from '../../utils/copyText';
-import shortenAddress from '../../utils/shortenAddress';
+import { copyText } from '../../utils/copyText';
+import { shortenAddress } from '../../utils/shortenAddress';
 import capitalizeFirstLetter from '../../utils/capitalizeFirstLetter';
 
 interface TransactionDetail {

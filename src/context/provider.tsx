@@ -4,7 +4,7 @@ import ConnectModal from '../containers/ConnectModal';
 import { ContextState, IProviderConfig, ContextValues, IAppearance } from '../types';
 import { defaultAppearance } from '../constants/defaultAppearance';
 
-export const ProviderContext = createContext<ContextState | null>(null);
+export const BluxProviderContext = createContext<ContextState | null>(null);
 
 export const BluxProvider = ({
   config,
@@ -44,9 +44,9 @@ export const BluxProvider = ({
   }, [appearance]);
 
   return (
-    <ProviderContext.Provider value={{ value, setValue }}>
+    <BluxProviderContext.Provider value={{ value, setValue }}>
       {children}
       <ConnectModal isOpen={value.openModal} />
-    </ProviderContext.Provider>
+    </BluxProviderContext.Provider>
   );
 };

@@ -1,6 +1,6 @@
-import React, { useContext, useEffect, useState, useMemo } from 'react';
+import React, { useEffect, useState, useMemo } from 'react';
 
-import { ProviderContext } from '../../../context/provider';
+import { useBluxProvider } from '../../../hooks/useBluxProvider';
 
 import CardItem from '../../../components/CardItem';
 import { handleIcons } from '../../../utils/handleIcons';
@@ -17,8 +17,8 @@ type OnBoardingProps = {
 };
 
 const OnBoarding = ({ showAllWallets, setShowAllWallets }: OnBoardingProps) => {
-  const context = useContext(ProviderContext);
-  const [wallets, setWallets] = useState<WalletActions[]>(context?.value.availableWallets || []);
+  const context = useBluxProvider();
+  const [wallets, setWallets] = useState<WalletActions[]>(context.value.availableWallets || []);
 
   const hiddenWallets = useMemo(() => {
     return wallets.length > 3 ? wallets.slice(2) : [];
@@ -38,7 +38,7 @@ const OnBoarding = ({ showAllWallets, setShowAllWallets }: OnBoardingProps) => {
         .map(({ wallet }) => wallet);
 
       setWallets(available);
-      context?.setValue((prev) => ({
+      context.setValue((prev) => ({
         ...prev,
         availableWallets: available,
         isReady: true,
@@ -49,18 +49,18 @@ const OnBoarding = ({ showAllWallets, setShowAllWallets }: OnBoardingProps) => {
   }, [wallets]);
 
   useEffect(() => {
-    if (context?.value.connectRejected) {
-      context?.setValue((prev) => ({
+    if (context.value.connectRejected) {
+      context.setValue((prev) => ({
         ...prev,
         user: { wallet: null },
         isConnecting: false,
         connectRejected: false,
       }));
     }
-  }, [context?.value.connectRejected]);
+  }, [context.value.connectRejected]);
 
   const handleConnect = (wallet: WalletActions) => {
-    context?.setValue((prev) => ({
+    context.setValue((prev) => ({
       ...prev,
       user: { wallet: { name: wallet.name, address: null } },
       isConnecting: true,
@@ -70,10 +70,10 @@ const OnBoarding = ({ showAllWallets, setShowAllWallets }: OnBoardingProps) => {
   return (
     <div className="w-full">
       <div className="flex justify-center items-center w-full my-6">
-        {context?.value.config.appLogo ? (
-          <img src={context?.value.config.appLogo} alt={context?.value.config.appName} />
+        {context.value.config.appLogo ? (
+          <img src={context.value.config.appLogo} alt={context.value.config.appName} />
         ) : (
-          <BluxLogo fill={getContrastColor(context?.value.appearance.background as string)} />
+          <BluxLogo fill={getContrastColor(context.value.appearance.background as string)} />
         )}
       </div>
       <div className="space-y-2">
@@ -92,9 +92,7 @@ const OnBoarding = ({ showAllWallets, setShowAllWallets }: OnBoardingProps) => {
             endArrow
             label="All Stellar wallets"
             startIcon={
-              <StellarIcon
-                fill={getContrastColor(context?.value.appearance.background as string)}
-              />
+              <StellarIcon fill={getContrastColor(context.value.appearance.background as string)} />
             }
             onClick={() => setShowAllWallets(true)}
           />
@@ -102,7 +100,7 @@ const OnBoarding = ({ showAllWallets, setShowAllWallets }: OnBoardingProps) => {
       </div>
       <div
         className="text-center font-medium text-sm mt-3 leading-[32px] cursor-pointer"
-        style={{ color: context?.value.appearance?.accent }}
+        style={{ color: context.value.appearance?.accent }}
       >
         Login with passkey
       </div>
@@ -110,7 +108,7 @@ const OnBoarding = ({ showAllWallets, setShowAllWallets }: OnBoardingProps) => {
       <div
         className="font-semibold text-[12px] text-center w-full pt-[6px]"
         style={{
-          color: context?.value.appearance?.textColor,
+          color: context.value.appearance?.textColor,
         }}
       >
         Powered by{' '}
@@ -118,7 +116,7 @@ const OnBoarding = ({ showAllWallets, setShowAllWallets }: OnBoardingProps) => {
           href="https://blux.cc"
           target="_blank"
           rel="noreferrer"
-          style={{ color: context?.value.appearance?.accent }}
+          style={{ color: context.value.appearance?.accent }}
         >
           Blux.cc
         </a>

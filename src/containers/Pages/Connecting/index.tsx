@@ -1,7 +1,7 @@
-import React, { useContext, useEffect, useState, useRef } from 'react';
+import React, { useEffect, useState, useRef } from 'react';
 
 import Button from '../../../components/Button';
-import { ProviderContext } from '../../../context/provider';
+import { useBluxProvider } from '../../../hooks/useBluxProvider';
 
 import { handleIcons } from '../../../utils/handleIcons';
 import { initializeRabetMobile } from '../../../utils/initializeRabetMobile';
@@ -15,9 +15,9 @@ const Connecting = () => {
   const [mappedWallets, setMappedWallets] = useState<MappedWallet[]>([]);
   const [matchedWallet, setMatchedWallet] = useState<WalletActions | null>(null);
   const hasConnected = useRef(false);
-  const context = useContext(ProviderContext);
+  const context = useBluxProvider();
 
-  const { user } = context?.value || {};
+  const { user } = context.value || {};
   const userWallet = user?.wallet;
 
   useEffect(() => {
@@ -48,7 +48,7 @@ const Connecting = () => {
       const { publicKey } = await wallet.connect();
       if (publicKey) {
         setTimeout(() => {
-          context?.setValue((prev) => ({
+          context.setValue((prev) => ({
             ...prev,
             user: { wallet: { name: wallet.name, address: publicKey } },
             isConnecting: false,
@@ -57,7 +57,7 @@ const Connecting = () => {
         }, 400);
       }
     } catch {
-      context?.setValue((prev) => ({
+      context.setValue((prev) => ({
         ...prev,
         connectRejected: true,
       }));

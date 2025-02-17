@@ -1,16 +1,16 @@
-import React, { useContext, useEffect } from 'react';
+import React, { useEffect } from 'react';
 
 import Button from '../../../components/Button';
-import { ProviderContext } from '../../../context/provider';
 
 import { GreenCheck } from '../../../assets/Icons';
+import { useBluxProvider } from '../../../hooks/useBluxProvider';
 
 const Connecting = () => {
-  const context = useContext(ProviderContext);
+  const context = useBluxProvider();
 
   useEffect(() => {
     setTimeout(() => {
-      context?.setValue((prev) => ({
+      context.setValue((prev) => ({
         ...prev,
         openModal: false,
         connectSuccess: true,

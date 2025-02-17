@@ -1,7 +1,8 @@
-import { useContext, useEffect, useState } from 'react';
-import { ProviderContext } from '../context/provider';
-import { ModalState, ModalView } from '../types';
+import { useEffect, useState } from 'react';
+
 import { MODAL_HEIGHTS } from '../constants';
+import { ModalState, ModalView } from '../types';
+import { useBluxProvider } from './useBluxProvider';
 
 export interface UseConnectModalReturn {
   modalState: ModalState;
@@ -15,7 +16,7 @@ export interface UseConnectModalReturn {
 }
 
 export const useConnectModal = (): UseConnectModalReturn => {
-  const context = useContext(ProviderContext);
+  const context = useBluxProvider();
   const [modalState, setModalState] = useState<ModalState>({
     view: ModalView.ONBOARDING,
     showAllWallets: false,
@@ -39,22 +40,22 @@ export const useConnectModal = (): UseConnectModalReturn => {
   const initialHeight = getInitialHeight();
 
   useEffect(() => {
-    if (context?.value.isAuthenticated && !context.value.signTx.openModal) {
+    if (context.value.isAuthenticated && !context.value.signTx.openModal) {
       setModalState((prev) => ({ ...prev, view: ModalView.PROFILE }));
-    } else if (context?.value.isConnecting) {
+    } else if (context.value.isConnecting) {
       setModalState((prev) => ({ ...prev, view: ModalView.CONNECTING }));
-    } else if (context?.value.signTx.openModal) {
+    } else if (context.value.signTx.openModal) {
       setModalState((prev) => ({ ...prev, view: ModalView.SIGN_TRANSACTION }));
-    } else if (context?.value.connectSuccess) {
+    } else if (context.value.connectSuccess) {
       setModalState((prev) => ({ ...prev, view: ModalView.CONNECT_SUCCESS }));
     } else {
       setModalState((prev) => ({ ...prev, view: ModalView.ONBOARDING, showAllWallets: false }));
     }
   }, [
-    context?.value.isAuthenticated,
-    context?.value.isConnecting,
-    context?.value.signTx.openModal,
-    context?.value.connectSuccess,
+    context.value.isAuthenticated,
+    context.value.isConnecting,
+    context.value.signTx.openModal,
+    context.value.connectSuccess,
   ]);
 
   const handleGoBack = () => {
@@ -88,7 +89,7 @@ export const useConnectModal = (): UseConnectModalReturn => {
       : '';
 
   const closeModal = () => {
-    context?.setValue((prev) => ({
+    context.setValue((prev) => ({
       ...prev,
       openModal: false,
     }));

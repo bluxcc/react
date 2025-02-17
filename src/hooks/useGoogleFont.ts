@@ -1,6 +1,6 @@
-import { useEffect, useContext } from 'react';
-import { ProviderContext } from '../context/provider'; // Assuming this manages UI settings
+import { useEffect } from 'react';
 import { SupportedFonts } from '../types';
+import { useBluxProvider } from './useBluxProvider';
 
 // Google Fonts only supports these
 const googleFonts: Record<SupportedFonts, string | null> = {
@@ -11,8 +11,8 @@ const googleFonts: Record<SupportedFonts, string | null> = {
 };
 
 export function useGoogleFonts() {
-  const context = useContext(ProviderContext);
-  const selectedFont = context?.value?.appearance?.font as SupportedFonts;
+  const context = useBluxProvider();
+  const selectedFont = context.value?.appearance?.font as SupportedFonts;
 
   useEffect(() => {
     if (selectedFont && googleFonts[selectedFont]) {

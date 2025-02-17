@@ -1,12 +1,11 @@
-import React, { useContext, useEffect, useRef, useState } from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 
+import { useBluxProvider } from '../../hooks/useBluxProvider';
 import { getBorderRadius } from '../../utils/getBorderRadius';
 import { useModalAnimation } from '../../hooks/useModalAnimation';
-import { ProviderContext } from '../../context/provider';
 
 import ModalHeader from './Header';
 import ModalBackdrop from './Backdrop';
-import { defaultAppearance } from '../../constants/defaultAppearance';
 
 interface ModalProps {
   isOpen: boolean;
@@ -34,7 +33,7 @@ const Modal = ({
   const [contentHeight, setContentHeight] = useState<number | null>(null);
   const [heightChanged, setHeightChanged] = useState(false);
 
-  const context = useContext(ProviderContext);
+  const context = useBluxProvider();
   const { isOpening, isClosing, hasTransition, handleClose, setHasTransition } =
     useModalAnimation(isOpen);
 
@@ -43,7 +42,7 @@ const Modal = ({
   const previousChildrenRef = useRef(children);
   const previousHeightRef = useRef<number>(400);
 
-  const modalStyle = context?.value.appearance || defaultAppearance;
+  const modalStyle = context.value.appearance;
 
   useEffect(() => {
     if (!isOpen || !contentRef.current) return;
@@ -92,7 +91,7 @@ const Modal = ({
 
   return (
     <>
-      {!context?.value.isDemo && (
+      {!context.value.isDemo && (
         <ModalBackdrop isClosing={isClosing} onClose={() => handleClose(onClose)} />
       )}
 

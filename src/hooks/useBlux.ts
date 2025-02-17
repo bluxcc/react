@@ -1,8 +1,7 @@
-import { useContext } from 'react';
-import { ProviderContext } from '../context/provider';
+import { useBluxProvider } from './useBluxProvider';
 
 export const useBlux = () => {
-  const context = useContext(ProviderContext);
+  const context = useBluxProvider();
   if (!context) {
     throw new Error('useBlux must be used within a ProviderContext.');
   }

@@ -1,22 +1,24 @@
-import React, { useContext, useEffect, useState } from 'react';
+import React, { useEffect, useState } from 'react';
 
-import copyText from '../../../utils/copyText';
 import Button from '../../../components/Button';
-import { useBlux } from '../../../hooks/useBlux';
-import shortenAddress from '../../../utils/shortenAddress';
-
-import { ProviderContext } from '../../../context/provider';
-import { Copy, History, LogOut, Send } from '../../../assets/Icons';
 import CardItem from '../../../components/CardItem';
 
+import { useBlux } from '../../../hooks/useBlux';
+import { useBluxProvider } from '../../../hooks/useBluxProvider';
+
+import { copyText } from '../../../utils/copyText';
+import { shortenAddress } from '../../../utils/shortenAddress';
+
+import { Copy, History, LogOut, Send } from '../../../assets/Icons';
+
 const Profile = () => {
-  const context = useContext(ProviderContext);
+  const context = useBluxProvider();
   const { disconnect } = useBlux();
-  const [address, setAddress] = useState(context?.value.user.wallet?.address || '');
+  const [address, setAddress] = useState(context.value.user.wallet?.address || '');
 
   useEffect(() => {
-    setAddress(context?.value.user.wallet?.address as string);
-  }, [context?.value.user.wallet?.address]);
+    setAddress(context.value.user.wallet?.address as string);
+  }, [context.value.user.wallet?.address]);
 
   const handleDisconnect = () => {
     disconnect();
@@ -28,7 +30,7 @@ const Profile = () => {
       <p
         className="inline-flex gap-1 text-base cursor-pointer text-gray-700 mt-6 mb-4"
         onClick={() => {
-          copyText(context?.value.user.wallet?.address as string);
+          copyText(context.value.user.wallet?.address as string);
         }}
       >
         {shortenAddress(address, 5)}
