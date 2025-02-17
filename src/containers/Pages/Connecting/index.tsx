@@ -1,21 +1,21 @@
 import React, { useEffect, useState, useRef } from 'react';
 
 import Button from '../../../components/Button';
-import { useBluxProvider } from '../../../context/bluxProvider';
+import { useProvider } from '../../../context/provider';
 
 import { handleIcons } from '../../../utils/handleIcons';
 import { initializeRabetMobile } from '../../../utils/initializeRabetMobile';
 import { getMappedWallets, MappedWallet } from '../../../utils/mappedWallets';
 
 import { Loading } from '../../../assets/Icons';
-import { WalletActions } from '../../../types';
+import { Routes, WalletActions } from '../../../types';
 
 const Connecting = () => {
   const [error, setError] = useState(false);
   const [mappedWallets, setMappedWallets] = useState<MappedWallet[]>([]);
   const [matchedWallet, setMatchedWallet] = useState<WalletActions | null>(null);
   const hasConnected = useRef(false);
-  const context = useBluxProvider();
+  const context = useProvider();
 
   const { user } = context.value || {};
   const userWallet = user?.wallet;
@@ -51,16 +51,11 @@ const Connecting = () => {
           context.setValue((prev) => ({
             ...prev,
             user: { wallet: { name: wallet.name, address: publicKey } },
-            isConnecting: false,
-            connectSuccess: true,
           }));
+          context.setRoute(Routes.CONNECT_SUCCESS);
         }, 400);
       }
     } catch {
-      context.setValue((prev) => ({
-        ...prev,
-        connectRejected: true,
-      }));
       setError(true);
     }
     initializeRabetMobile();
@@ -96,7 +91,7 @@ const Connecting = () => {
       </div>
 
       {error ? (
-        <Button onClick={handleRetry} className="text-white bg-lightRed-300">
+        <Button onClick={handleRetry} className="text-white bg-lightRed-300 hover:text-primary-500">
           Try again
         </Button>
       ) : (

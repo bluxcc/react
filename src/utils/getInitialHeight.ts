@@ -1,8 +1,8 @@
 import { MODAL_HEIGHTS } from '../constants';
-import { ModalRoute, Routes } from '../types';
+import { Routes } from '../types';
 
-export const getInitialHeight = (route: ModalRoute): number => {
-  switch (route.route) {
+export const getInitialHeight = (route: Routes): number => {
+  switch (route) {
     case Routes.PROFILE:
       return MODAL_HEIGHTS[Routes.PROFILE];
     case Routes.CONNECTING:

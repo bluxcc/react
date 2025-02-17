@@ -1,11 +1,10 @@
 import React, { createContext, useState, useEffect, useContext } from 'react';
 
 import ConnectModal from '../containers/ConnectModal';
-import { ContextState, IProviderConfig, BluxContextValues, IAppearance } from '../types';
+import { ContextState, IProviderConfig, BluxContextValues, IAppearance, Routes } from '../types';
 import { defaultAppearance } from '../constants/defaultAppearance';
-import { ModalProvider } from './modalProvider';
 
-export const BluxProviderContext = createContext<ContextState | null>(null);
+export const ProviderContext = createContext<ContextState | null>(null);
 
 export const BluxProvider = ({
   config,
@@ -18,6 +17,7 @@ export const BluxProvider = ({
   config: IProviderConfig;
   children: React.ReactNode;
 }) => {
+  const [route, setRoute] = useState<Routes>(Routes.ONBOARDING);
   const [value, setValue] = useState<BluxContextValues>({
     config,
     appearance: appearance ?? defaultAppearance,
@@ -26,11 +26,8 @@ export const BluxProvider = ({
     openModal: false,
     isReady: false,
     isAuthenticated: false,
-    isConnecting: false,
-    connectSuccess: false,
     connectRejected: false,
-    signTx: {
-      openModal: false,
+    signTransaction: {
       xdr: '',
       resolver: null,
     },
@@ -52,19 +49,17 @@ export const BluxProvider = ({
   };
 
   return (
-    <BluxProviderContext.Provider value={{ value, setValue }}>
+    <ProviderContext.Provider value={{ value, setValue, route, setRoute }}>
       {children}
-      <ModalProvider>
-        <ConnectModal isOpen={value.openModal} closeModal={closeModal} />
-      </ModalProvider>
-    </BluxProviderContext.Provider>
+      <ConnectModal isOpen={value.openModal} closeModal={closeModal} />
+    </ProviderContext.Provider>
   );
 };
 
-export const useBluxProvider = () => {
-  const context = useContext(BluxProviderContext);
+export const useProvider = () => {
+  const context = useContext(ProviderContext);
   if (!context) {
-    throw new Error('useBluxProvider must be used within a ProviderContext.');
+    throw new Error('useProvider must be used within a ProviderContext.');
   }
   return context;
 };

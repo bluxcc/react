@@ -1,12 +1,12 @@
 import React, { useEffect, useState, useMemo } from 'react';
 
-import { useBluxProvider } from '../../../context/bluxProvider';
+import { useProvider } from '../../../context/provider';
 
 import CardItem from '../../../components/CardItem';
 import { handleIcons } from '../../../utils/handleIcons';
 import { getMappedWallets } from '../../../utils/mappedWallets';
 
-import { WalletActions } from '../../../types';
+import { Routes, WalletActions } from '../../../types';
 import BluxLogo from '../../../assets/bluxLogo';
 import { StellarIcon } from '../../../assets/logos';
 import { getContrastColor } from '../../../utils/getContrastColor';
@@ -17,7 +17,7 @@ type OnBoardingProps = {
 };
 
 const OnBoarding = ({ showAllWallets, setShowAllWallets }: OnBoardingProps) => {
-  const context = useBluxProvider();
+  const context = useProvider();
   const [wallets, setWallets] = useState<WalletActions[]>(context.value.availableWallets || []);
 
   const hiddenWallets = useMemo(() => {
@@ -53,7 +53,6 @@ const OnBoarding = ({ showAllWallets, setShowAllWallets }: OnBoardingProps) => {
       context.setValue((prev) => ({
         ...prev,
         user: { wallet: null },
-        isConnecting: false,
         connectRejected: false,
       }));
     }
@@ -63,8 +62,8 @@ const OnBoarding = ({ showAllWallets, setShowAllWallets }: OnBoardingProps) => {
     context.setValue((prev) => ({
       ...prev,
       user: { wallet: { name: wallet.name, address: null } },
-      isConnecting: true,
     }));
+    context.setRoute(Routes.CONNECTING);
   };
 
   return (

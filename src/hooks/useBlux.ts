@@ -1,12 +1,13 @@
-import { useBluxProvider } from '../context/bluxProvider';
+import { useProvider } from '../context/provider';
+import { Routes } from '../types';
 
 export const useBlux = () => {
-  const context = useBluxProvider();
+  const context = useProvider();
   if (!context) {
     throw new Error('useBlux must be used within a ProviderContext.');
   }
 
-  const { value, setValue } = context;
+  const { value, setValue, setRoute } = context;
   const { isAuthenticated, user } = value;
 
   const connect = () => {
@@ -18,7 +19,6 @@ export const useBlux = () => {
       ...prev,
       user: { wallet: null },
       openModal: false,
-      isConnecting: false,
       isAuthenticated: false,
     }));
   };
@@ -27,6 +27,7 @@ export const useBlux = () => {
     if (!isAuthenticated) {
       throw new Error('User is not authenticated.');
     }
+    setRoute(Routes.PROFILE);
     setValue((prev) => ({ ...prev, openModal: true }));
   };
 
@@ -35,12 +36,11 @@ export const useBlux = () => {
       if (!isAuthenticated) {
         reject(new Error('User is not authenticated.'));
       }
-
+      setRoute(Routes.SIGN_TRANSACTION);
       setValue((prev) => ({
         ...prev,
         openModal: true,
-        signTx: {
-          openModal: true,
+        signTransaction: {
           xdr,
           resolver: resolve,
         },

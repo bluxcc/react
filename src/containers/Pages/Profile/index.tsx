@@ -4,7 +4,7 @@ import Button from '../../../components/Button';
 import CardItem from '../../../components/CardItem';
 
 import { useBlux } from '../../../hooks/useBlux';
-import { useBluxProvider } from '../../../context/bluxProvider';
+import { useProvider } from '../../../context/provider';
 
 import { copyText } from '../../../utils/copyText';
 import { shortenAddress } from '../../../utils/shortenAddress';
@@ -12,7 +12,7 @@ import { shortenAddress } from '../../../utils/shortenAddress';
 import { Copy, History, LogOut, Send } from '../../../assets/Icons';
 
 const Profile = () => {
-  const context = useBluxProvider();
+  const context = useProvider();
   const { disconnect } = useBlux();
   const [address, setAddress] = useState(context.value.user.wallet?.address || '');
 

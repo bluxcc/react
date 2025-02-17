@@ -3,7 +3,7 @@ import React from 'react';
 import Button from '../../../components/Button';
 import TransactionSummary from '../../../components/TransactionSummery';
 
-import { useBluxProvider } from '../../../context/bluxProvider';
+import { useProvider } from '../../../context/provider';
 
 import { shortenAddress } from '../../../utils/shortenAddress';
 import { getBorderRadius } from '../../../utils/getBorderRadius';
@@ -11,16 +11,15 @@ import { submitTransaction } from '../../../utils/submitTransaction';
 import { getTransactionDetails } from '../../../utils/getTransactionDetails';
 
 const SignTransaction = () => {
-  const context = useBluxProvider();
+  const context = useProvider();
   const modalStyle = context.value.appearance;
-  const { xdr, resolver } = context.value.signTx;
+  const { xdr, resolver } = context.value.signTransaction;
   const txDetails = getTransactionDetails(xdr, context.value.config.networkPassphrase);
 
   const handleSignTx = async () => {
     context.setValue((prev) => ({
       ...prev,
       openModal: true,
-      signTx: { ...prev.signTx, openModal: true },
     }));
     try {
       const walletName = context.value.user?.wallet?.name;

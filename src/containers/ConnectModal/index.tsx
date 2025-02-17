@@ -1,53 +1,50 @@
-import React from 'react';
+import React, { useState } from 'react';
+
 import Modal from '../../components/Modal';
-import Profile from '../Pages/Profile';
-import Connecting from '../Pages/Connecting';
-import OnBoarding from '../Pages/OnBoarding';
-import ConnectSuccess from '../Pages/ConnectSuccess';
-import SignTransaction from '../Pages/SignTransaction';
-import { Routes } from '../../types';
-import { useModal } from '../../context/modalProvider';
+import { useProvider } from '../../context/provider';
 import { getInitialHeight } from '../../utils/getInitialHeight';
 
-export default function ConnectModal({
-  isOpen,
-  closeModal,
-}: {
+import { Routes } from '../../types';
+import { modalContent } from './content';
+
+interface ConnectModalProps {
   isOpen: boolean;
   closeModal: () => void;
-}) {
-  const { route, goBack, setShowAllWallets } = useModal();
+}
 
-  const modalHeaderMap: Record<Routes, string> = {
-    [Routes.ONBOARDING]: 'Log in or Signup',
-    [Routes.PROFILE]: 'Profile',
-    [Routes.CONNECTING]: '',
-    [Routes.CONNECT_SUCCESS]: '',
-    [Routes.SIGN_TRANSACTION]: 'Confirmation',
+export default function ConnectModal({ isOpen, closeModal }: ConnectModalProps) {
+  const { route, setRoute } = useProvider();
+  const [showAllWallets, setShowAllWallets] = useState(false);
+
+  const shouldShowBackButton =
+    route === Routes.CONNECTING || (route === Routes.ONBOARDING && showAllWallets);
+
+  const getModalIcon = shouldShowBackButton
+    ? 'back'
+    : route === Routes.ONBOARDING
+    ? 'info'
+    : undefined;
+
+  const handleBackNavigation = () => {
+    if (route === Routes.CONNECTING) {
+      setRoute(Routes.ONBOARDING);
+    } else if (showAllWallets) {
+      setShowAllWallets(false);
+    }
   };
 
-  const modalContentMap: Record<Routes, React.ReactNode> = {
-    [Routes.CONNECTING]: <Connecting />,
-    [Routes.CONNECT_SUCCESS]: <ConnectSuccess />,
-    [Routes.PROFILE]: <Profile />,
-    [Routes.SIGN_TRANSACTION]: <SignTransaction />,
-    [Routes.ONBOARDING]: (
-      <OnBoarding showAllWallets={route.showAllWallets} setShowAllWallets={setShowAllWallets} />
-    ),
-  };
-  const showBackButton =
-    route.route === Routes.CONNECTING || (route.showAllWallets && route.route !== Routes.PROFILE);
+  const { title, Component } = modalContent[route];
 
   return (
     <Modal
       isOpen={isOpen}
-      onBack={goBack}
+      onBack={handleBackNavigation}
       onClose={closeModal}
-      modalHeader={modalHeaderMap[route.route]}
+      modalHeader={title}
       initialHeight={getInitialHeight(route)}
-      icon={showBackButton ? 'back' : route.route === Routes.ONBOARDING ? 'info' : undefined}
+      icon={getModalIcon}
     >
-      {modalContentMap[route.route]}
+      <Component showAllWallets={showAllWallets} setShowAllWallets={setShowAllWallets} />
     </Modal>
   );
 }

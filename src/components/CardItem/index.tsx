@@ -1,7 +1,7 @@
 import React from 'react';
 
 import { getBorderRadius } from '../../utils/getBorderRadius';
-import { useBluxProvider } from '../../context/bluxProvider';
+import { useProvider } from '../../context/provider';
 
 import { ArrowRight } from '../../assets/Icons';
 
@@ -14,7 +14,7 @@ type CardItemProps = {
 };
 
 const CardItem = ({ variant = 'default', startIcon, endArrow, label, onClick }: CardItemProps) => {
-  const context = useBluxProvider();
+  const context = useProvider();
   const modalStyle = context.value.appearance;
   return (
     <button

@@ -53,6 +53,8 @@ export interface IUser {
 export interface ContextState {
   value: BluxContextValues; // Current context values
   setValue: React.Dispatch<React.SetStateAction<BluxContextValues>>; // Function to update context values
+  route: Routes;
+  setRoute: React.Dispatch<React.SetStateAction<Routes>>;
 }
 
 /**
@@ -89,12 +91,9 @@ export interface BluxContextValues {
   isReady: boolean; // Indicates if the system is ready
   isDemo: boolean; // Specifies if in demo mode
   isAuthenticated: boolean; // User authentication status
-  isConnecting: boolean; // Connection state flag
   connectRejected: boolean; // Indicates if the connection was rejected
   availableWallets: WalletActions[]; // List of available wallets
-  connectSuccess: boolean; // Indicates if the connection was successful
-  signTx: {
-    openModal: boolean; // Indicates if sign transaction modal should open
+  signTransaction: {
     xdr: string; // Transaction details for signing
     resolver: ((value: HorizonApi.SubmitTransactionResponse) => void) | null; // Transaction signing resolver
   };

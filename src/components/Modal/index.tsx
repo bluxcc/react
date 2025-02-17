@@ -1,6 +1,6 @@
 import React, { useEffect, useRef, useState } from 'react';
 
-import { useBluxProvider } from '../../context/bluxProvider';
+import { useProvider } from '../../context/provider';
 import { getBorderRadius } from '../../utils/getBorderRadius';
 import { useModalAnimation } from '../../hooks/useModalAnimation';
 
@@ -33,7 +33,7 @@ const Modal = ({
   const [contentHeight, setContentHeight] = useState<number | null>(null);
   const [heightChanged, setHeightChanged] = useState(false);
 
-  const context = useBluxProvider();
+  const context = useProvider();
   const { isOpening, isClosing, hasTransition, handleClose, setHasTransition } =
     useModalAnimation(isOpen);
 

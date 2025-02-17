@@ -1,6 +1,6 @@
 import { useEffect } from 'react';
 import { SupportedFonts } from '../types';
-import { useBluxProvider } from '../context/bluxProvider';
+import { useProvider } from '../context/provider';
 
 // Google Fonts only supports these
 const googleFonts: Record<SupportedFonts, string | null> = {
@@ -11,7 +11,7 @@ const googleFonts: Record<SupportedFonts, string | null> = {
 };
 
 export function useGoogleFonts() {
-  const context = useBluxProvider();
+  const context = useProvider();
   const selectedFont = context.value?.appearance?.font as SupportedFonts;
 
   useEffect(() => {
