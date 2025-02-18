@@ -72,12 +72,14 @@ const Waiting = () => {
         }
       } else {
         const { publicKey } = await wallet.connect();
-        if (publicKey) {
+
+        if (publicKey && publicKey.trim() !== '') {
+          context.setValue((prev) => ({
+            ...prev,
+            user: { wallet: { name: wallet.name, address: publicKey } },
+          }));
+
           setTimeout(() => {
-            context.setValue((prev) => ({
-              ...prev,
-              user: { wallet: { name: wallet.name, address: publicKey } },
-            }));
             context.setRoute(Routes.SUCCESSFUL);
           }, 400);
         }

@@ -26,6 +26,11 @@ export const freighterConfig: WalletActions = {
         throw new Error('Freighter Wallet is not installed or connected.');
       }
       const result = await freighterApi.requestAccess();
+
+      if (result.address.trim() === '') {
+        throw new Error('Failed to connect to Freighter.');
+      }
+
       return { publicKey: result.address };
     } catch (error) {
       console.error('Error connecting to Freighter:', error);
