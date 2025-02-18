@@ -109,6 +109,8 @@ export enum Routes {
   SUCCESSFUL = 'SUCCESSFUL', // View for connection success process
   PROFILE = 'PROFILE', // User profile view
   SIGN_TRANSACTION = 'SIGN_TRANSACTION', // User sign transaction view
+  SEND = 'SEND', // User sign transaction view
+  ACTIVITY = 'ACTIVITY', // User sign transaction view
 }
 
 /**
@@ -128,6 +130,8 @@ export interface ModalHeights {
   [Routes.ONBOARDING]: number;
   [Routes.SUCCESSFUL]: number;
   [Routes.SIGN_TRANSACTION]: number;
+  [Routes.SEND]: number;
+  [Routes.ACTIVITY]: number;
 }
 
 /**

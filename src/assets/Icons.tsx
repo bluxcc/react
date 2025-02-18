@@ -137,3 +137,13 @@ export const Send = () => (
     </g>
   </svg>
 );
+export const ArrowDropUp = () => (
+  <svg width="16" height="16" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
+    <mask id="mask0_2204_971" maskUnits="userSpaceOnUse" x="0" y="0" width="16" height="16">
+      <rect width="16" height="16" fill="#D9D9D9" />
+    </mask>
+    <g mask="url(#mask0_2204_971)">
+      <path d="M5.06372 11.8333L7.99955 8.89746L10.9354 11.8333H5.06372Z" fill="#0C1083" />
+    </g>
+  </svg>
+);

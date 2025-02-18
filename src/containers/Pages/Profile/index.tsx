@@ -9,6 +9,7 @@ import { useProvider } from '../../../context/provider';
 import { copyText } from '../../../utils/copyText';
 import { shortenAddress } from '../../../utils/shortenAddress';
 
+import { Routes } from '../../../types';
 import { Copy, History, LogOut, Send } from '../../../assets/Icons';
 
 const Profile = () => {
@@ -39,8 +40,22 @@ const Profile = () => {
       <p className="text-primary-500 text-center">345.00 XLM</p>
 
       <div className="space-y-2 mt-[16px] w-full">
-        <CardItem endArrow label="Send" startIcon={<Send />} onClick={() => {}} />
-        <CardItem endArrow label="Activity" startIcon={<History />} onClick={() => {}} />
+        <CardItem
+          endArrow
+          label="Send"
+          startIcon={<Send />}
+          onClick={() => {
+            context.setRoute(Routes.SEND);
+          }}
+        />
+        <CardItem
+          endArrow
+          label="Activity"
+          startIcon={<History />}
+          onClick={() => {
+            context.setRoute(Routes.ACTIVITY);
+          }}
+        />
       </div>
 
       {/* divider */}
@@ -54,7 +69,6 @@ const Profile = () => {
         state="enabled"
         startIcon={<LogOut />}
         onClick={handleDisconnect}
-        className="font-medium w-full inline-flex justify-center items-center gap-[10px] border-none text-white"
       >
         Disconnect
       </Button>

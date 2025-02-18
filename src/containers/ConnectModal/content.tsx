@@ -4,6 +4,9 @@ import Waiting from '../Pages/Waiting';
 import Successful from '../Pages/Successful';
 import OnBoarding from '../Pages/OnBoarding';
 import SignTransaction from '../Pages/SignTransaction';
+import Send from '../Pages/Send';
+import Activity from '../Pages/Activity';
+
 import { Routes } from '../../types';
 
 interface ModalContentProps {
@@ -34,5 +37,13 @@ export const modalContent: Record<
   [Routes.SIGN_TRANSACTION]: {
     title: 'Confirmation',
     Component: () => <SignTransaction />,
+  },
+  [Routes.SEND]: {
+    title: 'Send',
+    Component: () => <Send />,
+  },
+  [Routes.ACTIVITY]: {
+    title: 'Activity',
+    Component: () => <Activity />,
   },
 };

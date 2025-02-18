@@ -43,6 +43,7 @@ export default function ConnectModal({ isOpen, closeModal }: ConnectModalProps) 
       modalHeader={title}
       initialHeight={getInitialHeight(route)}
       icon={getModalIcon}
+      closeButton={route === Routes.ONBOARDING ? false : true}
     >
       <Component showAllWallets={showAllWallets} setShowAllWallets={setShowAllWallets} />
     </Modal>

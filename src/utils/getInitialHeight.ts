@@ -11,6 +11,10 @@ export const getInitialHeight = (route: Routes): number => {
       return MODAL_HEIGHTS[Routes.SUCCESSFUL];
     case Routes.SIGN_TRANSACTION:
       return MODAL_HEIGHTS[Routes.SIGN_TRANSACTION];
+    case Routes.SEND:
+      return MODAL_HEIGHTS[Routes.SEND];
+    case Routes.ACTIVITY:
+      return MODAL_HEIGHTS[Routes.ACTIVITY];
     default:
       return MODAL_HEIGHTS[Routes.ONBOARDING];
   }
