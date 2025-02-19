@@ -21,6 +21,7 @@ export const useBlux = () => {
       openModal: false,
       isAuthenticated: false,
     }));
+    setRoute(Routes.ONBOARDING);
   };
 
   const profile = () => {

@@ -17,7 +17,10 @@ export default function ConnectModal({ isOpen, closeModal }: ConnectModalProps) 
   const [showAllWallets, setShowAllWallets] = useState(false);
 
   const shouldShowBackButton =
-    route === Routes.WAITING || (route === Routes.ONBOARDING && showAllWallets);
+    route === Routes.WAITING ||
+    (route === Routes.ONBOARDING && showAllWallets) ||
+    route === Routes.ACTIVITY ||
+    route === Routes.SEND;
 
   const getModalIcon = shouldShowBackButton
     ? 'back'

@@ -40,7 +40,7 @@ const Profile = () => {
           copyText(context.value.user.wallet?.address as string);
         }}
       >
-        {shortenAddress(address, 5)}
+        {address ? shortenAddress(address, 5) : ''}
         <Copy />
       </p>
       <p className="text-primary-500 text-center">
