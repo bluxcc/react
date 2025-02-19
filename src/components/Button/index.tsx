@@ -2,7 +2,6 @@ import React from 'react';
 
 import { getBorderRadius } from '../../utils/getBorderRadius';
 import { useProvider } from '../../context/provider';
-import { defaultAppearance } from '../../constants/defaultAppearance';
 
 type ButtonSize = 'small' | 'medium' | 'large';
 type ButtonVariant = 'outline' | 'text' | 'fill';
@@ -54,7 +53,7 @@ const Button = ({
   className,
 }: ButtonProps) => {
   const context = useProvider();
-  const modalStyle = context.value.appearance || defaultAppearance;
+  const modalStyle = context.value.appearance;
 
   return (
     <button

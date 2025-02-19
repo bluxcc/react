@@ -2,7 +2,7 @@ import React, { createContext, useState, useEffect, useContext } from 'react';
 
 import ConnectModal from '../containers/ConnectModal';
 import { ContextState, IProviderConfig, ContextValues, IAppearance, Routes } from '../types';
-import { defaultAppearance } from '../constants/defaultAppearance';
+import { defaultAppearance } from '../constants';
 
 export const ProviderContext = createContext<ContextState | null>(null);
 

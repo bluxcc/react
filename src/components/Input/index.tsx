@@ -43,8 +43,8 @@ const InputField: React.FC<InputFieldProps> = ({
       )}
       <div
         className={`flex items-center w-full border rounded-full px-3 py-2 transition-all 
-    ${error ? 'border-lightRed-300' : 'border-primary-100'} 
-    focus-within:ring-1`}
+        ${error ? 'border-lightRed-300' : 'border-primary-100'} 
+        focus-within:ring-1`}
         style={{ '--tw-ring-color': context.value.appearance.accent } as React.CSSProperties}
       >
         {iconLeft && <div className="mr-2">{iconLeft}</div>}
