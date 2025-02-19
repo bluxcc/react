@@ -11,11 +11,17 @@ import { shortenAddress } from '../../../utils/shortenAddress';
 
 import { Routes } from '../../../types';
 import { Copy, History, LogOut, Send } from '../../../assets/Icons';
+import useAccount from '../../../hooks/useAccount';
+import humanizeAmount from '../../../utils/humanizeAmount';
 
 const Profile = () => {
   const context = useProvider();
   const { disconnect } = useBlux();
   const [address, setAddress] = useState(context.value.user.wallet?.address || '');
+  const { account } = useAccount(
+    context.value.user.wallet?.address as string,
+    context.value.config.networkPassphrase,
+  );
 
   useEffect(() => {
     setAddress(context.value.user.wallet?.address as string);
@@ -37,7 +43,9 @@ const Profile = () => {
         {shortenAddress(address, 5)}
         <Copy />
       </p>
-      <p className="text-primary-500 text-center">345.00 XLM</p>
+      <p className="text-primary-500 text-center">
+        {account ? humanizeAmount(account.xlmBalance) : 'N/A'} XLM
+      </p>
 
       <div className="space-y-2 mt-[16px] w-full">
         <CardItem

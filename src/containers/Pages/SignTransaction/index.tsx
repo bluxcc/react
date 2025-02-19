@@ -9,12 +9,18 @@ import { shortenAddress } from '../../../utils/shortenAddress';
 import { getBorderRadius } from '../../../utils/getBorderRadius';
 import { getTransactionDetails } from '../../../utils/getTransactionDetails';
 import { Routes } from '../../../types';
+import humanizeAmount from '../../../utils/humanizeAmount';
+import useAccount from '../../../hooks/useAccount';
 
 const SignTransaction = () => {
   const context = useProvider();
   const modalStyle = context.value.appearance;
   const { xdr } = context.value.signTransaction;
   const txDetails = getTransactionDetails(xdr, context.value.config.networkPassphrase);
+  const { account } = useAccount(
+    context.value.user.wallet?.address as string,
+    context.value.config.networkPassphrase,
+  );
 
   const handleSignTx = async () => {
     context.setValue((prev) => ({
@@ -57,7 +63,9 @@ const SignTransaction = () => {
             borderRadius: getBorderRadius(modalStyle.cornerRadius),
           }}
         >
-          <p className="text-primary-500 text-xs font-normal">234 XLM</p>
+          <p className="text-primary-500 text-xs font-normal">
+            {account ? humanizeAmount(account.xlmBalance) : 'N/A'} XLM
+          </p>
         </div>
       </div>
 

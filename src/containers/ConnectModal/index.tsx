@@ -30,6 +30,8 @@ export default function ConnectModal({ isOpen, closeModal }: ConnectModalProps) 
       setRoute(Routes.ONBOARDING);
     } else if (showAllWallets) {
       setShowAllWallets(false);
+    } else if (route === Routes.SEND || route === Routes.ACTIVITY) {
+      setRoute(Routes.PROFILE);
     }
   };
 
