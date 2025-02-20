@@ -18,10 +18,10 @@ const Profile = () => {
   const context = useProvider();
   const { disconnect } = useBlux();
   const [address, setAddress] = useState(context.value.user.wallet?.address || '');
-  const { account } = useAccount(
-    context.value.user.wallet?.address as string,
-    context.value.config.networkPassphrase,
-  );
+  const { account } = useAccount({
+    publicKey: context.value.user.wallet?.address as string,
+    passphrase: context.value.config.networkPassphrase,
+  });
 
   useEffect(() => {
     setAddress(context.value.user.wallet?.address as string);

@@ -1,3 +1,4 @@
+import { Horizon } from '@stellar/stellar-sdk';
 import { HorizonApi } from '@stellar/stellar-sdk/lib/horizon';
 
 /**
@@ -20,6 +21,16 @@ export enum WalletNetwork {
   FUTURENET = 'Test SDF Future Network ; October 2022',
   SANDBOX = 'Local Sandbox Stellar Network ; September 2022',
   STANDALONE = 'Standalone Network ; February 2017',
+}
+
+export interface AccountData {
+  id: string;
+  sequence: string;
+  subentry_count: number;
+  thresholds: Horizon.HorizonApi.AccountThresholds;
+  balances: Horizon.HorizonApi.BalanceLine[];
+  xlmBalance: string;
+  transactions?: Horizon.ServerApi.TransactionRecord[];
 }
 
 /**

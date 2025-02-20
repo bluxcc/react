@@ -1,72 +1,124 @@
 import { useState, useEffect } from 'react';
 import { Horizon } from '@stellar/stellar-sdk';
-import { WalletNetwork } from '../types';
-import { getNetworkByPassphrase } from '../utils/getNetworkByPassphrase';
 
-const HORIZON_SERVERS: Record<string, string> = {
-  public: 'https://horizon.stellar.org',
-  testnet: 'https://horizon-testnet.stellar.org',
-  futurenet: 'https://horizon-futurenet.stellar.org',
+import { getNetworkByPassphrase } from '../utils/getNetworkByPassphrase';
+import { getHorizonServer } from '../utils/getHorizonServer';
+
+import { AccountData } from '../types';
+
+type HorizonServer = Horizon.Server;
+
+interface AccountHookResult {
+  account: AccountData | null;
+  loading: boolean;
+  error: string | null;
+}
+
+interface AccountHookProps {
+  publicKey: string;
+  passphrase: string;
+}
+
+const getXLMBalance = (balances: Horizon.HorizonApi.BalanceLine[]): string => {
+  return balances.find((b) => b.asset_type === 'native')?.balance || '0';
 };
 
-const useAccount = (publicKey: string, passphrase: string) => {
-  const [account, setAccount] = useState<any>(null);
-  const [loading, setLoading] = useState(true);
+const useAccount = ({ publicKey, passphrase }: AccountHookProps): AccountHookResult => {
+  const [account, setAccount] = useState<AccountData | null>(null);
+  const [loading, setLoading] = useState<boolean>(true);
   const [error, setError] = useState<string | null>(null);
 
-  let network: WalletNetwork;
-  try {
-    network = getNetworkByPassphrase(passphrase);
-  } catch (err: any) {
-    return { account: null, loading: false, error: err.message };
-  }
-
-  const server = new Horizon.Server(HORIZON_SERVERS[network]);
-
   useEffect(() => {
-    if (!publicKey) {
-      setError('No public key provided');
-      setLoading(false);
-      return;
-    }
+    let isSubscribed = true;
+    let eventSource: (() => void) | null = null;
 
-    const fetchAccount = async () => {
-      setLoading(true);
+    const fetchAccount = async (server: HorizonServer) => {
       try {
         const accountData = await server.loadAccount(publicKey);
-        const xlmBalance =
-          accountData.balances.find((b) => b.asset_type === 'native')?.balance || '0';
+        if (!isSubscribed) return;
 
-        setAccount({
+        setAccount((prev) => ({
           id: accountData.id,
           sequence: accountData.sequence,
           subentry_count: accountData.subentry_count,
           thresholds: accountData.thresholds,
           balances: accountData.balances,
-          xlmBalance,
-        });
+          xlmBalance: getXLMBalance(accountData.balances),
+          transactions: prev?.transactions,
+        }));
 
         setError(null);
-      } catch (err: any) {
-        setError(err.message);
-        setAccount(null);
-      } finally {
-        setLoading(false);
+      } catch (err) {
+        if (isSubscribed && !error) {
+          setError((err as Error).message);
+          setAccount(null);
+        }
       }
     };
 
-    fetchAccount();
+    const fetchTransactions = async (server: HorizonServer) => {
+      try {
+        const transactionsPage = await server
+          .transactions()
+          .forAccount(publicKey)
+          .limit(10)
+          .order('desc')
+          .call();
 
-    const es = server
-      .operations()
-      .forAccount(publicKey)
-      .cursor('now')
-      .stream({
-        onmessage: fetchAccount,
-        onerror: (err: any) => setError(err.message),
-      });
+        if (!isSubscribed) return;
 
-    return () => es();
+        setAccount((prev) => (prev ? { ...prev, transactions: transactionsPage.records } : null));
+      } catch (err) {
+        if (isSubscribed && !error) {
+          setError((err as Error).message);
+        }
+      }
+    };
+
+    const initializeAccount = async () => {
+      if (!publicKey) {
+        setError('No public key provided');
+        setLoading(false);
+        return;
+      }
+
+      try {
+        const server = getHorizonServer(
+          getNetworkByPassphrase(passphrase) as 'testnet' | 'public' | 'futurenet',
+        );
+        setLoading(true);
+
+        await Promise.all([fetchAccount(server), fetchTransactions(server)]);
+
+        // Set up streaming
+        eventSource = server
+          .operations()
+          .forAccount(publicKey)
+          .cursor('now')
+          .stream({
+            onmessage: () => fetchAccount(server),
+            onerror: (err) => {
+              if (isSubscribed && !error) {
+                setError((err as MessageEvent).data.message);
+              }
+            },
+          });
+      } finally {
+        if (isSubscribed) {
+          setLoading(false);
+        }
+      }
+    };
+
+    initializeAccount();
+
+    // Cleanup function
+    return () => {
+      isSubscribed = false;
+      if (eventSource) {
+        eventSource();
+      }
+    };
   }, [publicKey, passphrase]);
 
   return { account, loading, error };

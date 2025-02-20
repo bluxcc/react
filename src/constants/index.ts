@@ -11,6 +11,12 @@ export const MODAL_HEIGHTS: ModalHeights = {
   [Routes.ACTIVITY]: 356,
 };
 
+export const HORIZON_SERVERS = {
+  public: 'https://horizon.stellar.org',
+  testnet: 'https://horizon-testnet.stellar.org',
+  futurenet: 'https://horizon-futurenet.stellar.org',
+};
+
 export const defaultAppearance: IAppearance = {
   theme: 'light',
   background: '#ffffff',

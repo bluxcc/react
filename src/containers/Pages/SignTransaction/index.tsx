@@ -1,7 +1,7 @@
 import React from 'react';
 
 import Button from '../../../components/Button';
-import TransactionSummary from '../../../components/TransactionSummery';
+import TransactionSummary from '../../../components/Transaction/Summery';
 
 import { useProvider } from '../../../context/provider';
 
@@ -17,10 +17,10 @@ const SignTransaction = () => {
   const modalStyle = context.value.appearance;
   const { xdr } = context.value.signTransaction;
   const txDetails = getTransactionDetails(xdr, context.value.config.networkPassphrase);
-  const { account } = useAccount(
-    context.value.user.wallet?.address as string,
-    context.value.config.networkPassphrase,
-  );
+  const { account } = useAccount({
+    publicKey: context.value.user.wallet?.address as string,
+    passphrase: context.value.config.networkPassphrase,
+  });
 
   const handleSignTx = async () => {
     context.setValue((prev) => ({

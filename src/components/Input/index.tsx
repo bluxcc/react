@@ -1,5 +1,6 @@
 import React from 'react';
 import { useProvider } from '../../context/provider';
+import { getBorderRadius } from '../../utils/getBorderRadius';
 
 type InputFieldProps = {
   label?: string;
@@ -42,23 +43,29 @@ const InputField: React.FC<InputFieldProps> = ({
         </label>
       )}
       <div
-        className={`flex items-center w-full border rounded-full px-3 py-2 transition-all 
+        className={`flex items-center w-full border px-3 py-2 transition-all 
         ${error ? 'border-lightRed-300' : 'border-primary-100'} 
         focus-within:ring-1`}
-        style={{ '--tw-ring-color': context.value.appearance.accent } as React.CSSProperties}
+        style={
+          {
+            '--tw-ring-color': context.value.appearance.accent,
+            borderRadius: getBorderRadius(context.value.appearance.cornerRadius),
+          } as React.CSSProperties
+        }
       >
         {iconLeft && <div className="mr-2">{iconLeft}</div>}
         <input
           type="text"
-          className="bg-transparent outline-none text-gray-700 placeholder-gray-500 w-[90%] mr-2"
-          placeholder={placeholder}
           value={value}
+          placeholder={placeholder}
+          className="bg-transparent outline-none text-gray-700 placeholder-gray-500 w-[90%] mr-2"
           onChange={onChange}
         />
         {button && (
           <button
             onClick={onButtonClick}
-            className="bg-white border border-primary-100 text-primary-500 text-sm font-semibold px-3 py-1 rounded-full"
+            style={{ borderRadius: getBorderRadius(context.value.appearance.cornerRadius) }}
+            className="bg-white border border-primary-100 text-primary-500 text-sm font-semibold px-3 py-1"
           >
             {button}
           </button>
