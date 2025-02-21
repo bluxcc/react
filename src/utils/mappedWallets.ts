@@ -1,12 +1,12 @@
-import { WalletActions } from '../types';
+import { WalletInterface } from '../types';
 import { walletsConfig } from '../wallets/walletsConfig';
 
 export type MappedWallet = {
-  wallet: WalletActions;
+  wallet: WalletInterface;
   isAvailable: boolean;
 };
 
-export const getMappedWallets = async (): Promise<MappedWallet[]> => {
+const getMappedWallets = async (): Promise<MappedWallet[]> => {
   return Promise.all(
     Object.values(walletsConfig).map(async (wallet): Promise<MappedWallet> => {
       try {
@@ -19,3 +19,5 @@ export const getMappedWallets = async (): Promise<MappedWallet[]> => {
     }),
   );
 };
+
+export default getMappedWallets;

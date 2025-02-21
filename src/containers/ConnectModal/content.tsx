@@ -1,4 +1,5 @@
 import React from 'react';
+
 import Profile from '../Pages/Profile';
 import Waiting from '../Pages/Waiting';
 import Successful from '../Pages/Successful';

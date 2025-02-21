@@ -5,19 +5,19 @@ interface HeaderProps {
   icon?: 'info' | 'back';
   onInfo?: () => void;
   onBack?: () => void;
-  modalHeader: string;
+  title: string;
   closeButton?: boolean;
   onClose: () => void;
 }
 
-const ModalHeader: React.FC<HeaderProps> = ({
+const ModalHeader = ({
   icon,
   onInfo,
   onBack,
-  modalHeader,
+  title,
   closeButton = false,
   onClose,
-}) => {
+}: HeaderProps) => {
   return (
     <div className="w-full flex items-center justify-between h-16">
       {icon === 'info' ? (
@@ -35,7 +35,7 @@ const ModalHeader: React.FC<HeaderProps> = ({
         <div className="size-6" />
       )}
 
-      <p className="text-base font-semibold text-center flex-grow select-none">{modalHeader}</p>
+      <p className="text-base font-semibold text-center flex-grow select-none">{title}</p>
 
       {closeButton ? (
         <button onClick={onClose} className="cursor-pointer">

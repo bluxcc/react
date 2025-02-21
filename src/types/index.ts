@@ -62,8 +62,8 @@ export interface IUser {
  * Context state management interface.
  */
 export interface ContextState {
-  value: ContextValues; // Current context values
-  setValue: React.Dispatch<React.SetStateAction<ContextValues>>; // Function to update context values
+  value: ContextInterface; // Current context values
+  setValue: React.Dispatch<React.SetStateAction<ContextInterface>>; // Function to update context values
   route: Routes;
   setRoute: React.Dispatch<React.SetStateAction<Routes>>;
 }
@@ -94,20 +94,20 @@ export interface IAppearance {
 /**
  * Structure of the global context values.
  */
-export interface ContextValues {
+export interface ContextInterface {
   config: IProviderConfig; // Provider configuration
   appearance: IAppearance; // UI appearance settings
   user: IUser; // User-related information
-  openModal: boolean; // Determines if the modal is open
+  isModalOpen: boolean; // Determines if the modal is open
   isReady: boolean; // Indicates if the system is ready
   isDemo: boolean; // Specifies if in demo mode
   isAuthenticated: boolean; // User authentication status
-  availableWallets: WalletActions[]; // List of available wallets
-  modalState: 'connecting' | 'signing';
+  availableWallets: WalletInterface[]; // List of available wallets
+  waitingStatus: 'connecting' | 'signing';
   signTransaction: {
     xdr: string; // Transaction details for signing
     resolver: ((value: HorizonApi.SubmitTransactionResponse) => void) | null; // Transaction signing resolver
-    latestResults: HorizonApi.SubmitTransactionResponse | null; // Latest transaction signing result
+    result: HorizonApi.SubmitTransactionResponse | null; // Latest transaction signing result
   };
 }
 
@@ -162,7 +162,7 @@ export interface SignResult {
 /**
  * Defines the available actions for interacting with a wallet.
  */
-export interface WalletActions {
+export interface WalletInterface {
   name: SupportedWallets; // Name of the wallet
   website: string; // Official wallet website or documentation URL
   isAvailable: () => Promise<boolean> | boolean; // Checks wallet availability

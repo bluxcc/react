@@ -1,13 +1,11 @@
-import { HorizonApi } from '@stellar/stellar-sdk/lib/horizon';
-import { WalletActions } from '../types';
-import { submitTransaction } from './submitTransaction';
+import { WalletInterface } from '../../types';
+import submitTransaction from './submitTransaction';
 
-export const signTransactionHandler = async (
-  wallet: WalletActions,
+const signTransaction = async (
+  wallet: WalletInterface,
   xdr: string,
   address: string,
   networkPassphrase: string,
-  resolver: ((value: HorizonApi.SubmitTransactionResponse) => void) | null,
 ) => {
   if (!wallet?.signTransaction) {
     throw new Error('Wallet does not support transaction signing.');
@@ -20,6 +18,7 @@ export const signTransactionHandler = async (
 
   const result = await submitTransaction(signedXdr, networkPassphrase);
 
-  if (resolver) resolver(result);
   return result;
 };
+
+export default signTransaction;

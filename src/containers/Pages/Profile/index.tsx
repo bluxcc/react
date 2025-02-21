@@ -6,8 +6,8 @@ import CardItem from '../../../components/CardItem';
 import { useBlux } from '../../../hooks/useBlux';
 import { useProvider } from '../../../context/provider';
 
-import { copyText } from '../../../utils/copyText';
-import { shortenAddress } from '../../../utils/shortenAddress';
+import copyText from '../../../utils/copyText';
+import shortenAddress from '../../../utils/shortenAddress';
 
 import { Routes } from '../../../types';
 import { Copy, History, LogOut, Send } from '../../../assets/Icons';

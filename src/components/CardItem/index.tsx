@@ -1,6 +1,6 @@
-import React from 'react';
+import React, { MouseEvent } from 'react';
 
-import { getBorderRadius } from '../../utils/getBorderRadius';
+import getBorderRadius from '../../utils/getBorderRadius';
 import { useProvider } from '../../context/provider';
 
 import { ArrowRight } from '../../assets/Icons';
@@ -13,31 +13,41 @@ type CardItemProps = {
   onClick?: () => void;
 };
 
-const CardItem = ({ variant = 'default', startIcon, endArrow, label, onClick }: CardItemProps) => {
+const CardItem: React.FC<CardItemProps> = ({
+  variant = 'default',
+  startIcon,
+  endArrow,
+  label,
+  onClick,
+}) => {
   const context = useProvider();
-  const modalStyle = context.value.appearance;
+  const appearance = context.value.appearance;
+  const borderRadius = getBorderRadius(appearance.cornerRadius);
+
+  const onMouseEnter = (e: MouseEvent<HTMLButtonElement>) => {
+    if (variant === 'default') {
+      e.currentTarget.style.borderColor = appearance.accent;
+    }
+  };
+  const onMouseLeave = (e: MouseEvent<HTMLButtonElement>) => {
+    if (variant === 'default') {
+      e.currentTarget.style.borderColor = '#cdceee';
+    }
+  };
+
   return (
     <button
       onClick={onClick}
-      className={`flex items-center w-full pl-[10px] h-14 pr-3 py-2 transition-all text-gray-950
-        ${variant === 'social' ? 'border border-gray-300' : 'border border-primary-100'}`}
+      className={`flex items-center w-full pl-[10px] h-14 pr-3 py-2 transition-all text-gray-950 border border-primary-100`}
       style={{
-        borderRadius: getBorderRadius(modalStyle.cornerRadius),
-        color: modalStyle.textColor,
+        borderRadius,
+        color: appearance.textColor,
       }}
-      onMouseEnter={(e) => {
-        if (variant === 'default') {
-          e.currentTarget.style.borderColor = modalStyle.accent;
-        }
-      }}
-      onMouseLeave={(e) => {
-        if (variant === 'default') {
-          e.currentTarget.style.borderColor = '#cdceee';
-        }
-      }}
+      onMouseEnter={onMouseEnter}
+      onMouseLeave={onMouseLeave}
     >
       <span
-        style={{ borderRadius: getBorderRadius(modalStyle.cornerRadius) }}
+        style={{ borderRadius }}
         className="flex justify-center items-center border border-primary-100 size-10 overflow-hidden"
       >
         {startIcon}

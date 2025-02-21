@@ -1,8 +1,9 @@
 import React, { useEffect, useRef, useState } from 'react';
 
 import { useProvider } from '../../context/provider';
-import { getBorderRadius } from '../../utils/getBorderRadius';
 import { useModalAnimation } from '../../hooks/useModalAnimation';
+
+import getBorderRadius from '../../utils/getBorderRadius';
 
 import ModalHeader from './Header';
 import ModalBackdrop from './Backdrop';
@@ -15,7 +16,7 @@ interface ModalProps {
   icon?: 'info' | 'back';
   onInfo?: () => void;
   closeButton?: boolean;
-  modalHeader: string;
+  title: string;
   initialHeight: number;
 }
 
@@ -25,7 +26,7 @@ const Modal = ({
   onBack,
   onInfo,
   children,
-  modalHeader,
+  title,
   icon,
   initialHeight,
   closeButton = true,
@@ -42,26 +43,28 @@ const Modal = ({
   const previousChildrenRef = useRef(children);
   const previousHeightRef = useRef<number>(400);
 
-  const modalStyle = context.value.appearance;
+  const appearance = context.value.appearance;
+  const borderRadius = getBorderRadius(appearance.cornerRadius);
+
+  const updateHeight = () => {
+    const newHeight = contentRef.current?.offsetHeight;
+    if (!newHeight) return;
+
+    if (isFirstRender.current) {
+      previousHeightRef.current = newHeight;
+      isFirstRender.current = false;
+      return;
+    }
+    if (!isFirstRender.current && newHeight !== previousHeightRef.current) {
+      setContentHeight(newHeight);
+      setHeightChanged(true);
+      previousHeightRef.current = newHeight;
+    }
+  };
 
   useEffect(() => {
     if (!isOpen || !contentRef.current) return;
 
-    const updateHeight = () => {
-      const newHeight = contentRef.current?.offsetHeight;
-      if (!newHeight) return;
-
-      if (isFirstRender.current) {
-        previousHeightRef.current = newHeight;
-        isFirstRender.current = false;
-        return;
-      }
-      if (!isFirstRender.current && newHeight !== previousHeightRef.current) {
-        setContentHeight(newHeight);
-        setHeightChanged(true);
-        previousHeightRef.current = newHeight;
-      }
-    };
     if (heightChanged) {
       setHasTransition(true);
     }
@@ -112,11 +115,11 @@ const Modal = ({
               : hasTransition
               ? 'height 300ms ease-in-out'
               : 'transition-all',
-            backgroundColor: modalStyle.background,
-            color: modalStyle.textColor,
-            fontFamily: modalStyle.font,
+            backgroundColor: appearance.background,
+            color: appearance.textColor,
+            fontFamily: appearance.font,
             letterSpacing: '-0.03px',
-            borderRadius: getBorderRadius(modalStyle.cornerRadius),
+            borderRadius,
           }}
         >
           <div ref={contentRef} className="px-6 pb-4 transition-all">
@@ -124,7 +127,7 @@ const Modal = ({
               icon={icon}
               onInfo={onInfo}
               onBack={onBack}
-              modalHeader={modalHeader}
+              title={title}
               closeButton={closeButton}
               onClose={() => handleClose(onClose)}
             />

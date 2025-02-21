@@ -1,47 +1,42 @@
-import numeral from 'numeral';
+export function sevenDigit(number: number | string): string {
+  const numStr = number.toString();
+  const [integer, decimal = ''] = numStr.split('.');
 
-import BN from './BN';
+  if (!decimal) return integer;
 
-export function sevenDigit(number: number | string) {
-  const [before, after] = number.toString().split('.');
-  const integer = before || '0';
+  const precisionMap: Record<number, number> = {
+    0: 8,
+    1: 7,
+    2: 6,
+    3: 5,
+    4: 4,
+    5: 3,
+    6: 2,
+  };
 
-  if (!after) {
-    return integer;
-  }
-
-  switch (before.length) {
-    case 0:
-      return `${integer}.${after.slice(0, 8)}`;
-    case 1:
-      return `${integer}.${after.slice(0, 7)}`;
-    case 2:
-      return `${integer}.${after.slice(0, 6)}`;
-    case 3:
-      return `${integer}.${after.slice(0, 5)}`;
-    case 4:
-      return `${integer}.${after.slice(0, 4)}`;
-    case 5:
-      return `${integer}.${after.slice(0, 3)}`;
-    case 6:
-      return `${integer}.${after.slice(0, 2)}`;
-    default:
-      return integer;
-  }
+  const precision = precisionMap[integer.length] ?? 0;
+  return precision > 0 ? `${integer}.${decimal.slice(0, precision)}` : integer;
 }
 
-export default function humanizeAmount(amount: number | string, big = false) {
-  if (new BN(amount).isEqualTo(0)) {
-    return 0;
-  }
-  if (new BN(amount).isLessThan('0.000001')) {
-    return amount;
-  }
+function humanizeAmount(amount: number | string, big: boolean = false): string {
+  const num = typeof amount === 'number' ? amount : parseFloat(amount);
 
-  let format = '0,0.[0000000]';
+  if (isNaN(num) || num === 0) return '0';
+  if (num < 0.000001) return amount.toString();
+
   if (big) {
-    format = '0.[00]a';
+    if (num >= 1e6) return `${(num / 1e6).toFixed(2)}m`;
+    if (num >= 1e3) return `${(num / 1e3).toFixed(2)}k`;
   }
 
-  return numeral(sevenDigit(amount)).format(format);
+  return formatNumberWithCommas(sevenDigit(num));
 }
+
+function formatNumberWithCommas(number: string): string {
+  const [integer, decimal] = number.split('.');
+  return decimal
+    ? `${integer.replace(/\B(?=(\d{3})+(?!\d))/g, ',')}.${decimal}`
+    : integer.replace(/\B(?=(\d{3})+(?!\d))/g, ',');
+}
+
+export default humanizeAmount;

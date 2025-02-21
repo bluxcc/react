@@ -1,8 +1,8 @@
 import React, { createContext, useState, useEffect, useContext } from 'react';
 
-import ConnectModal from '../containers/ConnectModal';
-import { ContextState, IProviderConfig, ContextValues, IAppearance, Routes } from '../types';
 import { defaultAppearance } from '../constants';
+import ConnectModal from '../containers/ConnectModal';
+import { ContextState, IProviderConfig, ContextInterface, IAppearance, Routes } from '../types';
 
 export const ProviderContext = createContext<ContextState | null>(null);
 
@@ -18,19 +18,19 @@ export const BluxProvider = ({
   children: React.ReactNode;
 }) => {
   const [route, setRoute] = useState<Routes>(Routes.ONBOARDING);
-  const [value, setValue] = useState<ContextValues>({
+  const [value, setValue] = useState<ContextInterface>({
     config,
     appearance: appearance ?? defaultAppearance,
     isDemo: isDemo ?? false,
     user: { wallet: null },
-    openModal: false,
+    isModalOpen: false,
     isReady: false,
     isAuthenticated: false,
-    modalState: 'connecting',
+    waitingStatus: 'connecting',
     signTransaction: {
       xdr: '',
       resolver: null,
-      latestResults: null,
+      result: null,
     },
     availableWallets: [],
   });
@@ -45,14 +45,14 @@ export const BluxProvider = ({
   const closeModal = () => {
     setValue((prev) => ({
       ...prev,
-      openModal: false,
+      isModalOpen: false,
     }));
   };
 
   return (
     <ProviderContext.Provider value={{ value, setValue, route, setRoute }}>
       {children}
-      <ConnectModal isOpen={value.openModal} closeModal={closeModal} />
+      <ConnectModal isOpen={value.isModalOpen} closeModal={closeModal} />
     </ProviderContext.Provider>
   );
 };

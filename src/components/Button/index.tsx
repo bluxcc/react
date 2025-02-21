@@ -1,6 +1,6 @@
 import React from 'react';
 
-import { getBorderRadius } from '../../utils/getBorderRadius';
+import getBorderRadius from '../../utils/getBorderRadius';
 import { useProvider } from '../../context/provider';
 
 type ButtonSize = 'small' | 'medium' | 'large';
@@ -53,7 +53,7 @@ const Button = ({
   className,
 }: ButtonProps) => {
   const context = useProvider();
-  const modalStyle = context.value.appearance;
+  const borderRadius = getBorderRadius(context.value.appearance.cornerRadius);
 
   return (
     <button
@@ -61,7 +61,7 @@ const Button = ({
       className={`${buttonBase} ${sizeClasses[size]} ${variantClasses[variant]} ${stateClasses[state]} ${className}`}
       disabled={state === 'disabled'}
       style={{
-        borderRadius: getBorderRadius(modalStyle.cornerRadius),
+        borderRadius,
         ...style,
       }}
     >

@@ -1,7 +1,7 @@
 import React from 'react';
 
-import { copyText } from '../../../utils/copyText';
-import { shortenAddress } from '../../../utils/shortenAddress';
+import copyText from '../../../utils/copyText';
+import shortenAddress from '../../../utils/shortenAddress';
 import capitalizeFirstLetter from '../../../utils/capitalizeFirstLetter';
 
 interface TransactionDetail {
@@ -11,22 +11,17 @@ interface TransactionDetail {
   isCopyable?: boolean;
 }
 
-interface TransactionSummaryProps {
-  operations: number;
+interface SummaryProps {
+  operationsCount: number;
   sender: string;
   estimatedFee: string;
   action: string;
 }
 
-const TransactionSummary = ({
-  operations,
-  sender,
-  estimatedFee,
-  action,
-}: TransactionSummaryProps) => {
+const Summary = ({ operationsCount, sender, estimatedFee, action }: SummaryProps) => {
   const details: TransactionDetail[] = [
     { label: 'Action', value: capitalizeFirstLetter(action) },
-    { label: 'Operations', value: operations.toString() },
+    { label: 'Operations', value: operationsCount.toString() },
     { label: 'Sender', value: shortenAddress(sender, 5), isHighlighted: true, isCopyable: true },
     { label: 'Estimated Fee', value: `${estimatedFee} XLM` },
   ];
@@ -55,4 +50,4 @@ const TransactionSummary = ({
   );
 };
 
-export default TransactionSummary;
+export default Summary;

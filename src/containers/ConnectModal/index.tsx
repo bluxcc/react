@@ -2,10 +2,10 @@ import React, { useState } from 'react';
 
 import Modal from '../../components/Modal';
 import { useProvider } from '../../context/provider';
-import { getInitialHeight } from '../../utils/getInitialHeight';
 
 import { Routes } from '../../types';
 import { modalContent } from './content';
+import { MODAL_HEIGHTS } from '../../constants';
 
 interface ConnectModalProps {
   isOpen: boolean;
@@ -22,11 +22,13 @@ export default function ConnectModal({ isOpen, closeModal }: ConnectModalProps) 
     route === Routes.ACTIVITY ||
     route === Routes.SEND;
 
-  const getModalIcon = shouldShowBackButton
-    ? 'back'
-    : route === Routes.ONBOARDING
-    ? 'info'
-    : undefined;
+  let modalIcon: 'back' | 'info' | undefined;
+
+  if (shouldShowBackButton) {
+    modalIcon = 'back';
+  } else if (route === Routes.ONBOARDING) {
+    modalIcon = 'info';
+  }
 
   const handleBackNavigation = () => {
     if (route === Routes.WAITING) {
@@ -45,9 +47,9 @@ export default function ConnectModal({ isOpen, closeModal }: ConnectModalProps) 
       isOpen={isOpen}
       onBack={handleBackNavigation}
       onClose={closeModal}
-      modalHeader={title}
-      initialHeight={getInitialHeight(route)}
-      icon={getModalIcon}
+      title={title}
+      initialHeight={MODAL_HEIGHTS[route]}
+      icon={modalIcon}
       closeButton={route === Routes.ONBOARDING ? false : true}
     >
       <Component showAllWallets={showAllWallets} setShowAllWallets={setShowAllWallets} />

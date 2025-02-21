@@ -1,8 +1,9 @@
 import { Transaction } from '@stellar/stellar-sdk';
+import { WalletNetwork } from '../../types';
 
-export const getTransactionDetails = (xdr: string, networkPassPhrase: string) => {
+const getTransactionDetails = (xdr: string) => {
   try {
-    const transaction = new Transaction(xdr, networkPassPhrase);
+    const transaction = new Transaction(xdr, WalletNetwork.PUBLIC);
 
     return {
       action: transaction.operations[0].type,
@@ -15,3 +16,5 @@ export const getTransactionDetails = (xdr: string, networkPassPhrase: string) =>
     throw error;
   }
 };
+
+export default getTransactionDetails;

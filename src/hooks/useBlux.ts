@@ -11,14 +11,18 @@ export const useBlux = () => {
   const { isAuthenticated, user } = value;
 
   const connect = () => {
-    setValue((prev) => (prev.openModal ? prev : { ...prev, openModal: true }));
+    if (!isAuthenticated) {
+      setValue((prev) => (prev.isModalOpen ? prev : { ...prev, isModalOpen: true }));
+    } else {
+      throw new Error('User is already connected.');
+    }
   };
 
   const disconnect = () => {
     setValue((prev) => ({
       ...prev,
       user: { wallet: null },
-      openModal: false,
+      isModalOpen: false,
       isAuthenticated: false,
     }));
     setRoute(Routes.ONBOARDING);
@@ -29,7 +33,7 @@ export const useBlux = () => {
       throw new Error('User is not authenticated.');
     }
     setRoute(Routes.PROFILE);
-    setValue((prev) => ({ ...prev, openModal: true }));
+    setValue((prev) => ({ ...prev, isModalOpen: true }));
   };
 
   const signTransaction = (xdr: string) =>
@@ -40,7 +44,7 @@ export const useBlux = () => {
       setRoute(Routes.SIGN_TRANSACTION);
       setValue((prev) => ({
         ...prev,
-        openModal: true,
+        isModalOpen: true,
         signTransaction: {
           ...prev.signTransaction,
           xdr,

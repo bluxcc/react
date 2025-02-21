@@ -3,21 +3,21 @@ import React, { useEffect, useState, useRef } from 'react';
 import Button from '../../../components/Button';
 import { useProvider } from '../../../context/provider';
 
-import { handleIcons } from '../../../utils/handleIcons';
-import { getMappedWallets, MappedWallet } from '../../../utils/mappedWallets';
+import handleIcons from '../../../utils/handleIcons';
+import getMappedWallets, { MappedWallet } from '../../../utils/mappedWallets';
 
 import { Loading } from '../../../assets/Icons';
-import { Routes, WalletActions } from '../../../types';
-import { signTransactionHandler } from '../../../utils/signTransactionHandler';
+import { Routes, WalletInterface } from '../../../types';
+import signTransaction from '../../../utils/stellar/signTransaction';
 
 const Waiting = () => {
   const [error, setError] = useState(false);
   const [mappedWallets, setMappedWallets] = useState<MappedWallet[]>([]);
-  const [matchedWallet, setMatchedWallet] = useState<WalletActions | null>(null);
+  const [matchedWallet, setMatchedWallet] = useState<WalletInterface | null>(null);
   const hasConnected = useRef(false);
   const context = useProvider();
 
-  const modalState = context.value.modalState;
+  const waitingStatus = context.value.waitingStatus;
   const { user } = context.value || {};
   const { xdr, resolver } = context.value.signTransaction;
 
@@ -46,22 +46,23 @@ const Waiting = () => {
     }
   }, [matchedWallet]);
 
-  const handleAssignment = async (wallet: WalletActions) => {
+  const handleAssignment = async (wallet: WalletInterface) => {
     try {
-      if (modalState === 'signing') {
-        const result = await signTransactionHandler(
+      if (waitingStatus === 'signing') {
+        const result = await signTransaction(
           wallet,
           xdr,
           context.value.user.wallet?.address as string,
           context.value.config.networkPassphrase,
-          resolver,
         );
+
+        if (resolver) resolver(result);
 
         context.setValue((prev) => ({
           ...prev,
           signTransaction: {
             ...prev.signTransaction,
-            latestResults: result,
+            result: result,
           },
         }));
 
@@ -108,15 +109,15 @@ const Waiting = () => {
       <div className="space-y-1 flex-col text-center font-semibold">
         <p className="text-xl">
           {error
-            ? `Failed ${modalState === 'connecting' ? 'connecting to' : 'signing with'}`
-            : `${modalState === 'connecting' ? 'Waiting for' : 'Signing with'}`}{' '}
+            ? `Failed ${waitingStatus === 'connecting' ? 'connecting to' : 'signing with'}`
+            : `${waitingStatus === 'connecting' ? 'Waiting for' : 'Signing with'}`}{' '}
           {user?.wallet?.name}
         </p>
         <p className="text-sm">
           {error
-            ? `Please try ${modalState === 'connecting' ? 'connecting' : 'signing'} again.`
+            ? `Please try ${waitingStatus === 'connecting' ? 'connecting' : 'signing'} again.`
             : `${
-                modalState === 'connecting' ? 'Accept connection' : 'Sign the'
+                waitingStatus === 'connecting' ? 'Accept connection' : 'Sign the'
               } request in your wallet`}
         </p>
       </div>
@@ -132,7 +133,7 @@ const Waiting = () => {
         </Button>
       ) : (
         <Button state="enabled" variant="outline" startIcon={<Loading />}>
-          {modalState === 'connecting' ? 'Connecting' : 'Signing'}
+          {waitingStatus === 'connecting' ? 'Connecting' : 'Signing'}
         </Button>
       )}
     </div>

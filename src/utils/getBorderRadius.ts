@@ -8,6 +8,8 @@ const radiusMap: Record<CornerRadius, string> = {
   full: '32px',
 };
 
-export const getBorderRadius = (cornerRadius: CornerRadius): string => {
+const getBorderRadius = (cornerRadius: CornerRadius): string => {
   return radiusMap[cornerRadius] || '0px';
 };
+
+export default getBorderRadius;

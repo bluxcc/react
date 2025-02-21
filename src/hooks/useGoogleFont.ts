@@ -2,7 +2,6 @@ import { useEffect } from 'react';
 import { SupportedFonts } from '../types';
 import { useProvider } from '../context/provider';
 
-// Google Fonts only supports these
 const googleFonts: Record<SupportedFonts, string | null> = {
   Manrope: 'Manrope',
   Inter: 'Inter',

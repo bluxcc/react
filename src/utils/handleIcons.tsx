@@ -2,7 +2,7 @@ import React from 'react';
 
 import { AlbedoIcon, FreighterIcon, LobstrIcon, RabetIcon, XBullIcon } from '../assets/logos';
 
-export const handleIcons = (walletName: string) => {
+const handleIcons = (walletName: string) => {
   switch (walletName) {
     case 'Rabet':
       return <RabetIcon />;
@@ -18,3 +18,5 @@ export const handleIcons = (walletName: string) => {
       return null;
   }
 };
+
+export default handleIcons;

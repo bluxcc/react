@@ -1,9 +1,11 @@
 import React from 'react';
+
 import Button from '../../../components/Button';
-import { useProvider } from '../../../context/provider';
-import { getNetworkByPassphrase } from '../../../utils/getNetworkByPassphrase';
 import History from '../../../components/Transaction/History';
+
 import useAccount from '../../../hooks/useAccount';
+import { useProvider } from '../../../context/provider';
+import getExplorerUrl from '../../../utils/stellar/getExplorerUrl';
 
 const Activity: React.FC = () => {
   const context = useProvider();
@@ -13,10 +15,13 @@ const Activity: React.FC = () => {
   });
   const transactions = account?.transactions || [];
   console.log(account?.transactions);
+
   const handleGoToExplorer = () => {
-    const explorerUrl = `https://stellar.expert/explorer/${getNetworkByPassphrase(
+    const explorerUrl = getExplorerUrl(
       context.value.config.networkPassphrase,
-    )}/${context.value.user.wallet?.address}/tx`;
+      `${context.value.user.wallet?.address}`,
+    );
+
     window.open(explorerUrl, '_blank', 'noopener,noreferrer');
   };
   // Todo : fix tx values

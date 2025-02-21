@@ -1,6 +1,6 @@
-import { WalletNetwork } from '../types';
+import { WalletNetwork } from '../../types';
 
-export const getNetworkByPassphrase = (passphrase: string) => {
+const getNetworkByPassphrase = (passphrase: string) => {
   const networkEntry = Object.entries(WalletNetwork).find(([, value]) => value === passphrase);
 
   if (!networkEntry) {
@@ -9,3 +9,5 @@ export const getNetworkByPassphrase = (passphrase: string) => {
 
   return networkEntry[0].toLowerCase();
 };
+
+export default getNetworkByPassphrase;

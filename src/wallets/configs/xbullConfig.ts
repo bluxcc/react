@@ -1,8 +1,9 @@
 import { xBullWalletConnect } from '@creit.tech/xbull-wallet-connect';
-import { SupportedWallets, WalletActions } from '../../types';
-import { getNetworkByPassphrase } from '../../utils/getNetworkByPassphrase';
 
-export const xBullConfig: WalletActions = {
+import { SupportedWallets, WalletInterface } from '../../types';
+import getNetworkByPassphrase from '../../utils/stellar/getNetworkByPassphrase';
+
+export const xBullConfig: WalletInterface = {
   name: SupportedWallets.Xbull,
   website: 'https://xbull.app',
 

@@ -1,7 +1,8 @@
 import { isConnected, getPublicKey, signTransaction } from '@lobstrco/signer-extension-api';
-import { SupportedWallets, WalletActions } from '../../types';
 
-export const lobstrConfig: WalletActions = {
+import { SupportedWallets, WalletInterface } from '../../types';
+
+export const lobstrConfig: WalletInterface = {
   name: SupportedWallets.Lobstr,
   website: 'https://lobstr.co',
 

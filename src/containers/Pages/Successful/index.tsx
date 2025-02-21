@@ -4,38 +4,37 @@ import Button from '../../../components/Button';
 
 import { GreenCheck } from '../../../assets/Icons';
 import { useProvider } from '../../../context/provider';
-import { getNetworkByPassphrase } from '../../../utils/getNetworkByPassphrase';
+import getExplorerUrl from '../../../utils/stellar/getExplorerUrl';
 
 const Successful = () => {
   const context = useProvider();
-  const modalState = context.value.modalState;
+  const waitingStatus = context.value.waitingStatus;
 
   useEffect(() => {
-    if (modalState === 'connecting') {
+    if (waitingStatus === 'connecting') {
       setTimeout(() => {
         context.setValue((prev) => ({
           ...prev,
-          openModal: false,
+          isModalOpen: false,
           isAuthenticated: true,
         }));
       }, 1000);
     }
-    if (modalState === 'signing') {
+    if (waitingStatus === 'signing') {
       setTimeout(() => {
         context.setValue((prev) => ({
           ...prev,
-          openModal: false,
+          isModalOpen: false,
         }));
       }, 10000);
     }
   }, []);
 
   const handleGoToExplorer = () => {
-    const txHash = context.value.signTransaction.latestResults?.hash;
+    const txHash = context.value.signTransaction.result?.hash;
     if (txHash) {
-      const explorerUrl = `https://stellar.expert/explorer/${getNetworkByPassphrase(
-        context.value.config.networkPassphrase,
-      )}/tx/${txHash}`;
+      const explorerUrl = getExplorerUrl(context.value.config.networkPassphrase, `tx/${txHash}`);
+
       window.open(explorerUrl, '_blank', 'noopener,noreferrer');
     }
   };
@@ -48,15 +47,15 @@ const Successful = () => {
 
       <div className="space-y-1 w-full flex-col text-center">
         <p className="text-xl font-semibold">
-          {modalState === 'connecting' ? 'Connection' : 'Transaction'} Successful
+          {waitingStatus === 'connecting' ? 'Connection' : 'Transaction'} Successful
         </p>
         <p className="text-sm text-center font-medium leading-5">
-          {modalState === 'connecting'
+          {waitingStatus === 'connecting'
             ? 'Your account has been successfully connected'
             : 'Your transaction was successfully completed'}
         </p>
       </div>
-      {modalState === 'signing' && (
+      {waitingStatus === 'signing' && (
         <Button
           state="enabled"
           variant="outline"
@@ -72,7 +71,7 @@ const Successful = () => {
         <div className="absolute left-0 right-0 bg-primary-100 h-[1px]" />
       </div>
 
-      {modalState === 'connecting' ? (
+      {waitingStatus === 'connecting' ? (
         <Button state="enabled" variant="outline">
           Logging In
         </Button>

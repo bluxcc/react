@@ -1,4 +1,4 @@
-export const getContrastColor = (bgColor: string): string => {
+const getContrastColor = (bgColor: string): string => {
   // Convert hex to RGB
   const hex = bgColor.replace('#', '');
   const r = parseInt(hex.substring(0, 2), 16);
@@ -11,3 +11,5 @@ export const getContrastColor = (bgColor: string): string => {
   // Return black or white based on luminance
   return luminance > 0.5 ? '#000000' : '#FFFFFF';
 };
+
+export default getContrastColor;

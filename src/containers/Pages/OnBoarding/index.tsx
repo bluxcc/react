@@ -3,13 +3,15 @@ import React, { useEffect, useState, useMemo } from 'react';
 import { useProvider } from '../../../context/provider';
 
 import CardItem from '../../../components/CardItem';
-import { handleIcons } from '../../../utils/handleIcons';
-import { getMappedWallets } from '../../../utils/mappedWallets';
 
-import { Routes, WalletActions } from '../../../types';
+import handleIcons from '../../../utils/handleIcons';
+import getMappedWallets from '../../../utils/mappedWallets';
+import getContrastColor from '../../../utils/getContrastColor';
+import initializeRabetMobile from '../../../utils/initializeRabetMobile';
+
 import BluxLogo from '../../../assets/bluxLogo';
 import { StellarIcon } from '../../../assets/logos';
-import { getContrastColor } from '../../../utils/getContrastColor';
+import { Routes, WalletInterface } from '../../../types';
 
 type OnBoardingProps = {
   showAllWallets: boolean;
@@ -18,7 +20,7 @@ type OnBoardingProps = {
 
 const OnBoarding = ({ showAllWallets, setShowAllWallets }: OnBoardingProps) => {
   const context = useProvider();
-  const [wallets, setWallets] = useState<WalletActions[]>(context.value.availableWallets || []);
+  const [wallets, setWallets] = useState<WalletInterface[]>(context.value.availableWallets || []);
 
   const hiddenWallets = useMemo(() => {
     return wallets.length > 3 ? wallets.slice(2) : [];
@@ -33,6 +35,7 @@ const OnBoarding = ({ showAllWallets, setShowAllWallets }: OnBoardingProps) => {
 
     const loadWallets = async () => {
       const mappedWallets = await getMappedWallets();
+      window.addEventListener('load', initializeRabetMobile);
       const available = mappedWallets
         .filter(({ isAvailable }) => isAvailable)
         .map(({ wallet }) => wallet);
@@ -48,7 +51,7 @@ const OnBoarding = ({ showAllWallets, setShowAllWallets }: OnBoardingProps) => {
     loadWallets();
   }, [wallets]);
 
-  const handleConnect = (wallet: WalletActions) => {
+  const handleConnect = (wallet: WalletInterface) => {
     context.setValue((prev) => ({
       ...prev,
       user: { wallet: { name: wallet.name, address: null } },

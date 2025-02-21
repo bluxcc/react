@@ -1,7 +1,8 @@
 import React from 'react';
-import { Globe, RedAlert, Upstream } from '../../../assets/Icons';
+
 import { useProvider } from '../../../context/provider';
-import { getNetworkByPassphrase } from '../../../utils/getNetworkByPassphrase';
+import { Globe, RedAlert, Upstream } from '../../../assets/Icons';
+import getExplorerUrl from '../../../utils/stellar/getExplorerUrl';
 
 interface TransactionProps {
   amount: string;
@@ -14,10 +15,8 @@ interface TransactionProps {
 const History = ({ amount, date, status, action, hash }: TransactionProps) => {
   const context = useProvider();
 
-  const handleGoToExplorer = (hash: string) => {
-    const explorerUrl = `https://stellar.expert/explorer/${getNetworkByPassphrase(
-      context.value.config.networkPassphrase,
-    )}/tx/${hash}`;
+  const handleGoToExplorer = () => {
+    const explorerUrl = getExplorerUrl(context.value.config.networkPassphrase, `tx/${hash}`);
     window.open(explorerUrl, '_blank', 'noopener,noreferrer');
   };
 
@@ -41,7 +40,7 @@ const History = ({ amount, date, status, action, hash }: TransactionProps) => {
         <div
           className="flex justify-center item-center rounded-full size-8 cursor-pointer bg-gray-50"
           title="View transaction details"
-          onClick={() => handleGoToExplorer(hash)}
+          onClick={handleGoToExplorer}
         >
           <span className="flex justify-center items-center">
             <Globe />

@@ -1,6 +1,6 @@
-import { WalletNetwork } from '../types';
+import { WalletNetwork } from '../../types';
 
-export const getNetworkPassphrase = (network: string): string => {
+const getNetworkPassphrase = (network: string): string => {
   const normalizedNetwork = network.trim().toLowerCase();
 
   switch (normalizedNetwork) {
@@ -18,3 +18,5 @@ export const getNetworkPassphrase = (network: string): string => {
       throw new Error(`Unknown network: ${network}`);
   }
 };
+
+export default getNetworkPassphrase;

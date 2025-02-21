@@ -1,7 +1,8 @@
 import freighterApi, { signTransaction } from '@stellar/freighter-api';
-import { SupportedWallets, WalletActions } from '../../types';
 
-export const freighterConfig: WalletActions = {
+import { SupportedWallets, WalletInterface } from '../../types';
+
+export const freighterConfig: WalletInterface = {
   name: SupportedWallets.Freighter,
   website: 'https://freighter.app',
 

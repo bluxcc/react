@@ -1,8 +1,8 @@
 import { useState, useEffect } from 'react';
 import { Horizon } from '@stellar/stellar-sdk';
 
-import { getNetworkByPassphrase } from '../utils/getNetworkByPassphrase';
-import { getHorizonServer } from '../utils/getHorizonServer';
+import getNetworkByPassphrase from '../utils/stellar/getNetworkByPassphrase';
+import getStellarServer from '../utils/stellar/getStellarServer';
 
 import { AccountData } from '../types';
 
@@ -83,7 +83,7 @@ const useAccount = ({ publicKey, passphrase }: AccountHookProps): AccountHookRes
       }
 
       try {
-        const server = getHorizonServer(
+        const server = getStellarServer(
           getNetworkByPassphrase(passphrase) as 'testnet' | 'public' | 'futurenet',
         );
         setLoading(true);

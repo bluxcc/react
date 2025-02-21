@@ -1,6 +1,7 @@
 import React from 'react';
+
 import { useProvider } from '../../context/provider';
-import { getBorderRadius } from '../../utils/getBorderRadius';
+import getBorderRadius from '../../utils/getBorderRadius';
 
 type InputFieldProps = {
   label?: string;
@@ -16,7 +17,23 @@ type InputFieldProps = {
   customLabel?: React.ReactNode;
 };
 
-const InputField: React.FC<InputFieldProps> = ({
+type CustomButtonProps = {
+  button: string | React.ReactNode;
+  onButtonClick?: () => void;
+  borderRadius: string;
+};
+
+const CustomButton = ({ button, onButtonClick, borderRadius }: CustomButtonProps) => (
+  <button
+    onClick={onButtonClick}
+    style={{ borderRadius }}
+    className="bg-white border border-primary-100 text-primary-500 text-sm font-semibold px-3 py-1"
+  >
+    {button}
+  </button>
+);
+
+const InputField = ({
   label,
   placeholder = 'Input',
   error,
@@ -28,8 +45,10 @@ const InputField: React.FC<InputFieldProps> = ({
   customLabel,
   value,
   onChange,
-}) => {
+}: InputFieldProps) => {
   const context = useProvider();
+  const borderRadius = getBorderRadius(context.value.appearance.cornerRadius);
+
   return (
     <div className="w-full flex flex-col">
       {label && (
@@ -49,7 +68,7 @@ const InputField: React.FC<InputFieldProps> = ({
         style={
           {
             '--tw-ring-color': context.value.appearance.accent,
-            borderRadius: getBorderRadius(context.value.appearance.cornerRadius),
+            borderRadius,
           } as React.CSSProperties
         }
       >
@@ -62,13 +81,7 @@ const InputField: React.FC<InputFieldProps> = ({
           onChange={onChange}
         />
         {button && (
-          <button
-            onClick={onButtonClick}
-            style={{ borderRadius: getBorderRadius(context.value.appearance.cornerRadius) }}
-            className="bg-white border border-primary-100 text-primary-500 text-sm font-semibold px-3 py-1"
-          >
-            {button}
-          </button>
+          <CustomButton button={button} onButtonClick={onButtonClick} borderRadius={borderRadius} />
         )}
         {iconRight && <div className="ml-2">{iconRight}</div>}
       </div>

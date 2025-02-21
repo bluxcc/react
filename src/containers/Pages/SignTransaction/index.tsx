@@ -1,22 +1,23 @@
 import React from 'react';
 
 import Button from '../../../components/Button';
-import TransactionSummary from '../../../components/Transaction/Summery';
+import Summary from '../../../components/Transaction/Summery';
 
 import { useProvider } from '../../../context/provider';
 
-import { shortenAddress } from '../../../utils/shortenAddress';
-import { getBorderRadius } from '../../../utils/getBorderRadius';
-import { getTransactionDetails } from '../../../utils/getTransactionDetails';
+import shortenAddress from '../../../utils/shortenAddress';
+import getBorderRadius from '../../../utils/getBorderRadius';
+import getTransactionDetails from '../../../utils/stellar/getTransactionDetails';
 import { Routes } from '../../../types';
 import humanizeAmount from '../../../utils/humanizeAmount';
 import useAccount from '../../../hooks/useAccount';
 
 const SignTransaction = () => {
   const context = useProvider();
-  const modalStyle = context.value.appearance;
+
   const { xdr } = context.value.signTransaction;
-  const txDetails = getTransactionDetails(xdr, context.value.config.networkPassphrase);
+  const borderRadius = getBorderRadius(context.value.appearance.cornerRadius);
+  const txDetails = getTransactionDetails(xdr);
   const { account } = useAccount({
     publicKey: context.value.user.wallet?.address as string,
     passphrase: context.value.config.networkPassphrase,
@@ -25,8 +26,8 @@ const SignTransaction = () => {
   const handleSignTx = async () => {
     context.setValue((prev) => ({
       ...prev,
-      openModal: true,
-      modalState: 'signing',
+      isModalOpen: true,
+      waitingStatus: 'signing',
     }));
     context.setRoute(Routes.WAITING);
   };
@@ -38,8 +39,8 @@ const SignTransaction = () => {
         permission to approve the following transaction.
       </p>
 
-      <TransactionSummary
-        operations={txDetails.operations}
+      <Summary
+        operationsCount={txDetails.operations}
         sender={txDetails.sender}
         estimatedFee={txDetails.estimatedFee.toString()}
         action={txDetails.action}
@@ -48,7 +49,7 @@ const SignTransaction = () => {
       <div
         className="inline-flex items-center h-14 px-4 justify-between border border-primary-100 mt-4 w-full"
         style={{
-          borderRadius: getBorderRadius(modalStyle.cornerRadius),
+          borderRadius,
         }}
       >
         <div className="inline-flex items-center gap-2 font-medium">
@@ -60,7 +61,7 @@ const SignTransaction = () => {
         <div
           className="bg-lightBlue-100 py-2 px-[10px]"
           style={{
-            borderRadius: getBorderRadius(modalStyle.cornerRadius),
+            borderRadius,
           }}
         >
           <p className="text-primary-500 text-xs font-normal">
