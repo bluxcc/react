@@ -1,63 +1,58 @@
-import React from 'react';
+import React, { useState } from 'react';
 
 import Modal from '../../components/Modal';
-import Profile from '../ModalState/Profile';
-import Connecting from '../ModalState/Connecting';
-import OnBoarding from '../ModalState/OnBoarding';
+import { useProvider } from '../../context/provider';
 
-import { useConnectModal } from '../../hooks/useConnectModal';
-import { useGoogleFonts } from '../../hooks/useGoogleFont';
-
-import { ModalView } from '../../types';
+import { Routes } from '../../types';
+import { modalContent } from './content';
+import { MODAL_HEIGHTS } from '../../constants';
 
 interface ConnectModalProps {
   isOpen: boolean;
+  closeModal: () => void;
 }
 
-export default function ConnectModal({ isOpen }: ConnectModalProps) {
-  const {
-    modalState,
-    handleGoBack,
-    setShowAllWallets,
-    modalHeader,
-    showBackButton,
-    showCloseButton,
-    initialHeight,
-    closeModal,
-  } = useConnectModal();
+export default function ConnectModal({ isOpen, closeModal }: ConnectModalProps) {
+  const { route, setRoute } = useProvider();
+  const [showAllWallets, setShowAllWallets] = useState(false);
 
-  useGoogleFonts();
+  const shouldShowBackButton =
+    route === Routes.WAITING ||
+    (route === Routes.ONBOARDING && showAllWallets) ||
+    route === Routes.ACTIVITY ||
+    route === Routes.SEND;
 
-  const renderContent = () => {
-    switch (modalState.view) {
-      case ModalView.PROFILE:
-        return <Profile />;
-      case ModalView.CONNECTING:
-        return <Connecting />;
-      default:
-        return (
-          <div className="flex flex-col items-center">
-            <OnBoarding
-              showAllWallets={modalState.showAllWallets}
-              setShowAllWallets={setShowAllWallets}
-            />
-          </div>
-        );
+  let modalIcon: 'back' | 'info' | undefined;
+
+  if (shouldShowBackButton) {
+    modalIcon = 'back';
+  } else if (route === Routes.ONBOARDING) {
+    modalIcon = 'info';
+  }
+
+  const handleBackNavigation = () => {
+    if (route === Routes.WAITING) {
+      setRoute(Routes.ONBOARDING);
+    } else if (showAllWallets) {
+      setShowAllWallets(false);
+    } else if (route === Routes.SEND || route === Routes.ACTIVITY) {
+      setRoute(Routes.PROFILE);
     }
   };
+
+  const { title, Component } = modalContent[route];
 
   return (
     <Modal
       isOpen={isOpen}
+      onBack={handleBackNavigation}
       onClose={closeModal}
-      className={`!w-[360px]`}
-      modalHeader={modalHeader}
-      icon={showBackButton ? 'back' : 'info'}
-      closeButton={showCloseButton}
-      onBack={handleGoBack}
-      initialHeight={initialHeight}
+      title={title}
+      initialHeight={MODAL_HEIGHTS[route]}
+      icon={modalIcon}
+      closeButton={route === Routes.ONBOARDING ? false : true}
     >
-      {renderContent()}
+      <Component showAllWallets={showAllWallets} setShowAllWallets={setShowAllWallets} />
     </Modal>
   );
 }

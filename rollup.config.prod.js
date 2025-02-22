@@ -24,10 +24,8 @@ export default {
       sourcemap: true,
     },
   ],
-
-  treeshake: {
-    moduleSideEffects: false,
-  },
+  preserveEntrySignatures: 'strict',
+  treeshake: true,
   plugins: [
     peerDepsExternal(),
     terser({
@@ -48,25 +46,12 @@ export default {
       extract: false,
       inject: true,
       minimize: true,
-      sourceMap: true,
       plugins: [tailwindcss, autoprefixer],
     }),
     typescript({
       tsconfig: './tsconfig.json',
-      target: 'es2022',
       exclude: ['node_modules', 'motion'],
     }),
   ],
   external: [...Object.keys(pkg.dependencies || {}), ...Object.keys(pkg.peerDependencies || {})],
-  onwarn(warning, warn) {
-    if (warning.code === 'MODULE_LEVEL_DIRECTIVE') {
-      return;
-    }
-    warn(warning);
-  },
-  watch: {
-    clearScreen: false,
-    include: 'src/**',
-    exclude: 'node_modules/**',
-  },
 };

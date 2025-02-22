@@ -1,18 +1,17 @@
-import { useEffect, useContext } from 'react';
-import { ProviderContext } from '../context/provider'; // Assuming this manages UI settings
+import { useEffect } from 'react';
 import { SupportedFonts } from '../types';
+import { useProvider } from '../context/provider';
 
-// Google Fonts only supports these
 const googleFonts: Record<SupportedFonts, string | null> = {
   Manrope: 'Manrope',
   Inter: 'Inter',
   'JetBrains Mono': 'JetBrains+Mono',
-  Roboto: 'Roboto',
+  Lora: 'Lora',
 };
 
 export function useGoogleFonts() {
-  const context = useContext(ProviderContext);
-  const selectedFont = context?.value?.appearance?.font as SupportedFonts;
+  const context = useProvider();
+  const selectedFont = context.value?.appearance?.font as SupportedFonts;
 
   useEffect(() => {
     if (selectedFont && googleFonts[selectedFont]) {

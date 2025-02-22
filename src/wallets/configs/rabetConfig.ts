@@ -1,10 +1,13 @@
-import { SupportedWallets, WalletActions, WalletNetwork } from '../../types';
+import { SupportedWallets, WalletInterface, WalletNetwork } from '../../types';
 
-export const rabetConfig: WalletActions = {
+export const rabetConfig: WalletInterface = {
   name: SupportedWallets.Rabet,
   website: 'https://rabet.io',
 
-  isAvailable: () => typeof window !== 'undefined' && !!window.rabet,
+  isAvailable: () =>
+    new Promise((resolve) => {
+      setTimeout(() => resolve(typeof window !== 'undefined' && !!window.rabet), 250);
+    }),
 
   connect: async () => {
     try {
@@ -24,7 +27,7 @@ export const rabetConfig: WalletActions = {
         xdr,
         options.networkPassphrase === WalletNetwork.PUBLIC ? 'mainnet' : 'testnet',
       );
-      return result.signedXdr;
+      return result.xdr;
     } catch (error) {
       console.error('Error signing transaction with Rabet:', error);
       throw new Error('Failed to sign the transaction with Rabet.');

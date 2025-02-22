@@ -1,18 +1,10 @@
-import React, { createContext, useState, useEffect } from 'react';
+import React, { createContext, useState, useEffect, useContext } from 'react';
+
+import { defaultAppearance } from '../constants';
 import ConnectModal from '../containers/ConnectModal';
-import { ContextState, IProviderConfig, ContextValues, IAppearance } from '../types';
+import { ContextState, IProviderConfig, ContextInterface, IAppearance, Routes } from '../types';
 
 export const ProviderContext = createContext<ContextState | null>(null);
-
-export const defaultAppearance: IAppearance = {
-  theme: 'light',
-  background: '#FFFFFF',
-  accent: '#0C1083',
-  textColor: '#000000',
-  font: 'Inter',
-  cornerRadius: 'full',
-  cover: '',
-};
 
 export const BluxProvider = ({
   config,
@@ -25,15 +17,22 @@ export const BluxProvider = ({
   config: IProviderConfig;
   children: React.ReactNode;
 }) => {
-  const [value, setValue] = useState<ContextValues>({
+  const [route, setRoute] = useState<Routes>(Routes.ONBOARDING);
+  const [value, setValue] = useState<ContextInterface>({
     config,
     appearance: appearance ?? defaultAppearance,
     isDemo: isDemo ?? false,
     user: { wallet: null },
-    openModal: false,
-    ready: false,
+    isModalOpen: false,
+    isReady: false,
     isAuthenticated: false,
-    isConnecting: false,
+    waitingStatus: 'connecting',
+    signTransaction: {
+      xdr: '',
+      resolver: null,
+      result: null,
+    },
+    availableWallets: [],
   });
 
   useEffect(() => {
@@ -43,10 +42,25 @@ export const BluxProvider = ({
     }));
   }, [appearance]);
 
+  const closeModal = () => {
+    setValue((prev) => ({
+      ...prev,
+      isModalOpen: false,
+    }));
+  };
+
   return (
-    <ProviderContext.Provider value={{ value, setValue }}>
+    <ProviderContext.Provider value={{ value, setValue, route, setRoute }}>
       {children}
-      <ConnectModal isOpen={value.openModal} />
+      <ConnectModal isOpen={value.isModalOpen} closeModal={closeModal} />
     </ProviderContext.Provider>
   );
+};
+
+export const useProvider = () => {
+  const context = useContext(ProviderContext);
+  if (!context) {
+    throw new Error('useProvider must be used within a ProviderContext.');
+  }
+  return context;
 };

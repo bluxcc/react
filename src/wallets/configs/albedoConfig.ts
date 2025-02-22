@@ -1,9 +1,9 @@
 import albedo from '@albedo-link/intent';
 
-import { SupportedWallets, WalletActions } from '../../types';
-import { getNetworkByPassphrase } from '../../utils/getNetworkByPassphrase';
+import { SupportedWallets, WalletInterface } from '../../types';
+import getNetworkByPassphrase from '../../utils/stellar/getNetworkByPassphrase';
 
-export const albedoConfig: WalletActions = {
+export const albedoConfig: WalletInterface = {
   name: SupportedWallets.Albedo,
   website: 'https://albedo.link',
 
