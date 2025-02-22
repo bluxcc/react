@@ -32,7 +32,7 @@ Import Blux and set up the authentication flow:
 ```tsx
 import { BluxProvider, useBlux } from "@bluxcc/react";
 
-const YourComponent = () => {
+const ConnectButton = () => {
   const { connect } = useBlux();
   return <button onClick={connect}>Connect Wallet</button>;
 };
@@ -40,7 +40,7 @@ const YourComponent = () => {
 const App = () => {
   return (
     <BluxProvider config={{ appName: "YourApp", network: "testnet" }}>
-      <YourComponent />
+      <ConnectButton />
     </BluxProvider>
   );
 };
