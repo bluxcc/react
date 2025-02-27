@@ -6,7 +6,7 @@ export const lobstrConfig: WalletInterface = {
   name: SupportedWallets.Lobstr,
   website: 'https://lobstr.co',
 
-  isAvailable: () => true,
+  isAvailable: async () => true,
 
   connect: async () => {
     try {

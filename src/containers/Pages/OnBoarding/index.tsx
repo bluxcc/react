@@ -4,13 +4,13 @@ import { useProvider } from '../../../context/provider';
 
 import CardItem from '../../../components/CardItem';
 
-import handleIcons from '../../../utils/handleIcons';
+import handleLogos from '../../../utils/handleLogos';
 import getMappedWallets from '../../../utils/mappedWallets';
 import getContrastColor from '../../../utils/getContrastColor';
 import initializeRabetMobile from '../../../utils/initializeRabetMobile';
 
 import BluxLogo from '../../../assets/bluxLogo';
-import { StellarIcon } from '../../../assets/logos';
+import { StellarLogo } from '../../../assets/logos';
 import { Routes, WalletInterface } from '../../../types';
 
 type OnBoardingProps = {
@@ -74,7 +74,7 @@ const OnBoarding = ({ showAllWallets, setShowAllWallets }: OnBoardingProps) => {
             key={wallet.name}
             {...wallet}
             label={wallet.name}
-            startIcon={handleIcons(wallet.name)}
+            startIcon={handleLogos(wallet.name)}
             onClick={() => handleConnect(wallet)}
           />
         ))}
@@ -84,12 +84,20 @@ const OnBoarding = ({ showAllWallets, setShowAllWallets }: OnBoardingProps) => {
             endArrow
             label="All Stellar wallets"
             startIcon={
-              <StellarIcon fill={getContrastColor(context.value.appearance.background as string)} />
+              <StellarLogo fill={getContrastColor(context.value.appearance.background as string)} />
             }
             onClick={() => setShowAllWallets(true)}
           />
         )}
       </div>
+      <CardItem
+        variant="social"
+        label="Continue with Google"
+        startIcon={
+          <StellarLogo fill={getContrastColor(context.value.appearance.background as string)} />
+        }
+        onClick={() => setShowAllWallets(true)}
+      />
       <div
         className="text-center font-medium text-sm mt-3 leading-[32px] cursor-pointer"
         style={{ color: context.value.appearance?.accent }}
