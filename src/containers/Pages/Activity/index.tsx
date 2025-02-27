@@ -14,7 +14,6 @@ const Activity: React.FC = () => {
     passphrase: context.value.config.networkPassphrase,
   });
   const transactions = account?.transactions || [];
-  console.log(account?.transactions);
 
   const handleGoToExplorer = () => {
     const explorerUrl = getExplorerUrl(

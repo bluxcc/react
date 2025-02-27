@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import Button from '../../../components/Button';
 import InputField from '../../../components/Input';
-import { StellarSmallIcon } from '../../../assets/logos';
+import { StellarSmallLogo } from '../../../assets/logos';
 import { ArrowDropUp } from '../../../assets/Icons';
 
 const Send = () => {
@@ -38,7 +38,7 @@ const Send = () => {
           button={
             <span className="flex justify-between gap-1 text-black">
               <span className="flex justify-center items-center">
-                <StellarSmallIcon fill="black" />
+                <StellarSmallLogo fill="black" />
               </span>
               XLM
             </span>
