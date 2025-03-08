@@ -106,25 +106,29 @@ const OnBoarding = ({ showAllWallets, setShowAllWallets }: OnBoardingProps) => {
           />
         )}
       </div>
+      {!showAllWallets && (
+        <>
+          {/* divider */}
+          <div className="w-full flex justify-center items-center h-8">
+            <div className="absolute left-0 right-0 bg-primary-100 h-[0.75px]" />
+          </div>
 
-      {/* divider */}
-      <div className="w-full flex justify-center items-center h-8">
-        <div className="absolute left-0 right-0 bg-primary-100 h-[1px]" />
-      </div>
-
-      <CardItem
-        inputType="email"
-        variant="input"
-        startIcon={<SmallEmailIcon />}
-        onChange={(value) => setInputValue(value)}
-        onEnter={handleConnectEmail}
-      />
+          <CardItem
+            inputType="email"
+            variant="input"
+            startIcon={<SmallEmailIcon />}
+            onChange={(value) => setInputValue(value)}
+            onEnter={handleConnectEmail}
+            onSubmit={handleConnectEmail}
+          />
+        </>
+      )}
 
       <div
         className="text-center font-medium text-sm mt-3 leading-[32px] cursor-pointer"
         style={{ color: context.value.appearance?.accent }}
       >
-        Login with passkey
+        Log in with passkey
       </div>
 
       <div

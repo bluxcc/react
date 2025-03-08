@@ -26,7 +26,7 @@ const ConfirmCode = () => {
 
       {/* divider */}
       <div className="w-full flex justify-center items-center h-8">
-        <div className="absolute left-0 right-0 bg-primary-100 h-[1px]" />
+        <div className="absolute left-0 right-0 bg-primary-100 h-[0.75px]" />
       </div>
 
       <Button

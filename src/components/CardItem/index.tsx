@@ -11,6 +11,7 @@ type CardItemProps = {
   onClick?: () => void;
   onChange?: (value: string) => void;
   onEnter?: (value: string) => void;
+  onSubmit?: (value: string) => void;
   inputType?: 'text' | 'password' | 'number' | 'email' | string;
 };
 
@@ -22,13 +23,15 @@ const CardItem = ({
   onClick,
   onChange,
   onEnter,
+  onSubmit,
   inputType = 'text',
 }: CardItemProps) => {
   const context = useProvider();
   const appearance = context.value.appearance;
   const borderRadius = getBorderRadius(appearance.cornerRadius);
   const [inputValue, setInputValue] = useState(label || '');
-  const [isValid, setIsValid] = useState(true);
+  const [isValid, setIsValid] = useState(false);
+  const [isFocused, setIsFocused] = useState(false); // Track input focus
 
   const validateInput = (value: string) => {
     if (inputType === 'email') {
@@ -40,8 +43,7 @@ const CardItem = ({
   const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const value = e.target.value;
     setInputValue(value);
-    const valid = validateInput(value);
-    setIsValid(valid);
+    setIsValid(validateInput(value));
     onChange?.(value);
   };
 
@@ -52,12 +54,12 @@ const CardItem = ({
   };
 
   const onMouseEnter = (e: MouseEvent<HTMLDivElement>) => {
-    if (variant !== 'social') {
+    if (variant !== 'social' && !isFocused) {
       e.currentTarget.style.borderColor = appearance.accent;
     }
   };
   const onMouseLeave = (e: MouseEvent<HTMLDivElement>) => {
-    if (variant !== 'social') {
+    if (variant !== 'social' && !isFocused) {
       e.currentTarget.style.borderColor = '#cdceee';
     }
   };
@@ -65,12 +67,13 @@ const CardItem = ({
   return (
     <div
       onClick={variant === 'input' ? undefined : onClick}
-      className={`flex items-center w-full h-14 border border-primary-100 transition-all px-[10px] py-2 ${
+      className={`flex items-center w-full h-14 border transition-all px-[10px] py-2 ${
         variant === 'input' ? 'cursor-text' : 'cursor-pointer'
       }`}
       style={{
         borderRadius,
         color: appearance.textColor,
+        borderColor: isFocused ? appearance.accent : '#cdceee',
       }}
       onMouseEnter={onMouseEnter}
       onMouseLeave={onMouseLeave}
@@ -82,19 +85,33 @@ const CardItem = ({
         {startIcon}
       </span>
 
-      <div className="flex-1 flex items-center ml-4">
+      <div className="flex-1 flex items-center ml-4 mr-1">
         {variant === 'input' ? (
-          <input
-            type={inputType}
-            value={inputValue}
-            onChange={handleInputChange}
-            onKeyDown={handleKeyDown}
-            placeholder="Email"
-            className={`bg-transparent outline-none placeholder:text-gray-600 w-full focus:outline-none mr-2 ${
-              isValid ? '' : 'text-red-500'
-            }`}
-            style={{ color: appearance.textColor }}
-          />
+          <>
+            <input
+              type={inputType}
+              value={inputValue}
+              onChange={handleInputChange}
+              onKeyDown={handleKeyDown}
+              placeholder="Email"
+              className="bg-transparent outline-none placeholder:text-gray-600 w-[70%] mr-1"
+              style={{ color: appearance.textColor }}
+              onFocus={() => setIsFocused(true)}
+              onBlur={() => setIsFocused(false)}
+            />
+            <button
+              disabled={!isValid}
+              onClick={() => onSubmit?.(inputValue)}
+              style={{ borderRadius }}
+              className={`bg-white border text-sm font-medium flex justify-center items-center h-8 !w-[68px] ${
+                isValid
+                  ? '!text-primary-500 border-primary-500'
+                  : '!text-gray-400 border-primary-100'
+              }`}
+            >
+              Submit
+            </button>
+          </>
         ) : (
           <span>{label}</span>
         )}
