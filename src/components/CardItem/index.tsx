@@ -73,7 +73,11 @@ const CardItem = ({
       style={{
         borderRadius,
         color: appearance.textColor,
-        borderColor: isFocused ? appearance.accent : '#cdceee',
+        borderColor: isFocused
+          ? appearance.accent
+          : variant === 'input' && inputValue && !isValid
+          ? 'red'
+          : '#cdceee',
       }}
       onMouseEnter={onMouseEnter}
       onMouseLeave={onMouseLeave}
@@ -97,17 +101,23 @@ const CardItem = ({
               className="bg-transparent outline-none placeholder:text-gray-600 w-[70%] mr-1"
               style={{ color: appearance.textColor }}
               onFocus={() => setIsFocused(true)}
-              onBlur={() => setIsFocused(false)}
+              onBlur={() => {
+                setIsFocused(false);
+                if (!validateInput(inputValue)) {
+                  setIsValid(false);
+                }
+              }}
             />
+
             <button
               disabled={!isValid}
               onClick={() => onSubmit?.(inputValue)}
-              style={{ borderRadius }}
-              className={`bg-white border text-sm font-medium flex justify-center items-center h-8 !w-[68px] ${
-                isValid
-                  ? '!text-primary-500 border-primary-500'
-                  : '!text-gray-400 border-primary-100'
-              }`}
+              style={{
+                borderRadius,
+                color: isValid ? appearance.accent : '#9ca3af',
+                borderColor: isValid ? appearance.accent : '#9ca3af',
+              }}
+              className={`bg-white border text-sm font-medium flex justify-center items-center h-8 !w-[68px]`}
             >
               Submit
             </button>

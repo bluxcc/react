@@ -52,8 +52,9 @@ const OTPInput: React.FC = () => {
   };
 
   const getInputStyle = (digit: string): React.CSSProperties => ({
-    borderRadius: appearance.cornerRadius === 'full' ? '16px' : borderRadius,
+    borderRadius: borderRadius,
     color: appearance.textColor,
+    background: appearance.background,
     borderColor: digit ? appearance.accent : '#cdceee',
   });
 
