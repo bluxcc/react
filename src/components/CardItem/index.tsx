@@ -31,7 +31,7 @@ const CardItem = ({
   const borderRadius = getBorderRadius(appearance.cornerRadius);
   const [inputValue, setInputValue] = useState(label || '');
   const [isValid, setIsValid] = useState(false);
-  const [isFocused, setIsFocused] = useState(false); // Track input focus
+  const [isFocused, setIsFocused] = useState(false);
 
   const validateInput = (value: string) => {
     if (inputType === 'email') {
@@ -73,11 +73,7 @@ const CardItem = ({
       style={{
         borderRadius,
         color: appearance.textColor,
-        borderColor: isFocused
-          ? appearance.accent
-          : variant === 'input' && inputValue && !isValid
-          ? 'red'
-          : '#cdceee',
+        borderColor: isFocused ? appearance.accent : '#cdceee',
       }}
       onMouseEnter={onMouseEnter}
       onMouseLeave={onMouseLeave}

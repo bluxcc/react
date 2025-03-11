@@ -1,15 +1,26 @@
-import React, { useState, useRef, ChangeEvent, ClipboardEvent, KeyboardEvent } from 'react';
+import React, { useRef, ChangeEvent, ClipboardEvent, KeyboardEvent, useEffect } from 'react';
 import { useProvider } from '../../context/provider';
 import getBorderRadius from '../../utils/getBorderRadius';
 
-const OTPInput: React.FC = () => {
-  const LENGTH = 6;
-  const {
-    value: { appearance },
-  } = useProvider();
-  const [otp, setOtp] = useState<string[]>(Array(LENGTH).fill(''));
+interface OTPInputProps {
+  otp: string[];
+  setOtp: (otp: string[]) => void;
+  error?: boolean;
+}
+
+const OTPInput: React.FC<OTPInputProps> = ({ otp, setOtp, error }) => {
+  const LENGTH = otp.length;
+  const context = useProvider();
+  const appearance = context.value.appearance;
   const inputsRef = useRef<(HTMLInputElement | null)[]>([]);
   const borderRadius = getBorderRadius(appearance.cornerRadius);
+
+  useEffect(() => {
+    if (error) {
+      setTimeout(() => inputsRef.current[0]?.focus(), 1001);
+    }
+  }, [error]);
+
   const handleChange = (index: number, e: ChangeEvent<HTMLInputElement>): void => {
     const value = e.target.value.replace(/\D/g, '');
     if (!value) return;
@@ -26,20 +37,16 @@ const OTPInput: React.FC = () => {
   const handlePaste = (e: ClipboardEvent<HTMLInputElement>): void => {
     e.preventDefault();
     const pasteData = e.clipboardData.getData('text').replace(/\D/g, '').slice(0, LENGTH);
-
     if (!pasteData) return;
 
     const newOtp = [...pasteData.split(''), ...Array(LENGTH - pasteData.length).fill('')];
-
     setOtp(newOtp);
-
     setTimeout(() => inputsRef.current[LENGTH - 1]?.focus(), 0);
   };
 
   const handleKeyDown = (index: number, e: KeyboardEvent<HTMLInputElement>): void => {
     if (e.key === 'Backspace') {
       const newOtp = [...otp];
-
       if (newOtp[index]) {
         newOtp[index] = '';
         setOtp(newOtp);
@@ -52,10 +59,10 @@ const OTPInput: React.FC = () => {
   };
 
   const getInputStyle = (digit: string): React.CSSProperties => ({
-    borderRadius: borderRadius,
+    borderRadius: appearance.cornerRadius === 'full' ? '20px' : borderRadius,
     color: appearance.textColor,
     background: appearance.background,
-    borderColor: digit ? appearance.accent : '#cdceee',
+    borderColor: error ? '#FF6666' : digit ? appearance.accent : '#cdceee',
   });
 
   return (
