@@ -39,8 +39,7 @@ export interface AccountData {
 export interface IProviderConfig {
   appName: string; // Application name
   appLogo?: string; // Optional application logo URL
-  networkPassphrase: string; // Stellar network passphrase
-  network: 'mainnet' | 'testnet' | 'futurenet' | 'sandbox' | 'standalone'; // Supported network types
+  network: string; // Supported network types
 }
 
 /**

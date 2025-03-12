@@ -16,7 +16,7 @@ const History = ({ amount, date, status, action, hash }: TransactionProps) => {
   const context = useProvider();
 
   const handleGoToExplorer = () => {
-    const explorerUrl = getExplorerUrl(context.value.config.networkPassphrase, `tx/${hash}`);
+    const explorerUrl = getExplorerUrl(context.value.config.network, `tx/${hash}`);
     window.open(explorerUrl, '_blank', 'noopener,noreferrer');
   };
 

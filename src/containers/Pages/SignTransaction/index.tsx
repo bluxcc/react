@@ -20,7 +20,7 @@ const SignTransaction = () => {
   const txDetails = getTransactionDetails(xdr);
   const { account } = useAccount({
     publicKey: context.value.user.wallet?.address as string,
-    passphrase: context.value.config.networkPassphrase,
+    passphrase: context.value.config.network,
   });
 
   const handleSignTx = async () => {

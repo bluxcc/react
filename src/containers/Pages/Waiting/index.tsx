@@ -53,7 +53,7 @@ const Waiting = () => {
           wallet,
           xdr,
           context.value.user.wallet?.address as string,
-          context.value.config.networkPassphrase,
+          context.value.config.network,
         );
 
         if (resolver) resolver(result);
