@@ -1,7 +1,7 @@
 import React, { createContext, useState, useEffect, useContext } from 'react';
 
 import { defaultAppearance } from '../constants';
-import ConnectModal from '../containers/ConnectModal';
+import BluxModal from '../containers/BluxModal';
 import { ContextState, IProviderConfig, ContextInterface, IAppearance, Routes } from '../types';
 
 export const ProviderContext = createContext<ContextState | null>(null);
@@ -26,7 +26,7 @@ export const BluxProvider = ({
     config,
     appearance: appearance ?? defaultAppearance,
     isDemo: isDemo ?? false,
-    user: { wallet: null },
+    user: { wallet: null, phoneNumber: null, email: null },
     isModalOpen: false,
     isReady: false,
     isAuthenticated: false,
@@ -56,8 +56,8 @@ export const BluxProvider = ({
   return (
     <ProviderContext.Provider value={{ value, setValue, route, setRoute }}>
       {children}
-
-      <ConnectModal isOpen={value.isModalOpen} closeModal={closeModal} />
+ 
+      <BluxModal isOpen={value.isModalOpen} closeModal={closeModal} />
     </ProviderContext.Provider>
   );
 };

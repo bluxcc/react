@@ -36,7 +36,7 @@ const Send = () => {
           button={
             <span className="flex justify-between gap-1 text-black">
               <span className="flex justify-center items-center">
-                <StellarSmallIcon fill="black" />
+                <StellarSmallLogo fill="black" />
               </span>
               XLM
             </span>

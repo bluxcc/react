@@ -7,12 +7,12 @@ import { Routes } from '../../types';
 import { modalContent } from './content';
 import { MODAL_HEIGHTS } from '../../constants';
 
-interface ConnectModalProps {
+interface BluxModalProps {
   isOpen: boolean;
   closeModal: () => void;
 }
 
-export default function ConnectModal({ isOpen, closeModal }: ConnectModalProps) {
+export default function BluxModal({ isOpen, closeModal }: BluxModalProps) {
   const { route, setRoute } = useProvider();
   const [showAllWallets, setShowAllWallets] = useState(false);
 
@@ -20,7 +20,8 @@ export default function ConnectModal({ isOpen, closeModal }: ConnectModalProps) 
     route === Routes.WAITING ||
     (route === Routes.ONBOARDING && showAllWallets) ||
     route === Routes.ACTIVITY ||
-    route === Routes.SEND;
+    route === Routes.SEND ||
+    route === Routes.OTP;
 
   let modalIcon: 'back' | 'info' | undefined;
 
@@ -31,7 +32,7 @@ export default function ConnectModal({ isOpen, closeModal }: ConnectModalProps) 
   }
 
   const handleBackNavigation = () => {
-    if (route === Routes.WAITING) {
+    if (route === Routes.WAITING || route === Routes.OTP) {
       setRoute(Routes.ONBOARDING);
     } else if (showAllWallets) {
       setShowAllWallets(false);

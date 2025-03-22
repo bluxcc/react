@@ -38,6 +38,12 @@ export default {
           900: '#1A1A1A',
           950: '#0D0D0D',
         },
+        alert: {
+          info: '#5093FF',
+          error: '#EC2929',
+          success: '#00BD81',
+          warning: '#FA8F02',
+        },
       },
       keyframes: {
         fadeIn: {

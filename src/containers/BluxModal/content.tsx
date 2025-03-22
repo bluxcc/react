@@ -1,12 +1,13 @@
 import React from 'react';
 
+import Send from '../Pages/Send';
 import Profile from '../Pages/Profile';
 import Waiting from '../Pages/Waiting';
+import Activity from '../Pages/Activity';
 import Successful from '../Pages/Successful';
 import OnBoarding from '../Pages/OnBoarding';
+import ConfirmCode from '../Pages/ConfirmCode';
 import SignTransaction from '../Pages/SignTransaction';
-import Send from '../Pages/Send';
-import Activity from '../Pages/Activity';
 
 import { Routes } from '../../types';
 
@@ -46,5 +47,9 @@ export const modalContent: Record<
   [Routes.ACTIVITY]: {
     title: 'Activity',
     Component: () => <Activity />,
+  },
+  [Routes.OTP]: {
+    title: '',
+    Component: () => <ConfirmCode />,
   },
 };
