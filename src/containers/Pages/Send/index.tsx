@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import Button from '../../../components/Button';
 import InputField from '../../../components/Input';
 import { ArrowDropUp } from '../../../assets/Icons';
-import { StellarSmallIcon } from '../../../assets/logos';
+import { StellarSmallLogo } from '../../../assets/logos';
 
 const Send = () => {
   const [amount, setAmount] = useState('');

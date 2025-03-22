@@ -1,10 +1,9 @@
 import React, { useEffect, useState, useRef } from 'react';
 
 import Button from '../../../components/Button';
-import { useProvider } from '../../../context/provider';
-import handleLogos from '../../../utils/handleLogos';
 import { Loading } from '../../../assets/Icons';
-import handleIcons from '../../../utils/handleIcons';
+import handleLogos from '../../../utils/handleLogos';
+import { useProvider } from '../../../context/provider';
 import { Routes, WalletInterface } from '../../../types';
 import signTransaction from '../../../utils/stellar/signTransaction';
 import getMappedWallets, { MappedWallet } from '../../../utils/mappedWallets';
