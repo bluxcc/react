@@ -17,6 +17,10 @@ export const BluxProvider = ({
   config: IProviderConfig;
   children: React.ReactNode;
 }) => {
+  if (config.networks.length === 0) {
+    throw new Error('no network is set in config.networks');
+  }
+
   const [route, setRoute] = useState<Routes>(Routes.ONBOARDING);
   const [value, setValue] = useState<ContextInterface>({
     config,
@@ -52,6 +56,7 @@ export const BluxProvider = ({
   return (
     <ProviderContext.Provider value={{ value, setValue, route, setRoute }}>
       {children}
+
       <ConnectModal isOpen={value.isModalOpen} closeModal={closeModal} />
     </ProviderContext.Provider>
   );

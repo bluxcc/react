@@ -20,7 +20,7 @@ const Profile = () => {
   const [address, setAddress] = useState(context.value.user.wallet?.address || '');
   const { account } = useAccount({
     publicKey: context.value.user.wallet?.address as string,
-    passphrase: context.value.config.network,
+    passphrase: context.value.config.networks[0], // todo: fix network
   });
 
   useEffect(() => {

@@ -1,5 +1,3 @@
-import { useProvider } from '../context/provider';
-
 type UseBalanceParameters = {
   address: string;
   blockNumber?: number;
@@ -8,10 +6,7 @@ type UseBalanceParameters = {
 }
 
 const useBalance = (_params: UseBalanceParameters) => {
-  const provider = useProvider()
-
-  console.log(provider.value.config.network)
-  
+  // const provider = useProvider()
   return 2;
 };
 
