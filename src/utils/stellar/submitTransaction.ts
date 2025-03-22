@@ -1,10 +1,10 @@
 import { Horizon, Transaction } from '@stellar/stellar-sdk';
 
-const submitTransaction = async (xdr: string, networkPassPhrase: string) => {
+const submitTransaction = async (xdr: string, network: string) => {
   try {
     const server = new Horizon.Server('https://horizon-testnet.stellar.org');
 
-    const transaction = new Transaction(xdr, networkPassPhrase);
+    const transaction = new Transaction(xdr, network);
 
     const response = await server.submitTransaction(transaction);
 

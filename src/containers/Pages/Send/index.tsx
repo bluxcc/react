@@ -1,8 +1,8 @@
 import React, { useState } from 'react';
 import Button from '../../../components/Button';
 import InputField from '../../../components/Input';
-import { StellarSmallLogo } from '../../../assets/logos';
 import { ArrowDropUp } from '../../../assets/Icons';
+import { StellarSmallLogo } from '../../../assets/logos';
 
 const Send = () => {
   const [amount, setAmount] = useState('');
@@ -16,9 +16,7 @@ const Send = () => {
     navigator.clipboard.readText().then((text) => setAddress(text));
   };
 
-  const handleSubmit = () => {
-    console.log('Sending:', { amount, address });
-  };
+  const handleSubmit = () => {};
 
   return (
     <div>
