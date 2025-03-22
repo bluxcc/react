@@ -3,7 +3,7 @@ import React, { useEffect, useState, useRef } from 'react';
 import Button from '../../../components/Button';
 import { useProvider } from '../../../context/provider';
 
-import handleIcons from '../../../utils/handleIcons';
+import handleLogos from '../../../utils/handleLogos';
 import getMappedWallets, { MappedWallet } from '../../../utils/mappedWallets';
 
 import { Loading } from '../../../assets/Icons';
@@ -77,7 +77,10 @@ const Waiting = () => {
         if (publicKey && publicKey.trim() !== '') {
           context.setValue((prev) => ({
             ...prev,
-            user: { wallet: { name: wallet.name, address: publicKey } },
+            user: {
+              ...prev.user,
+              wallet: { name: wallet.name, address: publicKey },
+            },
           }));
 
           setTimeout(() => {
@@ -103,7 +106,7 @@ const Waiting = () => {
           error ? 'border-lightRed-200' : 'border-primary-100'
         }`}
       >
-        {handleIcons(user?.wallet?.name ?? '')}
+        {handleLogos(user?.wallet?.name ?? '')}
       </div>
 
       <div className="space-y-1 flex-col text-center font-semibold">
@@ -123,7 +126,7 @@ const Waiting = () => {
       </div>
 
       {/* divider */}
-      <div className="w-full my-4">
+      <div className="w-full flex justify-center items-center h-8">
         <div className="absolute left-0 right-0 bg-primary-100 h-[1px]" />
       </div>
 

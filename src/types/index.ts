@@ -56,6 +56,8 @@ export interface WalletInfo {
  */
 export interface IUser {
   wallet: WalletInfo | null; // The user's connected wallet details
+  email: string | null; // User email address
+  phoneNumber: number | null; // User phone number
 }
 
 /**
@@ -122,6 +124,7 @@ export enum Routes {
   SIGN_TRANSACTION = 'SIGN_TRANSACTION', // User sign transaction view
   SEND = 'SEND', // User sign transaction view
   ACTIVITY = 'ACTIVITY', // User sign transaction view
+  OTP = 'OTP', // User Login with Phone ot email
 }
 
 /**
@@ -143,6 +146,7 @@ export interface ModalHeights {
   [Routes.SIGN_TRANSACTION]: number;
   [Routes.SEND]: number;
   [Routes.ACTIVITY]: number;
+  [Routes.OTP]: number;
 }
 
 /**

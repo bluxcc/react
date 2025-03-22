@@ -9,6 +9,7 @@ export const MODAL_HEIGHTS: ModalHeights = {
   [Routes.ONBOARDING]: 399,
   [Routes.SEND]: 326,
   [Routes.ACTIVITY]: 408,
+  [Routes.OTP]: 424,
 };
 
 export const HORIZON_SERVERS = {

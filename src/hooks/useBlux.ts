@@ -21,7 +21,7 @@ export const useBlux = () => {
   const disconnect = () => {
     setValue((prev) => ({
       ...prev,
-      user: { wallet: null },
+      user: { ...prev.user, wallet: null },
       isModalOpen: false,
       isAuthenticated: false,
     }));

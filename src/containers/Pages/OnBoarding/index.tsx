@@ -4,14 +4,15 @@ import { useProvider } from '../../../context/provider';
 
 import CardItem from '../../../components/CardItem';
 
-import handleIcons from '../../../utils/handleIcons';
+import handleLogos from '../../../utils/handleLogos';
 import getMappedWallets from '../../../utils/mappedWallets';
 import getContrastColor from '../../../utils/getContrastColor';
 import initializeRabetMobile from '../../../utils/initializeRabetMobile';
 
 import BluxLogo from '../../../assets/bluxLogo';
-import { StellarIcon } from '../../../assets/logos';
+import { StellarLogo } from '../../../assets/logos';
 import { Routes, WalletInterface } from '../../../types';
+import { SmallEmailIcon } from '../../../assets/Icons';
 
 type OnBoardingProps = {
   showAllWallets: boolean;
@@ -21,6 +22,7 @@ type OnBoardingProps = {
 const OnBoarding = ({ showAllWallets, setShowAllWallets }: OnBoardingProps) => {
   const context = useProvider();
   const [wallets, setWallets] = useState<WalletInterface[]>(context.value.availableWallets || []);
+  const [inputValue, setInputValue] = useState('');
 
   const hiddenWallets = useMemo(() => {
     return wallets.length > 3 ? wallets.slice(2) : [];
@@ -54,9 +56,23 @@ const OnBoarding = ({ showAllWallets, setShowAllWallets }: OnBoardingProps) => {
   const handleConnect = (wallet: WalletInterface) => {
     context.setValue((prev) => ({
       ...prev,
-      user: { wallet: { name: wallet.name, address: null } },
+      user: {
+        ...prev.user,
+        wallet: { name: wallet.name, address: null },
+      },
     }));
     context.setRoute(Routes.WAITING);
+  };
+
+  const handleConnectEmail = () => {
+    context.setValue((prev) => ({
+      ...prev,
+      user: {
+        ...prev.user,
+        email: inputValue,
+      },
+    }));
+    context.setRoute(Routes.OTP);
   };
 
   return (
@@ -74,7 +90,7 @@ const OnBoarding = ({ showAllWallets, setShowAllWallets }: OnBoardingProps) => {
             key={wallet.name}
             {...wallet}
             label={wallet.name}
-            startIcon={handleIcons(wallet.name)}
+            startIcon={handleLogos(wallet.name)}
             onClick={() => handleConnect(wallet)}
           />
         ))}
@@ -84,17 +100,35 @@ const OnBoarding = ({ showAllWallets, setShowAllWallets }: OnBoardingProps) => {
             endArrow
             label="All Stellar wallets"
             startIcon={
-              <StellarIcon fill={getContrastColor(context.value.appearance.background as string)} />
+              <StellarLogo fill={getContrastColor(context.value.appearance.background as string)} />
             }
             onClick={() => setShowAllWallets(true)}
           />
         )}
       </div>
+      {!showAllWallets && (
+        <>
+          {/* divider */}
+          <div className="w-full flex justify-center items-center h-8">
+            <div className="absolute left-0 right-0 bg-primary-100 h-[0.75px]" />
+          </div>
+
+          <CardItem
+            inputType="email"
+            variant="input"
+            startIcon={<SmallEmailIcon />}
+            onChange={(value) => setInputValue(value)}
+            onEnter={handleConnectEmail}
+            onSubmit={handleConnectEmail}
+          />
+        </>
+      )}
+
       <div
         className="text-center font-medium text-sm mt-3 leading-[32px] cursor-pointer"
         style={{ color: context.value.appearance?.accent }}
       >
-        Login with passkey
+        Log in with passkey
       </div>
 
       <div

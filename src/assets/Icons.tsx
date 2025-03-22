@@ -188,3 +188,30 @@ export const Globe = () => (
     </g>
   </svg>
 );
+export const SmallEmailIcon = () => (
+  <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+    <mask id="mask0_2324_772" maskUnits="userSpaceOnUse" x="0" y="0" width="24" height="24">
+      <rect width="24" height="24" fill="#D9D9D9" />
+    </mask>
+    <g mask="url(#mask0_2324_772)">
+      <path
+        d="M12 1.59619L21.5 7.25369V20.4999H2.5V7.25369L12 1.59619ZM12 12.6499L19.8 7.99994L12 3.34994L4.2 7.99994L12 12.6499ZM12 14.4037L4 9.62294V18.9999H20V9.62294L12 14.4037Z"
+        fill="#0C1083"
+      />
+    </g>
+  </svg>
+);
+
+export const EmailIcon = () => (
+  <svg width="40" height="40" viewBox="0 0 40 40" fill="none" xmlns="http://www.w3.org/2000/svg">
+    <mask id="mask0_2097_3575" maskUnits="userSpaceOnUse" x="0" y="0" width="40" height="40">
+      <rect width="40" height="40" fill="#D9D9D9" />
+    </mask>
+    <g mask="url(#mask0_2097_3575)">
+      <path
+        d="M20 2.66113L35.8334 12.0903V34.1674H4.16669V12.0903L20 2.66113ZM20 21.0841L33 13.3341L20 5.58405L7.00002 13.3341L20 21.0841ZM20 24.007L6.66669 16.0391V31.6674H33.3334V16.0391L20 24.007Z"
+        fill="#0C1083"
+      />
+    </g>
+  </svg>
+);
