@@ -109,8 +109,14 @@ const OnBoarding = ({ showAllWallets, setShowAllWallets }: OnBoardingProps) => {
       {!showAllWallets && (
         <>
           {/* divider */}
-          <div className="w-full flex justify-center items-center h-8">
-            <div className="absolute left-0 right-0 bg-primary-100 h-[0.75px]" />
+          <div className="w-full flex items-center justify-center h-8 my-1">
+            <div className="absolute z-10 left-0 right-0 border-t border-dashed border-spacing-3 border-primary-100" />
+            <span
+              className="z-20 w-auto px-2 text-primary-100 text-sm font-medium"
+              style={{ backgroundColor: context.value.appearance?.background }}
+            >
+              or
+            </span>
           </div>
 
           <CardItem

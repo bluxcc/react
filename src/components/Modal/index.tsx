@@ -1,10 +1,7 @@
 import React, { useEffect, useRef, useState } from 'react';
-
 import { useProvider } from '../../context/provider';
 import { useModalAnimation } from '../../hooks/useModalAnimation';
-
 import getBorderRadius from '../../utils/getBorderRadius';
-
 import ModalHeader from './Header';
 import ModalBackdrop from './Backdrop';
 
@@ -33,6 +30,7 @@ const Modal = ({
 }: ModalProps) => {
   const [contentHeight, setContentHeight] = useState<number | null>(null);
   const [heightChanged, setHeightChanged] = useState(false);
+  const [isMobile, setIsMobile] = useState(false);
 
   const context = useProvider();
   const { isOpening, isClosing, hasTransition, handleClose, setHasTransition } =
@@ -45,6 +43,13 @@ const Modal = ({
 
   const appearance = context.value.appearance;
   const borderRadius = getBorderRadius(appearance.cornerRadius);
+
+  useEffect(() => {
+    const checkMobile = () => setIsMobile(window.innerWidth < 450);
+    checkMobile();
+    window.addEventListener('resize', checkMobile);
+    return () => window.removeEventListener('resize', checkMobile);
+  }, []);
 
   const updateHeight = () => {
     const newHeight = contentRef.current?.offsetHeight;
@@ -105,10 +110,13 @@ const Modal = ({
         onClick={(e) => e.target === e.currentTarget && handleClose(onClose)}
       >
         <div
-          className="relative overflow-hidden w-[360px] shadow-[0px_4px_80px_0px_#00000008] border border-primary-100 box-border"
+          className={`overflow-hidden shadow-[0px_4px_80px_0px_#00000008] border border-primary-100 box-border transition-all ${
+            isMobile
+              ? 'fixed bottom-0 left-0 w-full max-h-[90vh] !rounded-b-none'
+              : 'relative w-[360px]'
+          }`}
           style={{
             height: `${currentHeight}px`,
-            // transform: isOpening ? 'scale(0.98)' : 'scale(1)',
             opacity: isOpening ? '0' : '1',
             transition: isOpening
               ? 'transform 300ms ease-out, opacity 300ms ease-out'

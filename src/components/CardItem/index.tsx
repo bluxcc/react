@@ -85,7 +85,7 @@ const CardItem = ({
         {startIcon}
       </span>
 
-      <div className="flex-1 flex items-center ml-4 mr-1">
+      <div className="relative flex-1 flex items-center ml-4 mr-1">
         {variant === 'input' ? (
           <>
             <input
@@ -94,7 +94,7 @@ const CardItem = ({
               onChange={handleInputChange}
               onKeyDown={handleKeyDown}
               placeholder="Email"
-              className="bg-transparent outline-none placeholder:text-gray-600 w-[70%] mr-1"
+              className="bg-transparent outline-none placeholder:text-gray-600 w-full mr-1"
               style={{ color: appearance.textColor }}
               onFocus={() => setIsFocused(true)}
               onBlur={() => {
@@ -104,19 +104,20 @@ const CardItem = ({
                 }
               }}
             />
-
-            <button
-              disabled={!isValid}
-              onClick={() => onSubmit?.(inputValue)}
-              style={{
-                borderRadius,
-                color: isValid ? appearance.accent : '#9ca3af',
-                borderColor: isValid ? appearance.accent : '#9ca3af',
-              }}
-              className={`bg-white border text-sm font-medium flex justify-center items-center h-8 !w-[68px]`}
-            >
-              Submit
-            </button>
+            <div className="bg-transparent w-[100px] h-10 flex justify-center items-center">
+              <button
+                disabled={!isValid}
+                onClick={() => onSubmit?.(inputValue)}
+                style={{
+                  borderRadius,
+                  color: isValid ? appearance.accent : '#9ca3af',
+                  borderColor: isValid ? appearance.accent : '#9ca3af',
+                }}
+                className={`absolute right-0 bg-white border text-sm font-medium flex justify-center items-center h-8 !w-[68px]`}
+              >
+                Submit
+              </button>
+            </div>
           </>
         ) : (
           <span>{label}</span>
@@ -124,7 +125,7 @@ const CardItem = ({
       </div>
 
       {endArrow && (
-        <span className="ml-auto flex items-center">
+        <span className="ml-auto mr-1 flex items-center">
           <ArrowRight />
         </span>
       )}

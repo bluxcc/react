@@ -6,7 +6,7 @@ export const MODAL_HEIGHTS: ModalHeights = {
   [Routes.WAITING]: 340,
   [Routes.SIGN_TRANSACTION]: 458.4,
   [Routes.SUCCESSFUL]: 328,
-  [Routes.ONBOARDING]: 399,
+  [Routes.ONBOARDING]: 520,
   [Routes.SEND]: 326,
   [Routes.ACTIVITY]: 408,
   [Routes.OTP]: 424,

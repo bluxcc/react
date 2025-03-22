@@ -35,7 +35,7 @@ const ModalHeader = ({
         <div className="size-6" />
       )}
 
-      <p className="text-base font-semibold text-center flex-grow select-none">{title}</p>
+      <p className="text-lg font-semibold text-center flex-grow select-none">{title}</p>
 
       {closeButton ? (
         <button onClick={onClose} className="cursor-pointer">
