@@ -11,13 +11,13 @@ const Activity: React.FC = () => {
   const context = useProvider();
   const { account } = useAccount({
     publicKey: context.value.user.wallet?.address as string,
-    passphrase: context.value.config.networkPassphrase,
+    passphrase: context.value.config.networks[0], // todo: fix it to active network
   });
   const transactions = account?.transactions || [];
 
   const handleGoToExplorer = () => {
     const explorerUrl = getExplorerUrl(
-      context.value.config.networkPassphrase,
+      context.value.config.networks[0], // todo: fix it to active network
       `${context.value.user.wallet?.address}`,
     );
 

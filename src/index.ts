@@ -1,5 +1,7 @@
 import './tailwind.css';
 
+export * from './networks';
+export * from './useStellar';
 export { useBlux } from './hooks/useBlux';
-export { BluxProvider } from './context/provider';
 export { defaultAppearance } from './constants';
+export { BluxProvider } from './context/provider';

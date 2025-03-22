@@ -2,13 +2,12 @@ import React, { useEffect, useState, useRef } from 'react';
 
 import Button from '../../../components/Button';
 import { useProvider } from '../../../context/provider';
-
 import handleLogos from '../../../utils/handleLogos';
-import getMappedWallets, { MappedWallet } from '../../../utils/mappedWallets';
-
 import { Loading } from '../../../assets/Icons';
+import handleIcons from '../../../utils/handleIcons';
 import { Routes, WalletInterface } from '../../../types';
 import signTransaction from '../../../utils/stellar/signTransaction';
+import getMappedWallets, { MappedWallet } from '../../../utils/mappedWallets';
 
 const Waiting = () => {
   const [error, setError] = useState(false);
@@ -53,7 +52,7 @@ const Waiting = () => {
           wallet,
           xdr,
           context.value.user.wallet?.address as string,
-          context.value.config.networkPassphrase,
+          context.value.config.networks[0], // todo: fix network
         );
 
         if (resolver) resolver(result);

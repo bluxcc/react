@@ -33,14 +33,21 @@ export interface AccountData {
   transactions?: Horizon.ServerApi.TransactionRecord[];
 }
 
+interface IServers {
+  horizon?: string;
+  soroban?: string;
+}
+
+export type ITransports = Record<string, IServers>;
+
 /**
  * Configuration options for the provider.
  */
 export interface IProviderConfig {
   appName: string; // Application name
   appLogo?: string; // Optional application logo URL
-  networkPassphrase: string; // Stellar network passphrase
-  network: 'mainnet' | 'testnet' | 'futurenet' | 'sandbox' | 'standalone'; // Supported network types
+  networks: string[]; // Supported network pass phrases
+  transports?: ITransports;
 }
 
 /**
