@@ -1,13 +1,11 @@
-import React, { useEffect, useState, useMemo } from 'react';
+import React, { useState, useMemo } from 'react';
 
 import { useProvider } from '../../../context/provider';
 
 import CardItem from '../../../components/CardItem';
 
 import handleLogos from '../../../utils/handleLogos';
-import getMappedWallets from '../../../utils/mappedWallets';
 import getContrastColor from '../../../utils/getContrastColor';
-import initializeRabetMobile from '../../../utils/initializeRabetMobile';
 
 import BluxLogo from '../../../assets/bluxLogo';
 import { StellarLogo } from '../../../assets/logos';
@@ -21,8 +19,9 @@ type OnBoardingProps = {
 
 const OnBoarding = ({ showAllWallets, setShowAllWallets }: OnBoardingProps) => {
   const context = useProvider();
-  const [wallets, setWallets] = useState<WalletInterface[]>(context.value.availableWallets || []);
   const [inputValue, setInputValue] = useState('');
+
+  const wallets = context.value.availableWallets;
 
   const hiddenWallets = useMemo(() => {
     return wallets.length > 3 ? wallets.slice(2) : [];
@@ -31,27 +30,6 @@ const OnBoarding = ({ showAllWallets, setShowAllWallets }: OnBoardingProps) => {
   const visibleWallets = useMemo(() => {
     return showAllWallets ? wallets.slice(2) : wallets.slice(0, 2);
   }, [wallets, showAllWallets]);
-
-  useEffect(() => {
-    if (wallets.length > 0) return;
-
-    const loadWallets = async () => {
-      const mappedWallets = await getMappedWallets();
-      window.addEventListener('load', initializeRabetMobile);
-      const available = mappedWallets
-        .filter(({ isAvailable }) => isAvailable)
-        .map(({ wallet }) => wallet);
-
-      setWallets(available);
-      context.setValue((prev) => ({
-        ...prev,
-        availableWallets: available,
-        isReady: true,
-      }));
-    };
-
-    loadWallets();
-  }, [wallets]);
 
   const handleConnect = (wallet: WalletInterface) => {
     context.setValue((prev) => ({

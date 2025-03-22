@@ -5,7 +5,6 @@ import { useProvider } from '../../context/provider';
 
 import { Routes } from '../../types';
 import { modalContent } from './content';
-import { MODAL_HEIGHTS } from '../../constants';
 
 interface BluxModalProps {
   isOpen: boolean;
@@ -49,7 +48,6 @@ export default function BluxModal({ isOpen, closeModal }: BluxModalProps) {
       onBack={handleBackNavigation}
       onClose={closeModal}
       title={title}
-      initialHeight={MODAL_HEIGHTS[route]}
       icon={modalIcon}
       closeButton={route === Routes.ONBOARDING ? false : true}
     >

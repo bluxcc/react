@@ -3,6 +3,8 @@ import React, { createContext, useState, useEffect, useContext } from 'react';
 import { defaultAppearance } from '../constants';
 import BluxModal from '../containers/BluxModal';
 import { ContextState, IProviderConfig, ContextInterface, IAppearance, Routes } from '../types';
+import getMappedWallets from '../utils/mappedWallets';
+import initializeRabetMobile from '../utils/initializeRabetMobile';
 
 export const ProviderContext = createContext<ContextState | null>(null);
 
@@ -46,6 +48,24 @@ export const BluxProvider = ({
     }));
   }, [appearance]);
 
+  useEffect(() => {
+    const loadWallets = async () => {
+      const mappedWallets = await getMappedWallets();
+      window.addEventListener('load', initializeRabetMobile);
+      const available = mappedWallets
+        .filter(({ isAvailable }) => isAvailable)
+        .map(({ wallet }) => wallet);
+
+      setValue((prev) => ({
+        ...prev,
+        availableWallets: available,
+        isReady: true,
+      }));
+    };
+
+    loadWallets();
+  }, [config]);
+
   const closeModal = () => {
     setValue((prev) => ({
       ...prev,
@@ -56,7 +76,7 @@ export const BluxProvider = ({
   return (
     <ProviderContext.Provider value={{ value, setValue, route, setRoute }}>
       {children}
- 
+
       <BluxModal isOpen={value.isModalOpen} closeModal={closeModal} />
     </ProviderContext.Provider>
   );

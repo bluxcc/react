@@ -120,7 +120,7 @@ const CardItem = ({
             </div>
           </>
         ) : (
-          <span>{label}</span>
+          <span className="font-medium">{label}</span>
         )}
       </div>
 
