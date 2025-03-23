@@ -5,25 +5,28 @@ import { Loading } from '../../../assets/Icons';
 import handleLogos from '../../../utils/handleLogos';
 import { useProvider } from '../../../context/provider';
 import { Routes, WalletInterface } from '../../../types';
+import setWalletNetwork from '../../../utils/setWalletNetwork';
 import signTransaction from '../../../utils/stellar/signTransaction';
 import getMappedWallets, { MappedWallet } from '../../../utils/mappedWallets';
 
 const Waiting = () => {
+  const context = useProvider();
+  const hasConnected = useRef(false);
   const [error, setError] = useState(false);
   const [mappedWallets, setMappedWallets] = useState<MappedWallet[]>([]);
   const [matchedWallet, setMatchedWallet] = useState<WalletInterface | null>(null);
-  const hasConnected = useRef(false);
-  const context = useProvider();
 
-  const waitingStatus = context.value.waitingStatus;
   const { user } = context.value || {};
+  const waitingStatus = context.value.waitingStatus;
   const { xdr, resolver } = context.value.signTransaction;
 
+  const fetchWallets = async () => {
+    const wallets = await getMappedWallets();
+
+    setMappedWallets(wallets);
+  };
+
   useEffect(() => {
-    const fetchWallets = async () => {
-      const wallets = await getMappedWallets();
-      setMappedWallets(wallets);
-    };
     fetchWallets();
   }, []);
 
@@ -73,11 +76,17 @@ const Waiting = () => {
         const { publicKey } = await wallet.connect();
 
         if (publicKey && publicKey.trim() !== '') {
+          const passphrase = await setWalletNetwork(wallet, context.value.config.networks);
+
           context.setValue((prev) => ({
             ...prev,
             user: {
               ...prev.user,
-              wallet: { name: wallet.name, address: publicKey },
+              wallet: {
+                passphrase,
+                name: wallet.name,
+                address: publicKey,
+              },
             },
           }));
 
@@ -94,6 +103,7 @@ const Waiting = () => {
 
   const handleRetry = () => {
     setError(false);
+
     if (matchedWallet) handleAssignment(matchedWallet);
   };
 

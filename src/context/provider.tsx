@@ -1,7 +1,7 @@
 import React, { createContext, useState, useEffect, useContext } from 'react';
 
-import { defaultAppearance } from '../constants';
 import BluxModal from '../containers/BluxModal';
+import { defaultAppearance } from '../constants';
 import { ContextState, IProviderConfig, ContextInterface, IAppearance, Routes } from '../types';
 
 export const ProviderContext = createContext<ContextState | null>(null);
@@ -45,6 +45,16 @@ export const BluxProvider = ({
       appearance: appearance ?? defaultAppearance,
     }));
   }, [appearance]);
+
+  useEffect(() => {
+    if (value.user.wallet && !value.config.networks.includes(value.user.wallet.passphrase)) {
+      // todo: use a persistent modal instead of alert
+      console.log('You are on a wrong network!');
+    } else {
+      console.log('You are on a right network!');
+      // close the modal if the network is correct.
+    }
+  }, [value.config.networks, value.user.wallet]);
 
   const closeModal = () => {
     setValue((prev) => ({

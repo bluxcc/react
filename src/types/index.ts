@@ -54,6 +54,7 @@ export interface IProviderConfig {
  * Information about the connected wallet.
  */
 export interface WalletInfo {
+  passphrase: string;
   name: SupportedWallets; // Wallet name, if connected
   address: string | null; // Wallet public address, if connected
 }
@@ -170,6 +171,11 @@ export interface SignResult {
   signedXdr: string; // Signed XDR transaction string
 }
 
+export interface GetNetworkResult {
+  network: string,
+  passphrase: string,
+}
+
 /**
  * Defines the available actions for interacting with a wallet.
  */
@@ -188,9 +194,9 @@ export interface WalletInterface {
     },
   ) => Promise<string>; // Signs a transaction with optional parameters
   disconnect?: () => Promise<void>; // Disconnects the wallet session
-  getNetwork?: () => Promise<{
+  getNetwork: () => Promise<{
     network: string;
-    networkPassphrase: string;
+    passphrase: string;
   }>; // Retrieves network information from the wallet
   signMessage?: (
     message: string,

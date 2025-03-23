@@ -38,8 +38,9 @@ declare global {
     freighterApiSDK?: FreighterApi;
     rabet?: {
       sign(xdr: string, network: 'mainnet' | 'testnet'): Promise<SignResult>;
-      connect: () => Promise<ConnectResult>;
       disconnect(): Promise<void>;
+      connect: () => Promise<ConnectResult>;
+      getNetwork: () => Promise<{ network: string, passphrase: string }>;
     };
   }
 }
