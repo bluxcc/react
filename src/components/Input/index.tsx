@@ -47,7 +47,7 @@ const InputField = ({
   onChange,
 }: InputFieldProps) => {
   const context = useProvider();
-  const borderRadius = getBorderRadius(context.value.appearance.cornerRadius);
+  const borderRadius = getBorderRadius(context.value.config.appearance.cornerRadius);
 
   return (
     <div className="w-full flex flex-col">
@@ -67,7 +67,7 @@ const InputField = ({
         focus-within:ring-1`}
         style={
           {
-            '--tw-ring-color': context.value.appearance.accent,
+            '--tw-ring-color': context.value.config.appearance.accent,
             borderRadius,
           } as React.CSSProperties
         }

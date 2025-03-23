@@ -1,7 +1,7 @@
 import { xBullWalletConnect } from '@creit.tech/xbull-wallet-connect';
 
-import { SupportedWallets, WalletInterface } from '../../types';
 import getNetworkByPassphrase from '../../utils/stellar/getNetworkByPassphrase';
+import { GetNetworkResult, SupportedWallets, WalletInterface } from '../../types';
 
 export const xBullConfig: WalletInterface = {
   name: SupportedWallets.Xbull,
@@ -39,4 +39,7 @@ export const xBullConfig: WalletInterface = {
       throw new Error('Failed to sign the transaction with xBull.');
     }
   },
+  getNetwork: async (): Promise<GetNetworkResult> => {
+    throw new Error('Failed to get network from xBull');
+  }
 };

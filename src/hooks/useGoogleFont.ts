@@ -3,15 +3,15 @@ import { SupportedFonts } from '../types';
 import { useProvider } from '../context/provider';
 
 const googleFonts: Record<SupportedFonts, string | null> = {
-  Manrope: 'Manrope',
-  Inter: 'Inter',
-  'JetBrains Mono': 'JetBrains+Mono',
   Lora: 'Lora',
+  Inter: 'Inter',
+  Manrope: 'Manrope',
+  'JetBrains Mono': 'JetBrains+Mono',
 };
 
 export function useGoogleFonts() {
   const context = useProvider();
-  const selectedFont = context.value?.appearance?.font as SupportedFonts;
+  const selectedFont = context.value?.config.appearance?.font as SupportedFonts;
 
   useEffect(() => {
     if (selectedFont && googleFonts[selectedFont]) {

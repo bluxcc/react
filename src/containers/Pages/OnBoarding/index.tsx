@@ -4,7 +4,6 @@ import CardItem from '../../../components/CardItem';
 import handleLogos from '../../../utils/handleLogos';
 import { useProvider } from '../../../context/provider';
 import { Routes, WalletInterface } from '../../../types';
-import getMappedWallets from '../../../utils/mappedWallets';
 import getContrastColor from '../../../utils/getContrastColor';
 
 import BluxLogo from '../../../assets/bluxLogo';
@@ -19,7 +18,6 @@ type OnBoardingProps = {
 const OnBoarding = ({ showAllWallets, setShowAllWallets }: OnBoardingProps) => {
   const context = useProvider();
   const [inputValue, setInputValue] = useState('');
-  const [wallets, setWallets] = useState<WalletInterface[]>(context.value.availableWallets || []);
 
   const wallets = context.value.availableWallets;
 
@@ -36,7 +34,11 @@ const OnBoarding = ({ showAllWallets, setShowAllWallets }: OnBoardingProps) => {
       ...prev,
       user: {
         ...prev.user,
-        wallet: { name: wallet.name, address: null },
+        wallet: {
+          address: null,
+          passphrase: '',
+          name: wallet.name,
+        },
       },
     }));
 
@@ -55,13 +57,15 @@ const OnBoarding = ({ showAllWallets, setShowAllWallets }: OnBoardingProps) => {
     context.setRoute(Routes.OTP);
   };
 
+  const { appearance } = context.value.config;
+
   return (
     <div className="w-full">
       <div className="flex justify-center items-center w-full my-6">
         {context.value.config.appLogo ? (
           <img src={context.value.config.appLogo} alt={context.value.config.appName} />
         ) : (
-          <BluxLogo fill={getContrastColor(context.value.appearance.background as string)} />
+          <BluxLogo fill={getContrastColor(appearance.background as string)} />
         )}
       </div>
       <div className="space-y-2">
@@ -80,7 +84,7 @@ const OnBoarding = ({ showAllWallets, setShowAllWallets }: OnBoardingProps) => {
             endArrow
             label="All Stellar wallets"
             startIcon={
-              <StellarLogo fill={getContrastColor(context.value.appearance.background as string)} />
+              <StellarLogo fill={getContrastColor(appearance.background)} />
             }
             onClick={() => setShowAllWallets(true)}
           />
@@ -93,7 +97,7 @@ const OnBoarding = ({ showAllWallets, setShowAllWallets }: OnBoardingProps) => {
             <div className="absolute z-10 left-0 right-0 border-t border-dashed border-spacing-3 border-primary-100" />
             <span
               className="z-20 w-auto px-2 text-primary-100 text-sm font-medium"
-              style={{ backgroundColor: context.value.appearance?.background }}
+              style={{ backgroundColor: appearance.background }}
             >
               or
             </span>
@@ -112,7 +116,7 @@ const OnBoarding = ({ showAllWallets, setShowAllWallets }: OnBoardingProps) => {
 
       <div
         className="text-center font-medium text-sm mt-3 leading-[32px] cursor-pointer"
-        style={{ color: context.value.appearance?.accent }}
+        style={{ color: appearance.accent }}
       >
         Log in with passkey
       </div>
@@ -120,7 +124,7 @@ const OnBoarding = ({ showAllWallets, setShowAllWallets }: OnBoardingProps) => {
       <div
         className="font-semibold text-[12px] text-center w-full pt-[6px]"
         style={{
-          color: context.value.appearance?.textColor,
+          color: appearance.textColor,
         }}
       >
         Powered by{' '}
@@ -128,7 +132,7 @@ const OnBoarding = ({ showAllWallets, setShowAllWallets }: OnBoardingProps) => {
           href="https://blux.cc"
           target="_blank"
           rel="noreferrer"
-          style={{ color: context.value.appearance?.accent }}
+          style={{ color: appearance.accent }}
         >
           Blux.cc
         </a>

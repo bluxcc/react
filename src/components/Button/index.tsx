@@ -53,7 +53,7 @@ const Button = ({
   className,
 }: ButtonProps) => {
   const context = useProvider();
-  const borderRadius = getBorderRadius(context.value.appearance.cornerRadius);
+  const borderRadius = getBorderRadius(context.value.config.appearance.cornerRadius);
 
   return (
     <button

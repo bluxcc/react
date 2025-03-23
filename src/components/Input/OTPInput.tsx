@@ -11,7 +11,7 @@ interface OTPInputProps {
 const OTPInput: React.FC<OTPInputProps> = ({ otp, setOtp, error }) => {
   const LENGTH = otp.length;
   const context = useProvider();
-  const appearance = context.value.appearance;
+  const { appearance } = context.value.config;
   const inputsRef = useRef<(HTMLInputElement | null)[]>([]);
   const borderRadius = getBorderRadius(appearance.cornerRadius);
 

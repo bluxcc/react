@@ -33,7 +33,7 @@ const Modal = ({
   const context = useProvider();
   const { isOpening, isClosing, handleClose } = useModalAnimation(isOpen);
 
-  const appearance = context.value.appearance;
+  const { appearance } = context.value.config;
   const borderRadius = getBorderRadius(appearance.cornerRadius);
 
   useEffect(() => {

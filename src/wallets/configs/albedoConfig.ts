@@ -1,7 +1,7 @@
 import albedo from '@albedo-link/intent';
 
-import { SupportedWallets, WalletInterface } from '../../types';
 import getNetworkByPassphrase from '../../utils/stellar/getNetworkByPassphrase';
+import { GetNetworkResult, SupportedWallets, WalletInterface } from '../../types';
 
 export const albedoConfig: WalletInterface = {
   name: SupportedWallets.Albedo,
@@ -36,4 +36,7 @@ export const albedoConfig: WalletInterface = {
       throw new Error('Failed to sign the transaction with Albedo.');
     }
   },
+  getNetwork: async (): Promise<GetNetworkResult> => {
+    throw new Error('Failed to get network from albedo');
+  }
 };

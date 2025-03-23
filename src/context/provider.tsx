@@ -2,20 +2,18 @@ import React, { createContext, useState, useEffect, useContext } from 'react';
 
 import BluxModal from '../containers/BluxModal';
 import { defaultAppearance } from '../constants';
-import { ContextState, IProviderConfig, ContextInterface, IAppearance, Routes } from '../types';
 import getMappedWallets from '../utils/mappedWallets';
 import initializeRabetMobile from '../utils/initializeRabetMobile';
+import { ContextState, IProviderConfig, ContextInterface, Routes } from '../types';
 
 export const ProviderContext = createContext<ContextState | null>(null);
 
 export const BluxProvider = ({
   config,
   isDemo,
-  appearance,
   children,
 }: {
   isDemo?: boolean;
-  appearance?: IAppearance;
   config: IProviderConfig;
   children: React.ReactNode;
 }) => {
@@ -25,8 +23,10 @@ export const BluxProvider = ({
 
   const [route, setRoute] = useState<Routes>(Routes.ONBOARDING);
   const [value, setValue] = useState<ContextInterface>({
-    config,
-    appearance: appearance ?? defaultAppearance,
+    config: {
+      ...config,
+      appearance: config.appearance ?? defaultAppearance,
+    },
     isDemo: isDemo ?? false,
     user: { wallet: null, phoneNumber: null, email: null },
     isModalOpen: false,
@@ -44,9 +44,12 @@ export const BluxProvider = ({
   useEffect(() => {
     setValue((prev) => ({
       ...prev,
-      appearance: appearance ?? defaultAppearance,
+      config: {
+        ...prev.config,
+        appearance: config.appearance ?? defaultAppearance,
+      },
     }));
-  }, [appearance]);
+  }, [config.appearance]);
 
   useEffect(() => {
     const loadWallets = async () => {
@@ -68,10 +71,10 @@ export const BluxProvider = ({
 
    useEffect(() => {
     if (value.user.wallet && !value.config.networks.includes(value.user.wallet.passphrase)) {
-      // todo: use a persistent modal instead of alert
-      console.log('You are on a wrong network!');
+      // todo: use a persistent modal instead of console.log
+      // console.log('You are on a wrong network!');
     } else {
-      console.log('You are on a right network!');
+      // console.log('You are on a right network!');
       // close the modal if the network is correct.
     }
   }, [value.config.networks, value.user.wallet]);

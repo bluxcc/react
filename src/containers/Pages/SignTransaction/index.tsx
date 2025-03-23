@@ -1,22 +1,20 @@
 import React from 'react';
 
+import { Routes } from '../../../types';
 import Button from '../../../components/Button';
-import Summary from '../../../components/Transaction/Summery';
-
+import useAccount from '../../../hooks/useAccount';
 import { useProvider } from '../../../context/provider';
-
+import humanizeAmount from '../../../utils/humanizeAmount';
 import shortenAddress from '../../../utils/shortenAddress';
 import getBorderRadius from '../../../utils/getBorderRadius';
+import Summary from '../../../components/Transaction/Summery';
 import getTransactionDetails from '../../../utils/stellar/getTransactionDetails';
-import { Routes } from '../../../types';
-import humanizeAmount from '../../../utils/humanizeAmount';
-import useAccount from '../../../hooks/useAccount';
 
 const SignTransaction = () => {
   const context = useProvider();
 
   const { xdr } = context.value.signTransaction;
-  const borderRadius = getBorderRadius(context.value.appearance.cornerRadius);
+  const borderRadius = getBorderRadius(context.value.config.appearance.cornerRadius);
   const txDetails = getTransactionDetails(xdr);
   const { account } = useAccount({
     publicKey: context.value.user.wallet?.address as string,

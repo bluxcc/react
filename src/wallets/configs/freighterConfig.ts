@@ -78,9 +78,6 @@ export const freighterConfig: WalletInterface = {
 
       const network = await freighterApi.getNetwork();
 
-      console.log('freighter network')
-      console.log(network)
-
       if (network.error) {
         throw new Error('Failed to get network from Freighter');
       }

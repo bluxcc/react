@@ -1,6 +1,6 @@
 import { isConnected, getPublicKey, signTransaction } from '@lobstrco/signer-extension-api';
 
-import { SupportedWallets, WalletInterface } from '../../types';
+import { GetNetworkResult, SupportedWallets, WalletInterface } from '../../types';
 
 export const lobstrConfig: WalletInterface = {
   name: SupportedWallets.Lobstr,
@@ -32,4 +32,7 @@ export const lobstrConfig: WalletInterface = {
       throw new Error('Failed to sign the transaction with LOBSTR.');
     }
   },
+  getNetwork: async (): Promise<GetNetworkResult> => {
+    throw new Error('Failed to get network from LOBSTR');
+  }
 };

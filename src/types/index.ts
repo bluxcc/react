@@ -47,6 +47,7 @@ export interface IProviderConfig {
   appName: string; // Application name
   appLogo?: string; // Optional application logo URL
   networks: string[]; // Supported network pass phrases
+  appearance: IAppearance;
   transports?: ITransports;
 }
 
@@ -106,7 +107,6 @@ export interface IAppearance {
  */
 export interface ContextInterface {
   config: IProviderConfig; // Provider configuration
-  appearance: IAppearance; // UI appearance settings
   user: IUser; // User-related information
   isModalOpen: boolean; // Determines if the modal is open
   isReady: boolean; // Indicates if the system is ready
