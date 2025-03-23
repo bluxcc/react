@@ -3,18 +3,24 @@ import { Routes } from '../types';
 
 export const useBlux = () => {
   const context = useProvider();
+
   if (!context) {
     throw new Error('useBlux must be used within a ProviderContext.');
   }
 
   const { value, setValue, setRoute } = context;
-  const { isAuthenticated, user } = value;
+  const { isReady, user, isAuthenticated } = value;
 
   const connect = () => {
+    // todo: uncomment after the new PR
+    // if (!isReady) {
+    //   throw new Error('Cannot connect when isReady is false.');
+    // }
+
     if (!isAuthenticated) {
       setValue((prev) => (prev.isModalOpen ? prev : { ...prev, isModalOpen: true }));
     } else {
-      throw new Error('User is already connected.');
+      throw new Error('Already connected.');
     }
   };
 

@@ -1,15 +1,14 @@
 import React, { useState, useMemo } from 'react';
 
-import { useProvider } from '../../../context/provider';
-
 import CardItem from '../../../components/CardItem';
-
 import handleLogos from '../../../utils/handleLogos';
+import { useProvider } from '../../../context/provider';
+import { Routes, WalletInterface } from '../../../types';
+import getMappedWallets from '../../../utils/mappedWallets';
 import getContrastColor from '../../../utils/getContrastColor';
 
 import BluxLogo from '../../../assets/bluxLogo';
 import { StellarLogo } from '../../../assets/logos';
-import { Routes, WalletInterface } from '../../../types';
 import { SmallEmailIcon } from '../../../assets/Icons';
 
 type OnBoardingProps = {
@@ -20,6 +19,7 @@ type OnBoardingProps = {
 const OnBoarding = ({ showAllWallets, setShowAllWallets }: OnBoardingProps) => {
   const context = useProvider();
   const [inputValue, setInputValue] = useState('');
+  const [wallets, setWallets] = useState<WalletInterface[]>(context.value.availableWallets || []);
 
   const wallets = context.value.availableWallets;
 
@@ -39,6 +39,7 @@ const OnBoarding = ({ showAllWallets, setShowAllWallets }: OnBoardingProps) => {
         wallet: { name: wallet.name, address: null },
       },
     }));
+
     context.setRoute(Routes.WAITING);
   };
 
@@ -50,6 +51,7 @@ const OnBoarding = ({ showAllWallets, setShowAllWallets }: OnBoardingProps) => {
         email: inputValue,
       },
     }));
+
     context.setRoute(Routes.OTP);
   };
 
