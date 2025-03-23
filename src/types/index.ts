@@ -49,6 +49,7 @@ export interface IProviderConfig {
   networks: string[]; // Supported network pass phrases
   appearance: IAppearance;
   transports?: ITransports;
+  loginMethods?: Array<'wallet' | 'email' | 'sms' | 'google' | 'twitter' | 'discord' | 'github' | 'passkey'>;
 }
 
 /**

@@ -59,6 +59,11 @@ const OnBoarding = ({ showAllWallets, setShowAllWallets }: OnBoardingProps) => {
 
   const { appearance } = context.value.config;
 
+  const loginMethods = context.value.config.loginMethods || [];
+
+  const isEmailEnabled = loginMethods.includes('email');
+  const isPassKeyEnabled = loginMethods.includes('passkey');
+
   return (
     <div className="w-full">
       <div className="flex justify-center items-center w-full my-6">
@@ -90,7 +95,7 @@ const OnBoarding = ({ showAllWallets, setShowAllWallets }: OnBoardingProps) => {
           />
         )}
       </div>
-      {!showAllWallets && (
+      {(!showAllWallets && isEmailEnabled) && (
         <>
           {/* divider */}
           <div className="w-full flex items-center justify-center h-8 my-1">
@@ -114,12 +119,14 @@ const OnBoarding = ({ showAllWallets, setShowAllWallets }: OnBoardingProps) => {
         </>
       )}
 
-      <div
-        className="text-center font-medium text-sm mt-3 leading-[32px] cursor-pointer"
-        style={{ color: appearance.accent }}
-      >
-        Log in with passkey
-      </div>
+      {isPassKeyEnabled && (
+        <div
+          className="text-center font-medium text-sm mt-3 leading-[32px] cursor-pointer"
+          style={{ color: appearance.accent }}
+        >
+          Log in with passkey
+        </div>
+      )}
 
       <div
         className="font-semibold text-[12px] text-center w-full pt-[6px]"
