@@ -1,4 +1,4 @@
-import React, { useEffect, useState, useMemo } from 'react';
+import React, { useState, useMemo } from 'react';
 
 import CardItem from '../../../components/CardItem';
 import handleLogos from '../../../utils/handleLogos';
@@ -6,7 +6,6 @@ import { useProvider } from '../../../context/provider';
 import { Routes, WalletInterface } from '../../../types';
 import getMappedWallets from '../../../utils/mappedWallets';
 import getContrastColor from '../../../utils/getContrastColor';
-import initializeRabetMobile from '../../../utils/initializeRabetMobile';
 
 import BluxLogo from '../../../assets/bluxLogo';
 import { StellarLogo } from '../../../assets/logos';
@@ -22,6 +21,8 @@ const OnBoarding = ({ showAllWallets, setShowAllWallets }: OnBoardingProps) => {
   const [inputValue, setInputValue] = useState('');
   const [wallets, setWallets] = useState<WalletInterface[]>(context.value.availableWallets || []);
 
+  const wallets = context.value.availableWallets;
+
   const hiddenWallets = useMemo(() => {
     return wallets.length > 3 ? wallets.slice(2) : [];
   }, [wallets]);
@@ -29,27 +30,6 @@ const OnBoarding = ({ showAllWallets, setShowAllWallets }: OnBoardingProps) => {
   const visibleWallets = useMemo(() => {
     return showAllWallets ? wallets.slice(2) : wallets.slice(0, 2);
   }, [wallets, showAllWallets]);
-
-  useEffect(() => {
-    if (wallets.length > 0) return;
-
-    const loadWallets = async () => {
-      const mappedWallets = await getMappedWallets();
-      window.addEventListener('load', initializeRabetMobile);
-      const available = mappedWallets
-        .filter(({ isAvailable }) => isAvailable)
-        .map(({ wallet }) => wallet);
-
-      setWallets(available);
-      context.setValue((prev) => ({
-        ...prev,
-        availableWallets: available,
-        isReady: true,
-      }));
-    };
-
-    loadWallets();
-  }, [wallets]);
 
   const handleConnect = (wallet: WalletInterface) => {
     context.setValue((prev) => ({
@@ -109,8 +89,14 @@ const OnBoarding = ({ showAllWallets, setShowAllWallets }: OnBoardingProps) => {
       {!showAllWallets && (
         <>
           {/* divider */}
-          <div className="w-full flex justify-center items-center h-8">
-            <div className="absolute left-0 right-0 bg-primary-100 h-[0.75px]" />
+          <div className="w-full flex items-center justify-center h-8 my-1">
+            <div className="absolute z-10 left-0 right-0 border-t border-dashed border-spacing-3 border-primary-100" />
+            <span
+              className="z-20 w-auto px-2 text-primary-100 text-sm font-medium"
+              style={{ backgroundColor: context.value.appearance?.background }}
+            >
+              or
+            </span>
           </div>
 
           <CardItem

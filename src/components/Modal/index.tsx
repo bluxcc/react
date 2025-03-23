@@ -1,10 +1,7 @@
 import React, { useEffect, useRef, useState } from 'react';
-
 import { useProvider } from '../../context/provider';
 import { useModalAnimation } from '../../hooks/useModalAnimation';
-
 import getBorderRadius from '../../utils/getBorderRadius';
-
 import ModalHeader from './Header';
 import ModalBackdrop from './Backdrop';
 
@@ -17,7 +14,6 @@ interface ModalProps {
   onInfo?: () => void;
   closeButton?: boolean;
   title: string;
-  initialHeight: number;
 }
 
 const Modal = ({
@@ -28,67 +24,41 @@ const Modal = ({
   children,
   title,
   icon,
-  initialHeight,
   closeButton = true,
 }: ModalProps) => {
-  const [contentHeight, setContentHeight] = useState<number | null>(null);
-  const [heightChanged, setHeightChanged] = useState(false);
-
-  const context = useProvider();
-  const { isOpening, isClosing, hasTransition, handleClose, setHasTransition } =
-    useModalAnimation(isOpen);
+  const [height, setHeight] = useState<string | number>('auto');
+  const [isMobile, setIsMobile] = useState(false);
 
   const contentRef = useRef<HTMLDivElement>(null);
-  const isFirstRender = useRef(true);
-  const previousChildrenRef = useRef(children);
-  const previousHeightRef = useRef<number>(400);
+  const context = useProvider();
+  const { isOpening, isClosing, handleClose } = useModalAnimation(isOpen);
 
   const appearance = context.value.appearance;
   const borderRadius = getBorderRadius(appearance.cornerRadius);
 
-  const updateHeight = () => {
-    const newHeight = contentRef.current?.offsetHeight;
-    if (!newHeight) return;
-
-    if (isFirstRender.current) {
-      previousHeightRef.current = newHeight;
-      isFirstRender.current = false;
-      return;
-    }
-    if (!isFirstRender.current && newHeight !== previousHeightRef.current) {
-      setContentHeight(newHeight);
-      setHeightChanged(true);
-      previousHeightRef.current = newHeight;
-    }
-  };
+  useEffect(() => {
+    const checkMobile = () => setIsMobile(window.innerWidth < 450);
+    checkMobile();
+    window.addEventListener('resize', checkMobile);
+    return () => window.removeEventListener('resize', checkMobile);
+  }, []);
 
   useEffect(() => {
     if (!isOpen || !contentRef.current) return;
 
-    if (heightChanged) {
-      setHasTransition(true);
-    }
-    const resizeObserver = new ResizeObserver(updateHeight);
-    resizeObserver.observe(contentRef.current);
-    updateHeight();
+    // Initialize height when modal opens
+    setHeight(contentRef.current.offsetHeight);
 
+    // Set up the resize observer to update height when content changes
+    const resizeObserver = new ResizeObserver(() => {
+      if (contentRef.current) {
+        setHeight(contentRef.current.offsetHeight);
+      }
+    });
+
+    resizeObserver.observe(contentRef.current);
     return () => resizeObserver.disconnect();
   }, [isOpen, children]);
-
-  useEffect(() => {
-    if (!isOpen) {
-      setContentHeight(null);
-      setHeightChanged(false);
-      isFirstRender.current = true;
-      previousChildrenRef.current = children;
-      previousHeightRef.current = initialHeight;
-      return;
-    }
-  }, [isOpen]);
-
-  const currentHeight = isFirstRender.current
-    ? initialHeight
-    : contentHeight ?? previousHeightRef.current;
 
   if (!isOpen) return null;
 
@@ -105,16 +75,24 @@ const Modal = ({
         onClick={(e) => e.target === e.currentTarget && handleClose(onClose)}
       >
         <div
-          className="relative overflow-hidden w-[360px] shadow-[0px_4px_80px_0px_#00000008] border border-primary-100 box-border"
+          className={`overflow-hidden shadow-[0px_4px_80px_0px_#00000008] border border-primary-100 box-border transition-all ${
+            isMobile
+              ? 'fixed bottom-0 left-0 w-full max-h-[90vh] !rounded-b-none'
+              : 'relative !w-[360px]'
+          }`}
           style={{
-            height: `${currentHeight}px`,
-            // transform: isOpening ? 'scale(0.98)' : 'scale(1)',
-            opacity: isOpening ? '0' : '1',
-            transition: isOpening
-              ? 'transform 300ms ease-out, opacity 300ms ease-out'
-              : hasTransition
-              ? 'height 300ms ease-in-out'
-              : 'transition-all',
+            height: typeof height === 'number' ? `${height}px` : height,
+            opacity: isClosing ? '0' : '1',
+            transform: isMobile
+              ? isOpening
+                ? 'translateY(100%)'
+                : isClosing
+                ? 'translateY(100%)'
+                : 'translateY(0%)'
+              : 'none',
+            transition: `height 300ms ease-in-out, opacity 300ms ease-out${
+              isMobile ? ', transform 300ms ease-out' : ''
+            }`,
             backgroundColor: appearance.background,
             color: appearance.textColor,
             fontFamily: appearance.font,
@@ -122,7 +100,7 @@ const Modal = ({
             borderRadius,
           }}
         >
-          <div ref={contentRef} className="px-6 pb-4 transition-all">
+          <div ref={contentRef} className="px-6 pb-4">
             <ModalHeader
               icon={icon}
               onInfo={onInfo}

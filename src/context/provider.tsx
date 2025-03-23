@@ -3,6 +3,8 @@ import React, { createContext, useState, useEffect, useContext } from 'react';
 import BluxModal from '../containers/BluxModal';
 import { defaultAppearance } from '../constants';
 import { ContextState, IProviderConfig, ContextInterface, IAppearance, Routes } from '../types';
+import getMappedWallets from '../utils/mappedWallets';
+import initializeRabetMobile from '../utils/initializeRabetMobile';
 
 export const ProviderContext = createContext<ContextState | null>(null);
 
@@ -47,6 +49,24 @@ export const BluxProvider = ({
   }, [appearance]);
 
   useEffect(() => {
+    const loadWallets = async () => {
+      const mappedWallets = await getMappedWallets();
+      window.addEventListener('load', initializeRabetMobile);
+      const available = mappedWallets
+        .filter(({ isAvailable }) => isAvailable)
+        .map(({ wallet }) => wallet);
+
+      setValue((prev) => ({
+        ...prev,
+        availableWallets: available,
+        isReady: true,
+      }));
+    };
+
+    loadWallets();
+  }, [config]);
+
+   useEffect(() => {
     if (value.user.wallet && !value.config.networks.includes(value.user.wallet.passphrase)) {
       // todo: use a persistent modal instead of alert
       console.log('You are on a wrong network!');
@@ -55,6 +75,7 @@ export const BluxProvider = ({
       // close the modal if the network is correct.
     }
   }, [value.config.networks, value.user.wallet]);
+
 
   const closeModal = () => {
     setValue((prev) => ({
@@ -66,7 +87,7 @@ export const BluxProvider = ({
   return (
     <ProviderContext.Provider value={{ value, setValue, route, setRoute }}>
       {children}
- 
+
       <BluxModal isOpen={value.isModalOpen} closeModal={closeModal} />
     </ProviderContext.Provider>
   );
