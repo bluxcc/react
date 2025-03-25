@@ -36,7 +36,7 @@ const ConfirmCode: React.FC = () => {
   return (
     <div className="flex flex-col items-center justify-center w-full select-none mt-4">
       <div className="h-20 w-20 flex justify-center border-2 rounded-full overflow-hidden items-center mb-6 border-primary-100">
-        <EmailIcon />
+        <EmailIcon fill={value.config.appearance.accent} />
       </div>
 
       <div className="space-y-1 flex-col text-center">

@@ -49,7 +49,9 @@ export interface IProviderConfig {
   networks: string[]; // Supported network pass phrases
   appearance: IAppearance;
   transports?: ITransports;
-  loginMethods?: Array<'wallet' | 'email' | 'sms' | 'google' | 'twitter' | 'discord' | 'github' | 'passkey'>;
+  loginMethods?: Array<
+    'wallet' | 'email' | 'sms' | 'google' | 'twitter' | 'discord' | 'github' | 'passkey'
+  >;
 }
 
 /**
@@ -100,7 +102,6 @@ export interface IAppearance {
   textColor: string; // Main text color
   font: SupportedFonts; // Selected font style
   cornerRadius: CornerRadius; // Border radius styling
-  cover: string; // Cover image or color for UI components
 }
 
 /**
@@ -173,8 +174,8 @@ export interface SignResult {
 }
 
 export interface GetNetworkResult {
-  network: string,
-  passphrase: string,
+  network: string;
+  passphrase: string;
 }
 
 /**

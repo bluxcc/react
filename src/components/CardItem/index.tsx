@@ -113,7 +113,7 @@ const CardItem = ({
                   color: isValid ? appearance.accent : '#9ca3af',
                   borderColor: isValid ? appearance.accent : '#9ca3af',
                 }}
-                className={`absolute right-0 bg-white border text-sm font-medium flex justify-center items-center h-8 !w-[68px]`}
+                className={`absolute right-0 bg-transparent border text-sm font-medium flex justify-center items-center h-8 !w-[68px]`}
               >
                 Submit
               </button>
@@ -126,7 +126,7 @@ const CardItem = ({
 
       {endArrow && (
         <span className="ml-auto mr-1 flex items-center">
-          <ArrowRight />
+          <ArrowRight fill={appearance.textColor} />
         </span>
       )}
     </div>

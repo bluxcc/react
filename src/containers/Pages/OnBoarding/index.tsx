@@ -70,7 +70,7 @@ const OnBoarding = ({ showAllWallets, setShowAllWallets }: OnBoardingProps) => {
         {context.value.config.appLogo ? (
           <img src={context.value.config.appLogo} alt={context.value.config.appName} />
         ) : (
-          <BluxLogo fill={getContrastColor(appearance.background as string)} />
+          <BluxLogo fill={appearance.textColor} />
         )}
       </div>
       <div className="space-y-2">
@@ -88,14 +88,12 @@ const OnBoarding = ({ showAllWallets, setShowAllWallets }: OnBoardingProps) => {
           <CardItem
             endArrow
             label="All Stellar wallets"
-            startIcon={
-              <StellarLogo fill={getContrastColor(appearance.background)} />
-            }
+            startIcon={<StellarLogo fill={getContrastColor(appearance.background)} />}
             onClick={() => setShowAllWallets(true)}
           />
         )}
       </div>
-      {(!showAllWallets && isEmailEnabled) && (
+      {!showAllWallets && isEmailEnabled && (
         <>
           {/* divider */}
           <div className="w-full flex items-center justify-center h-8 my-1">
@@ -111,7 +109,7 @@ const OnBoarding = ({ showAllWallets, setShowAllWallets }: OnBoardingProps) => {
           <CardItem
             inputType="email"
             variant="input"
-            startIcon={<SmallEmailIcon />}
+            startIcon={<SmallEmailIcon fill={appearance.accent} />}
             onChange={(value) => setInputValue(value)}
             onEnter={handleConnectEmail}
             onSubmit={handleConnectEmail}

@@ -13,7 +13,7 @@ export const InfoIcon = ({ fill = '#1C1B1F' }: { fill?: string }) => (
     </g>
   </svg>
 );
-export const ArrowRight = () => (
+export const ArrowRight = ({ fill = '#5F6367' }: { fill?: string }) => (
   <svg width="20" height="20" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg">
     <mask id="mask0_117_204" maskUnits="userSpaceOnUse" x="0" y="0" width="20" height="20">
       <rect width="20" height="20" fill="#D9D9D9" />
@@ -21,25 +21,22 @@ export const ArrowRight = () => (
     <g mask="url(#mask0_117_204)">
       <path
         d="M6.67929 18.0448L5.49658 16.862L12.3587 9.99996L5.49658 3.13788L6.67929 1.95517L14.7241 9.99996L6.67929 18.0448Z"
-        fill="#5F6367"
+        fill={fill}
       />
     </g>
   </svg>
 );
-export const ArrowLeft = () => (
+export const ArrowLeft = ({ fill = '#5F6367' }: { fill?: string }) => (
   <svg width="24" height="25" viewBox="0 0 24 25" fill="none" xmlns="http://www.w3.org/2000/svg">
     <mask id="mask0_170_30135" maskUnits="userSpaceOnUse" x="0" y="0" width="24" height="25">
       <rect y="0.5" width="24" height="24" fill="#D9D9D9" />
     </mask>
     <g mask="url(#mask0_170_30135)">
-      <path
-        d="M16 22.5L6 12.5L16 2.5L17.775 4.275L9.55 12.5L17.775 20.725L16 22.5Z"
-        fill="#5F6367"
-      />
+      <path d="M16 22.5L6 12.5L16 2.5L17.775 4.275L9.55 12.5L17.775 20.725L16 22.5Z" fill={fill} />
     </g>
   </svg>
 );
-export const Close = () => (
+export const Close = ({ fill = '#5F6367' }: { fill?: string }) => (
   <svg width="22" height="22" viewBox="0 0 22 22" fill="none" xmlns="http://www.w3.org/2000/svg">
     <mask id="mask0_150_17" maskUnits="userSpaceOnUse" x="0" y="0" width="22" height="22">
       <rect width="22" height="22" fill="#D9D9D9" />
@@ -47,7 +44,7 @@ export const Close = () => (
     <g mask="url(#mask0_150_17)">
       <path
         d="M4.4 19.25L2.75 17.6L9.35 11L2.75 4.4L4.4 2.75L11 9.35L17.6 2.75L19.25 4.4L12.65 11L19.25 17.6L17.6 19.25L11 12.65L4.4 19.25Z"
-        fill="#5F6367"
+        fill={fill}
       />
     </g>
   </svg>
@@ -188,7 +185,7 @@ export const Globe = () => (
     </g>
   </svg>
 );
-export const SmallEmailIcon = () => (
+export const SmallEmailIcon = ({ fill = '#0C1083' }: { fill?: string }) => (
   <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
     <mask id="mask0_2324_772" maskUnits="userSpaceOnUse" x="0" y="0" width="24" height="24">
       <rect width="24" height="24" fill="#D9D9D9" />
@@ -196,13 +193,13 @@ export const SmallEmailIcon = () => (
     <g mask="url(#mask0_2324_772)">
       <path
         d="M12 1.59619L21.5 7.25369V20.4999H2.5V7.25369L12 1.59619ZM12 12.6499L19.8 7.99994L12 3.34994L4.2 7.99994L12 12.6499ZM12 14.4037L4 9.62294V18.9999H20V9.62294L12 14.4037Z"
-        fill="#0C1083"
+        fill={fill}
       />
     </g>
   </svg>
 );
 
-export const EmailIcon = () => (
+export const EmailIcon = ({ fill = '#0C1083' }: { fill?: string }) => (
   <svg width="40" height="40" viewBox="0 0 40 40" fill="none" xmlns="http://www.w3.org/2000/svg">
     <mask id="mask0_2097_3575" maskUnits="userSpaceOnUse" x="0" y="0" width="40" height="40">
       <rect width="40" height="40" fill="#D9D9D9" />
@@ -210,7 +207,7 @@ export const EmailIcon = () => (
     <g mask="url(#mask0_2097_3575)">
       <path
         d="M20 2.66113L35.8334 12.0903V34.1674H4.16669V12.0903L20 2.66113ZM20 21.0841L33 13.3341L20 5.58405L7.00002 13.3341L20 21.0841ZM20 24.007L6.66669 16.0391V31.6674H33.3334V16.0391L20 24.007Z"
-        fill="#0C1083"
+        fill={fill}
       />
     </g>
   </svg>

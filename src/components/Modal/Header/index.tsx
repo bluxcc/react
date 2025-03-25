@@ -1,5 +1,6 @@
 import React from 'react';
 import { ArrowLeft, Close, InfoIcon } from '../../../assets/Icons';
+import { useProvider } from '../../../context/provider';
 
 interface HeaderProps {
   icon?: 'info' | 'back';
@@ -18,18 +19,19 @@ const ModalHeader = ({
   closeButton = false,
   onClose,
 }: HeaderProps) => {
+  const context = useProvider();
   return (
     <div className="w-full flex items-center justify-between h-16">
       {icon === 'info' ? (
         <button
           onClick={onInfo}
-          className="size-6 flex justify-center items-center hover:bg-gray-100 rounded-full transition duration-300"
+          className="size-6 flex justify-center items-center rounded-full transition duration-300"
         >
-          <InfoIcon />
+          <InfoIcon fill={context.value.config.appearance.textColor} />
         </button>
       ) : icon === 'back' ? (
         <button onClick={onBack} className="size-6 cursor-pointer flex justify-center items-center">
-          <ArrowLeft />
+          <ArrowLeft fill={context.value.config.appearance.textColor} />
         </button>
       ) : (
         <div className="size-6" />
@@ -39,7 +41,7 @@ const ModalHeader = ({
 
       {closeButton ? (
         <button onClick={onClose} className="cursor-pointer">
-          <Close />
+          <Close fill={context.value.config.appearance.textColor} />
         </button>
       ) : (
         <div className="w-6" />
