@@ -1,6 +1,9 @@
 import { Horizon } from '@stellar/stellar-sdk';
 import { HorizonApi } from '@stellar/stellar-sdk/lib/horizon';
 
+import { Url } from '../utils/network/url';
+import { Fallback } from '../utils/network/fallback';
+
 /**
  * Enum representing the supported wallets in the system.
  */
@@ -26,16 +29,16 @@ export enum WalletNetwork {
 export interface AccountData {
   id: string;
   sequence: string;
+  xlmBalance: string;
   subentry_count: number;
   thresholds: Horizon.HorizonApi.AccountThresholds;
   balances: Horizon.HorizonApi.BalanceLine[];
-  xlmBalance: string;
   transactions?: Horizon.ServerApi.TransactionRecord[];
 }
 
 interface IServers {
-  horizon?: string;
-  soroban?: string;
+  horizon?: Url | Fallback;
+  soroban?: Url | Fallback;
 }
 
 export type ITransports = Record<string, IServers>;
@@ -47,9 +50,11 @@ export interface IProviderConfig {
   appName: string; // Application name
   appLogo?: string; // Optional application logo URL
   networks: string[]; // Supported network pass phrases
-  appearance: IAppearance;
+  appearance?: IAppearance;
   transports?: ITransports;
-  loginMethods?: Array<'wallet' | 'email' | 'sms' | 'google' | 'twitter' | 'discord' | 'github' | 'passkey'>;
+  loginMethods?: Array<
+    'wallet' | 'email' | 'sms' | 'google' | 'twitter' | 'discord' | 'github' | 'passkey'
+  >;
 }
 
 /**
@@ -173,8 +178,8 @@ export interface SignResult {
 }
 
 export interface GetNetworkResult {
-  network: string,
-  passphrase: string,
+  network: string;
+  passphrase: string;
 }
 
 /**

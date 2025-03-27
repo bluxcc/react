@@ -8,15 +8,13 @@ import { ContextState, IProviderConfig, ContextInterface, Routes } from '../type
 
 export const ProviderContext = createContext<ContextState | null>(null);
 
-export const BluxProvider = ({
-  config,
-  isDemo,
-  children,
-}: {
+type BluxProviderProps = {
   isDemo?: boolean;
   config: IProviderConfig;
   children: React.ReactNode;
-}) => {
+};
+
+export const BluxProvider = ({ config, isDemo, children }: BluxProviderProps) => {
   if (config.networks.length === 0) {
     throw new Error('no network is set in config.networks');
   }
@@ -69,7 +67,7 @@ export const BluxProvider = ({
     loadWallets();
   }, [config]);
 
-   useEffect(() => {
+  useEffect(() => {
     if (value.user.wallet && !value.config.networks.includes(value.user.wallet.passphrase)) {
       // todo: use a persistent modal instead of console.log
       // console.log('You are on a wrong network!');
@@ -78,7 +76,6 @@ export const BluxProvider = ({
       // close the modal if the network is correct.
     }
   }, [value.config.networks, value.user.wallet]);
-
 
   const closeModal = () => {
     setValue((prev) => ({

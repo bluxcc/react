@@ -5,7 +5,7 @@ import { Loading } from '../../../assets/Icons';
 import handleLogos from '../../../utils/handleLogos';
 import { useProvider } from '../../../context/provider';
 import { Routes, WalletInterface } from '../../../types';
-import setWalletNetwork from '../../../utils/setWalletNetwork';
+import getWalletNetwork from '../../../utils/getWalletNetwork';
 import signTransaction from '../../../utils/stellar/signTransaction';
 import getMappedWallets, { MappedWallet } from '../../../utils/mappedWallets';
 
@@ -76,7 +76,7 @@ const Waiting = () => {
         const { publicKey } = await wallet.connect();
 
         if (publicKey && publicKey.trim() !== '') {
-          const passphrase = await setWalletNetwork(wallet, context.value.config.networks);
+          const passphrase = await getWalletNetwork(wallet, context.value.config.networks);
 
           context.setValue((prev) => ({
             ...prev,
