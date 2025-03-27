@@ -25,7 +25,10 @@ export const BluxProvider = ({
   const [value, setValue] = useState<ContextInterface>({
     config: {
       ...config,
-      appearance: config.appearance ?? defaultAppearance,
+      appearance: {
+        ...defaultAppearance,
+        ...config.appearance,
+      },
     },
     isDemo: isDemo ?? false,
     user: { wallet: null, phoneNumber: null, email: null },
@@ -48,7 +51,10 @@ export const BluxProvider = ({
         ...prev.config,
         appLogo: config.appLogo,
         loginMethods: config.loginMethods,
-        appearance: config.appearance ?? defaultAppearance,
+        appearance: {
+          ...defaultAppearance,
+          ...config.appearance,
+        },
       },
     }));
   }, [config]);
