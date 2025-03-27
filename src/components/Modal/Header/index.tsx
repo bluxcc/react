@@ -25,12 +25,12 @@ const ModalHeader = ({
       {icon === 'info' ? (
         <button
           onClick={onInfo}
-          className="size-6 flex justify-center items-center rounded-full transition duration-300"
+          className="flex justify-center items-center rounded-full transition duration-300"
         >
           <InfoIcon fill={context.value.config.appearance.textColor} />
         </button>
       ) : icon === 'back' ? (
-        <button onClick={onBack} className="size-6 cursor-pointer flex justify-center items-center">
+        <button onClick={onBack} className="cursor-pointer flex justify-center items-center">
           <ArrowLeft fill={context.value.config.appearance.textColor} />
         </button>
       ) : (

@@ -94,7 +94,7 @@ const CardItem = ({
               onChange={handleInputChange}
               onKeyDown={handleKeyDown}
               placeholder="Email"
-              className="bg-transparent outline-none placeholder:text-gray-600 w-full mr-1"
+              className="bg-transparent outline-none placeholder:text-gray-600 w-full mr-1 focus:outline-none"
               style={{ color: appearance.textColor }}
               onFocus={() => setIsFocused(true)}
               onBlur={() => {

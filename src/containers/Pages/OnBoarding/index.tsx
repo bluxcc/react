@@ -92,7 +92,7 @@ const OnBoarding = ({ showAllWallets, setShowAllWallets }: OnBoardingProps) => {
           const nextMethod = orderedLoginMethods[index + 1];
           const prevMethod = orderedLoginMethods[index - 1];
           const shouldRenderDivider =
-            (method === 'wallet' && nextMethod === 'email') ||
+            (!showAllWallets && method === 'wallet' && nextMethod === 'email') ||
             (method === 'email' && prevMethod !== 'wallet');
 
           if (method === 'wallet') {

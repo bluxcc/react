@@ -18,28 +18,30 @@ const Activity: React.FC = () => {
   const handleGoToExplorer = () => {
     const explorerUrl = getExplorerUrl(
       context.value.config.networks[0], // todo: fix it to active network
-      `${context.value.user.wallet?.address}`,
+      `account/${context.value.user.wallet?.address}`,
     );
 
     window.open(explorerUrl, '_blank', 'noopener,noreferrer');
   };
   // Todo : fix tx values
+  const limitedTransactions = transactions.slice(0, 5);
+
   return (
     <div>
-      <div className="my-4 h-[248px]">
-        {transactions.map((tx, index) => (
+      <div className="my-4 min-h-[248px]">
+        {limitedTransactions.map((tx, index) => (
           <div
             key={index}
             className={`p-2 ${
-              index < transactions.length - 1 ? 'border-b border-dashed border-gray-300' : ''
+              index < limitedTransactions.length - 1 ? 'border-b border-dashed border-gray-300' : ''
             }`}
           >
             <History
-              amount={tx.id.slice(0, 5)}
-              date={tx.created_at}
-              status={tx.successful ? 'success' : 'failed'}
-              action={tx.memo_type}
-              hash={tx.hash}
+              amount={tx.others?.amount}
+              date={tx.others?.date}
+              status={tx.others?.success ? 'success' : 'failed'}
+              action={tx.title}
+              hash={tx.others?.hash}
             />
           </div>
         ))}

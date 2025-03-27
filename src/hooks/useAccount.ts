@@ -5,6 +5,7 @@ import getNetworkByPassphrase from '../utils/stellar/getNetworkByPassphrase';
 import getStellarServer from '../utils/stellar/getStellarServer';
 
 import { AccountData } from '../types';
+import { getTransactions } from '../utils/stellar/getTransactions';
 
 type HorizonServer = Horizon.Server;
 
@@ -31,7 +32,10 @@ const useAccount = ({ publicKey, passphrase }: AccountHookProps): AccountHookRes
   useEffect(() => {
     let isSubscribed = true;
     let eventSource: (() => void) | null = null;
-
+    getTransactions(new Horizon.Server('https://horizon.stellar.org'), publicKey).then((res) => {
+      setAccount((prev) => (prev ? { ...prev, transactions: res } : null));
+    });
+    // todo fix network
     const fetchAccount = async (server: HorizonServer) => {
       try {
         const accountData = await server.loadAccount(publicKey);
@@ -56,25 +60,6 @@ const useAccount = ({ publicKey, passphrase }: AccountHookProps): AccountHookRes
       }
     };
 
-    const fetchTransactions = async (server: HorizonServer) => {
-      try {
-        const transactionsPage = await server
-          .transactions()
-          .forAccount(publicKey)
-          .limit(10)
-          .order('desc')
-          .call();
-
-        if (!isSubscribed) return;
-
-        setAccount((prev) => (prev ? { ...prev, transactions: transactionsPage.records } : null));
-      } catch (err) {
-        if (isSubscribed && !error) {
-          setError((err as Error).message);
-        }
-      }
-    };
-
     const initializeAccount = async () => {
       if (!publicKey) {
         setError('No public key provided');
@@ -88,9 +73,7 @@ const useAccount = ({ publicKey, passphrase }: AccountHookProps): AccountHookRes
         );
         setLoading(true);
 
-        await Promise.all([fetchAccount(server), fetchTransactions(server)]);
-
-        // Set up streaming
+        await Promise.all([fetchAccount(server)]);
         eventSource = server
           .operations()
           .forAccount(publicKey)

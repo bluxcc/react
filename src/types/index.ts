@@ -1,5 +1,6 @@
 import { Horizon } from '@stellar/stellar-sdk';
 import { HorizonApi } from '@stellar/stellar-sdk/lib/horizon';
+import { History } from '../utils/stellar/getTransactions';
 
 /**
  * Enum representing the supported wallets in the system.
@@ -30,7 +31,7 @@ export interface AccountData {
   thresholds: Horizon.HorizonApi.AccountThresholds;
   balances: Horizon.HorizonApi.BalanceLine[];
   xlmBalance: string;
-  transactions?: Horizon.ServerApi.TransactionRecord[];
+  transactions?: History[];
 }
 
 interface IServers {
