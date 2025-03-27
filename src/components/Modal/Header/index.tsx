@@ -21,11 +21,14 @@ const ModalHeader = ({
 }: HeaderProps) => {
   const context = useProvider();
   return (
-    <div className="w-full flex items-center justify-between h-16">
+    <div
+      className="w-full flex items-center justify-between h-16"
+      style={{ backgroundColor: context.value.config.appearance.background }}
+    >
       {icon === 'info' ? (
         <button
           onClick={onInfo}
-          className="flex justify-center items-center rounded-full transition duration-300"
+          className="flex justify-center items-center rounded-full cursor-pointer"
         >
           <InfoIcon fill={context.value.config.appearance.textColor} />
         </button>
