@@ -6,7 +6,6 @@ import { useProvider } from '../../../context/provider';
 import { Routes, WalletInterface } from '../../../types';
 import getContrastColor from '../../../utils/getContrastColor';
 
-import BluxLogo from '../../../assets/bluxLogo';
 import { StellarLogo } from '../../../assets/logos';
 import { SmallEmailIcon } from '../../../assets/Icons';
 
@@ -66,13 +65,12 @@ const OnBoarding = ({ showAllWallets, setShowAllWallets }: OnBoardingProps) => {
 
   return (
     <div className="w-full">
-      <div className="flex justify-center items-center w-full my-6">
-        {context.value.config.appLogo ? (
+      {context.value.config.appLogo && (
+        <div className="flex justify-center items-center w-full my-6">
           <img src={context.value.config.appLogo} alt={context.value.config.appName} />
-        ) : (
-          <BluxLogo fill={appearance.textColor} />
-        )}
-      </div>
+        </div>
+      )}
+      {/* wallets */}
       <div className="space-y-2">
         {visibleWallets.map((wallet) => (
           <CardItem
@@ -105,7 +103,7 @@ const OnBoarding = ({ showAllWallets, setShowAllWallets }: OnBoardingProps) => {
               or
             </span>
           </div>
-
+          {/* email */}
           <CardItem
             inputType="email"
             variant="input"
@@ -116,13 +114,13 @@ const OnBoarding = ({ showAllWallets, setShowAllWallets }: OnBoardingProps) => {
           />
         </>
       )}
-
+      {/* passKey */}
       {isPassKeyEnabled && (
         <div
           className="text-center font-medium text-sm mt-3 leading-[32px] cursor-pointer"
           style={{ color: appearance.accent }}
         >
-          Log in with passkey
+          Log in with Passkey
         </div>
       )}
 

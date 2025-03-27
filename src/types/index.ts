@@ -45,7 +45,7 @@ export type ITransports = Record<string, IServers>;
  */
 export interface IProviderConfig {
   appName: string; // Application name
-  appLogo?: string; // Optional application logo URL
+  appLogo?: React.ImgHTMLAttributes<HTMLImageElement>['src']; // Optional application logo URL
   networks: string[]; // Supported network pass phrases
   appearance: IAppearance;
   transports?: ITransports;

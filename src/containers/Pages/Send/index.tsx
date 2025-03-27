@@ -1,41 +1,61 @@
 import React, { useState } from 'react';
+
 import Button from '../../../components/Button';
 import InputField from '../../../components/Input';
+
 import { ArrowDropUp } from '../../../assets/Icons';
 import { StellarSmallLogo } from '../../../assets/logos';
 
 const Send = () => {
-  const [amount, setAmount] = useState('');
-  const [address, setAddress] = useState('');
+  const [form, setForm] = useState({ amount: '', address: '', memo: '' });
+  const [errors, setErrors] = useState<{ amount?: string; address?: string }>({});
 
-  const handleMaxClick = () => {
-    setAmount('345.00'); // Simulating max balance selection
+  const handleChange = (field: keyof typeof form) => (e: React.ChangeEvent<HTMLInputElement>) => {
+    setForm((prev) => ({ ...prev, [field]: e.target.value }));
+    setErrors((prev) => ({ ...prev, [field]: '' }));
   };
 
-  const handlePasteClick = () => {
-    navigator.clipboard.readText().then((text) => setAddress(text));
+  const handleMaxClick = () => setForm((prev) => ({ ...prev, amount: '345.00' }));
+
+  const handlePasteClick = async () => {
+    const text = await navigator.clipboard.readText();
+    setForm((prev) => ({ ...prev, address: text }));
   };
 
-  const handleSubmit = () => {};
+  const handleSubmit = () => {
+    const newErrors: typeof errors = {};
+    if (!form.address) newErrors.address = 'Address is required';
+    if (!form.amount) newErrors.amount = 'Amount is required';
+
+    setErrors(newErrors);
+
+    if (Object.keys(newErrors).length === 0) {
+      console.log('Submitting transaction:', form);
+    }
+  };
 
   return (
     <div>
       {/* Amount Input */}
       <div className="mb-4">
         <InputField
+          type="number"
           label="Amount"
           placeholder="0.00"
-          value={amount}
-          onChange={(e) => setAmount(e.target.value)}
+          value={form.amount}
+          onChange={handleChange('amount')}
+          error={errors.amount}
           customLabel={
-            <span onClick={handleMaxClick} className="inline-flex text-primary-500 mr-2">
-              Max
-              <ArrowDropUp />
+            <span
+              onClick={handleMaxClick}
+              className="inline-flex text-primary-500 cursor-pointer mr-2"
+            >
+              Max <ArrowDropUp />
             </span>
           }
           button={
             <span className="flex justify-between gap-1 text-black">
-              <span className="flex justify-center items-center">
+              <span className="flex items-center">
                 <StellarSmallLogo fill="black" />
               </span>
               XLM
@@ -49,14 +69,25 @@ const Send = () => {
         <InputField
           label="To"
           placeholder="Enter address"
-          value={address}
-          onChange={(e) => setAddress(e.target.value)}
+          value={form.address}
+          onChange={handleChange('address')}
+          error={errors.address}
           button="Paste"
           onButtonClick={handlePasteClick}
         />
       </div>
 
-      {/* divider */}
+      {/* Memo Input */}
+      <div className="mb-4">
+        <InputField
+          label="Memo"
+          placeholder="Enter Memo (optional)"
+          value={form.memo}
+          onChange={handleChange('memo')}
+        />
+      </div>
+
+      {/* Divider */}
       <div className="w-full my-4 mb-8">
         <div className="absolute left-0 right-0 bg-primary-100 h-[0.5px]" />
       </div>
