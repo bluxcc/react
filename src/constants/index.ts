@@ -13,4 +13,5 @@ export const defaultAppearance: IAppearance = {
   textColor: '#000000',
   font: 'Manrope',
   cornerRadius: 'full',
+  logo: '',
 };

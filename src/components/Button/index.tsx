@@ -30,9 +30,9 @@ const sizeClasses: Record<ButtonSize, string> = {
 
 const variantClasses: Record<ButtonVariant, string> = {
   outline:
-    'border border-primary-500 text-primary-600 hover:bg-primary-50 disabled:border-gray-300 disabled:text-gray-400',
-  text: '!text-gray-700 hover:bg-gray-50 disabled:text-gray-400',
-  fill: 'bg-primary-500 text-white hover:bg-primary-700 disabled:bg-gray-400',
+    'border border-primary-500 text-primary-600 hover:!bg-primary-50 disabled:border-gray-300 disabled:text-gray-400 !bg-white',
+  text: '!text-gray-700 hover:!bg-gray-50 disabled:text-gray-400 !bg-white',
+  fill: '!bg-primary-500 text-white hover:!bg-primary-700 disabled:!bg-gray-400',
 };
 
 const stateClasses: Record<ButtonState, string> = {

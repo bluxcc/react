@@ -18,11 +18,11 @@ const History = ({ amount, date, status, action, hash }: TransactionProps) => {
   const handleActionLogo = (action: string) => {
     switch (action) {
       case 'Receive':
-        return <Upstream />;
-      case 'Send':
-        return <MultiOperation />;
-      default:
         return <Downstream />;
+      case 'Send':
+        return <Upstream />;
+      default:
+        return <MultiOperation />;
     }
   };
 
@@ -33,12 +33,12 @@ const History = ({ amount, date, status, action, hash }: TransactionProps) => {
 
   return (
     <div className="flex items-center justify-between">
-      <div className="flex items-center gap-3">
+      <div className="flex items-center justify-start gap-3">
         <div className={`w-8 h-8 flex items-center justify-center rounded-full`}>
-          {status === 'success' ? handleActionLogo(action) : <RedAlert />}
+          {status !== 'success' ? <RedAlert /> : handleActionLogo(action)}
         </div>
-        <div>
-          <p className="text-xs text-gray-700 font-medium">{action}</p>
+        <div className="flex flex-col justify-start">
+          <p className="text-xs text-gray-700 text-start font-medium">{action}</p>
           <p className="text-sm font-medium">{amount} XLM</p>
         </div>
       </div>

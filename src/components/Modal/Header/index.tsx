@@ -26,16 +26,16 @@ const ModalHeader = ({
       style={{ backgroundColor: context.value.config.appearance.background }}
     >
       {icon === 'info' ? (
-        <button
+        <div
           onClick={onInfo}
-          className="flex justify-center items-center rounded-full cursor-pointer"
+          className="flex justify-center items-center rounded-full cursor-pointer size-6"
         >
           <InfoIcon fill={context.value.config.appearance.textColor} />
-        </button>
+        </div>
       ) : icon === 'back' ? (
-        <button onClick={onBack} className="cursor-pointer flex justify-center items-center">
+        <div onClick={onBack} className="cursor-pointer flex justify-center items-center size-6">
           <ArrowLeft fill={context.value.config.appearance.textColor} />
-        </button>
+        </div>
       ) : (
         <div className="size-6" />
       )}
@@ -43,9 +43,9 @@ const ModalHeader = ({
       <p className="text-lg font-semibold text-center flex-grow select-none">{title}</p>
 
       {closeButton ? (
-        <button onClick={onClose} className="cursor-pointer">
+        <div onClick={onClose} className="cursor-pointer size-6">
           <Close fill={context.value.config.appearance.textColor} />
-        </button>
+        </div>
       ) : (
         <div className="w-6" />
       )}

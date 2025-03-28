@@ -25,7 +25,11 @@ const OnBoarding = ({ showAllWallets, setShowAllWallets }: OnBoardingProps) => {
   }, [wallets]);
 
   const visibleWallets = useMemo(() => {
-    return showAllWallets ? wallets.slice(2) : wallets.slice(0, 2);
+    return wallets.length <= 3
+      ? wallets
+      : showAllWallets
+      ? wallets.slice(2, wallets.length)
+      : wallets.slice(0, 2);
   }, [wallets, showAllWallets]);
 
   const handleConnect = (wallet: WalletInterface) => {
@@ -81,9 +85,13 @@ const OnBoarding = ({ showAllWallets, setShowAllWallets }: OnBoardingProps) => {
 
   return (
     <div className="w-full">
-      {context.value.config.appLogo && (
+      {context.value.config.appearance.logo && (
         <div className="flex justify-center items-center w-full my-6">
-          <img src={context.value.config.appLogo} alt={context.value.config.appName} />
+          <img
+            src={context.value.config.appearance.logo}
+            alt={context.value.config.appName}
+            className="max-w-[200px] max-h-[180px]"
+          />
         </div>
       )}
 

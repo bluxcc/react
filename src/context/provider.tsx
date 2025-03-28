@@ -49,7 +49,6 @@ export const BluxProvider = ({
       ...prev,
       config: {
         ...prev.config,
-        appLogo: config.appLogo,
         loginMethods: config.loginMethods,
         appearance: {
           ...defaultAppearance,

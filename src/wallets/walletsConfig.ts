@@ -8,7 +8,7 @@ import { SupportedWallets, WalletInterface } from '../types';
 export const walletsConfig: Record<SupportedWallets, WalletInterface> = {
   [SupportedWallets.Freighter]: freighterConfig,
   [SupportedWallets.Rabet]: rabetConfig,
-  [SupportedWallets.Xbull]: xBullConfig,
   [SupportedWallets.Albedo]: albedoConfig,
+  [SupportedWallets.Xbull]: xBullConfig,
   [SupportedWallets.Lobstr]: lobstrConfig,
 };

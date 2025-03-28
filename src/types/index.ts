@@ -46,7 +46,6 @@ export type ITransports = Record<string, IServers>;
  */
 export interface IProviderConfig {
   appName: string; // Application name
-  appLogo?: React.ImgHTMLAttributes<HTMLImageElement>['src']; // Optional application logo URL
   networks: string[]; // Supported network pass phrases
   appearance: IAppearance;
   transports?: ITransports;
@@ -103,6 +102,7 @@ export interface IAppearance {
   textColor: string; // Main text color
   font: SupportedFonts; // Selected font style
   cornerRadius: CornerRadius; // Border radius styling
+  logo?: React.ImgHTMLAttributes<HTMLImageElement>['src']; // Optional application logo URL
 }
 
 /**
