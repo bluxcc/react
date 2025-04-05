@@ -154,7 +154,7 @@ const OnBoarding = ({ showAllWallets, setShowAllWallets }: OnBoardingProps) => {
             return (
               <div
                 key="passkey"
-                className="text-center font-medium text-sm mt-3 leading-[32px] cursor-pointer"
+                className="flex justify-center items-center font-medium text-sm h-11 leading-[32px] cursor-pointer"
                 style={{ color: appearance.accent }}
               >
                 Log in with Passkey

@@ -62,7 +62,9 @@ const ConfirmCode: React.FC = () => {
         state="enabled"
         variant="text"
         onClick={handleResendCode}
-        className="!text-primary-500"
+        style={{
+          color: value.config.appearance.accent,
+        }}
       >
         Resend code
       </Button>

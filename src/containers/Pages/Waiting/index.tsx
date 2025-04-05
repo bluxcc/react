@@ -143,7 +143,11 @@ const Waiting = () => {
           Try again
         </Button>
       ) : (
-        <Button state="enabled" variant="outline" startIcon={<Loading />}>
+        <Button
+          state="enabled"
+          variant="outline"
+          startIcon={<Loading fill={context.value.config.appearance.accent} />}
+        >
           {waitingStatus === 'connecting' ? 'Connecting' : 'Signing'}
         </Button>
       )}

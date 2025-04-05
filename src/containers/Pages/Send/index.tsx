@@ -5,8 +5,11 @@ import InputField from '../../../components/Input';
 
 import { ArrowDropUp } from '../../../assets/Icons';
 import { StellarSmallLogo } from '../../../assets/logos';
+import { useProvider } from '../../../context/provider';
 
 const Send = () => {
+  const context = useProvider();
+  const appearance = context.value.config.appearance;
   const [form, setForm] = useState({ amount: '', address: '', memo: '' });
   const [errors, setErrors] = useState<{ amount?: string; address?: string }>({});
 
@@ -48,9 +51,10 @@ const Send = () => {
           customLabel={
             <span
               onClick={handleMaxClick}
-              className="inline-flex text-primary-500 cursor-pointer mr-2"
+              style={{ color: appearance.accent }}
+              className="inline-flex cursor-pointer mr-2"
             >
-              Max <ArrowDropUp />
+              Max <ArrowDropUp fill={appearance.accent} />
             </span>
           }
           button={

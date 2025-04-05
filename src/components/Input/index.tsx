@@ -2,6 +2,7 @@ import React from 'react';
 
 import { useProvider } from '../../context/provider';
 import getBorderRadius from '../../utils/getBorderRadius';
+import { IAppearance } from '../../types';
 
 type InputFieldProps = {
   label?: string;
@@ -20,18 +21,25 @@ type InputFieldProps = {
 type CustomButtonProps = {
   button: string | React.ReactNode;
   onButtonClick?: () => void;
-  borderRadius: string;
+  appearance: IAppearance;
 };
 
-const CustomButton = ({ button, onButtonClick, borderRadius }: CustomButtonProps) => (
-  <button
-    onClick={onButtonClick}
-    style={{ borderRadius }}
-    className="bg-white border border-primary-100 text-primary-500 text-sm font-semibold px-3 py-1"
-  >
-    {button}
-  </button>
-);
+const CustomButton = ({ button, onButtonClick, appearance }: CustomButtonProps) => {
+  return (
+    <button
+      onClick={onButtonClick}
+      style={{
+        borderRadius: getBorderRadius(appearance.cornerRadius),
+        color: appearance.accent,
+        borderColor: appearance.accent,
+        backgroundColor: appearance.background,
+      }}
+      className="border text-sm font-semibold px-3 py-1"
+    >
+      {button}
+    </button>
+  );
+};
 
 const InputField = ({
   label,
@@ -47,6 +55,7 @@ const InputField = ({
   onChange,
 }: InputFieldProps) => {
   const context = useProvider();
+  const appearance = context.value.config.appearance;
   const borderRadius = getBorderRadius(context.value.config.appearance.cornerRadius);
 
   return (
@@ -81,7 +90,7 @@ const InputField = ({
           onChange={onChange}
         />
         {button && (
-          <CustomButton button={button} onButtonClick={onButtonClick} borderRadius={borderRadius} />
+          <CustomButton button={button} onButtonClick={onButtonClick} appearance={appearance} />
         )}
         {iconRight && <div className="ml-2">{iconRight}</div>}
       </div>
