@@ -111,7 +111,7 @@ const CardItem = ({
                 style={{
                   borderRadius,
                   color: isValid ? appearance.accent : '#9ca3af',
-                  borderColor: isValid ? appearance.accent : '#9ca3af',
+                  borderColor: isValid ? appearance.accent : '#CDCEEE',
                 }}
                 className={`absolute right-0 bg-transparent border text-sm font-medium flex justify-center items-center h-8 !w-[68px]`}
               >
