@@ -16,6 +16,7 @@ import humanizeAmount from '../../../utils/humanizeAmount';
 
 const Profile = () => {
   const context = useProvider();
+  const appearance = context.value.config.appearance;
   const { disconnect } = useBlux();
   const [address, setAddress] = useState(context.value.user.wallet?.address || '');
   const { account } = useAccount({
@@ -43,7 +44,7 @@ const Profile = () => {
         {address ? shortenAddress(address, 5) : ''}
         <Copy />
       </p>
-      <p className="text-primary-500 text-center">
+      <p className="text-center" style={{ color: appearance.accent }}>
         {account ? humanizeAmount(account.xlmBalance) : 'N/A'} XLM
       </p>
 
@@ -51,7 +52,7 @@ const Profile = () => {
         <CardItem
           endArrow
           label="Send"
-          startIcon={<Send />}
+          startIcon={<Send fill={appearance.accent} />}
           onClick={() => {
             context.setRoute(Routes.SEND);
           }}
@@ -59,7 +60,7 @@ const Profile = () => {
         <CardItem
           endArrow
           label="Activity"
-          startIcon={<History />}
+          startIcon={<History fill={appearance.accent} />}
           onClick={() => {
             context.setRoute(Routes.ACTIVITY);
           }}
@@ -76,6 +77,7 @@ const Profile = () => {
         variant="text"
         state="enabled"
         startIcon={<LogOut />}
+        className="!text-gray-600"
         onClick={handleDisconnect}
       >
         Disconnect

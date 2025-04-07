@@ -6,7 +6,7 @@ export const lobstrConfig: WalletInterface = {
   name: SupportedWallets.Lobstr,
   website: 'https://lobstr.co',
 
-  isAvailable: async () => true,
+  isAvailable: () => true,
 
   connect: async () => {
     try {
@@ -34,5 +34,5 @@ export const lobstrConfig: WalletInterface = {
   },
   getNetwork: async (): Promise<GetNetworkResult> => {
     throw new Error('Failed to get network from LOBSTR');
-  }
+  },
 };

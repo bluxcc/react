@@ -25,7 +25,10 @@ export const BluxProvider = ({
   const [value, setValue] = useState<ContextInterface>({
     config: {
       ...config,
-      appearance: config.appearance ?? defaultAppearance,
+      appearance: {
+        ...defaultAppearance,
+        ...config.appearance,
+      },
     },
     isDemo: isDemo ?? false,
     user: { wallet: null, phoneNumber: null, email: null },
@@ -46,10 +49,14 @@ export const BluxProvider = ({
       ...prev,
       config: {
         ...prev.config,
-        appearance: config.appearance ?? defaultAppearance,
+        loginMethods: config.loginMethods,
+        appearance: {
+          ...defaultAppearance,
+          ...config.appearance,
+        },
       },
     }));
-  }, [config.appearance]);
+  }, [config]);
 
   useEffect(() => {
     const loadWallets = async () => {
@@ -67,9 +74,9 @@ export const BluxProvider = ({
     };
 
     loadWallets();
-  }, [config]);
+  }, []);
 
-   useEffect(() => {
+  useEffect(() => {
     if (value.user.wallet && !value.config.networks.includes(value.user.wallet.passphrase)) {
       // todo: use a persistent modal instead of console.log
       // console.log('You are on a wrong network!');
@@ -78,7 +85,6 @@ export const BluxProvider = ({
       // close the modal if the network is correct.
     }
   }, [value.config.networks, value.user.wallet]);
-
 
   const closeModal = () => {
     setValue((prev) => ({

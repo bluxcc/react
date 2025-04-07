@@ -1,5 +1,6 @@
 import { Horizon } from '@stellar/stellar-sdk';
 import { HorizonApi } from '@stellar/stellar-sdk/lib/horizon';
+import { History } from '../utils/stellar/getTransactions';
 
 /**
  * Enum representing the supported wallets in the system.
@@ -30,7 +31,7 @@ export interface AccountData {
   thresholds: Horizon.HorizonApi.AccountThresholds;
   balances: Horizon.HorizonApi.BalanceLine[];
   xlmBalance: string;
-  transactions?: Horizon.ServerApi.TransactionRecord[];
+  transactions?: History[];
 }
 
 interface IServers {
@@ -45,11 +46,12 @@ export type ITransports = Record<string, IServers>;
  */
 export interface IProviderConfig {
   appName: string; // Application name
-  appLogo?: string; // Optional application logo URL
   networks: string[]; // Supported network pass phrases
   appearance: IAppearance;
   transports?: ITransports;
-  loginMethods?: Array<'wallet' | 'email' | 'sms' | 'google' | 'twitter' | 'discord' | 'github' | 'passkey'>;
+  loginMethods?: Array<
+    'wallet' | 'email' | 'sms' | 'google' | 'twitter' | 'discord' | 'github' | 'passkey'
+  >;
 }
 
 /**
@@ -100,7 +102,7 @@ export interface IAppearance {
   textColor: string; // Main text color
   font: SupportedFonts; // Selected font style
   cornerRadius: CornerRadius; // Border radius styling
-  cover: string; // Cover image or color for UI components
+  logo?: React.ImgHTMLAttributes<HTMLImageElement>['src']; // Optional application logo URL
 }
 
 /**
@@ -173,8 +175,8 @@ export interface SignResult {
 }
 
 export interface GetNetworkResult {
-  network: string,
-  passphrase: string,
+  network: string;
+  passphrase: string;
 }
 
 /**
