@@ -86,11 +86,11 @@ const OnBoarding = ({ showAllWallets, setShowAllWallets }: OnBoardingProps) => {
   return (
     <div className="w-full">
       {context.value.config.appearance.logo && (
-        <div className="flex justify-center items-center w-full my-6">
+        <div className="flex justify-center items-center my-6 w-full max-h-[80px] overflow-hidden">
           <img
             src={context.value.config.appearance.logo}
             alt={context.value.config.appName}
-            className="max-w-[200px] max-h-[180px]"
+            width={152}
           />
         </div>
       )}
