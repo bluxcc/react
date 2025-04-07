@@ -99,9 +99,10 @@ const OnBoarding = ({ showAllWallets, setShowAllWallets }: OnBoardingProps) => {
         {orderedLoginMethods.map((method, index) => {
           const nextMethod = orderedLoginMethods[index + 1];
           const prevMethod = orderedLoginMethods[index - 1];
+          const walletExists = orderedLoginMethods.includes('wallet');
           const shouldRenderDivider =
-            (!showAllWallets && method === 'wallet' && nextMethod === 'email') ||
-            (method === 'email' && prevMethod !== 'wallet');
+            (walletExists && !showAllWallets && method === 'wallet' && nextMethod === 'email') ||
+            (walletExists && method === 'email' && prevMethod !== 'wallet');
 
           if (method === 'wallet') {
             return (
