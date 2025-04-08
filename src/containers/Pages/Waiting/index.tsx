@@ -139,11 +139,15 @@ const Waiting = () => {
       </div>
 
       {error ? (
-        <Button onClick={handleRetry} className="text-white bg-lightRed-300 hover:text-primary-500">
+        <Button onClick={handleRetry} state="enabled" variant="outline">
           Try again
         </Button>
       ) : (
-        <Button state="enabled" variant="outline" startIcon={<Loading />}>
+        <Button
+          state="enabled"
+          variant="outline"
+          startIcon={<Loading fill={context.value.config.appearance.accent} />}
+        >
           {waitingStatus === 'connecting' ? 'Connecting' : 'Signing'}
         </Button>
       )}

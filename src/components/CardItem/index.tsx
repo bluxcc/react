@@ -94,7 +94,7 @@ const CardItem = ({
               onChange={handleInputChange}
               onKeyDown={handleKeyDown}
               placeholder="Email"
-              className="bg-transparent outline-none placeholder:text-gray-600 w-full mr-1"
+              className="bg-transparent outline-none placeholder:text-gray-600 w-full mr-1 focus:outline-none"
               style={{ color: appearance.textColor }}
               onFocus={() => setIsFocused(true)}
               onBlur={() => {
@@ -111,9 +111,9 @@ const CardItem = ({
                 style={{
                   borderRadius,
                   color: isValid ? appearance.accent : '#9ca3af',
-                  borderColor: isValid ? appearance.accent : '#9ca3af',
+                  borderColor: isValid ? appearance.accent : '#CDCEEE',
                 }}
-                className={`absolute right-0 bg-white border text-sm font-medium flex justify-center items-center h-8 !w-[68px]`}
+                className={`absolute right-0 bg-transparent border text-sm font-medium flex justify-center items-center h-8 !w-[68px]`}
               >
                 Submit
               </button>
@@ -126,7 +126,7 @@ const CardItem = ({
 
       {endArrow && (
         <span className="ml-auto mr-1 flex items-center">
-          <ArrowRight />
+          <ArrowRight fill={appearance.textColor} />
         </span>
       )}
     </div>

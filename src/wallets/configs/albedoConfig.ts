@@ -7,7 +7,7 @@ export const albedoConfig: WalletInterface = {
   name: SupportedWallets.Albedo,
   website: 'https://albedo.link',
 
-  isAvailable: () => typeof albedo !== 'undefined',
+  isAvailable: () => true,
 
   connect: async () => {
     try {
@@ -38,5 +38,5 @@ export const albedoConfig: WalletInterface = {
   },
   getNetwork: async (): Promise<GetNetworkResult> => {
     throw new Error('Failed to get network from albedo');
-  }
+  },
 };

@@ -37,7 +37,7 @@ const Modal = ({
   const borderRadius = getBorderRadius(appearance.cornerRadius);
 
   useEffect(() => {
-    const checkMobile = () => setIsMobile(window.innerWidth < 450);
+    const checkMobile = () => setIsMobile(window.innerWidth < 760);
     checkMobile();
     window.addEventListener('resize', checkMobile);
     return () => window.removeEventListener('resize', checkMobile);

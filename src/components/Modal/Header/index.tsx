@@ -1,5 +1,6 @@
 import React from 'react';
 import { ArrowLeft, Close, InfoIcon } from '../../../assets/Icons';
+import { useProvider } from '../../../context/provider';
 
 interface HeaderProps {
   icon?: 'info' | 'back';
@@ -18,19 +19,23 @@ const ModalHeader = ({
   closeButton = false,
   onClose,
 }: HeaderProps) => {
+  const context = useProvider();
   return (
-    <div className="w-full flex items-center justify-between h-16">
+    <div
+      className="w-full flex items-center justify-between h-16"
+      style={{ backgroundColor: context.value.config.appearance.background }}
+    >
       {icon === 'info' ? (
-        <button
+        <div
           onClick={onInfo}
-          className="size-6 flex justify-center items-center hover:bg-gray-100 rounded-full transition duration-300"
+          className="flex justify-center items-center rounded-full cursor-pointer size-6"
         >
-          <InfoIcon />
-        </button>
+          <InfoIcon fill={context.value.config.appearance.textColor} />
+        </div>
       ) : icon === 'back' ? (
-        <button onClick={onBack} className="size-6 cursor-pointer flex justify-center items-center">
-          <ArrowLeft />
-        </button>
+        <div onClick={onBack} className="cursor-pointer flex justify-center items-center size-6">
+          <ArrowLeft fill={context.value.config.appearance.textColor} />
+        </div>
       ) : (
         <div className="size-6" />
       )}
@@ -38,9 +43,9 @@ const ModalHeader = ({
       <p className="text-lg font-semibold text-center flex-grow select-none">{title}</p>
 
       {closeButton ? (
-        <button onClick={onClose} className="cursor-pointer">
-          <Close />
-        </button>
+        <div onClick={onClose} className="cursor-pointer size-6">
+          <Close fill={context.value.config.appearance.textColor} />
+        </div>
       ) : (
         <div className="w-6" />
       )}

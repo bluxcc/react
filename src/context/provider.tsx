@@ -23,7 +23,10 @@ export const BluxProvider = ({ config, isDemo, children }: BluxProviderProps) =>
   const [value, setValue] = useState<ContextInterface>({
     config: {
       ...config,
-      appearance: config.appearance ?? defaultAppearance,
+      appearance: {
+        ...defaultAppearance,
+        ...config.appearance,
+      },
     },
     isDemo: isDemo ?? false,
     user: { wallet: null, phoneNumber: null, email: null },
@@ -44,10 +47,14 @@ export const BluxProvider = ({ config, isDemo, children }: BluxProviderProps) =>
       ...prev,
       config: {
         ...prev.config,
-        appearance: config.appearance ?? defaultAppearance,
+        loginMethods: config.loginMethods,
+        appearance: {
+          ...defaultAppearance,
+          ...config.appearance,
+        },
       },
     }));
-  }, [config.appearance]);
+  }, [config]);
 
   useEffect(() => {
     const loadWallets = async () => {
@@ -65,7 +72,7 @@ export const BluxProvider = ({ config, isDemo, children }: BluxProviderProps) =>
     };
 
     loadWallets();
-  }, [config]);
+  }, []);
 
   useEffect(() => {
     if (value.user.wallet && !value.config.networks.includes(value.user.wallet.passphrase)) {

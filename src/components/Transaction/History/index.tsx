@@ -1,7 +1,7 @@
 import React from 'react';
 
 import { useProvider } from '../../../context/provider';
-import { Globe, RedAlert, Upstream } from '../../../assets/Icons';
+import { Downstream, Globe, MultiOperation, RedAlert, Upstream } from '../../../assets/Icons';
 import getExplorerUrl from '../../../utils/stellar/getExplorerUrl';
 
 interface TransactionProps {
@@ -15,6 +15,17 @@ interface TransactionProps {
 const History = ({ amount, date, status, action, hash }: TransactionProps) => {
   const context = useProvider();
 
+  const handleActionLogo = (action: string) => {
+    switch (action) {
+      case 'Receive':
+        return <Downstream />;
+      case 'Send':
+        return <Upstream />;
+      default:
+        return <MultiOperation />;
+    }
+  };
+
   const handleGoToExplorer = () => {
     const explorerUrl = getExplorerUrl(context.value.config.networks[0], `tx/${hash}`); // todo: network fix
     window.open(explorerUrl, '_blank', 'noopener,noreferrer');
@@ -22,16 +33,12 @@ const History = ({ amount, date, status, action, hash }: TransactionProps) => {
 
   return (
     <div className="flex items-center justify-between">
-      <div className="flex items-center gap-3">
-        <div
-          className={`w-8 h-8 flex items-center justify-center rounded-full ${
-            status === 'success' ? 'bg-green-100 text-green-600' : 'bg-red-100 text-red-600'
-          }`}
-        >
-          {status === 'success' ? <Upstream /> : <RedAlert />}
+      <div className="flex items-center justify-start gap-3">
+        <div className={`w-8 h-8 flex items-center justify-center rounded-full`}>
+          {status !== 'success' ? <RedAlert /> : handleActionLogo(action)}
         </div>
-        <div>
-          <p className="text-xs text-gray-700 font-medium">{action}</p>
+        <div className="flex flex-col justify-start">
+          <p className="text-xs text-gray-700 text-start font-medium">{action}</p>
           <p className="text-sm font-medium">{amount} XLM</p>
         </div>
       </div>

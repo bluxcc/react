@@ -5,9 +5,9 @@ Blux is a **comprehensive authentication and wallet connect kit** designed for S
 ## Features
 
 - **Multi-Wallet Support**: Easily integrate Stellar wallets such as **Rabet, xBull, Lobstr, Freighter, and Albedo**.
-- **OAuth & Social Login** *(Coming Soon)*: Support for **Apple, Meta, Google, and more**.
-- **Email & Phone Authentication** *(Coming Soon)*: Securely onboard users with non-crypto credentials.
-- **Customizable UI**: Adjust themes, fonts, backgrounds, logos, cover images, corner radius, and text colors.
+- **OAuth & Social Login** _(Coming Soon)_: Support for **Apple, Meta, Google, and more**.
+- **Email & Phone Authentication** _(Coming Soon)_: Securely onboard users with non-crypto credentials.
+- **Customizable UI**: Adjust themes, fonts, backgrounds, logos, corner radius, and text colors.
 - **Configurable Networks**: Set up and modify network preferences via API keys.
 - **Future-Proof**: More wallets and authentication methods will be added based on community feedback.
 
@@ -30,7 +30,7 @@ yarn add @bluxcc/react
 Import Blux and set up the authentication flow:
 
 ```tsx
-import { BluxProvider, useBlux } from "@bluxcc/react";
+import { BluxProvider, useBlux } from '@bluxcc/react';
 
 const ConnectButton = () => {
   const { connect } = useBlux();
@@ -39,7 +39,7 @@ const ConnectButton = () => {
 
 const App = () => {
   return (
-    <BluxProvider config={{ appName: "YourApp", network: "testnet" }}>
+    <BluxProvider config={{ appName: 'YourApp', network: 'testnet' }}>
       <ConnectButton />
     </BluxProvider>
   );
@@ -53,7 +53,7 @@ export default App;
 Developers can customize various UI elements:
 
 - **Themes & Fonts**
-- **Backgrounds, Logos, and Cover Images**
+- **Backgrounds, Logos**
 - **Corner Radius & Text Colors**
 - **Authentication Limits** (Free tier supports 500-1000 accounts per auth method)
 
