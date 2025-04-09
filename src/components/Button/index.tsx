@@ -41,7 +41,7 @@ const Button = ({
 }: ButtonProps) => {
   const context = useProvider();
   const appearance = context.value.config.appearance;
-  const borderRadius = getBorderRadius(context.value.config.appearance.cornerRadius);
+  const borderRadius = getBorderRadius(appearance.cornerRadius);
 
   const baseStyle: React.CSSProperties = {
     borderRadius,

@@ -1,9 +1,8 @@
 import { Horizon } from '@stellar/stellar-sdk';
-import { HorizonApi } from '@stellar/stellar-sdk/lib/horizon';
-import { History } from '../utils/stellar/getTransactions';
 
 import { Url } from '../utils/network/url';
 import { Fallback } from '../utils/network/fallback';
+import { History } from '../utils/stellar/getTransactions';
 
 /**
  * Enum representing the supported wallets in the system.
@@ -34,7 +33,9 @@ export interface AccountData {
   subentry_count: number;
   balances: Horizon.HorizonApi.BalanceLine[];
   thresholds: Horizon.HorizonApi.AccountThresholds;
-  transactions?: Horizon.ServerApi.TransactionRecord[];
+  // todo: use a viable history type for transacrtions, rename history to transactions for better understanding
+  // transactions?: Horizon.ServerApi.TransactionRecord[];
+  transactions?: History[];
 }
 
 interface IServers {
@@ -50,7 +51,7 @@ export type ITransports = Record<string, IServers>;
 export interface IProviderConfig {
   appName: string; // Application name
   networks: string[]; // Supported network pass phrases
-  appearance?: IAppearance;
+  appearance: IAppearance;
   transports?: ITransports;
   loginMethods?: Array<
     'wallet' | 'email' | 'sms' | 'google' | 'twitter' | 'discord' | 'github' | 'passkey'
@@ -122,8 +123,8 @@ export interface ContextInterface {
   waitingStatus: 'connecting' | 'signing';
   signTransaction: {
     xdr: string; // Transaction details for signing
-    resolver: ((value: HorizonApi.SubmitTransactionResponse) => void) | null; // Transaction signing resolver
-    result: HorizonApi.SubmitTransactionResponse | null; // Latest transaction signing result
+    resolver: ((value: Horizon.HorizonApi.SubmitTransactionResponse) => void) | null; // Transaction signing resolver
+    result: Horizon.HorizonApi.SubmitTransactionResponse | null; // Latest transaction signing result
   };
 }
 

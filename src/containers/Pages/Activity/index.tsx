@@ -26,6 +26,7 @@ const Activity: React.FC = () => {
     window.open(explorerUrl, '_blank', 'noopener,noreferrer');
   };
 
+  // todo: fix history
   return (
     <div>
       <div className="my-4 h-[248px]">
@@ -45,9 +46,12 @@ const Activity: React.FC = () => {
             >
               <History
                 amount={'1234.56'}
+                // @ts-ignore: todo this should be fixed later
                 date={tx.title}
                 status={'success'}
+                // @ts-ignore: todo this should be fixed later
                 action={tx.title}
+                // @ts-ignore: todo this should be fixed later
                 hash={tx.title}
               />
             </div>

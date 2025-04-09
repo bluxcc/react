@@ -1,4 +1,5 @@
 import { Horizon } from '@stellar/stellar-sdk';
+//
 // Todo: fix all of this file
 export type History = {
   title: string;
@@ -6,7 +7,8 @@ export type History = {
   others?: any;
 };
 
-const handleAssetText = (op: Horizon.ServerApi.PaymentOperationRecord) => {
+// todo: remove any
+const handleAssetText = (op: Horizon.ServerApi.PaymentOperationRecord | any) => {
   if (op.asset_type === 'native') {
     return 'XLM';
   }
@@ -53,12 +55,17 @@ export const getTransactions = async (server: Horizon.Server, publicKey: string)
           title,
           description: `${op.amount} ${handleAssetText(op)}`,
         });
-      } else if (op.type === 'createAccount') {
+
+        // todo: use good operation types
+      } else if (op.type === Horizon.HorizonApi.OperationResponseType.createAccount) {
         result.push({
           title: 'Create Account',
           description: 'Account creation',
         });
-      } else if (op.type === 'pathPaymentSend' || op.type === 'pathPaymentReceive') {
+      } else if (
+        op.type === Horizon.HorizonApi.OperationResponseType.pathPaymentStrictSend ||
+        op.type === Horizon.HorizonApi.OperationResponseType.pathPayment
+      ) {
         result.push({
           title: 'Swap',
           description: `Path payment of ${op.amount} ${handleAssetText(op)}`,
@@ -72,8 +79,9 @@ export const getTransactions = async (server: Horizon.Server, publicKey: string)
     }
 
     return result;
-  } catch (error: any) {
+  } catch (error: unknown) {
     console.error(error);
+
     return [];
   }
 };
