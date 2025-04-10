@@ -1,8 +1,8 @@
 import { Horizon } from '@stellar/stellar-sdk';
+import { HorizonApi } from '@stellar/stellar-sdk/lib/horizon';
 
 import { Url } from '../utils/network/url';
 import { Fallback } from '../utils/network/fallback';
-import { History } from '../utils/stellar/getTransactions';
 
 /**
  * Enum representing the supported wallets in the system.
@@ -33,9 +33,7 @@ export interface AccountData {
   subentry_count: number;
   balances: Horizon.HorizonApi.BalanceLine[];
   thresholds: Horizon.HorizonApi.AccountThresholds;
-  // todo: use a viable history type for transacrtions, rename history to transactions for better understanding
-  // transactions?: Horizon.ServerApi.TransactionRecord[];
-  transactions?: History[];
+  transactions?: Horizon.ServerApi.TransactionRecord[];
 }
 
 interface IServers {
@@ -45,17 +43,26 @@ interface IServers {
 
 export type ITransports = Record<string, IServers>;
 
+
 /**
- * Configuration options for the provider.
+ *  BluxProvider.config
  */
 export interface IProviderConfig {
   appName: string; // Application name
   networks: string[]; // Supported network pass phrases
-  appearance: IAppearance;
+  appearance?: Partial<IAppearance>;
   transports?: ITransports;
   loginMethods?: Array<
     'wallet' | 'email' | 'sms' | 'google' | 'twitter' | 'discord' | 'github' | 'passkey'
   >;
+}
+
+/**
+ *  context.value.config
+ *  Appearance will be set to default values if the user does not provider appearance (or provides some of the values in Appearance)
+ */
+export interface IConfig extends IProviderConfig {
+  appearance: IAppearance;
 }
 
 /**
@@ -104,8 +111,8 @@ export interface IAppearance {
   background: string; // Background color or image
   accent: string; // Primary accent color
   textColor: string; // Main text color
-  font: SupportedFonts; // Selected font style
-  cornerRadius: CornerRadius; // Border radius styling
+  font: SupportedFonts | string; // Selected font style
+  cornerRadius: CornerRadius | string; // Border radius styling
   logo?: React.ImgHTMLAttributes<HTMLImageElement>['src']; // Optional application logo URL
 }
 
@@ -113,7 +120,7 @@ export interface IAppearance {
  * Structure of the global context values.
  */
 export interface ContextInterface {
-  config: IProviderConfig; // Provider configuration
+  config: IConfig; // Provider configuration
   user: IUser; // User-related information
   isModalOpen: boolean; // Determines if the modal is open
   isReady: boolean; // Indicates if the system is ready
@@ -123,8 +130,8 @@ export interface ContextInterface {
   waitingStatus: 'connecting' | 'signing';
   signTransaction: {
     xdr: string; // Transaction details for signing
-    resolver: ((value: Horizon.HorizonApi.SubmitTransactionResponse) => void) | null; // Transaction signing resolver
-    result: Horizon.HorizonApi.SubmitTransactionResponse | null; // Latest transaction signing result
+    resolver: ((value: HorizonApi.SubmitTransactionResponse) => void) | null; // Transaction signing resolver
+    result: HorizonApi.SubmitTransactionResponse | null; // Latest transaction signing result
   };
 }
 

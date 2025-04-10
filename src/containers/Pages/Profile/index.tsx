@@ -19,6 +19,7 @@ const Profile = () => {
   const appearance = context.value.config.appearance;
   const { disconnect } = useBlux();
   const [address, setAddress] = useState(context.value.user.wallet?.address || '');
+  const [copied, setCopied] = useState(false);
   const { account } = useAccount({
     publicKey: context.value.user.wallet?.address as string,
     passphrase: context.value.config.networks[0], // todo: fix network
@@ -31,18 +32,33 @@ const Profile = () => {
   const handleDisconnect = () => {
     disconnect();
   };
-
+  const handleCopyAddress = () => {
+    copyText(context.value.user.wallet?.address as string)
+      .then(() => {
+        setCopied(true);
+        setTimeout(() => {
+          setCopied(false);
+        }, 1000);
+      })
+      .catch((error) => {
+        console.error('Failed to copy code:', error);
+      });
+  };
   return (
     <div className="flex flex-col items-center justify-center">
-      <div className="size-[73px] rounded-full bg-lightBlue-200 mt-4" />
+      <div className="size-[73px] rounded-full mt-4" style={{ background: appearance.accent }} />
       <p
-        className="inline-flex gap-1 text-base cursor-pointer text-gray-700 mt-6 mb-4"
-        onClick={() => {
-          copyText(context.value.user.wallet?.address as string);
-        }}
+        className="inline-flex text-base cursor-pointer text-gray-700 mt-6 mb-4"
+        onClick={handleCopyAddress}
       >
-        {address ? shortenAddress(address, 5) : ''}
-        <Copy />
+        {copied ? (
+          'Copied!'
+        ) : (
+          <span className="flex items-center gap-1">
+            {address ? shortenAddress(address, 5) : ''}
+            <Copy />
+          </span>
+        )}
       </p>
       <p className="text-center" style={{ color: appearance.accent }}>
         {account ? humanizeAmount(account.xlmBalance) : 'N/A'} XLM

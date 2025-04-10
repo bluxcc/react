@@ -6,6 +6,7 @@ import InputField from '../../../components/Input';
 import { ArrowDropUp } from '../../../assets/Icons';
 import { StellarSmallLogo } from '../../../assets/logos';
 import { useProvider } from '../../../context/provider';
+import getContrastColor from '../../../utils/getContrastColor';
 
 const Send = () => {
   const context = useProvider();
@@ -33,7 +34,7 @@ const Send = () => {
     setErrors(newErrors);
 
     if (Object.keys(newErrors).length === 0) {
-      console.log('Submitting transaction:', form);
+      // console.log('Submitting transaction:', form);
     }
   };
 
@@ -58,9 +59,9 @@ const Send = () => {
             </span>
           }
           button={
-            <span className="flex justify-between gap-1 text-black">
+            <span className="flex justify-between gap-1" style={{ color: appearance.textColor }}>
               <span className="flex items-center">
-                <StellarSmallLogo fill="black" />
+                <StellarSmallLogo fill={getContrastColor(appearance.background)} />
               </span>
               XLM
             </span>

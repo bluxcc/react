@@ -13,7 +13,8 @@ const getTransactionDetails = (xdr: string) => {
     };
   } catch (error) {
     console.error('Transaction failed:', error);
-    throw error;
+
+    return null;
   }
 };
 

@@ -53,7 +53,7 @@ const Button = ({
 
   if (variant === 'outline') {
     Object.assign(baseStyle, {
-      border: `1px solid ${appearance.accent}`,
+      border: `1px solid #CDCEEE`,
       color: appearance.accent,
       backgroundColor: appearance.background,
     });
@@ -78,7 +78,9 @@ const Button = ({
     <button
       onClick={onClick}
       disabled={state === 'disabled'}
-      className={`${buttonBase} ${sizeClasses[size]} ${className ?? ''}`}
+      className={`${buttonBase} ${sizeClasses[size]} ${
+        className ?? ''
+      } transition-all duration-300`}
       style={baseStyle}
     >
       {startIcon && <span>{startIcon}</span>}

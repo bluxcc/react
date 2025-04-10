@@ -146,7 +146,7 @@ export const ArrowDropUp = ({ fill = '#0C1083' }: { fill?: string }) => (
 );
 export const RedAlert = () => (
   <svg width="40" height="40" viewBox="0 0 40 40" fill="none" xmlns="http://www.w3.org/2000/svg">
-    <rect x="0.5" y="0.5" width="39" height="39" rx="19.5" fill="white" stroke="#EC2929" />
+    <rect x="0.5" y="0.5" width="39" height="39" rx="19.5" fill="transparent" stroke="#EC2929" />
     <mask id="mask0_2214_3806" maskUnits="userSpaceOnUse" x="8" y="8" width="24" height="24">
       <rect x="8" y="8" width="24" height="24" fill="#D9D9D9" />
     </mask>
@@ -160,7 +160,7 @@ export const RedAlert = () => (
 );
 export const Upstream = () => (
   <svg width="40" height="40" viewBox="0 0 40 40" fill="none" xmlns="http://www.w3.org/2000/svg">
-    <rect x="0.5" y="0.5" width="39" height="39" rx="19.5" fill="white" stroke="#00BD81" />
+    <rect x="0.5" y="0.5" width="39" height="39" rx="19.5" fill="transparent" stroke="#00BD81" />
     <mask id="mask0_2212_3318" maskUnits="userSpaceOnUse" x="8" y="8" width="24" height="24">
       <rect x="8" y="8" width="24" height="24" fill="#D9D9D9" />
     </mask>
@@ -174,7 +174,7 @@ export const Upstream = () => (
 );
 export const MultiOperation = () => (
   <svg width="40" height="40" viewBox="0 0 40 40" fill="none" xmlns="http://www.w3.org/2000/svg">
-    <rect x="0.5" y="0.5" width="39" height="39" rx="19.5" fill="white" stroke="#00BD81" />
+    <rect x="0.5" y="0.5" width="39" height="39" rx="19.5" fill="transparent" stroke="#00BD81" />
     <mask id="mask0_2494_9033" maskUnits="userSpaceOnUse" x="8" y="8" width="24" height="24">
       <rect x="8" y="8" width="24" height="24" fill="#D9D9D9" />
     </mask>
@@ -189,7 +189,7 @@ export const MultiOperation = () => (
 );
 export const Downstream = () => (
   <svg width="40" height="40" viewBox="0 0 40 40" fill="none" xmlns="http://www.w3.org/2000/svg">
-    <rect x="0.5" y="0.5" width="39" height="39" rx="19.5" fill="white" stroke="#00BD81" />
+    <rect x="0.5" y="0.5" width="39" height="39" rx="19.5" fill="transparent" stroke="#00BD81" />
     <mask id="mask0_2214_3828" maskUnits="userSpaceOnUse" x="8" y="8" width="24" height="24">
       <rect x="8" y="8" width="24" height="24" fill="#D9D9D9" />
     </mask>
