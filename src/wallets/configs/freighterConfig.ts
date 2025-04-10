@@ -8,18 +8,22 @@ export const freighterConfig: WalletInterface = {
 
   isAvailable: () =>
     new Promise((resolve) => {
-      const timeout = setTimeout(() => resolve(false), 250);
+      const timeout = setTimeout(() => resolve(false), 400);
 
-      freighterApi
-        .isConnected()
-        .then(({ isConnected, error }) => {
-          clearTimeout(timeout);
-          resolve(!error && isConnected);
-        })
-        .catch(() => {
-          clearTimeout(timeout);
-          resolve(false);
-        });
+      setTimeout(() => {
+        freighterApi
+          .isConnected()
+          .then(({ isConnected, error }) => {
+            clearTimeout(timeout);
+
+            resolve(!error && isConnected);
+          })
+          .catch(() => {
+            clearTimeout(timeout);
+
+            resolve(false);
+          });
+      }, 250);
     }),
 
   connect: async () => {
@@ -30,7 +34,7 @@ export const freighterConfig: WalletInterface = {
 
       const result = await freighterApi.requestAccess();
 
-      if (result.error && result.error.message === "The user rejected this request.") {
+      if (result.error && result.error.message === 'The user rejected this request.') {
         throw new Error('Failed to connect to Freighter');
       }
 
