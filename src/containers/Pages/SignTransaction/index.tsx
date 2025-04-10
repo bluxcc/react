@@ -27,8 +27,17 @@ const SignTransaction = () => {
       isModalOpen: true,
       waitingStatus: 'signing',
     }));
+
     context.setRoute(Routes.WAITING);
   };
+
+  if (!txDetails) {
+    return (
+      <div>
+        <p>Invalid XDR</p>
+      </div>
+    );
+  }
 
   return (
     <div className="w-full">

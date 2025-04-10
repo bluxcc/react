@@ -77,7 +77,7 @@ export const BluxProvider = ({ config, isDemo, children }: BluxProviderProps) =>
   useEffect(() => {
     if (value.user.wallet && !value.config.networks.includes(value.user.wallet.passphrase)) {
       // todo: use a persistent modal instead of console.log
-      // console.log('You are on a wrong network!');
+      console.log('You are on a wrong network!');
     } else {
       // console.log('You are on a right network!');
       // close the modal if the network is correct.
