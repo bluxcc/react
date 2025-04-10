@@ -12,6 +12,6 @@ export const defaultAppearance: IAppearance = {
   accent: '#0C1083',
   textColor: '#000000',
   font: 'Manrope',
-  cornerRadius: 'full',
+  cornerRadius: 'md',
   logo: '',
 };

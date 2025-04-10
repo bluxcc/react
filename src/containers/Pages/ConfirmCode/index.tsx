@@ -42,9 +42,11 @@ const ConfirmCode: React.FC = () => {
       <div className="space-y-1 flex-col text-center">
         <p className="text-xl font-medium">Enter confirmation code</p>
         {error ? (
-          <p className="text-alert-error text-sm">Invalid code, please try again.</p>
+          <p className="text-alert-error text-sm h-10 flex justify-center items-center">
+            Invalid code, please try again.
+          </p>
         ) : (
-          <p className="text-sm">Please check your email and enter confirmation code below</p>
+          <p className="text-sm h-10">Please check your email and enter confirmation code below</p>
         )}
       </div>
 

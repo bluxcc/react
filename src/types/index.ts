@@ -104,8 +104,8 @@ export interface IAppearance {
   background: string; // Background color or image
   accent: string; // Primary accent color
   textColor: string; // Main text color
-  font: SupportedFonts; // Selected font style
-  cornerRadius: CornerRadius; // Border radius styling
+  font: SupportedFonts | string; // Selected font style
+  cornerRadius: CornerRadius | string; // Border radius styling
   logo?: React.ImgHTMLAttributes<HTMLImageElement>['src']; // Optional application logo URL
 }
 

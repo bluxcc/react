@@ -73,9 +73,9 @@ const OnBoarding = ({ showAllWallets, setShowAllWallets }: OnBoardingProps) => {
 
   const renderDivider = () => (
     <div className="w-full flex items-center justify-center h-8 my-1">
-      <div className="absolute z-10 left-0 right-0 border-t border-dashed border-spacing-3 border-primary-100" />
+      <div className="absolute z-10 left-0 right-0 border-t border-dashed border-spacing-2 border-primary-100" />
       <span
-        className="z-20 w-auto px-2 text-primary-100 text-sm font-medium"
+        className="z-20 w-auto px-2 text-primary-100 text-sm font-medium select-none"
         style={{ backgroundColor: appearance.background }}
       >
         or
@@ -130,10 +130,10 @@ const OnBoarding = ({ showAllWallets, setShowAllWallets }: OnBoardingProps) => {
               </React.Fragment>
             );
           }
-          if (method === 'email') {
+          if (!showAllWallets && method === 'email') {
             return (
               <React.Fragment key="email">
-                {!showAllWallets && (
+                {
                   <>
                     <CardItem
                       inputType="email"
@@ -146,12 +146,12 @@ const OnBoarding = ({ showAllWallets, setShowAllWallets }: OnBoardingProps) => {
 
                     {shouldRenderDivider && renderDivider()}
                   </>
-                )}
+                }
               </React.Fragment>
             );
           }
 
-          if (method === 'passkey') {
+          if (!showAllWallets && method === 'passkey') {
             return (
               <div
                 key="passkey"
@@ -168,7 +168,9 @@ const OnBoarding = ({ showAllWallets, setShowAllWallets }: OnBoardingProps) => {
       </div>
 
       <div
-        className="font-semibold text-[12px] text-center w-full pt-[6px]"
+        className={`font-semibold text-[12px] text-center w-full pt-[6px] ${
+          showAllWallets && 'mt-2'
+        }`}
         style={{
           color: appearance.textColor,
         }}
