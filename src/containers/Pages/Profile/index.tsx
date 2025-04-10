@@ -17,7 +17,7 @@ import humanizeAmount from '../../../utils/humanizeAmount';
 const Profile = () => {
   const context = useProvider();
   const appearance = context.value.config.appearance;
-  const { disconnect } = useBlux();
+  const { logout } = useBlux();
   const [address, setAddress] = useState(context.value.user.wallet?.address || '');
   const [copied, setCopied] = useState(false);
   const { account } = useAccount({
@@ -30,7 +30,7 @@ const Profile = () => {
   }, [context.value.user.wallet?.address]);
 
   const handleDisconnect = () => {
-    disconnect();
+    logout();
   };
   const handleCopyAddress = () => {
     copyText(context.value.user.wallet?.address as string)
