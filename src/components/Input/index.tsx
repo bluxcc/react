@@ -34,7 +34,7 @@ const CustomButton = ({ button, onButtonClick, appearance }: CustomButtonProps) 
         borderColor: appearance.accent,
         backgroundColor: appearance.background,
       }}
-      className="border text-sm font-semibold px-3 py-1"
+      className="border text-sm font-semibold px-3 py-1 transition-all duration-300"
     >
       {button}
     </button>
@@ -87,6 +87,7 @@ const InputField = ({
           value={value}
           placeholder={placeholder}
           className="bg-transparent outline-none text-gray-700 placeholder-gray-500 w-[90%] mr-2"
+          style={{ color: appearance.textColor }}
           onChange={onChange}
         />
         {button && (

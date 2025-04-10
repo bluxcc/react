@@ -67,7 +67,7 @@ const CardItem = ({
   return (
     <div
       onClick={variant === 'input' ? undefined : onClick}
-      className={`flex items-center w-full h-14 border transition-all px-[10px] py-2 ${
+      className={`flex items-center w-full !h-14 border transition-all duration-300 px-[10px] py-2 ${
         variant === 'input' ? 'cursor-text' : 'cursor-pointer'
       }`}
       style={{
@@ -80,12 +80,12 @@ const CardItem = ({
     >
       <span
         style={{ borderRadius }}
-        className="flex-shrink-0 flex justify-center items-center border border-primary-100 size-10 overflow-hidden"
+        className="flex-shrink-0 flex justify-center items-center border border-primary-100 size-10 overflow-hidden transition-all duration-300"
       >
         {startIcon}
       </span>
 
-      <div className="relative flex-1 flex items-center ml-4 mr-1">
+      <div className="relative flex-1 flex items-center ml-4 mr-1 h-full">
         {variant === 'input' ? (
           <>
             <input
@@ -94,7 +94,7 @@ const CardItem = ({
               onChange={handleInputChange}
               onKeyDown={handleKeyDown}
               placeholder="Email"
-              className="bg-transparent outline-none placeholder:text-gray-600 w-full mr-1 focus:outline-none"
+              className="bg-transparent outline-none placeholder:text-gray-400 w-full h-full mr-1 focus:outline-none"
               style={{ color: appearance.textColor }}
               onFocus={() => setIsFocused(true)}
               onBlur={() => {
@@ -113,14 +113,14 @@ const CardItem = ({
                   color: isValid ? appearance.accent : '#9ca3af',
                   borderColor: isValid ? appearance.accent : '#CDCEEE',
                 }}
-                className={`absolute right-0 bg-transparent border text-sm font-medium flex justify-center items-center h-8 !w-[68px]`}
+                className={`absolute right-0 bg-transparent border text-sm font-medium flex justify-center items-center h-8 !w-[68px] transition-all duration-300`}
               >
                 Submit
               </button>
             </div>
           </>
         ) : (
-          <span className="font-medium">{label}</span>
+          <span className="font-medium select-none">{label}</span>
         )}
       </div>
 

@@ -1,6 +1,6 @@
 import { CornerRadius } from '../types';
 
-const radiusMap: Record<CornerRadius, string> = {
+const radiusMap: Record<string, string> = {
   none: '0px',
   sm: '4px',
   md: '8px',
@@ -8,7 +8,11 @@ const radiusMap: Record<CornerRadius, string> = {
   full: '32px',
 };
 
-const getBorderRadius = (cornerRadius: CornerRadius): string => {
+const getBorderRadius = (cornerRadius: CornerRadius | string): string => {
+  if (typeof cornerRadius === 'string' && cornerRadius.endsWith('px')) {
+    return `${cornerRadius}`;
+  }
+
   return radiusMap[cornerRadius] || '0px';
 };
 

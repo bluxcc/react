@@ -34,7 +34,12 @@ const History = ({ amount, date, status, action, hash }: TransactionProps) => {
   return (
     <div className="flex items-center justify-between">
       <div className="flex items-center justify-start gap-3">
-        <div className={`w-8 h-8 flex items-center justify-center rounded-full`}>
+        <div
+          className={`size-8 flex items-center justify-center rounded-full`}
+          style={{
+            backgroundColor: context.value.config.appearance.background,
+          }}
+        >
           {status !== 'success' ? <RedAlert /> : handleActionLogo(action)}
         </div>
         <div className="flex flex-col justify-start">
@@ -46,6 +51,9 @@ const History = ({ amount, date, status, action, hash }: TransactionProps) => {
         {date}
         <div
           className="flex justify-center item-center rounded-full size-8 cursor-pointer bg-gray-50"
+          style={{
+            backgroundColor: context.value.config.appearance.background,
+          }}
           title="View transaction details"
           onClick={handleGoToExplorer}
         >

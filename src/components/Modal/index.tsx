@@ -90,13 +90,13 @@ const Modal = ({
                 ? 'translateY(100%)'
                 : 'translateY(0%)'
               : 'none',
-            transition: `height 300ms ease-in-out, opacity 300ms ease-out${
+            transition: `height 300ms ease-in-out, border-radius 300ms, opacity 300ms ease-out${
               isMobile ? ', transform 300ms ease-out' : ''
             }`,
             backgroundColor: appearance.background,
             color: appearance.textColor,
             fontFamily: appearance.font,
-            letterSpacing: '-0.03px',
+            letterSpacing: '-0.04px',
             borderRadius,
           }}
         >

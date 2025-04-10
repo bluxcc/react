@@ -68,7 +68,7 @@ const Activity: React.FC = () => {
           state="enabled"
           variant="outline"
           size="medium"
-          className="mt-4"
+          className="mt-6"
           onClick={handleGoToExplorer}
         >
           See all in explorer
