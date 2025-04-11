@@ -162,7 +162,7 @@ const OnBoarding = ({ showAllWallets, setShowAllWallets }: OnBoardingProps) => {
             return (
               <div
                 key="passkey"
-                className="bluxcc-flex bluxcc-h-11 bluxcc-cursor-pointer bluxcc-items-center bluxcc-justify-center bluxcc-text-sm bluxcc-font-medium bluxcc-leading-[32px]"
+                className="bluxcc-mt-4 bluxcc-flex bluxcc-h-6 bluxcc-cursor-pointer bluxcc-items-center bluxcc-justify-center bluxcc-text-sm bluxcc-font-medium bluxcc-leading-[28px]"
                 style={{ color: appearance.accent }}
               >
                 Log in with Passkey
@@ -175,9 +175,7 @@ const OnBoarding = ({ showAllWallets, setShowAllWallets }: OnBoardingProps) => {
       </div>
 
       <div
-        className={`bluxcc-w-full bluxcc-pt-[6px] bluxcc-text-center bluxcc-text-[12px] bluxcc-font-semibold ${
-          showAllWallets && 'bluxcc-mt-2'
-        }`}
+        className={`bluxcc-w-full bluxcc-pt-[8px] bluxcc-text-center bluxcc-text-[12px] bluxcc-font-medium`}
         style={{
           color: appearance.textColor,
         }}

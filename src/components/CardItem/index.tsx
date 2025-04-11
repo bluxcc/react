@@ -113,7 +113,7 @@ const CardItem = ({
                   color: isValid ? appearance.accent : '#9ca3af',
                   borderColor: isValid ? appearance.accent : '#CDCEEE',
                 }}
-                className={`bluxcc-!w-[68px] bluxcc-absolute bluxcc-right-0 bluxcc-flex bluxcc-h-8 bluxcc-items-center bluxcc-justify-center bluxcc-border bluxcc-bg-transparent bluxcc-text-sm bluxcc-font-medium bluxcc-transition-all bluxcc-duration-300`}
+                className={`bluxcc-absolute bluxcc-right-0 bluxcc-flex bluxcc-h-8 !bluxcc-w-[68px] bluxcc-items-center bluxcc-justify-center bluxcc-border bluxcc-bg-transparent bluxcc-text-sm bluxcc-font-medium bluxcc-transition-all bluxcc-duration-300`}
               >
                 Submit
               </button>
