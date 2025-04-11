@@ -1,15 +1,15 @@
 import React from 'react';
 
 import Send from '../Pages/Send';
+import { Routes } from '../../types';
 import Profile from '../Pages/Profile';
 import Waiting from '../Pages/Waiting';
 import Activity from '../Pages/Activity';
 import Successful from '../Pages/Successful';
 import OnBoarding from '../Pages/OnBoarding';
 import ConfirmCode from '../Pages/ConfirmCode';
+import WrongNetwork from '../Pages/WrongNetwork';
 import SignTransaction from '../Pages/SignTransaction';
-
-import { Routes } from '../../types';
 
 interface ModalContentProps {
   showAllWallets: boolean;
@@ -51,5 +51,9 @@ export const modalContent: Record<
   [Routes.OTP]: {
     title: '',
     Component: () => <ConfirmCode />,
+  },
+  [Routes.WRONG_NETWORK]: {
+    title: 'Wrong Network',
+    Component: () => <WrongNetwork />,
   },
 };

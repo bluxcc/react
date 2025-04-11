@@ -50,6 +50,7 @@ export type ITransports = Record<string, IServers>;
 export interface IProviderConfig {
   appName: string; // Application name
   networks: string[]; // Supported network pass phrases
+  defaultNetwork: string; // The default network passphrase
   appearance?: Partial<IAppearance>;
   transports?: ITransports;
   loginMethods?: Array<
@@ -140,6 +141,7 @@ export interface ContextInterface {
  */
 export enum Routes {
   ONBOARDING = 'ONBOARDING', // View for selecting a wallet
+  WRONG_NETWORK = 'WRONG_NETWORK', // View for selecting a wallet
   WAITING = 'WAITING', // View for connection process
   SUCCESSFUL = 'SUCCESSFUL', // View for connection success process
   PROFILE = 'PROFILE', // User profile view

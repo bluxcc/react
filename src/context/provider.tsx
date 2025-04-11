@@ -5,6 +5,7 @@ import { defaultAppearance } from '../constants';
 import getMappedWallets from '../utils/mappedWallets';
 import initializeRabetMobile from '../utils/initializeRabetMobile';
 import { ContextState, IProviderConfig, ContextInterface, Routes, SupportedFonts } from '../types';
+import useCheckWalletNetwork from './useCheckWalletNetwork';
 
 export const ProviderContext = createContext<ContextState | null>(null);
 
@@ -21,9 +22,20 @@ const googleFonts: Record<SupportedFonts, string | null> = {
   'JetBrains Mono': 'JetBrains+Mono',
 };
 
+const getGoogleFontUrl = (fontName: string): string => {
+  const fallbackEncoded = fontName.trim().split(' ').join('+');
+  const encodedFont = googleFonts[fontName as SupportedFonts] ?? fallbackEncoded;
+
+  return `https://fonts.googleapis.com/css2?family=${encodedFont}&display=swap`;
+};
+
 export const BluxProvider = ({ config, isDemo, children }: BluxProviderProps) => {
   if (config.networks.length === 0) {
     throw new Error('no network is set in config.networks');
+  }
+
+  if (!config.networks.includes(config.defaultNetwork)) {
+    throw new Error('default network is not listed in networks');
   }
 
   const [route, setRoute] = useState<Routes>(Routes.ONBOARDING);
@@ -49,6 +61,8 @@ export const BluxProvider = ({ config, isDemo, children }: BluxProviderProps) =>
     availableWallets: [],
   });
 
+  useCheckWalletNetwork(value, setValue, setRoute);
+
   useEffect(() => {
     setValue((prev) => ({
       ...prev,
@@ -66,7 +80,9 @@ export const BluxProvider = ({ config, isDemo, children }: BluxProviderProps) =>
   useEffect(() => {
     const loadWallets = async () => {
       const mappedWallets = await getMappedWallets();
+
       window.addEventListener('load', initializeRabetMobile);
+
       const available = mappedWallets
         .filter(({ isAvailable }) => isAvailable)
         .map(({ wallet }) => wallet);
@@ -80,13 +96,6 @@ export const BluxProvider = ({ config, isDemo, children }: BluxProviderProps) =>
 
     loadWallets();
   }, []);
-
-  const getGoogleFontUrl = (fontName: string): string => {
-    const fallbackEncoded = fontName.trim().split(' ').join('+');
-    const encodedFont = googleFonts[fontName as SupportedFonts] ?? fallbackEncoded;
-
-    return `https://fonts.googleapis.com/css2?family=${encodedFont}&display=swap`;
-  };
 
   useEffect(() => {
     const font = value.config.appearance.font;
@@ -103,15 +112,6 @@ export const BluxProvider = ({ config, isDemo, children }: BluxProviderProps) =>
     }
   }, [value.config.appearance.font]);
 
-  useEffect(() => {
-    if (value.user.wallet && !value.config.networks.includes(value.user.wallet.passphrase)) {
-      // todo: use a persistent modal instead of console.log
-      console.log('You are on a wrong network!');
-    } else {
-      // console.log('You are on a right network!');
-      // close the modal if the network is correct.
-    }
-  }, [value.config.networks, value.user.wallet]);
 
   const closeModal = () => {
     setValue((prev) => ({
@@ -131,8 +131,10 @@ export const BluxProvider = ({ config, isDemo, children }: BluxProviderProps) =>
 
 export const useProvider = () => {
   const context = useContext(ProviderContext);
+
   if (!context) {
     throw new Error('useProvider must be used within a ProviderContext.');
   }
+
   return context;
 };
