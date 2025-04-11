@@ -78,10 +78,7 @@ const Waiting = () => {
         const { publicKey } = await wallet.connect();
 
         if (publicKey && publicKey.trim() !== '') {
-          const passphrase = await getWalletNetwork(
-            wallet,
-            context.value.config.networks,
-          );
+          const passphrase = await getWalletNetwork(wallet);
 
           context.setValue((prev) => ({
             ...prev,
