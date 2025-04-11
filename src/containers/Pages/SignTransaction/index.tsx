@@ -64,7 +64,9 @@ const SignTransaction = () => {
         }}
       >
         <div className="bluxcc-inline-flex bluxcc-items-center bluxcc-gap-2 bluxcc-font-medium">
-          <p className="bluxcc-font-me bluxcc-text-sm">Your wallet</p>
+          <p className="bluxcc-whitespace-nowrap bluxcc-text-sm bluxcc-font-medium">
+            Your wallet
+          </p>
           <p className="bluxcc-text-xs bluxcc-text-gray-700">
             {shortenAddress(context.value.user.wallet?.address as string, 5)}
           </p>
