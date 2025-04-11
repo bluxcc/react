@@ -1,6 +1,12 @@
 import React from 'react';
 
-import { AlbedoLogo, FreighterLogo, LobstrLogo, RabetLogo, XBullLogo } from '../assets/logos';
+import {
+  AlbedoLogo,
+  FreighterLogo,
+  LobstrLogo,
+  RabetLogo,
+  XBullLogo,
+} from '../assets/logos';
 
 const handleLogos = (walletName: string) => {
   switch (walletName) {

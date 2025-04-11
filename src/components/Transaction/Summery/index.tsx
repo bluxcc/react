@@ -18,27 +18,39 @@ interface SummaryProps {
   action: string;
 }
 
-const Summary = ({ operationsCount, sender, estimatedFee, action }: SummaryProps) => {
+const Summary = ({
+  operationsCount,
+  sender,
+  estimatedFee,
+  action,
+}: SummaryProps) => {
   const details: TransactionDetail[] = [
     { label: 'Action', value: capitalizeFirstLetter(action) },
     { label: 'Operations', value: operationsCount.toString() },
-    { label: 'Sender', value: shortenAddress(sender, 5), isHighlighted: true, isCopyable: true },
+    {
+      label: 'Sender',
+      value: shortenAddress(sender, 5),
+      isHighlighted: true,
+      isCopyable: true,
+    },
     { label: 'Estimated Fee', value: `${estimatedFee} XLM` },
   ];
 
   return (
-    <div className="text-sm text-gray-800 w-full">
+    <div className="bluxcc-w-full bluxcc-text-sm bluxcc-text-gray-800">
       {details.map(({ label, value, isHighlighted, isCopyable }, index) => (
         <div
           key={index}
-          className={`flex justify-between py-2 px-4 ${
-            index < details.length - 1 ? 'border-b border-dashed border-gray-300' : ''
+          className={`bluxcc-flex bluxcc-justify-between bluxcc-px-4 bluxcc-py-2 ${
+            index < details.length - 1
+              ? 'bluxcc-border-b bluxcc-border-dashed bluxcc-border-gray-300'
+              : ''
           }`}
         >
           <span>{label}</span>
           <span
-            className={`${isHighlighted ? 'text-primary-600' : 'text-gray-700'} ${
-              isCopyable ? 'cursor-pointer' : ''
+            className={`${isHighlighted ? 'bluxcc-text-primary-600' : 'bluxcc-text-gray-700'} ${
+              isCopyable ? 'bluxcc-cursor-pointer' : ''
             }`}
             onClick={() => isCopyable && copyText(sender)}
           >

@@ -18,7 +18,9 @@ export const useBlux = () => {
     }
 
     if (!isAuthenticated) {
-      setValue((prev) => (prev.isModalOpen ? prev : { ...prev, isModalOpen: true }));
+      setValue((prev) =>
+        prev.isModalOpen ? prev : { ...prev, isModalOpen: true },
+      );
     } else {
       throw new Error('Already connected.');
     }

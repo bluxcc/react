@@ -1,4 +1,10 @@
-import React, { useRef, ChangeEvent, ClipboardEvent, KeyboardEvent, useEffect } from 'react';
+import React, {
+  useRef,
+  ChangeEvent,
+  ClipboardEvent,
+  KeyboardEvent,
+  useEffect,
+} from 'react';
 import { useProvider } from '../../context/provider';
 import getBorderRadius from '../../utils/getBorderRadius';
 
@@ -21,7 +27,10 @@ const OTPInput: React.FC<OTPInputProps> = ({ otp, setOtp, error }) => {
     }
   }, [error]);
 
-  const handleChange = (index: number, e: ChangeEvent<HTMLInputElement>): void => {
+  const handleChange = (
+    index: number,
+    e: ChangeEvent<HTMLInputElement>,
+  ): void => {
     const value = e.target.value.replace(/\D/g, '');
     if (!value) return;
 
@@ -36,15 +45,24 @@ const OTPInput: React.FC<OTPInputProps> = ({ otp, setOtp, error }) => {
 
   const handlePaste = (e: ClipboardEvent<HTMLInputElement>): void => {
     e.preventDefault();
-    const pasteData = e.clipboardData.getData('text').replace(/\D/g, '').slice(0, LENGTH);
+    const pasteData = e.clipboardData
+      .getData('text')
+      .replace(/\D/g, '')
+      .slice(0, LENGTH);
     if (!pasteData) return;
 
-    const newOtp = [...pasteData.split(''), ...Array(LENGTH - pasteData.length).fill('')];
+    const newOtp = [
+      ...pasteData.split(''),
+      ...Array(LENGTH - pasteData.length).fill(''),
+    ];
     setOtp(newOtp);
     setTimeout(() => inputsRef.current[LENGTH - 1]?.focus(), 0);
   };
 
-  const handleKeyDown = (index: number, e: KeyboardEvent<HTMLInputElement>): void => {
+  const handleKeyDown = (
+    index: number,
+    e: KeyboardEvent<HTMLInputElement>,
+  ): void => {
     if (e.key === 'Backspace') {
       const newOtp = [...otp];
       if (newOtp[index]) {
@@ -66,7 +84,7 @@ const OTPInput: React.FC<OTPInputProps> = ({ otp, setOtp, error }) => {
   });
 
   return (
-    <div className="flex gap-1">
+    <div className="bluxcc-flex bluxcc-gap-1">
       {otp.map((digit, index) => (
         <input
           key={index}
@@ -80,7 +98,7 @@ const OTPInput: React.FC<OTPInputProps> = ({ otp, setOtp, error }) => {
           onChange={(e) => handleChange(index, e)}
           onPaste={handlePaste}
           onKeyDown={(e) => handleKeyDown(index, e)}
-          className="w-12 h-14 text-center text-lg outline-none border"
+          className="bluxcc-h-14 bluxcc-w-12 bluxcc-border bluxcc-text-center bluxcc-text-lg bluxcc-outline-none"
           style={getInputStyle(digit)}
         />
       ))}

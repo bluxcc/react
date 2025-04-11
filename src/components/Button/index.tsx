@@ -20,12 +20,13 @@ interface ButtonProps {
   className?: string;
 }
 
-const buttonBase = 'flex justify-center items-center px-[10px] transition-all w-full';
+const buttonBase =
+  'bluxcc-flex bluxcc-justify-center bluxcc-items-center bluxcc-px-[10px] bluxcc-transition-all bluxcc-w-full';
 
 const sizeClasses: Record<ButtonSize, string> = {
-  small: 'h-8 text-sm gap-1',
-  medium: 'h-12 text-sm gap-2',
-  large: 'h-14 text-base gap-2',
+  small: 'bluxcc-h-8 bluxcc-text-sm bluxcc-gap-1',
+  medium: 'bluxcc-h-12 bluxcc-text-sm bluxcc-gap-2',
+  large: 'bluxcc-h-14 bluxcc-text-base bluxcc-gap-2',
 };
 
 const Button = ({
@@ -80,7 +81,7 @@ const Button = ({
       disabled={state === 'disabled'}
       className={`${buttonBase} ${sizeClasses[size]} ${
         className ?? ''
-      } transition-all duration-300`}
+      } bluxcc-transition-all bluxcc-duration-300`}
       style={baseStyle}
     >
       {startIcon && <span>{startIcon}</span>}

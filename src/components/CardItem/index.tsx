@@ -67,8 +67,8 @@ const CardItem = ({
   return (
     <div
       onClick={variant === 'input' ? undefined : onClick}
-      className={`flex items-center w-full !h-14 border transition-all duration-300 px-[10px] py-2 ${
-        variant === 'input' ? 'cursor-text' : 'cursor-pointer'
+      className={`bluxcc-flex !bluxcc-h-14 bluxcc-w-full bluxcc-items-center bluxcc-border bluxcc-px-[10px] bluxcc-py-2 bluxcc-transition-all bluxcc-duration-300 ${
+        variant === 'input' ? 'bluxcc-cursor-text' : 'bluxcc-cursor-pointer'
       }`}
       style={{
         borderRadius,
@@ -80,12 +80,12 @@ const CardItem = ({
     >
       <span
         style={{ borderRadius }}
-        className="flex-shrink-0 flex justify-center items-center border border-primary-100 size-10 overflow-hidden transition-all duration-300"
+        className="bluxcc-flex bluxcc-size-10 bluxcc-flex-shrink-0 bluxcc-items-center bluxcc-justify-center bluxcc-overflow-hidden bluxcc-border bluxcc-border-primary-100 bluxcc-transition-all bluxcc-duration-300"
       >
         {startIcon}
       </span>
 
-      <div className="relative flex-1 flex items-center ml-4 mr-1 h-full">
+      <div className="bluxcc-relative bluxcc-ml-4 bluxcc-mr-1 bluxcc-flex bluxcc-h-full bluxcc-flex-1 bluxcc-items-center">
         {variant === 'input' ? (
           <>
             <input
@@ -94,7 +94,7 @@ const CardItem = ({
               onChange={handleInputChange}
               onKeyDown={handleKeyDown}
               placeholder="Email"
-              className="bg-transparent outline-none placeholder:text-gray-400 w-full h-full mr-1 focus:outline-none"
+              className="bluxcc-mr-1 bluxcc-h-full bluxcc-w-full bluxcc-bg-transparent bluxcc-outline-none placeholder:bluxcc-text-gray-400 focus:bluxcc-outline-none"
               style={{ color: appearance.textColor }}
               onFocus={() => setIsFocused(true)}
               onBlur={() => {
@@ -104,7 +104,7 @@ const CardItem = ({
                 }
               }}
             />
-            <div className="bg-transparent w-[100px] h-10 flex justify-center items-center">
+            <div className="bluxcc-flex bluxcc-h-10 bluxcc-w-[100px] bluxcc-items-center bluxcc-justify-center bluxcc-bg-transparent">
               <button
                 disabled={!isValid}
                 onClick={() => onSubmit?.(inputValue)}
@@ -113,19 +113,19 @@ const CardItem = ({
                   color: isValid ? appearance.accent : '#9ca3af',
                   borderColor: isValid ? appearance.accent : '#CDCEEE',
                 }}
-                className={`absolute right-0 bg-transparent border text-sm font-medium flex justify-center items-center h-8 !w-[68px] transition-all duration-300`}
+                className={`bluxcc-!w-[68px] bluxcc-absolute bluxcc-right-0 bluxcc-flex bluxcc-h-8 bluxcc-items-center bluxcc-justify-center bluxcc-border bluxcc-bg-transparent bluxcc-text-sm bluxcc-font-medium bluxcc-transition-all bluxcc-duration-300`}
               >
                 Submit
               </button>
             </div>
           </>
         ) : (
-          <span className="font-medium select-none">{label}</span>
+          <span className="bluxcc-select-none bluxcc-font-medium">{label}</span>
         )}
       </div>
 
       {endArrow && (
-        <span className="ml-auto mr-1 flex items-center">
+        <span className="bluxcc-ml-auto bluxcc-mr-1 bluxcc-flex bluxcc-items-center">
           <ArrowRight fill={appearance.textColor} />
         </span>
       )}

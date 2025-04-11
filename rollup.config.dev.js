@@ -44,7 +44,10 @@ export default {
       exclude: ['node_modules', 'motion'],
     }),
   ],
-  external: [...Object.keys(pkg.dependencies || {}), ...Object.keys(pkg.peerDependencies || {})],
+  external: [
+    ...Object.keys(pkg.dependencies || {}),
+    ...Object.keys(pkg.peerDependencies || {}),
+  ],
   watch: {
     clearScreen: false,
     include: 'src/**',

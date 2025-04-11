@@ -43,7 +43,6 @@ interface IServers {
 
 export type ITransports = Record<string, IServers>;
 
-
 /**
  *  BluxProvider.config
  */
@@ -53,7 +52,14 @@ export interface IProviderConfig {
   appearance?: Partial<IAppearance>;
   transports?: ITransports;
   loginMethods?: Array<
-    'wallet' | 'email' | 'sms' | 'google' | 'twitter' | 'discord' | 'github' | 'passkey'
+    | 'wallet'
+    | 'email'
+    | 'sms'
+    | 'google'
+    | 'twitter'
+    | 'discord'
+    | 'github'
+    | 'passkey'
   >;
 }
 

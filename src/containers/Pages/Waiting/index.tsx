@@ -14,7 +14,9 @@ const Waiting = () => {
   const hasConnected = useRef(false);
   const [error, setError] = useState(false);
   const [mappedWallets, setMappedWallets] = useState<MappedWallet[]>([]);
-  const [matchedWallet, setMatchedWallet] = useState<WalletInterface | null>(null);
+  const [matchedWallet, setMatchedWallet] = useState<WalletInterface | null>(
+    null,
+  );
 
   const { user } = context.value || {};
   const waitingStatus = context.value.waitingStatus;
@@ -76,7 +78,10 @@ const Waiting = () => {
         const { publicKey } = await wallet.connect();
 
         if (publicKey && publicKey.trim() !== '') {
-          const passphrase = await getWalletNetwork(wallet, context.value.config.networks);
+          const passphrase = await getWalletNetwork(
+            wallet,
+            context.value.config.networks,
+          );
 
           context.setValue((prev) => ({
             ...prev,
@@ -108,34 +113,36 @@ const Waiting = () => {
   };
 
   return (
-    <div className="flex flex-col items-center justify-center w-full select-none mt-4">
+    <div className="bluxcc-mt-4 bluxcc-flex bluxcc-w-full bluxcc-select-none bluxcc-flex-col bluxcc-items-center bluxcc-justify-center">
       <div
-        className={`h-20 w-20 flex justify-center border-2 rounded-full overflow-hidden items-center mb-6 ${
-          error ? 'border-lightRed-200' : 'border-primary-100'
+        className={`bluxcc-mb-6 bluxcc-flex bluxcc-h-20 bluxcc-w-20 bluxcc-items-center bluxcc-justify-center bluxcc-overflow-hidden bluxcc-rounded-full bluxcc-border-2 ${
+          error ? 'bluxcc-border-lightRed-200' : 'bluxcc-border-primary-100'
         }`}
       >
         {handleLogos(user?.wallet?.name ?? '')}
       </div>
 
-      <div className="space-y-1 flex-col text-center font-semibold">
-        <p className="text-xl">
+      <div className="bluxcc-flex-col bluxcc-space-y-1 bluxcc-text-center bluxcc-font-semibold">
+        <p className="bluxcc-text-xl">
           {error
             ? `Failed ${waitingStatus === 'connecting' ? 'connecting to' : 'signing with'}`
             : `${waitingStatus === 'connecting' ? 'Waiting for' : 'Signing with'}`}{' '}
           {user?.wallet?.name}
         </p>
-        <p className="text-sm">
+        <p className="bluxcc-text-sm">
           {error
             ? `Please try ${waitingStatus === 'connecting' ? 'connecting' : 'signing'} again.`
             : `${
-                waitingStatus === 'connecting' ? 'Accept connection' : 'Sign the'
+                waitingStatus === 'connecting'
+                  ? 'Accept connection'
+                  : 'Sign the'
               } request in your wallet`}
         </p>
       </div>
 
       {/* divider */}
-      <div className="w-full flex justify-center items-center h-8">
-        <div className="absolute left-0 right-0 bg-primary-100 h-[1px]" />
+      <div className="bluxcc-flex bluxcc-h-8 bluxcc-w-full bluxcc-items-center bluxcc-justify-center">
+        <div className="bluxcc-absolute bluxcc-left-0 bluxcc-right-0 bluxcc-h-[1px] bluxcc-bg-primary-100" />
       </div>
 
       {error ? (

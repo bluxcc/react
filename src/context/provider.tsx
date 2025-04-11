@@ -4,14 +4,20 @@ import BluxModal from '../containers/BluxModal';
 import { defaultAppearance } from '../constants';
 import getMappedWallets from '../utils/mappedWallets';
 import initializeRabetMobile from '../utils/initializeRabetMobile';
-import { ContextState, IProviderConfig, ContextInterface, Routes, SupportedFonts } from '../types';
+import {
+  ContextState,
+  IProviderConfig,
+  ContextInterface,
+  Routes,
+  SupportedFonts,
+} from '../types';
 
 export const ProviderContext = createContext<ContextState | null>(null);
 
 type BluxProviderProps = {
   isDemo?: boolean;
   config: IProviderConfig;
-  children: React.ReactNode;
+  children: React.ReactNode | any;
 };
 
 const googleFonts: Record<SupportedFonts, string | null> = {
@@ -21,7 +27,11 @@ const googleFonts: Record<SupportedFonts, string | null> = {
   'JetBrains Mono': 'JetBrains+Mono',
 };
 
-export const BluxProvider = ({ config, isDemo, children }: BluxProviderProps) => {
+export const BluxProvider = ({
+  config,
+  isDemo,
+  children,
+}: BluxProviderProps) => {
   if (config.networks.length === 0) {
     throw new Error('no network is set in config.networks');
   }
@@ -83,7 +93,8 @@ export const BluxProvider = ({ config, isDemo, children }: BluxProviderProps) =>
 
   const getGoogleFontUrl = (fontName: string): string => {
     const fallbackEncoded = fontName.trim().split(' ').join('+');
-    const encodedFont = googleFonts[fontName as SupportedFonts] ?? fallbackEncoded;
+    const encodedFont =
+      googleFonts[fontName as SupportedFonts] ?? fallbackEncoded;
 
     return `https://fonts.googleapis.com/css2?family=${encodedFont}&display=swap`;
   };
@@ -104,7 +115,10 @@ export const BluxProvider = ({ config, isDemo, children }: BluxProviderProps) =>
   }, [value.config.appearance.font]);
 
   useEffect(() => {
-    if (value.user.wallet && !value.config.networks.includes(value.user.wallet.passphrase)) {
+    if (
+      value.user.wallet &&
+      !value.config.networks.includes(value.user.wallet.passphrase)
+    ) {
       // todo: use a persistent modal instead of console.log
       console.log('You are on a wrong network!');
     } else {

@@ -1,7 +1,11 @@
 import { xBullWalletConnect } from '@creit.tech/xbull-wallet-connect';
 
 import getNetworkByPassphrase from '../../utils/stellar/getNetworkByPassphrase';
-import { GetNetworkResult, SupportedWallets, WalletInterface } from '../../types';
+import {
+  GetNetworkResult,
+  SupportedWallets,
+  WalletInterface,
+} from '../../types';
 
 export const xBullConfig: WalletInterface = {
   name: SupportedWallets.Xbull,
@@ -9,7 +13,10 @@ export const xBullConfig: WalletInterface = {
 
   isAvailable: () =>
     new Promise((resolve) => {
-      setTimeout(() => resolve(typeof window !== 'undefined' && !!window.xBullSDK), 250);
+      setTimeout(
+        () => resolve(typeof window !== 'undefined' && !!window.xBullSDK),
+        250,
+      );
     }),
 
   connect: async () => {
@@ -30,7 +37,9 @@ export const xBullConfig: WalletInterface = {
       const signedXdr = await xbull.sign({
         xdr,
         publicKey: options?.address,
-        network: options?.networkPassphrase && getNetworkByPassphrase(options?.networkPassphrase),
+        network:
+          options?.networkPassphrase &&
+          getNetworkByPassphrase(options?.networkPassphrase),
       });
       xbull.closeConnections();
       return signedXdr;
@@ -41,5 +50,5 @@ export const xBullConfig: WalletInterface = {
   },
   getNetwork: async (): Promise<GetNetworkResult> => {
     throw new Error('Failed to get network from xBull');
-  }
+  },
 };

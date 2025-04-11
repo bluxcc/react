@@ -1,4 +1,4 @@
-import { Networks } from "@stellar/stellar-sdk";
+import { Networks } from '@stellar/stellar-sdk';
 
 export const networks = {
   mainnet: Networks.PUBLIC,

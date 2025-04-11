@@ -1,8 +1,21 @@
 import React from 'react';
 
 export const InfoIcon = ({ fill = '#1C1B1F' }: { fill?: string }) => (
-  <svg width="20" height="20" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg">
-    <mask id="mask0_0_3021" maskUnits="userSpaceOnUse" x="0" y="0" width="20" height="20">
+  <svg
+    width="20"
+    height="20"
+    viewBox="0 0 20 20"
+    fill="none"
+    xmlns="http://www.w3.org/2000/svg"
+  >
+    <mask
+      id="mask0_0_3021"
+      maskUnits="userSpaceOnUse"
+      x="0"
+      y="0"
+      width="20"
+      height="20"
+    >
       <rect width="20" height="20" fill="#D9D9D9" />
     </mask>
     <g mask="url(#mask0_0_3021)">
@@ -14,8 +27,21 @@ export const InfoIcon = ({ fill = '#1C1B1F' }: { fill?: string }) => (
   </svg>
 );
 export const ArrowRight = ({ fill = '#5F6367' }: { fill?: string }) => (
-  <svg width="20" height="20" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg">
-    <mask id="mask0_117_204" maskUnits="userSpaceOnUse" x="0" y="0" width="20" height="20">
+  <svg
+    width="20"
+    height="20"
+    viewBox="0 0 20 20"
+    fill="none"
+    xmlns="http://www.w3.org/2000/svg"
+  >
+    <mask
+      id="mask0_117_204"
+      maskUnits="userSpaceOnUse"
+      x="0"
+      y="0"
+      width="20"
+      height="20"
+    >
       <rect width="20" height="20" fill="#D9D9D9" />
     </mask>
     <g mask="url(#mask0_117_204)">
@@ -27,18 +53,47 @@ export const ArrowRight = ({ fill = '#5F6367' }: { fill?: string }) => (
   </svg>
 );
 export const ArrowLeft = ({ fill = '#5F6367' }: { fill?: string }) => (
-  <svg width="24" height="25" viewBox="0 0 24 25" fill="none" xmlns="http://www.w3.org/2000/svg">
-    <mask id="mask0_170_30135" maskUnits="userSpaceOnUse" x="0" y="0" width="24" height="25">
+  <svg
+    width="24"
+    height="25"
+    viewBox="0 0 24 25"
+    fill="none"
+    xmlns="http://www.w3.org/2000/svg"
+  >
+    <mask
+      id="mask0_170_30135"
+      maskUnits="userSpaceOnUse"
+      x="0"
+      y="0"
+      width="24"
+      height="25"
+    >
       <rect y="0.5" width="24" height="24" fill="#D9D9D9" />
     </mask>
     <g mask="url(#mask0_170_30135)">
-      <path d="M16 22.5L6 12.5L16 2.5L17.775 4.275L9.55 12.5L17.775 20.725L16 22.5Z" fill={fill} />
+      <path
+        d="M16 22.5L6 12.5L16 2.5L17.775 4.275L9.55 12.5L17.775 20.725L16 22.5Z"
+        fill={fill}
+      />
     </g>
   </svg>
 );
 export const Close = ({ fill = '#5F6367' }: { fill?: string }) => (
-  <svg width="22" height="22" viewBox="0 0 22 22" fill="none" xmlns="http://www.w3.org/2000/svg">
-    <mask id="mask0_150_17" maskUnits="userSpaceOnUse" x="0" y="0" width="22" height="22">
+  <svg
+    width="22"
+    height="22"
+    viewBox="0 0 22 22"
+    fill="none"
+    xmlns="http://www.w3.org/2000/svg"
+  >
+    <mask
+      id="mask0_150_17"
+      maskUnits="userSpaceOnUse"
+      x="0"
+      y="0"
+      width="22"
+      height="22"
+    >
       <rect width="22" height="22" fill="#D9D9D9" />
     </mask>
     <g mask="url(#mask0_150_17)">
@@ -56,9 +111,16 @@ export const Loading = ({ fill = '#0C1083' }: { fill?: string }) => (
     viewBox="0 0 25 24"
     fill="none"
     xmlns="http://www.w3.org/2000/svg"
-    className="animate-spin"
+    className="bluxcc-animate-spin"
   >
-    <mask id="mask0_2054_770" maskUnits="userSpaceOnUse" x="0" y="0" width="25" height="24">
+    <mask
+      id="mask0_2054_770"
+      maskUnits="userSpaceOnUse"
+      x="0"
+      y="0"
+      width="25"
+      height="24"
+    >
       <rect x="0.5" width="24" height="24" fill="#D9D9D9" />
     </mask>
     <g mask="url(#mask0_2054_770)">
@@ -70,8 +132,21 @@ export const Loading = ({ fill = '#0C1083' }: { fill?: string }) => (
   </svg>
 );
 export const GreenCheck = () => (
-  <svg width="48" height="49" viewBox="0 0 48 49" fill="none" xmlns="http://www.w3.org/2000/svg">
-    <mask id="mask0_2045_4252" maskUnits="userSpaceOnUse" x="0" y="0" width="48" height="49">
+  <svg
+    width="48"
+    height="49"
+    viewBox="0 0 48 49"
+    fill="none"
+    xmlns="http://www.w3.org/2000/svg"
+  >
+    <mask
+      id="mask0_2045_4252"
+      maskUnits="userSpaceOnUse"
+      x="0"
+      y="0"
+      width="48"
+      height="49"
+    >
       <rect y="0.5" width="48" height="48" fill="#D9D9D9" />
     </mask>
     <g mask="url(#mask0_2045_4252)">
@@ -83,8 +158,21 @@ export const GreenCheck = () => (
   </svg>
 );
 export const LogOut = () => (
-  <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-    <mask id="mask0_2054_469" maskUnits="userSpaceOnUse" x="0" y="0" width="24" height="24">
+  <svg
+    width="24"
+    height="24"
+    viewBox="0 0 24 24"
+    fill="none"
+    xmlns="http://www.w3.org/2000/svg"
+  >
+    <mask
+      id="mask0_2054_469"
+      maskUnits="userSpaceOnUse"
+      x="0"
+      y="0"
+      width="24"
+      height="24"
+    >
       <rect width="24" height="24" fill="#D9D9D9" />
     </mask>
     <g mask="url(#mask0_2054_469)">
@@ -96,8 +184,21 @@ export const LogOut = () => (
   </svg>
 );
 export const Copy = () => (
-  <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-    <mask id="mask0_2054_791" maskUnits="userSpaceOnUse" x="0" y="0" width="24" height="24">
+  <svg
+    width="24"
+    height="24"
+    viewBox="0 0 24 24"
+    fill="none"
+    xmlns="http://www.w3.org/2000/svg"
+  >
+    <mask
+      id="mask0_2054_791"
+      maskUnits="userSpaceOnUse"
+      x="0"
+      y="0"
+      width="24"
+      height="24"
+    >
       <rect width="24" height="24" fill="#D9D9D9" />
     </mask>
     <g mask="url(#mask0_2054_791)">
@@ -109,8 +210,21 @@ export const Copy = () => (
   </svg>
 );
 export const History = ({ fill = '#0C1083' }: { fill?: string }) => (
-  <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-    <mask id="mask0_2054_838" maskUnits="userSpaceOnUse" x="0" y="0" width="24" height="24">
+  <svg
+    width="24"
+    height="24"
+    viewBox="0 0 24 24"
+    fill="none"
+    xmlns="http://www.w3.org/2000/svg"
+  >
+    <mask
+      id="mask0_2054_838"
+      maskUnits="userSpaceOnUse"
+      x="0"
+      y="0"
+      width="24"
+      height="24"
+    >
       <rect width="24" height="24" fill="#D9D9D9" />
     </mask>
     <g mask="url(#mask0_2054_838)">
@@ -122,8 +236,21 @@ export const History = ({ fill = '#0C1083' }: { fill?: string }) => (
   </svg>
 );
 export const Send = ({ fill = '#0C1083' }: { fill?: string }) => (
-  <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-    <mask id="mask0_2054_817" maskUnits="userSpaceOnUse" x="0" y="0" width="24" height="24">
+  <svg
+    width="24"
+    height="24"
+    viewBox="0 0 24 24"
+    fill="none"
+    xmlns="http://www.w3.org/2000/svg"
+  >
+    <mask
+      id="mask0_2054_817"
+      maskUnits="userSpaceOnUse"
+      x="0"
+      y="0"
+      width="24"
+      height="24"
+    >
       <rect width="24" height="24" fill="#D9D9D9" />
     </mask>
     <g mask="url(#mask0_2054_817)">
@@ -135,19 +262,56 @@ export const Send = ({ fill = '#0C1083' }: { fill?: string }) => (
   </svg>
 );
 export const ArrowDropUp = ({ fill = '#0C1083' }: { fill?: string }) => (
-  <svg width="16" height="16" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
-    <mask id="mask0_2204_971" maskUnits="userSpaceOnUse" x="0" y="0" width="16" height="16">
+  <svg
+    width="16"
+    height="16"
+    viewBox="0 0 16 16"
+    fill="none"
+    xmlns="http://www.w3.org/2000/svg"
+  >
+    <mask
+      id="mask0_2204_971"
+      maskUnits="userSpaceOnUse"
+      x="0"
+      y="0"
+      width="16"
+      height="16"
+    >
       <rect width="16" height="16" fill="#D9D9D9" />
     </mask>
     <g mask="url(#mask0_2204_971)">
-      <path d="M5.06372 11.8333L7.99955 8.89746L10.9354 11.8333H5.06372Z" fill={fill} />
+      <path
+        d="M5.06372 11.8333L7.99955 8.89746L10.9354 11.8333H5.06372Z"
+        fill={fill}
+      />
     </g>
   </svg>
 );
 export const RedAlert = () => (
-  <svg width="40" height="40" viewBox="0 0 40 40" fill="none" xmlns="http://www.w3.org/2000/svg">
-    <rect x="0.5" y="0.5" width="39" height="39" rx="19.5" fill="transparent" stroke="#EC2929" />
-    <mask id="mask0_2214_3806" maskUnits="userSpaceOnUse" x="8" y="8" width="24" height="24">
+  <svg
+    width="40"
+    height="40"
+    viewBox="0 0 40 40"
+    fill="none"
+    xmlns="http://www.w3.org/2000/svg"
+  >
+    <rect
+      x="0.5"
+      y="0.5"
+      width="39"
+      height="39"
+      rx="19.5"
+      fill="transparent"
+      stroke="#EC2929"
+    />
+    <mask
+      id="mask0_2214_3806"
+      maskUnits="userSpaceOnUse"
+      x="8"
+      y="8"
+      width="24"
+      height="24"
+    >
       <rect x="8" y="8" width="24" height="24" fill="#D9D9D9" />
     </mask>
     <g mask="url(#mask0_2214_3806)">
@@ -159,9 +323,30 @@ export const RedAlert = () => (
   </svg>
 );
 export const Upstream = () => (
-  <svg width="40" height="40" viewBox="0 0 40 40" fill="none" xmlns="http://www.w3.org/2000/svg">
-    <rect x="0.5" y="0.5" width="39" height="39" rx="19.5" fill="transparent" stroke="#00BD81" />
-    <mask id="mask0_2212_3318" maskUnits="userSpaceOnUse" x="8" y="8" width="24" height="24">
+  <svg
+    width="40"
+    height="40"
+    viewBox="0 0 40 40"
+    fill="none"
+    xmlns="http://www.w3.org/2000/svg"
+  >
+    <rect
+      x="0.5"
+      y="0.5"
+      width="39"
+      height="39"
+      rx="19.5"
+      fill="transparent"
+      stroke="#00BD81"
+    />
+    <mask
+      id="mask0_2212_3318"
+      maskUnits="userSpaceOnUse"
+      x="8"
+      y="8"
+      width="24"
+      height="24"
+    >
       <rect x="8" y="8" width="24" height="24" fill="#D9D9D9" />
     </mask>
     <g mask="url(#mask0_2212_3318)">
@@ -173,9 +358,30 @@ export const Upstream = () => (
   </svg>
 );
 export const MultiOperation = () => (
-  <svg width="40" height="40" viewBox="0 0 40 40" fill="none" xmlns="http://www.w3.org/2000/svg">
-    <rect x="0.5" y="0.5" width="39" height="39" rx="19.5" fill="transparent" stroke="#00BD81" />
-    <mask id="mask0_2494_9033" maskUnits="userSpaceOnUse" x="8" y="8" width="24" height="24">
+  <svg
+    width="40"
+    height="40"
+    viewBox="0 0 40 40"
+    fill="none"
+    xmlns="http://www.w3.org/2000/svg"
+  >
+    <rect
+      x="0.5"
+      y="0.5"
+      width="39"
+      height="39"
+      rx="19.5"
+      fill="transparent"
+      stroke="#00BD81"
+    />
+    <mask
+      id="mask0_2494_9033"
+      maskUnits="userSpaceOnUse"
+      x="8"
+      y="8"
+      width="24"
+      height="24"
+    >
       <rect x="8" y="8" width="24" height="24" fill="#D9D9D9" />
     </mask>
     <g mask="url(#mask0_2494_9033)">
@@ -188,9 +394,30 @@ export const MultiOperation = () => (
   </svg>
 );
 export const Downstream = () => (
-  <svg width="40" height="40" viewBox="0 0 40 40" fill="none" xmlns="http://www.w3.org/2000/svg">
-    <rect x="0.5" y="0.5" width="39" height="39" rx="19.5" fill="transparent" stroke="#00BD81" />
-    <mask id="mask0_2214_3828" maskUnits="userSpaceOnUse" x="8" y="8" width="24" height="24">
+  <svg
+    width="40"
+    height="40"
+    viewBox="0 0 40 40"
+    fill="none"
+    xmlns="http://www.w3.org/2000/svg"
+  >
+    <rect
+      x="0.5"
+      y="0.5"
+      width="39"
+      height="39"
+      rx="19.5"
+      fill="transparent"
+      stroke="#00BD81"
+    />
+    <mask
+      id="mask0_2214_3828"
+      maskUnits="userSpaceOnUse"
+      x="8"
+      y="8"
+      width="24"
+      height="24"
+    >
       <rect x="8" y="8" width="24" height="24" fill="#D9D9D9" />
     </mask>
     <g mask="url(#mask0_2214_3828)">
@@ -202,8 +429,21 @@ export const Downstream = () => (
   </svg>
 );
 export const Globe = () => (
-  <svg width="16" height="16" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
-    <mask id="mask0_2265_983" maskUnits="userSpaceOnUse" x="0" y="0" width="24" height="24">
+  <svg
+    width="16"
+    height="16"
+    viewBox="0 0 16 16"
+    fill="none"
+    xmlns="http://www.w3.org/2000/svg"
+  >
+    <mask
+      id="mask0_2265_983"
+      maskUnits="userSpaceOnUse"
+      x="0"
+      y="0"
+      width="24"
+      height="24"
+    >
       <rect width="24" height="24" fill="#D9D9D9" />
     </mask>
     <g mask="url(#mask0_2265_983)">
@@ -215,8 +455,21 @@ export const Globe = () => (
   </svg>
 );
 export const SmallEmailIcon = ({ fill = '#0C1083' }: { fill?: string }) => (
-  <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-    <mask id="mask0_2324_772" maskUnits="userSpaceOnUse" x="0" y="0" width="24" height="24">
+  <svg
+    width="24"
+    height="24"
+    viewBox="0 0 24 24"
+    fill="none"
+    xmlns="http://www.w3.org/2000/svg"
+  >
+    <mask
+      id="mask0_2324_772"
+      maskUnits="userSpaceOnUse"
+      x="0"
+      y="0"
+      width="24"
+      height="24"
+    >
       <rect width="24" height="24" fill="#D9D9D9" />
     </mask>
     <g mask="url(#mask0_2324_772)">
@@ -229,8 +482,21 @@ export const SmallEmailIcon = ({ fill = '#0C1083' }: { fill?: string }) => (
 );
 
 export const EmailIcon = ({ fill = '#0C1083' }: { fill?: string }) => (
-  <svg width="40" height="40" viewBox="0 0 40 40" fill="none" xmlns="http://www.w3.org/2000/svg">
-    <mask id="mask0_2097_3575" maskUnits="userSpaceOnUse" x="0" y="0" width="40" height="40">
+  <svg
+    width="40"
+    height="40"
+    viewBox="0 0 40 40"
+    fill="none"
+    xmlns="http://www.w3.org/2000/svg"
+  >
+    <mask
+      id="mask0_2097_3575"
+      maskUnits="userSpaceOnUse"
+      x="0"
+      y="0"
+      width="40"
+      height="40"
+    >
       <rect width="40" height="40" fill="#D9D9D9" />
     </mask>
     <g mask="url(#mask0_2097_3575)">
