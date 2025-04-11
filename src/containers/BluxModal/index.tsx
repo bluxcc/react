@@ -40,7 +40,7 @@ export default function BluxModal({ isOpen, closeModal }: BluxModalProps) {
     }
   };
 
-  const { title, Component } = modalContent[route];
+  const { title, Component, isSticky } = modalContent[route];
 
   const showCloseModalIcon = route === Routes.WRONG_NETWORK || route === Routes.WAITING || route === Routes.SUCCESSFUL; 
 
@@ -48,7 +48,7 @@ export default function BluxModal({ isOpen, closeModal }: BluxModalProps) {
     <Modal
       isOpen={isOpen}
       onBack={handleBackNavigation}
-      onClose={closeModal}
+      onClose={isSticky ? () => {} : closeModal}
       title={title}
       icon={modalIcon}
       closeButton={!showCloseModalIcon}

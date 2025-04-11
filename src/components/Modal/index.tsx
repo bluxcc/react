@@ -38,8 +38,11 @@ const Modal = ({
 
   useEffect(() => {
     const checkMobile = () => setIsMobile(window.innerWidth < 760);
+
     checkMobile();
+
     window.addEventListener('resize', checkMobile);
+
     return () => window.removeEventListener('resize', checkMobile);
   }, []);
 
@@ -57,6 +60,7 @@ const Modal = ({
     });
 
     resizeObserver.observe(contentRef.current);
+
     return () => resizeObserver.disconnect();
   }, [isOpen, children]);
 

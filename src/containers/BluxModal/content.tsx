@@ -16,10 +16,13 @@ interface ModalContentProps {
   setShowAllWallets: (show: boolean) => void;
 }
 
-export const modalContent: Record<
-  Routes,
-  { title: string; Component: React.FC<ModalContentProps> }
-> = {
+type RouteContent = {
+  title: string;
+  isSticky?: boolean;
+  Component: React.FC<ModalContentProps>;
+}
+
+export const modalContent: Record<Routes, RouteContent> = {
   [Routes.ONBOARDING]: {
     title: 'Log in or Signup',
     Component: OnBoarding,
@@ -53,6 +56,7 @@ export const modalContent: Record<
     Component: () => <ConfirmCode />,
   },
   [Routes.WRONG_NETWORK]: {
+    isSticky: true,
     title: 'Wrong Network',
     Component: () => <WrongNetwork />,
   },

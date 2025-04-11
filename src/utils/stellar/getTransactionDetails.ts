@@ -9,7 +9,7 @@ const getTransactionDetails = (xdr: string) => {
       action: transaction.operations[0].type,
       operations: transaction.operations.length,
       sender: transaction.source,
-      estimatedFee: Number(transaction.fee) / 1000000,
+      estimatedFee: Number(transaction.fee) / 10000000,
     };
   } catch (error) {
     console.error('Transaction failed:', error);
