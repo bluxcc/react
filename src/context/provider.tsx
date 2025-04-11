@@ -3,16 +3,16 @@ import React, { createContext, useState, useEffect, useContext } from 'react';
 import BluxModal from '../containers/BluxModal';
 import { defaultAppearance } from '../constants';
 import getMappedWallets from '../utils/mappedWallets';
+import useCheckWalletNetwork from './useCheckWalletNetwork';
 import initializeRabetMobile from '../utils/initializeRabetMobile';
 import { ContextState, IProviderConfig, ContextInterface, Routes, SupportedFonts } from '../types';
-import useCheckWalletNetwork from './useCheckWalletNetwork';
 
 export const ProviderContext = createContext<ContextState | null>(null);
 
 type BluxProviderProps = {
   isDemo?: boolean;
   config: IProviderConfig;
-  children: React.ReactNode;
+  children: React.ReactNode | any;
 };
 
 const googleFonts: Record<SupportedFonts, string | null> = {

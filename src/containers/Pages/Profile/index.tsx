@@ -18,7 +18,9 @@ const Profile = () => {
   const context = useProvider();
   const appearance = context.value.config.appearance;
   const { logout } = useBlux();
-  const [address, setAddress] = useState(context.value.user.wallet?.address || '');
+  const [address, setAddress] = useState(
+    context.value.user.wallet?.address || '',
+  );
   const [copied, setCopied] = useState(false);
   const { account } = useAccount({
     publicKey: context.value.user.wallet?.address as string,
@@ -45,26 +47,29 @@ const Profile = () => {
       });
   };
   return (
-    <div className="flex flex-col items-center justify-center">
-      <div className="size-[73px] rounded-full mt-4" style={{ background: appearance.accent }} />
+    <div className="bluxcc-flex bluxcc-flex-col bluxcc-items-center bluxcc-justify-center">
+      <div
+        className="bluxcc-mt-4 bluxcc-size-[73px] bluxcc-rounded-full"
+        style={{ background: appearance.accent }}
+      />
       <p
-        className="inline-flex text-base cursor-pointer text-gray-700 mt-6 mb-4"
+        className="bluxcc-mb-4 bluxcc-mt-6 bluxcc-inline-flex bluxcc-cursor-pointer bluxcc-text-base bluxcc-text-gray-700"
         onClick={handleCopyAddress}
       >
         {copied ? (
           'Copied!'
         ) : (
-          <span className="flex items-center gap-1">
+          <span className="bluxcc-flex bluxcc-items-center bluxcc-gap-1">
             {address ? shortenAddress(address, 5) : ''}
             <Copy />
           </span>
         )}
       </p>
-      <p className="text-center" style={{ color: appearance.accent }}>
+      <p className="bluxcc-text-center" style={{ color: appearance.accent }}>
         {account ? humanizeAmount(account.xlmBalance) : 'N/A'} XLM
       </p>
 
-      <div className="space-y-2 mt-[16px] w-full">
+      <div className="bluxcc-mt-[16px] bluxcc-w-full bluxcc-space-y-2">
         <CardItem
           endArrow
           label="Send"
@@ -84,8 +89,8 @@ const Profile = () => {
       </div>
 
       {/* divider */}
-      <div className="w-full flex justify-center items-center h-8">
-        <div className="absolute left-0 right-0 bg-primary-100 h-[1px]" />
+      <div className="bluxcc-flex bluxcc-h-8 bluxcc-w-full bluxcc-items-center bluxcc-justify-center">
+        <div className="bluxcc-absolute bluxcc-left-0 bluxcc-right-0 bluxcc-h-[1px] bluxcc-bg-primary-100" />
       </div>
 
       <Button
@@ -93,7 +98,7 @@ const Profile = () => {
         variant="text"
         state="enabled"
         startIcon={<LogOut />}
-        className="!text-gray-600"
+        className="!bluxcc-text-gray-600"
         onClick={handleDisconnect}
       >
         Disconnect

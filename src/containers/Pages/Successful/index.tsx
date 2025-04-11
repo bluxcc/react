@@ -33,23 +33,29 @@ const Successful = () => {
   const handleGoToExplorer = () => {
     const txHash = context.value.signTransaction.result?.hash;
     if (txHash) {
-      const explorerUrl = getExplorerUrl(context.value.config.networks[0], `tx/${txHash}`); // todo: fix networks
+      const explorerUrl = getExplorerUrl(
+        context.value.config.networks[0],
+        `tx/${txHash}`,
+      ); // todo: fix networks
 
       window.open(explorerUrl, '_blank', 'noopener,noreferrer');
     }
   };
 
   return (
-    <div className="flex flex-col items-center justify-center w-full select-none mt-4">
-      <div className={`size-12 flex justify-center rounded-full overflow-hidden items-center mb-6`}>
+    <div className="bluxcc-mt-4 bluxcc-flex bluxcc-w-full bluxcc-select-none bluxcc-flex-col bluxcc-items-center bluxcc-justify-center">
+      <div
+        className={`bluxcc-mb-6 bluxcc-flex bluxcc-size-12 bluxcc-items-center bluxcc-justify-center bluxcc-overflow-hidden bluxcc-rounded-full`}
+      >
         <GreenCheck />
       </div>
 
-      <div className="space-y-1 w-full flex-col text-center">
-        <p className="text-xl font-semibold">
-          {waitingStatus === 'connecting' ? 'Connection' : 'Transaction'} Successful
+      <div className="bluxcc-w-full bluxcc-flex-col bluxcc-space-y-1 bluxcc-text-center">
+        <p className="bluxcc-text-xl bluxcc-font-semibold">
+          {waitingStatus === 'connecting' ? 'Connection' : 'Transaction'}{' '}
+          Successful
         </p>
-        <p className="text-sm text-center font-medium leading-5">
+        <p className="bluxcc-text-center bluxcc-text-sm bluxcc-font-medium bluxcc-leading-5">
           {waitingStatus === 'connecting'
             ? 'Your account has been successfully connected'
             : 'Your transaction was successfully completed'}
@@ -67,8 +73,8 @@ const Successful = () => {
         </Button>
       )}
 
-      <div className="w-full my-4">
-        <div className="absolute left-0 right-0 bg-primary-100 h-[1px]" />
+      <div className="bluxcc-my-4 bluxcc-w-full">
+        <div className="bluxcc-absolute bluxcc-left-0 bluxcc-right-0 bluxcc-h-[1px] bluxcc-bg-primary-100" />
       </div>
 
       {waitingStatus === 'connecting' ? (

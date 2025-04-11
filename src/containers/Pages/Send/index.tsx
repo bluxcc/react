@@ -12,14 +12,18 @@ const Send = () => {
   const context = useProvider();
   const appearance = context.value.config.appearance;
   const [form, setForm] = useState({ amount: '', address: '', memo: '' });
-  const [errors, setErrors] = useState<{ amount?: string; address?: string }>({});
+  const [errors, setErrors] = useState<{ amount?: string; address?: string }>(
+    {},
+  );
 
-  const handleChange = (field: keyof typeof form) => (e: React.ChangeEvent<HTMLInputElement>) => {
-    setForm((prev) => ({ ...prev, [field]: e.target.value }));
-    setErrors((prev) => ({ ...prev, [field]: '' }));
-  };
+  const handleChange =
+    (field: keyof typeof form) => (e: React.ChangeEvent<HTMLInputElement>) => {
+      setForm((prev) => ({ ...prev, [field]: e.target.value }));
+      setErrors((prev) => ({ ...prev, [field]: '' }));
+    };
 
-  const handleMaxClick = () => setForm((prev) => ({ ...prev, amount: '345.00' }));
+  const handleMaxClick = () =>
+    setForm((prev) => ({ ...prev, amount: '345.00' }));
 
   const handlePasteClick = async () => {
     const text = await navigator.clipboard.readText();
@@ -41,7 +45,7 @@ const Send = () => {
   return (
     <div>
       {/* Amount Input */}
-      <div className="mb-4">
+      <div className="bluxcc-mb-4">
         <InputField
           type="number"
           label="Amount"
@@ -53,15 +57,20 @@ const Send = () => {
             <span
               onClick={handleMaxClick}
               style={{ color: appearance.accent }}
-              className="inline-flex cursor-pointer mr-2"
+              className="bluxcc-mr-2 bluxcc-inline-flex bluxcc-cursor-pointer"
             >
               Max <ArrowDropUp fill={appearance.accent} />
             </span>
           }
           button={
-            <span className="flex justify-between gap-1" style={{ color: appearance.textColor }}>
+            <span
+              className="bluxcc-flex bluxcc-justify-between bluxcc-gap-1"
+              style={{ color: appearance.textColor }}
+            >
               <span className="flex items-center">
-                <StellarSmallLogo fill={getContrastColor(appearance.background)} />
+                <StellarSmallLogo
+                  fill={getContrastColor(appearance.background)}
+                />
               </span>
               XLM
             </span>
@@ -70,7 +79,7 @@ const Send = () => {
       </div>
 
       {/* Recipient Address Input */}
-      <div className="mb-4">
+      <div className="bluxcc-mb-4">
         <InputField
           label="To"
           placeholder="Enter address"
@@ -83,7 +92,7 @@ const Send = () => {
       </div>
 
       {/* Memo Input */}
-      <div className="mb-4">
+      <div className="bluxcc-mb-4">
         <InputField
           label="Memo"
           placeholder="Enter Memo (optional)"
@@ -93,11 +102,16 @@ const Send = () => {
       </div>
 
       {/* Divider */}
-      <div className="w-full my-4 mb-8">
-        <div className="absolute left-0 right-0 bg-primary-100 h-[0.5px]" />
+      <div className="bluxcc-my-4 bluxcc-mb-8 bluxcc-w-full">
+        <div className="bluxcc-absolute bluxcc-left-0 bluxcc-right-0 bluxcc-h-[0.5px] bluxcc-bg-primary-100" />
       </div>
 
-      <Button size="large" variant="outline" state="enabled" onClick={handleSubmit}>
+      <Button
+        size="large"
+        variant="outline"
+        state="enabled"
+        onClick={handleSubmit}
+      >
         Send
       </Button>
     </div>

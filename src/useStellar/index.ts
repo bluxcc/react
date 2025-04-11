@@ -1,5 +1,3 @@
-import useBalance from "./useBalance";
+import useBalance from './useBalance';
 
-export {
-  useBalance,
-};
+export { useBalance };

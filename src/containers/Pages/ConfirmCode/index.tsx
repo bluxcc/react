@@ -34,29 +34,33 @@ const ConfirmCode: React.FC = () => {
   }, [otp, email]);
 
   return (
-    <div className="flex flex-col items-center justify-center w-full select-none mt-4">
-      <div className="h-20 w-20 flex justify-center border-2 rounded-full overflow-hidden items-center mb-6 border-primary-100">
+    <div className="bluxcc-mt-4 bluxcc-flex bluxcc-w-full bluxcc-select-none bluxcc-flex-col bluxcc-items-center bluxcc-justify-center">
+      <div className="bluxcc-mb-6 bluxcc-flex bluxcc-h-20 bluxcc-w-20 bluxcc-items-center bluxcc-justify-center bluxcc-overflow-hidden bluxcc-rounded-full bluxcc-border-2 bluxcc-border-primary-100">
         <EmailIcon fill={value.config.appearance.accent} />
       </div>
 
-      <div className="space-y-1 flex-col text-center">
-        <p className="text-xl font-medium">Enter confirmation code</p>
+      <div className="bluxcc-flex-col bluxcc-space-y-1 bluxcc-text-center">
+        <p className="bluxcc-text-xl bluxcc-font-medium">
+          Enter confirmation code
+        </p>
         {error ? (
-          <p className="text-alert-error text-sm h-10 flex justify-center items-center">
+          <p className="bluxcc-flex bluxcc-h-10 bluxcc-items-center bluxcc-justify-center bluxcc-text-sm bluxcc-text-alert-error">
             Invalid code, please try again.
           </p>
         ) : (
-          <p className="text-sm h-10">Please check your email and enter confirmation code below</p>
+          <p className="bluxcc-h-10 bluxcc-text-sm">
+            Please check your email and enter confirmation code below
+          </p>
         )}
       </div>
 
-      <div className="mt-6 text-center">
+      <div className="bluxcc-mt-6 bluxcc-text-center">
         <OTPInput otp={otp} setOtp={setOtp} error={error} />
       </div>
 
       {/* Divider */}
-      <div className="w-full flex justify-center items-center h-8">
-        <div className="absolute left-0 right-0 bg-primary-100 h-[0.75px]" />
+      <div className="bluxcc-flex bluxcc-h-8 bluxcc-w-full bluxcc-items-center bluxcc-justify-center">
+        <div className="bluxcc-absolute bluxcc-left-0 bluxcc-right-0 bluxcc-h-[0.75px] bluxcc-bg-primary-100" />
       </div>
 
       <Button

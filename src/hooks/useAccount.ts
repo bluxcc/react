@@ -24,7 +24,10 @@ const getXLMBalance = (balances: Horizon.HorizonApi.BalanceLine[]): string => {
   return balances.find((b) => b.asset_type === 'native')?.balance || '0';
 };
 
-const useAccount = ({ publicKey, passphrase }: AccountHookProps): AccountHookResult => {
+const useAccount = ({
+  publicKey,
+  passphrase,
+}: AccountHookProps): AccountHookResult => {
   const [account, setAccount] = useState<AccountData | null>(null);
   const [loading, setLoading] = useState<boolean>(true);
   const [error, setError] = useState<string | null>(null);
@@ -32,7 +35,10 @@ const useAccount = ({ publicKey, passphrase }: AccountHookProps): AccountHookRes
   useEffect(() => {
     let isSubscribed = true;
     let eventSource: (() => void) | null = null;
-    getTransactions(new Horizon.Server('https://horizon.stellar.org'), publicKey).then((res) => {
+    getTransactions(
+      new Horizon.Server('https://horizon.stellar.org'),
+      publicKey,
+    ).then((res) => {
       setAccount((prev) => (prev ? { ...prev, transactions: res } : null));
     });
     // todo fix network
@@ -69,7 +75,10 @@ const useAccount = ({ publicKey, passphrase }: AccountHookProps): AccountHookRes
 
       try {
         const server = getStellarServer(
-          getNetworkByPassphrase(passphrase) as 'testnet' | 'public' | 'futurenet',
+          getNetworkByPassphrase(passphrase) as
+            | 'testnet'
+            | 'public'
+            | 'futurenet',
         );
         setLoading(true);
 

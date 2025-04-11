@@ -53,7 +53,10 @@ export default function BluxModal({ isOpen, closeModal }: BluxModalProps) {
       icon={modalIcon}
       closeButton={!showCloseModalIcon}
     >
-      <Component showAllWallets={showAllWallets} setShowAllWallets={setShowAllWallets} />
+      <Component
+        showAllWallets={showAllWallets}
+        setShowAllWallets={setShowAllWallets}
+      />
     </Modal>
   );
 }

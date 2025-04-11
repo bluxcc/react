@@ -1,4 +1,9 @@
-import { GetNetworkResult, SupportedWallets, WalletInterface, WalletNetwork } from '../../types';
+import {
+  GetNetworkResult,
+  SupportedWallets,
+  WalletInterface,
+  WalletNetwork,
+} from '../../types';
 
 export const rabetConfig: WalletInterface = {
   name: SupportedWallets.Rabet,
@@ -6,7 +11,10 @@ export const rabetConfig: WalletInterface = {
 
   isAvailable: () =>
     new Promise((resolve) => {
-      setTimeout(() => resolve(typeof window !== 'undefined' && !!window.rabet), 250);
+      setTimeout(
+        () => resolve(typeof window !== 'undefined' && !!window.rabet),
+        250,
+      );
     }),
 
   connect: async () => {
@@ -26,7 +34,9 @@ export const rabetConfig: WalletInterface = {
 
       const result = await window.rabet.sign(
         xdr,
-        options.networkPassphrase === WalletNetwork.PUBLIC ? 'mainnet' : 'testnet',
+        options.networkPassphrase === WalletNetwork.PUBLIC
+          ? 'mainnet'
+          : 'testnet',
       );
       return result.xdr;
     } catch (error) {
@@ -48,7 +58,7 @@ export const rabetConfig: WalletInterface = {
     try {
       if (!window.rabet) throw new Error('Rabet Wallet is not installed.');
 
-      const network = await window.rabet.getNetwork() as GetNetworkResult;
+      const network = (await window.rabet.getNetwork()) as GetNetworkResult;
 
       return network;
     } catch (error) {

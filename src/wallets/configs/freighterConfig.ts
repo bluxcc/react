@@ -1,6 +1,10 @@
 import freighterApi, { signTransaction } from '@stellar/freighter-api';
 
-import { GetNetworkResult, SupportedWallets, WalletInterface } from '../../types';
+import {
+  GetNetworkResult,
+  SupportedWallets,
+  WalletInterface,
+} from '../../types';
 
 export const freighterConfig: WalletInterface = {
   name: SupportedWallets.Freighter,
@@ -34,7 +38,10 @@ export const freighterConfig: WalletInterface = {
 
       const result = await freighterApi.requestAccess();
 
-      if (result.error && result.error.message === 'The user rejected this request.') {
+      if (
+        result.error &&
+        result.error.message === 'The user rejected this request.'
+      ) {
         throw new Error('Failed to connect to Freighter');
       }
 

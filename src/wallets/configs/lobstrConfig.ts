@@ -1,6 +1,14 @@
-import { isConnected, getPublicKey, signTransaction } from '@lobstrco/signer-extension-api';
+import {
+  isConnected,
+  getPublicKey,
+  signTransaction,
+} from '@lobstrco/signer-extension-api';
 
-import { GetNetworkResult, SupportedWallets, WalletInterface } from '../../types';
+import {
+  GetNetworkResult,
+  SupportedWallets,
+  WalletInterface,
+} from '../../types';
 
 export const lobstrConfig: WalletInterface = {
   name: SupportedWallets.Lobstr,

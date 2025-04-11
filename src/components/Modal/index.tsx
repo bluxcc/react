@@ -69,20 +69,23 @@ const Modal = ({
   return (
     <>
       {!context.value.isDemo && (
-        <ModalBackdrop isClosing={isClosing} onClose={() => handleClose(onClose)} />
+        <ModalBackdrop
+          isClosing={isClosing}
+          onClose={() => handleClose(onClose)}
+        />
       )}
 
       <div
-        className={`absolute inset-0 flex items-center justify-center z-[9999] ${
-          isClosing && 'animate-fadeOut'
+        className={`bluxcc-absolute bluxcc-inset-0 bluxcc-z-[9999] bluxcc-flex bluxcc-items-center bluxcc-justify-center ${
+          isClosing && 'bluxcc-animate-fadeOut'
         }`}
         onClick={(e) => e.target === e.currentTarget && handleClose(onClose)}
       >
         <div
-          className={`overflow-hidden shadow-[0px_4px_80px_0px_#00000008] border border-primary-100 box-border transition-all ${
+          className={`bluxcc-box-border bluxcc-overflow-hidden bluxcc-border bluxcc-border-primary-100 bluxcc-shadow-[0px_4px_80px_0px_#00000008] bluxcc-transition-all ${
             isMobile
-              ? 'fixed bottom-0 left-0 w-full max-h-[90vh] !rounded-b-none'
-              : 'relative !w-[360px]'
+              ? 'bluxcc-fixed bluxcc-bottom-0 bluxcc-left-0 bluxcc-max-h-[90vh] bluxcc-w-full !bluxcc-rounded-b-none'
+              : 'bluxcc-relative !bluxcc-w-[360px]'
           }`}
           style={{
             height: typeof height === 'number' ? `${height}px` : height,
@@ -91,8 +94,8 @@ const Modal = ({
               ? isOpening
                 ? 'translateY(100%)'
                 : isClosing
-                ? 'translateY(100%)'
-                : 'translateY(0%)'
+                  ? 'translateY(100%)'
+                  : 'translateY(0%)'
               : 'none',
             transition: `height 300ms ease-in-out, border-radius 300ms, opacity 300ms ease-out${
               isMobile ? ', transform 300ms ease-out' : ''
@@ -104,7 +107,7 @@ const Modal = ({
             borderRadius,
           }}
         >
-          <div ref={contentRef} className="px-6 pb-4">
+          <div ref={contentRef} className="bluxcc-px-6 bluxcc-pb-4">
             <ModalHeader
               icon={icon}
               onInfo={onInfo}

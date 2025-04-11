@@ -24,7 +24,11 @@ type CustomButtonProps = {
   appearance: IAppearance;
 };
 
-const CustomButton = ({ button, onButtonClick, appearance }: CustomButtonProps) => {
+const CustomButton = ({
+  button,
+  onButtonClick,
+  appearance,
+}: CustomButtonProps) => {
   return (
     <button
       onClick={onButtonClick}
@@ -34,7 +38,7 @@ const CustomButton = ({ button, onButtonClick, appearance }: CustomButtonProps) 
         borderColor: appearance.accent,
         backgroundColor: appearance.background,
       }}
-      className="border text-sm font-semibold px-3 py-1 transition-all duration-300"
+      className="bluxcc-border bluxcc-px-3 bluxcc-py-1 bluxcc-text-sm bluxcc-font-semibold bluxcc-transition-all bluxcc-duration-300"
     >
       {button}
     </button>
@@ -56,14 +60,16 @@ const InputField = ({
 }: InputFieldProps) => {
   const context = useProvider();
   const appearance = context.value.config.appearance;
-  const borderRadius = getBorderRadius(context.value.config.appearance.cornerRadius);
+  const borderRadius = getBorderRadius(
+    context.value.config.appearance.cornerRadius,
+  );
 
   return (
-    <div className="w-full flex flex-col">
+    <div className="bluxcc-flex bluxcc-w-full bluxcc-flex-col">
       {label && (
         <label
-          className={`flex justify-between text-sm ml-2 mb-1 ${
-            error ? 'text-alert-error' : 'text-gray-800'
+          className={`bluxcc-mb-1 bluxcc-ml-2 bluxcc-flex bluxcc-justify-between bluxcc-text-sm ${
+            error ? 'bluxcc-text-alert-error' : 'bluxcc-text-gray-800'
           }`}
         >
           <span>{label}</span>
@@ -71,9 +77,7 @@ const InputField = ({
         </label>
       )}
       <div
-        className={`flex items-center h-14 w-full border px-4 py-2 transition-all 
-        ${error ? 'border-alert-error' : 'border-primary-100 focus-within:ring-1'} 
-        `}
+        className={`bluxcc-flex bluxcc-h-14 bluxcc-w-full bluxcc-items-center bluxcc-border bluxcc-px-4 bluxcc-py-2 bluxcc-transition-all ${error ? 'bluxcc-border-alert-error' : 'bluxcc-border-primary-100 focus-within:bluxcc-ring-1'} `}
         style={
           {
             '--tw-ring-color': !error && context.value.config.appearance.accent,
@@ -81,21 +85,31 @@ const InputField = ({
           } as React.CSSProperties
         }
       >
-        {iconLeft && <div className="mr-2">{iconLeft}</div>}
+        {iconLeft && <div className="bluxcc-mr-2">{iconLeft}</div>}
         <input
           type={type}
           value={value}
           placeholder={placeholder}
-          className="bg-transparent outline-none text-gray-700 placeholder-gray-500 w-[90%] mr-2"
+          className="bluxcc-mr-2 bluxcc-w-[90%] bluxcc-bg-transparent bluxcc-text-gray-700 bluxcc-outline-none placeholder:bluxcc-text-gray-500"
           style={{ color: appearance.textColor }}
           onChange={onChange}
         />
         {button && (
-          <CustomButton button={button} onButtonClick={onButtonClick} appearance={appearance} />
+          <CustomButton
+            button={button}
+            onButtonClick={onButtonClick}
+            appearance={appearance}
+          />
         )}
-        {iconRight && <div className="ml-2">{iconRight}</div>}
+        {iconRight && <div className="bluxcc-ml-2">{iconRight}</div>}
       </div>
-      {error && <p className={`text-xs mt-1 ml-2 text-alert-error`}>{error}</p>}
+      {error && (
+        <p
+          className={`bluxcc-ml-2 bluxcc-mt-1 bluxcc-text-xs bluxcc-text-alert-error`}
+        >
+          {error}
+        </p>
+      )}
     </div>
   );
 };

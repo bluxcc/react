@@ -1,5 +1,6 @@
 /** @type {import('tailwindcss').Config} */
 export default {
+  prefix: 'bluxcc-',
   content: ['./src/**/*.{js,jsx,ts,tsx,css}'],
   theme: {
     extend: {

@@ -29,18 +29,18 @@ const Activity: React.FC = () => {
   // todo: fix history
   return (
     <div>
-      <div className="my-4 h-[248px]">
+      <div className="bluxcc-my-4 bluxcc-h-[248px]">
         {loading ? (
-          <div className="text-gray-700 text-center flex flex-col justify-center items-center h-full">
+          <div className="bluxcc-flex bluxcc-h-full bluxcc-flex-col bluxcc-items-center bluxcc-justify-center bluxcc-text-center bluxcc-text-gray-700">
             Loading activity...
           </div>
         ) : limitedTransactions.length > 0 ? (
           limitedTransactions.map((tx, index) => (
             <div
               key={index}
-              className={`p-2 ${
+              className={`bluxcc-p-2 ${
                 index < limitedTransactions.length - 1
-                  ? 'border-b border-dashed border-gray-300'
+                  ? 'bluxcc-border-b bluxcc-border-dashed bluxcc-border-gray-300'
                   : ''
               }`}
             >
@@ -57,7 +57,7 @@ const Activity: React.FC = () => {
             </div>
           ))
         ) : (
-          <div className="text-gray-700 text-center flex flex-col justify-center items-center h-full">
+          <div className="bluxcc-flex bluxcc-h-full bluxcc-flex-col bluxcc-items-center bluxcc-justify-center bluxcc-text-center bluxcc-text-gray-700">
             No activity found
           </div>
         )}
@@ -68,7 +68,7 @@ const Activity: React.FC = () => {
           state="enabled"
           variant="outline"
           size="medium"
-          className="mt-6"
+          className="bluxcc-mt-6"
           onClick={handleGoToExplorer}
         >
           See all in explorer

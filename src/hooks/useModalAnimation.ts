@@ -32,7 +32,8 @@ export const useModalAnimation = (isOpen: boolean) => {
 
   return {
     ...state,
-    setHasTransition: (value: boolean) => setState((prev) => ({ ...prev, hasTransition: value })),
+    setHasTransition: (value: boolean) =>
+      setState((prev) => ({ ...prev, hasTransition: value })),
     handleClose,
   };
 };

@@ -28,8 +28,8 @@ const OnBoarding = ({ showAllWallets, setShowAllWallets }: OnBoardingProps) => {
     return wallets.length <= 3
       ? wallets
       : showAllWallets
-      ? wallets.slice(2, wallets.length)
-      : wallets.slice(0, 2);
+        ? wallets.slice(2, wallets.length)
+        : wallets.slice(0, 2);
   }, [wallets, showAllWallets]);
 
   const handleConnect = (wallet: WalletInterface) => {
@@ -72,10 +72,10 @@ const OnBoarding = ({ showAllWallets, setShowAllWallets }: OnBoardingProps) => {
   }, [loginMethods, isPassKeyEnabled]);
 
   const renderDivider = () => (
-    <div className="w-full flex items-center justify-center h-8 my-1">
-      <div className="absolute z-10 left-0 right-0 border-t border-dashed border-spacing-2 border-primary-100" />
+    <div className="bluxcc-my-1 bluxcc-flex bluxcc-h-8 bluxcc-w-full bluxcc-items-center bluxcc-justify-center">
+      <div className="bluxcc-absolute bluxcc-left-0 bluxcc-right-0 bluxcc-z-10 bluxcc-border-spacing-2 bluxcc-border-t bluxcc-border-dashed bluxcc-border-primary-100" />
       <span
-        className="z-20 w-auto px-2 text-primary-100 text-sm font-medium select-none"
+        className="bluxcc-z-20 bluxcc-w-auto bluxcc-select-none bluxcc-px-2 bluxcc-text-sm bluxcc-font-medium bluxcc-text-primary-100"
         style={{ backgroundColor: appearance.background }}
       >
         or
@@ -84,9 +84,9 @@ const OnBoarding = ({ showAllWallets, setShowAllWallets }: OnBoardingProps) => {
   );
 
   return (
-    <div className="w-full">
+    <div className="bluxcc-w-full">
       {context.value.config.appearance.logo && (
-        <div className="flex justify-center items-center my-6 w-full max-h-[80px] overflow-hidden">
+        <div className="bluxcc-my-6 bluxcc-flex bluxcc-max-h-[80px] bluxcc-w-full bluxcc-items-center bluxcc-justify-center bluxcc-overflow-hidden">
           <img
             src={context.value.config.appearance.logo}
             alt={context.value.config.appName}
@@ -95,13 +95,16 @@ const OnBoarding = ({ showAllWallets, setShowAllWallets }: OnBoardingProps) => {
         </div>
       )}
 
-      <div className="space-y-2">
+      <div className="bluxcc-space-y-2">
         {orderedLoginMethods.map((method, index) => {
           const nextMethod = orderedLoginMethods[index + 1];
           const prevMethod = orderedLoginMethods[index - 1];
           const walletExists = orderedLoginMethods.includes('wallet');
           const shouldRenderDivider =
-            (walletExists && !showAllWallets && method === 'wallet' && nextMethod === 'email') ||
+            (walletExists &&
+              !showAllWallets &&
+              method === 'wallet' &&
+              nextMethod === 'email') ||
             (walletExists && method === 'email' && prevMethod !== 'wallet');
 
           if (method === 'wallet') {
@@ -121,7 +124,11 @@ const OnBoarding = ({ showAllWallets, setShowAllWallets }: OnBoardingProps) => {
                   <CardItem
                     endArrow
                     label="All Stellar wallets"
-                    startIcon={<StellarLogo fill={getContrastColor(appearance.background)} />}
+                    startIcon={
+                      <StellarLogo
+                        fill={getContrastColor(appearance.background)}
+                      />
+                    }
                     onClick={() => setShowAllWallets(true)}
                   />
                 )}
@@ -155,7 +162,7 @@ const OnBoarding = ({ showAllWallets, setShowAllWallets }: OnBoardingProps) => {
             return (
               <div
                 key="passkey"
-                className="flex justify-center items-center font-medium text-sm h-11 leading-[32px] cursor-pointer"
+                className="bluxcc-mt-4 bluxcc-flex bluxcc-h-6 bluxcc-cursor-pointer bluxcc-items-center bluxcc-justify-center bluxcc-text-sm bluxcc-font-medium bluxcc-leading-[28px]"
                 style={{ color: appearance.accent }}
               >
                 Log in with Passkey
@@ -168,9 +175,7 @@ const OnBoarding = ({ showAllWallets, setShowAllWallets }: OnBoardingProps) => {
       </div>
 
       <div
-        className={`font-semibold text-[12px] text-center w-full pt-[6px] ${
-          showAllWallets && 'mt-2'
-        }`}
+        className={`bluxcc-w-full bluxcc-pt-[8px] bluxcc-text-center bluxcc-text-[12px] bluxcc-font-medium`}
         style={{
           color: appearance.textColor,
         }}

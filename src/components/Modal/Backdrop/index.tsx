@@ -7,8 +7,8 @@ interface BackdropProps {
 
 const ModalBackdrop = ({ isClosing, onClose }: BackdropProps) => (
   <div
-    className={`fixed inset-0 z-40 bg-black bg-opacity-10 backdrop-blur-[1px] ${
-      isClosing ? 'animate-fadeOut' : 'animate-fadeIn'
+    className={`bluxcc-fixed bluxcc-inset-0 bluxcc-z-40 bluxcc-bg-black bluxcc-bg-opacity-10 bluxcc-backdrop-blur-[1px] ${
+      isClosing ? 'bluxcc-animate-fadeOut' : 'bluxcc-animate-fadeIn'
     }`}
     onClick={onClose}
   />

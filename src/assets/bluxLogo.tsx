@@ -1,14 +1,32 @@
 import React from 'react';
 
 const BluxLogo = ({ fill = 'black' }: { fill?: string }) => (
-  <svg width="150" height="32" viewBox="0 0 150 32" fill="none" xmlns="http://www.w3.org/2000/svg">
+  <svg
+    width="150"
+    height="32"
+    viewBox="0 0 150 32"
+    fill="none"
+    xmlns="http://www.w3.org/2000/svg"
+  >
     <g clipPath="url(#clip0_84_13134)">
-      <path d="M41.7486 0.558624H37.8855V25.7212H41.7486V0.558624Z" fill={fill} />
+      <path
+        d="M41.7486 0.558624H37.8855V25.7212H41.7486V0.558624Z"
+        fill={fill}
+      />
       <path d="M66.5053 27.5581H37.9539V31.5305H66.5053V27.5581Z" fill={fill} />
-      <path d="M76.3978 0.546021H72.5347V25.6688H76.3978V0.546021Z" fill={fill} />
-      <path d="M103.444 0.546021H99.5806V25.6688H103.444V0.546021Z" fill={fill} />
+      <path
+        d="M76.3978 0.546021H72.5347V25.6688H76.3978V0.546021Z"
+        fill={fill}
+      />
+      <path
+        d="M103.444 0.546021H99.5806V25.6688H103.444V0.546021Z"
+        fill={fill}
+      />
       <path d="M99.5805 27.5907H76.3992V31.4538H99.5805V27.5907Z" fill={fill} />
-      <path d="M27.9599 0.546021H1.08423V4.40916H27.9599V0.546021Z" fill={fill} />
+      <path
+        d="M27.9599 0.546021H1.08423V4.40916H27.9599V0.546021Z"
+        fill={fill}
+      />
       <path
         d="M4.82359 12.6967V0.496552H0.960449V12.6967V14.0672V17.9303V27.5907V31.4538V31.4662H4.82359V31.4538H27.9627V27.5907H4.82359V17.9303H27.9627V14.0672H4.82359V12.6967Z"
         fill={fill}
@@ -42,7 +60,12 @@ const BluxLogo = ({ fill = 'black' }: { fill?: string }) => (
     </g>
     <defs>
       <clipPath id="clip0_84_13134">
-        <rect width="148.08" height="32" fill="white" transform="translate(0.959717)" />
+        <rect
+          width="148.08"
+          height="32"
+          fill="white"
+          transform="translate(0.959717)"
+        />
       </clipPath>
     </defs>
   </svg>

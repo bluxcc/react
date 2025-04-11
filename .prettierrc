@@ -1,9 +1,11 @@
 {
-  "printWidth": 100,
+  "printWidth": 80,
   "useTabs": false,
   "tabWidth": 2,
   "semicolon": true,
   "singleQuote": true,
   "jsxSingleQuote": false,
-  "trailingComma": "all"
+  "trailingComma": "all",
+  "plugins": ["prettier-plugin-tailwindcss"],
+  "tailwindStylesheet": "./src/tailwind.css"
 }

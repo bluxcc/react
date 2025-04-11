@@ -22,30 +22,38 @@ const ModalHeader = ({
   const context = useProvider();
   return (
     <div
-      className="w-full flex items-center justify-between h-[60px]"
+      className="bluxcc-flex bluxcc-h-[60px] bluxcc-w-full bluxcc-items-center bluxcc-justify-between"
       style={{ backgroundColor: context.value.config.appearance.background }}
     >
       {icon === 'info' ? (
-        <div onClick={onInfo} className="flex justify-center items-center size-5">
+        <div
+          onClick={onInfo}
+          className="bluxcc-flex bluxcc-size-5 bluxcc-items-center bluxcc-justify-center"
+        >
           {/* cursor-pointer */}
           {/* <InfoIcon fill={context.value.config.appearance.textColor} /> */}
         </div>
       ) : icon === 'back' ? (
-        <div onClick={onBack} className="cursor-pointer flex justify-center items-center size-5">
+        <div
+          onClick={onBack}
+          className="bluxcc-flex bluxcc-size-5 bluxcc-cursor-pointer bluxcc-items-center bluxcc-justify-center"
+        >
           <ArrowLeft fill={context.value.config.appearance.textColor} />
         </div>
       ) : (
-        <div className="size-5" />
+        <div className="bluxcc-size-5" />
       )}
 
-      <p className="text-base font-semibold text-center flex-grow select-none">{title}</p>
+      <p className="bluxcc-flex-grow bluxcc-select-none bluxcc-text-center bluxcc-text-base bluxcc-font-semibold">
+        {title}
+      </p>
 
       {closeButton ? (
-        <div onClick={onClose} className="cursor-pointer size-5">
+        <div onClick={onClose} className="bluxcc-size-5 bluxcc-cursor-pointer">
           <Close fill={context.value.config.appearance.textColor} />
         </div>
       ) : (
-        <div className="size-5" />
+        <div className="bluxcc-size-5" />
       )}
     </div>
   );

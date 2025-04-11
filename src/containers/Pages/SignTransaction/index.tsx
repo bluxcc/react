@@ -14,7 +14,9 @@ const SignTransaction = () => {
   const context = useProvider();
 
   const { xdr } = context.value.signTransaction;
-  const borderRadius = getBorderRadius(context.value.config.appearance.cornerRadius);
+  const borderRadius = getBorderRadius(
+    context.value.config.appearance.cornerRadius,
+  );
   const txDetails = getTransactionDetails(xdr);
   const { account } = useAccount({
     publicKey: context.value.user.wallet?.address as string,
@@ -40,10 +42,12 @@ const SignTransaction = () => {
   }
 
   return (
-    <div className="w-full">
-      <p className="my-4 text-sm font-medium text-center select-none mx-3">
-        <span className="font-semibold capitalize">{context.value.config.appName} </span>wants your
-        permission to approve the following transaction.
+    <div className="bluxcc-w-full">
+      <p className="bluxcc-mx-3 bluxcc-my-4 bluxcc-select-none bluxcc-text-center bluxcc-text-sm bluxcc-font-medium">
+        <span className="bluxcc-font-semibold bluxcc-capitalize">
+          {context.value.config.appName}{' '}
+        </span>
+        wants your permission to approve the following transaction.
       </p>
 
       <Summary
@@ -54,35 +58,42 @@ const SignTransaction = () => {
       />
 
       <div
-        className="inline-flex items-center h-14 px-4 justify-between border border-primary-100 mt-4 w-full"
+        className="bluxcc-mt-4 bluxcc-inline-flex bluxcc-h-14 bluxcc-w-full bluxcc-items-center bluxcc-justify-between bluxcc-border bluxcc-border-primary-100 bluxcc-px-4"
         style={{
           borderRadius,
         }}
       >
-        <div className="inline-flex items-center gap-2 font-medium">
-          <p className="text-sm font-me">Your wallet</p>
-          <p className="text-xs text-gray-700">
+        <div className="bluxcc-inline-flex bluxcc-items-center bluxcc-gap-2 bluxcc-font-medium">
+          <p className="bluxcc-whitespace-nowrap bluxcc-text-sm bluxcc-font-medium">
+            Your wallet
+          </p>
+          <p className="bluxcc-text-xs bluxcc-text-gray-700">
             {shortenAddress(context.value.user.wallet?.address as string, 5)}
           </p>
         </div>
         <div
-          className="bg-lightBlue-100 py-2 px-[10px]"
+          className="bluxcc-bg-lightBlue-100 bluxcc-px-[10px] bluxcc-py-2"
           style={{
             borderRadius,
           }}
         >
-          <p className="text-primary-500 text-xs font-normal">
+          <p className="bluxcc-text-xs bluxcc-font-normal bluxcc-text-primary-500">
             {account ? humanizeAmount(account.xlmBalance) : 'N/A'} XLM
           </p>
         </div>
       </div>
 
       {/* divider */}
-      <div className="w-full flex justify-center items-center h-8">
-        <div className="absolute left-0 right-0 bg-primary-100 h-[1px]" />
+      <div className="bluxcc-flex bluxcc-h-8 bluxcc-w-full bluxcc-items-center bluxcc-justify-center">
+        <div className="bluxcc-absolute bluxcc-left-0 bluxcc-right-0 bluxcc-h-[1px] bluxcc-bg-primary-100" />
       </div>
 
-      <Button size="large" state="enabled" variant="fill" onClick={handleSignTx}>
+      <Button
+        size="large"
+        state="enabled"
+        variant="fill"
+        onClick={handleSignTx}
+      >
         Approve
       </Button>
     </div>

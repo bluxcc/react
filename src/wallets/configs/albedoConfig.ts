@@ -1,7 +1,11 @@
 import albedo from '@albedo-link/intent';
 
 import getNetworkByPassphrase from '../../utils/stellar/getNetworkByPassphrase';
-import { GetNetworkResult, SupportedWallets, WalletInterface } from '../../types';
+import {
+  GetNetworkResult,
+  SupportedWallets,
+  WalletInterface,
+} from '../../types';
 
 export const albedoConfig: WalletInterface = {
   name: SupportedWallets.Albedo,
@@ -26,7 +30,9 @@ export const albedoConfig: WalletInterface = {
       const result = await albedo.tx({
         xdr,
         pubkey: address,
-        network: options?.networkPassphrase && getNetworkByPassphrase(options?.networkPassphrase),
+        network:
+          options?.networkPassphrase &&
+          getNetworkByPassphrase(options?.networkPassphrase),
         submit,
       });
 

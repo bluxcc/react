@@ -8,14 +8,19 @@ export type History = {
 };
 
 // todo: remove any
-const handleAssetText = (op: Horizon.ServerApi.PaymentOperationRecord | any) => {
+const handleAssetText = (
+  op: Horizon.ServerApi.PaymentOperationRecord | any,
+) => {
   if (op.asset_type === 'native') {
     return 'XLM';
   }
   return op.asset_code;
 };
 
-export const getTransactions = async (server: Horizon.Server, publicKey: string) => {
+export const getTransactions = async (
+  server: Horizon.Server,
+  publicKey: string,
+) => {
   try {
     const transactionsPage = await server
       .transactions()
@@ -57,13 +62,16 @@ export const getTransactions = async (server: Horizon.Server, publicKey: string)
         });
 
         // todo: use good operation types
-      } else if (op.type === Horizon.HorizonApi.OperationResponseType.createAccount) {
+      } else if (
+        op.type === Horizon.HorizonApi.OperationResponseType.createAccount
+      ) {
         result.push({
           title: 'Create Account',
           description: 'Account creation',
         });
       } else if (
-        op.type === Horizon.HorizonApi.OperationResponseType.pathPaymentStrictSend ||
+        op.type ===
+          Horizon.HorizonApi.OperationResponseType.pathPaymentStrictSend ||
         op.type === Horizon.HorizonApi.OperationResponseType.pathPayment
       ) {
         result.push({

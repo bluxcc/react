@@ -40,7 +40,7 @@ declare global {
       sign(xdr: string, network: 'mainnet' | 'testnet'): Promise<SignResult>;
       disconnect(): Promise<void>;
       connect: () => Promise<ConnectResult>;
-      getNetwork: () => Promise<{ network: string, passphrase: string }>;
+      getNetwork: () => Promise<{ network: string; passphrase: string }>;
     };
   }
 }

@@ -3,7 +3,7 @@ type UseBalanceParameters = {
   blockNumber?: number;
   chainId?: number;
   enabled?: boolean;
-}
+};
 
 const useBalance = (_params: UseBalanceParameters) => {
   // const provider = useProvider()
