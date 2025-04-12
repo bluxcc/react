@@ -35,10 +35,10 @@ const CustomButton = ({
       style={{
         borderRadius: getBorderRadius(appearance.cornerRadius),
         color: appearance.accent,
-        borderColor: appearance.accent,
+        // borderColor: appearance.accent,
         backgroundColor: appearance.background,
       }}
-      className="bluxcc-border bluxcc-px-3 bluxcc-py-1 bluxcc-text-sm bluxcc-font-semibold bluxcc-transition-all bluxcc-duration-300"
+      className="bluxcc-border bluxcc-border-primary-100 bluxcc-px-3 bluxcc-py-1 bluxcc-text-sm bluxcc-font-semibold bluxcc-transition-all bluxcc-duration-300"
     >
       {button}
     </button>
