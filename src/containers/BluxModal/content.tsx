@@ -49,8 +49,6 @@ export const modalContent: Record<Routes, RouteContent> = {
   },
   [Routes.ACTIVITY]: {
     title: 'Activity',
-    shouldShowBackIcon: true,
-    shouwShowCloseIcon: true,
     Component: () => <Activity />,
   },
   [Routes.OTP]: {
@@ -59,8 +57,6 @@ export const modalContent: Record<Routes, RouteContent> = {
   },
   [Routes.WRONG_NETWORK]: {
     isSticky: true,
-    shouldShowBackIcon: true,
-    shouwShowCloseIcon: true,
     title: 'Wrong Network',
     Component: () => <WrongNetwork />,
   },
