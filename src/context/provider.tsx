@@ -1,7 +1,7 @@
 import React, { createContext, useState, useEffect, useContext } from 'react';
 
 import BluxModal from '../containers/BluxModal';
-import { defaultAppearance } from '../constants';
+import { defaultLightTheme } from '../constants';
 import getMappedWallets from '../utils/mappedWallets';
 import useCheckWalletNetwork from './useCheckWalletNetwork';
 import initializeRabetMobile from '../utils/initializeRabetMobile';
@@ -54,7 +54,7 @@ export const BluxProvider = ({
     config: {
       ...config,
       appearance: {
-        ...defaultAppearance,
+        ...defaultLightTheme,
         ...config.appearance,
       },
     },
@@ -83,7 +83,7 @@ export const BluxProvider = ({
         ...prev.config,
         loginMethods: config.loginMethods,
         appearance: {
-          ...defaultAppearance,
+          ...defaultLightTheme,
           ...config.appearance,
         },
       },
@@ -94,7 +94,8 @@ export const BluxProvider = ({
     const loadWallets = async () => {
       const mappedWallets = await getMappedWallets();
 
-      window.addEventListener('load', initializeRabetMobile);
+      const handleLoad = () => initializeRabetMobile();
+      window.addEventListener('load', handleLoad);
 
       const available = mappedWallets
         .filter(({ isAvailable }) => isAvailable)
@@ -105,6 +106,10 @@ export const BluxProvider = ({
         availableWallets: available,
         isReady: true,
       }));
+
+      return () => {
+        window.removeEventListener('load', handleLoad);
+      };
     };
 
     loadWallets();
@@ -113,16 +118,23 @@ export const BluxProvider = ({
   useEffect(() => {
     const font = value.config.appearance.font;
 
-    if (font) {
-      const link = document.createElement('link');
-      link.href = getGoogleFontUrl(font);
-      link.rel = 'stylesheet';
-      document.head.appendChild(link);
+    if (!font) return;
 
-      return () => {
-        document.head.removeChild(link);
-      };
-    }
+    const existing = document.querySelector(`link[data-font="${font}"]`);
+    if (existing) return;
+
+    const link = document.createElement('link');
+    link.href = getGoogleFontUrl(font);
+    link.rel = 'stylesheet';
+    link.setAttribute('data-font', font);
+    document.head.appendChild(link);
+
+    return () => {
+      const addedFont = document.querySelector(`link[data-font="${font}"]`);
+      if (addedFont) {
+        document.head.removeChild(addedFont);
+      }
+    };
   }, [value.config.appearance.font]);
 
   const closeModal = () => {

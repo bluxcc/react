@@ -1,5 +1,4 @@
 import React, { useState, MouseEvent } from 'react';
-import getBorderRadius from '../../utils/getBorderRadius';
 import { useProvider } from '../../context/provider';
 import { ArrowRight } from '../../assets/Icons';
 
@@ -28,7 +27,7 @@ const CardItem = ({
 }: CardItemProps) => {
   const context = useProvider();
   const { appearance } = context.value.config;
-  const borderRadius = getBorderRadius(appearance.cornerRadius);
+
   const [inputValue, setInputValue] = useState(label || '');
   const [isValid, setIsValid] = useState(false);
   const [isFocused, setIsFocused] = useState(false);
@@ -71,7 +70,7 @@ const CardItem = ({
         variant === 'input' ? 'bluxcc-cursor-text' : 'bluxcc-cursor-pointer'
       }`}
       style={{
-        borderRadius,
+        borderRadius: appearance.cornerRadius,
         color: appearance.textColor,
         borderColor: isFocused ? appearance.accent : '#cdceee',
       }}
@@ -79,7 +78,7 @@ const CardItem = ({
       onMouseLeave={onMouseLeave}
     >
       <span
-        style={{ borderRadius }}
+        style={{ borderRadius: appearance.cornerRadius }}
         className="bluxcc-flex bluxcc-size-10 bluxcc-flex-shrink-0 bluxcc-items-center bluxcc-justify-center bluxcc-overflow-hidden bluxcc-border bluxcc-border-primary-100 bluxcc-transition-all bluxcc-duration-300"
       >
         {startIcon}
@@ -109,7 +108,7 @@ const CardItem = ({
                 disabled={!isValid}
                 onClick={() => onSubmit?.(inputValue)}
                 style={{
-                  borderRadius,
+                  borderRadius: appearance.cornerRadius,
                   color: isValid ? appearance.accent : '#9ca3af',
                   borderColor: isValid ? appearance.accent : '#CDCEEE',
                 }}

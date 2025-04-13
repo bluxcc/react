@@ -6,7 +6,7 @@ import useAccount from '../../../hooks/useAccount';
 import { useProvider } from '../../../context/provider';
 import humanizeAmount from '../../../utils/humanizeAmount';
 import shortenAddress from '../../../utils/shortenAddress';
-import getBorderRadius from '../../../utils/getBorderRadius';
+
 import Summary from '../../../components/Transaction/Summery';
 import getTransactionDetails from '../../../utils/stellar/getTransactionDetails';
 
@@ -14,10 +14,7 @@ const SignTransaction = () => {
   const context = useProvider();
 
   const { xdr, network } = context.value.signTransaction;
-  
-  const borderRadius = getBorderRadius(
-    context.value.config.appearance.cornerRadius,
-  );
+
   const txDetails = getTransactionDetails(xdr, network);
   const { account } = useAccount({
     publicKey: context.value.user.wallet?.address as string,
@@ -61,7 +58,7 @@ const SignTransaction = () => {
       <div
         className="bluxcc-mt-4 bluxcc-inline-flex bluxcc-h-14 bluxcc-w-full bluxcc-items-center bluxcc-justify-between bluxcc-border bluxcc-border-primary-100 bluxcc-px-4"
         style={{
-          borderRadius,
+          borderRadius: context.value.config.appearance.cornerRadius,
         }}
       >
         <div className="bluxcc-inline-flex bluxcc-items-center bluxcc-gap-1 bluxcc-whitespace-nowrap bluxcc-font-medium">
@@ -75,7 +72,7 @@ const SignTransaction = () => {
         <div
           className="bluxcc-overflow-hidden bluxcc-bg-lightBlue-100 bluxcc-px-[10px] bluxcc-py-2"
           style={{
-            borderRadius,
+            borderRadius: context.value.config.appearance.cornerRadius,
           }}
         >
           <p className="bluxcc-max-w-[90px] bluxcc-text-xs bluxcc-font-normal bluxcc-text-primary-500">

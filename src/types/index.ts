@@ -107,7 +107,6 @@ export type SupportedFonts = 'Manrope' | 'Inter' | 'JetBrains Mono' | 'Lora';
 /**
  * Supported corner radius styles for UI elements.
  */
-export type CornerRadius = 'none' | 'full' | 'sm' | 'md' | 'lg';
 
 /**
  * Appearance customization options.
@@ -115,10 +114,13 @@ export type CornerRadius = 'none' | 'full' | 'sm' | 'md' | 'lg';
 export interface IAppearance {
   theme: 'light' | 'dark'; // Light or dark mode
   background: string; // Background color or image
+  bgField: string; // Background color for fields
   accent: string; // Primary accent color
   textColor: string; // Main text color
   font: SupportedFonts | string; // Selected font style
-  cornerRadius: CornerRadius | string; // Border radius styling
+  cornerRadius: string; // Border radius styling
+  borderColor: string; // Optional border color
+  borderWidth: string; // Optional border width
   logo?: React.ImgHTMLAttributes<HTMLImageElement>['src']; // Optional application logo URL
 }
 
@@ -199,9 +201,8 @@ export interface GetNetworkResult {
   passphrase: string;
 }
 
-
 export interface ISendTransactionOptions {
-  network?: string
+  network?: string;
 }
 
 /**

@@ -1,7 +1,8 @@
 import React, { useEffect, useRef, useState } from 'react';
+
 import { useProvider } from '../../context/provider';
 import { useModalAnimation } from '../../hooks/useModalAnimation';
-import getBorderRadius from '../../utils/getBorderRadius';
+
 import ModalHeader from './Header';
 import ModalBackdrop from './Backdrop';
 
@@ -36,7 +37,6 @@ const Modal = ({
   const { isOpening, isClosing, handleClose } = useModalAnimation(isOpen);
 
   const { appearance } = context.value.config;
-  const borderRadius = getBorderRadius(appearance.cornerRadius);
 
   useEffect(() => {
     const checkMobile = () => setIsMobile(window.innerWidth < 760);
@@ -107,7 +107,7 @@ const Modal = ({
             color: appearance.textColor,
             fontFamily: appearance.font,
             letterSpacing: '-0.04px',
-            borderRadius,
+            borderRadius: appearance.cornerRadius,
           }}
         >
           <div ref={contentRef} className="bluxcc-px-6 bluxcc-pb-4">

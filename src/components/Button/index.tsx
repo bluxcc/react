@@ -1,6 +1,5 @@
 import React from 'react';
 
-import getBorderRadius from '../../utils/getBorderRadius';
 import { useProvider } from '../../context/provider';
 import getContrastColor from '../../utils/getContrastColor';
 
@@ -42,10 +41,9 @@ const Button = ({
 }: ButtonProps) => {
   const context = useProvider();
   const appearance = context.value.config.appearance;
-  const borderRadius = getBorderRadius(appearance.cornerRadius);
 
   const baseStyle: React.CSSProperties = {
-    borderRadius,
+    borderRadius: appearance.cornerRadius,
     cursor: state === 'disabled' ? 'not-allowed' : 'pointer',
     opacity: state === 'disabled' ? 0.5 : 1,
     pointerEvents: state === 'disabled' ? 'none' : undefined,

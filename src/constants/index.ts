@@ -6,12 +6,28 @@ export const HORIZON_SERVERS = {
   futurenet: 'https://horizon-futurenet.stellar.org',
 };
 
-export const defaultAppearance: IAppearance = {
+export const defaultLightTheme: IAppearance = {
   theme: 'light',
-  background: '#ffffff',
-  accent: '#0C1083',
-  textColor: '#000000',
-  font: 'Manrope',
-  cornerRadius: 'md',
   logo: '',
+  font: 'Manrope',
+  accent: '#0C1083',
+  borderWidth: '1px',
+  bgField: '#ffffff',
+  cornerRadius: '32px',
+  textColor: '#000000',
+  background: '#ffffff',
+  borderColor: '#cdceee',
+};
+
+export const defaultDarkTheme: IAppearance = {
+  theme: 'dark',
+  logo: '',
+  font: 'Manrope',
+  accent: '#FFFFFF',
+  borderWidth: '1px',
+  bgField: '#1A1A1A',
+  cornerRadius: '32px',
+  textColor: '#FFFFFF',
+  background: '#000000',
+  borderColor: '#333333',
 };

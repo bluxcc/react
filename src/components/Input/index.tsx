@@ -1,7 +1,6 @@
 import React from 'react';
 
 import { useProvider } from '../../context/provider';
-import getBorderRadius from '../../utils/getBorderRadius';
 import { IAppearance } from '../../types';
 
 type InputFieldProps = {
@@ -33,7 +32,7 @@ const CustomButton = ({
     <button
       onClick={onButtonClick}
       style={{
-        borderRadius: getBorderRadius(appearance.cornerRadius),
+        borderRadius: appearance.cornerRadius,
         color: appearance.accent,
         // borderColor: appearance.accent,
         backgroundColor: appearance.background,
@@ -60,9 +59,6 @@ const InputField = ({
 }: InputFieldProps) => {
   const context = useProvider();
   const appearance = context.value.config.appearance;
-  const borderRadius = getBorderRadius(
-    context.value.config.appearance.cornerRadius,
-  );
 
   return (
     <div className="bluxcc-flex bluxcc-w-full bluxcc-flex-col">
@@ -81,7 +77,7 @@ const InputField = ({
         style={
           {
             '--tw-ring-color': !error && context.value.config.appearance.accent,
-            borderRadius,
+            borderRadius: appearance.cornerRadius,
           } as React.CSSProperties
         }
       >
