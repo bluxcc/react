@@ -39,7 +39,9 @@ const useAccount = ({
       new Horizon.Server('https://horizon.stellar.org'),
       publicKey,
     ).then((res) => {
-      setAccount((prev) => (prev ? { ...prev, transactions: res } : null));
+        // TODO: fix the typing
+        console.log(res);
+      // setAccount((prev) => (prev ? { ...prev, transactions: res } : null));
     });
     // todo fix network
     const fetchAccount = async (server: HorizonServer) => {
