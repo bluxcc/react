@@ -15,7 +15,14 @@ export function sevenDigit(number: number | string): string {
   };
 
   const precision = precisionMap[integer.length] ?? 0;
-  return precision > 0 ? `${integer}.${decimal.slice(0, precision)}` : integer;
+
+  if (precision > 0) {
+    const sliced = `${integer}.${decimal.slice(0, precision)}`;
+    const num = parseFloat(sliced);
+    return Number.isInteger(num) ? integer : num.toFixed(2);
+  }
+
+  return integer;
 }
 
 function humanizeAmount(amount: number | string, big: boolean = false): string {

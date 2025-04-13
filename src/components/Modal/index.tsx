@@ -14,6 +14,7 @@ interface ModalProps {
   onInfo?: () => void;
   closeButton?: boolean;
   title: string;
+  isSticky?: boolean;
 }
 
 const Modal = ({
@@ -24,6 +25,7 @@ const Modal = ({
   children,
   title,
   icon,
+  isSticky = false,
   closeButton = true,
 }: ModalProps) => {
   const [height, setHeight] = useState<string | number>('auto');
@@ -71,13 +73,14 @@ const Modal = ({
       {!context.value.isDemo && (
         <ModalBackdrop
           isClosing={isClosing}
+          isSticky={isSticky}
           onClose={() => handleClose(onClose)}
         />
       )}
 
       <div
         className={`bluxcc-absolute bluxcc-inset-0 bluxcc-z-[9999] bluxcc-flex bluxcc-items-center bluxcc-justify-center ${
-          isClosing && 'bluxcc-animate-fadeOut'
+          isClosing && !isSticky && 'bluxcc-animate-fadeOut'
         }`}
         onClick={(e) => e.target === e.currentTarget && handleClose(onClose)}
       >
@@ -89,7 +92,7 @@ const Modal = ({
           }`}
           style={{
             height: typeof height === 'number' ? `${height}px` : height,
-            opacity: isClosing ? '0' : '1',
+            opacity: isClosing && !isSticky ? '0' : '1',
             transform: isMobile
               ? isOpening
                 ? 'translateY(100%)'

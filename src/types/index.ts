@@ -48,7 +48,7 @@ export type ITransports = Record<string, IServers>;
  */
 export interface IProviderConfig {
   appName: string; // Application name
-  networks: string[]; // Supported network pass phrases
+  networks: string[]; // Supported network passphrases
   defaultNetwork: string; // The default network passphrase
   appearance?: Partial<IAppearance>;
   transports?: ITransports;

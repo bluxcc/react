@@ -91,6 +91,8 @@ const OnBoarding = ({ showAllWallets, setShowAllWallets }: OnBoardingProps) => {
             src={context.value.config.appearance.logo}
             alt={context.value.config.appName}
             width={152}
+            height={60}
+            className="bluxcc-max-h-[80px] bluxcc-max-w-[180px]"
           />
         </div>
       )}
@@ -182,6 +184,7 @@ const OnBoarding = ({ showAllWallets, setShowAllWallets }: OnBoardingProps) => {
       >
         Powered by{' '}
         <a
+          aria-label="blux link"
           href="https://blux.cc"
           target="_blank"
           rel="noreferrer"
