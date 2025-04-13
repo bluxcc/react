@@ -64,8 +64,11 @@ const Send = () => {
           }
           button={
             <span
-              className="bluxcc-flex bluxcc-justify-between bluxcc-gap-1 bluxcc-border-primary-100"
-              style={{ color: appearance.textColor }}
+              className="bluxcc-flex bluxcc-justify-between bluxcc-gap-1"
+              style={{
+                color: appearance.textColor,
+                borderColor: appearance.borderColor,
+              }}
             >
               <span className="flex items-center">
                 <StellarSmallLogo
@@ -92,7 +95,7 @@ const Send = () => {
       </div>
 
       {/* Memo Input */}
-      <div className="bluxcc-mb-4">
+      <div>
         <InputField
           label="Memo"
           placeholder="Enter Memo (optional)"
@@ -102,8 +105,11 @@ const Send = () => {
       </div>
 
       {/* Divider */}
-      <div className="bluxcc-my-4 bluxcc-mb-8 bluxcc-w-full">
-        <div className="bluxcc-absolute bluxcc-left-0 bluxcc-right-0 bluxcc-h-[0.5px] bluxcc-bg-primary-100" />
+      <div className="bluxcc-flex bluxcc-h-8 bluxcc-w-full bluxcc-items-center bluxcc-justify-center">
+        <div
+          className="bluxcc-absolute bluxcc-left-0 bluxcc-right-0 bluxcc-h-[1px]"
+          style={{ background: appearance.borderColor }}
+        />
       </div>
 
       <Button

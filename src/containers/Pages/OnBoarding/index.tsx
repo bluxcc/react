@@ -73,10 +73,16 @@ const OnBoarding = ({ showAllWallets, setShowAllWallets }: OnBoardingProps) => {
 
   const renderDivider = () => (
     <div className="bluxcc-my-1 bluxcc-flex bluxcc-h-8 bluxcc-w-full bluxcc-items-center bluxcc-justify-center">
-      <div className="bluxcc-absolute bluxcc-left-0 bluxcc-right-0 bluxcc-z-10 bluxcc-border-spacing-2 bluxcc-border-t bluxcc-border-dashed bluxcc-border-primary-100" />
+      <div
+        className="bluxcc-absolute bluxcc-left-0 bluxcc-right-0 bluxcc-z-10 bluxcc-border-spacing-2 bluxcc-border-t bluxcc-border-dashed"
+        style={{ borderColor: appearance.borderColor }}
+      />
       <span
-        className="bluxcc-z-20 bluxcc-w-auto bluxcc-select-none bluxcc-px-2 bluxcc-text-sm bluxcc-font-medium bluxcc-text-primary-100"
-        style={{ backgroundColor: appearance.background }}
+        className="bluxcc-z-20 bluxcc-w-auto bluxcc-select-none bluxcc-px-2 bluxcc-text-sm bluxcc-font-medium"
+        style={{
+          backgroundColor: appearance.background,
+          color: appearance.borderColor,
+        }}
       >
         or
       </span>
@@ -164,7 +170,7 @@ const OnBoarding = ({ showAllWallets, setShowAllWallets }: OnBoardingProps) => {
             return (
               <div
                 key="passkey"
-                className="bluxcc-mt-4 bluxcc-flex bluxcc-h-6 bluxcc-cursor-pointer bluxcc-items-center bluxcc-justify-center bluxcc-text-sm bluxcc-font-medium bluxcc-leading-[28px]"
+                className="!bluxcc-mt-6 bluxcc-flex bluxcc-h-6 bluxcc-cursor-pointer bluxcc-items-center bluxcc-justify-center bluxcc-text-sm bluxcc-font-medium bluxcc-leading-[28px]"
                 style={{ color: appearance.accent }}
               >
                 Log in with Passkey

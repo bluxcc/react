@@ -78,7 +78,11 @@ const OTPInput: React.FC<OTPInputProps> = ({ otp, setOtp, error }) => {
     borderRadius: appearance.cornerRadius,
     color: appearance.accent,
     background: appearance.background,
-    borderColor: error ? '#FF6666' : digit ? appearance.accent : '#cdceee',
+    borderColor: error
+      ? '#FF6666'
+      : digit
+        ? appearance.accent
+        : appearance.borderColor,
   });
 
   return (

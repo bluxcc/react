@@ -85,7 +85,7 @@ const Modal = ({
         onClick={(e) => e.target === e.currentTarget && handleClose(onClose)}
       >
         <div
-          className={`bluxcc-box-border bluxcc-overflow-hidden bluxcc-border bluxcc-border-primary-100 bluxcc-shadow-[0px_4px_80px_0px_#00000008] bluxcc-transition-all ${
+          className={`bluxcc-box-border bluxcc-overflow-hidden bluxcc-shadow-[0px_4px_80px_0px_#00000008] bluxcc-transition-all ${
             isMobile
               ? 'bluxcc-fixed bluxcc-bottom-0 bluxcc-left-0 bluxcc-max-h-[90vh] bluxcc-w-full !bluxcc-rounded-b-none'
               : 'bluxcc-relative !bluxcc-w-[360px]'
@@ -107,6 +107,8 @@ const Modal = ({
             color: appearance.textColor,
             fontFamily: appearance.font,
             letterSpacing: '-0.04px',
+            borderColor: appearance.borderColor,
+            borderWidth: appearance.borderWidth,
             borderRadius: appearance.cornerRadius,
           }}
         >

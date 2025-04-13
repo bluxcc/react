@@ -52,7 +52,7 @@ const Button = ({
 
   if (variant === 'outline') {
     Object.assign(baseStyle, {
-      border: `1px solid #CDCEEE`,
+      border: `1px solid ${appearance.borderColor}`,
       color: appearance.accent,
       backgroundColor: appearance.background,
     });

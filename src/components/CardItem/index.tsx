@@ -1,6 +1,7 @@
 import React, { useState, MouseEvent } from 'react';
 import { useProvider } from '../../context/provider';
 import { ArrowRight } from '../../assets/Icons';
+import getContrastColor from '../../utils/getContrastColor';
 
 type CardItemProps = {
   variant?: 'social' | 'default' | 'input';
@@ -59,7 +60,7 @@ const CardItem = ({
   };
   const onMouseLeave = (e: MouseEvent<HTMLDivElement>) => {
     if (variant !== 'social' && !isFocused) {
-      e.currentTarget.style.borderColor = '#cdceee';
+      e.currentTarget.style.borderColor = appearance.borderColor;
     }
   };
 
@@ -72,14 +73,18 @@ const CardItem = ({
       style={{
         borderRadius: appearance.cornerRadius,
         color: appearance.textColor,
-        borderColor: isFocused ? appearance.accent : '#cdceee',
+        borderColor: isFocused ? appearance.accent : appearance.borderColor,
+        backgroundColor: appearance.bgField,
       }}
       onMouseEnter={onMouseEnter}
       onMouseLeave={onMouseLeave}
     >
       <span
-        style={{ borderRadius: appearance.cornerRadius }}
-        className="bluxcc-flex bluxcc-size-10 bluxcc-flex-shrink-0 bluxcc-items-center bluxcc-justify-center bluxcc-overflow-hidden bluxcc-border bluxcc-border-primary-100 bluxcc-transition-all bluxcc-duration-300"
+        style={{
+          borderRadius: appearance.cornerRadius,
+          borderColor: appearance.borderColor,
+        }}
+        className="bluxcc-flex bluxcc-size-10 bluxcc-flex-shrink-0 bluxcc-items-center bluxcc-justify-center bluxcc-overflow-hidden bluxcc-border bluxcc-transition-all bluxcc-duration-300"
       >
         {startIcon}
       </span>
@@ -109,10 +114,15 @@ const CardItem = ({
                 onClick={() => onSubmit?.(inputValue)}
                 style={{
                   borderRadius: appearance.cornerRadius,
-                  color: isValid ? appearance.accent : '#9ca3af',
-                  borderColor: isValid ? appearance.accent : '#CDCEEE',
+                  background: isValid ? appearance.accent : 'transparent',
+                  borderColor: isValid
+                    ? appearance.accent
+                    : appearance.borderColor,
+                  color: isValid
+                    ? getContrastColor(appearance.accent)
+                    : appearance.textColor,
                 }}
-                className={`bluxcc-absolute bluxcc-right-0 bluxcc-flex bluxcc-h-8 !bluxcc-w-[68px] bluxcc-items-center bluxcc-justify-center bluxcc-border bluxcc-bg-transparent bluxcc-text-sm bluxcc-font-medium bluxcc-transition-all bluxcc-duration-300`}
+                className={`bluxcc-absolute bluxcc-right-0 bluxcc-flex bluxcc-h-8 !bluxcc-w-[68px] bluxcc-items-center bluxcc-justify-center bluxcc-border bluxcc-text-sm bluxcc-font-medium bluxcc-transition-all bluxcc-duration-300`}
               >
                 Submit
               </button>

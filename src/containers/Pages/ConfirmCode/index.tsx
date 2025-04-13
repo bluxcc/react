@@ -6,6 +6,8 @@ import OTPInput from '../../../components/Input/OTPInput';
 
 const ConfirmCode: React.FC = () => {
   const { value } = useProvider();
+  const appearance = value.config.appearance;
+
   const email = value.user.email;
   const [otp, setOtp] = useState<string[]>(Array(6).fill(''));
   const [error, setError] = useState(false);
@@ -35,8 +37,11 @@ const ConfirmCode: React.FC = () => {
 
   return (
     <div className="bluxcc-mt-4 bluxcc-flex bluxcc-w-full bluxcc-select-none bluxcc-flex-col bluxcc-items-center bluxcc-justify-center">
-      <div className="bluxcc-mb-6 bluxcc-flex bluxcc-h-20 bluxcc-w-20 bluxcc-items-center bluxcc-justify-center bluxcc-overflow-hidden bluxcc-rounded-full bluxcc-border-2 bluxcc-border-primary-100">
-        <EmailIcon fill={value.config.appearance.accent} />
+      <div
+        style={{ borderColor: appearance.borderColor }}
+        className="bluxcc-mb-6 bluxcc-flex bluxcc-h-20 bluxcc-w-20 bluxcc-items-center bluxcc-justify-center bluxcc-overflow-hidden bluxcc-rounded-full bluxcc-border-2"
+      >
+        <EmailIcon fill={appearance.accent} />
       </div>
 
       <div className="bluxcc-flex-col bluxcc-space-y-1 bluxcc-text-center">
@@ -60,7 +65,10 @@ const ConfirmCode: React.FC = () => {
 
       {/* Divider */}
       <div className="bluxcc-flex bluxcc-h-8 bluxcc-w-full bluxcc-items-center bluxcc-justify-center">
-        <div className="bluxcc-absolute bluxcc-left-0 bluxcc-right-0 bluxcc-h-[0.75px] bluxcc-bg-primary-100" />
+        <div
+          className="bluxcc-absolute bluxcc-left-0 bluxcc-right-0 bluxcc-h-[1px]"
+          style={{ background: appearance.borderColor }}
+        />
       </div>
 
       <Button
@@ -69,7 +77,7 @@ const ConfirmCode: React.FC = () => {
         variant="text"
         onClick={handleResendCode}
         style={{
-          color: value.config.appearance.accent,
+          color: appearance.accent,
         }}
       >
         Resend code
