@@ -7,6 +7,9 @@ const submitTransaction = async (xdr: string, network: string, transports: ITran
   try {
     const { horizon } = getNetworkRpc(network, transports);
 
+    console.log(horizon)
+    console.log(network)
+
     if (!horizon) {
       throw new Error('Horizon RPC was not found.');
     }

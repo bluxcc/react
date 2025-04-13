@@ -38,6 +38,7 @@ export const rabetConfig: WalletInterface = {
           ? 'mainnet'
           : 'testnet',
       );
+
       return result.xdr;
     } catch (error) {
       console.error('Error signing transaction with Rabet:', error);
