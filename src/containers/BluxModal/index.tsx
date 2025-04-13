@@ -12,11 +12,11 @@ interface BluxModalProps {
 }
 
 export default function BluxModal({ isOpen, closeModal }: BluxModalProps) {
-  const { route, setRoute } = useProvider();
+  const { route, setRoute, value } = useProvider();
   const [showAllWallets, setShowAllWallets] = useState(false);
 
   const shouldShowBackButton =
-    route === Routes.WAITING ||
+    (route === Routes.WAITING && value.waitingStatus !== 'signing') ||
     (route === Routes.ONBOARDING && showAllWallets) ||
     route === Routes.ACTIVITY ||
     route === Routes.SEND ||
@@ -31,7 +31,10 @@ export default function BluxModal({ isOpen, closeModal }: BluxModalProps) {
   }
 
   const handleBackNavigation = () => {
-    if (route === Routes.WAITING || route === Routes.OTP) {
+    if (
+      route === Routes.WAITING ||
+      (route === Routes.OTP && !value.isAuthenticated)
+    ) {
       setRoute(Routes.ONBOARDING);
     } else if (showAllWallets) {
       setShowAllWallets(false);
@@ -42,7 +45,10 @@ export default function BluxModal({ isOpen, closeModal }: BluxModalProps) {
 
   const { title, Component, isSticky } = modalContent[route];
 
-  const showCloseModalIcon = route === Routes.WRONG_NETWORK || route === Routes.WAITING || route === Routes.SUCCESSFUL; 
+  const showCloseModalIcon =
+    route === Routes.WRONG_NETWORK ||
+    route === Routes.WAITING ||
+    route === Routes.SUCCESSFUL;
 
   return (
     <Modal
@@ -50,6 +56,7 @@ export default function BluxModal({ isOpen, closeModal }: BluxModalProps) {
       onBack={handleBackNavigation}
       onClose={isSticky ? () => {} : closeModal}
       title={title}
+      isSticky={isSticky}
       icon={modalIcon}
       closeButton={!showCloseModalIcon}
     >

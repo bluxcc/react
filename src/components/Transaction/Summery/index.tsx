@@ -43,7 +43,7 @@ const Summary = ({
           key={index}
           className={`bluxcc-flex bluxcc-justify-between bluxcc-px-4 bluxcc-py-2 ${
             index < details.length - 1
-              ? 'bluxcc-border-b bluxcc-border-dashed bluxcc-border-gray-300'
+              ? 'bluxcc-border-b bluxcc-border-dashed bluxcc-border-primary-100'
               : ''
           }`}
         >

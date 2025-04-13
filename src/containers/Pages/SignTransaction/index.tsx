@@ -64,7 +64,7 @@ const SignTransaction = () => {
           borderRadius,
         }}
       >
-        <div className="bluxcc-inline-flex bluxcc-items-center bluxcc-gap-2 bluxcc-font-medium">
+        <div className="bluxcc-inline-flex bluxcc-items-center bluxcc-gap-1 bluxcc-whitespace-nowrap bluxcc-font-medium">
           <p className="bluxcc-whitespace-nowrap bluxcc-text-sm bluxcc-font-medium">
             Your wallet
           </p>
@@ -73,12 +73,12 @@ const SignTransaction = () => {
           </p>
         </div>
         <div
-          className="bluxcc-bg-lightBlue-100 bluxcc-px-[10px] bluxcc-py-2"
+          className="bluxcc-overflow-hidden bluxcc-bg-lightBlue-100 bluxcc-px-[10px] bluxcc-py-2"
           style={{
             borderRadius,
           }}
         >
-          <p className="bluxcc-text-xs bluxcc-font-normal bluxcc-text-primary-500">
+          <p className="bluxcc-max-w-[90px] bluxcc-text-xs bluxcc-font-normal bluxcc-text-primary-500">
             {account ? humanizeAmount(account.xlmBalance) : 'N/A'} XLM
           </p>
         </div>

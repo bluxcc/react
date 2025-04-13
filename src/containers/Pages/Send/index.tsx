@@ -64,7 +64,7 @@ const Send = () => {
           }
           button={
             <span
-              className="bluxcc-flex bluxcc-justify-between bluxcc-gap-1"
+              className="bluxcc-flex bluxcc-justify-between bluxcc-gap-1 bluxcc-border-primary-100"
               style={{ color: appearance.textColor }}
             >
               <span className="flex items-center">

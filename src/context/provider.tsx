@@ -5,7 +5,13 @@ import { defaultAppearance } from '../constants';
 import getMappedWallets from '../utils/mappedWallets';
 import useCheckWalletNetwork from './useCheckWalletNetwork';
 import initializeRabetMobile from '../utils/initializeRabetMobile';
-import { ContextState, IProviderConfig, ContextInterface, Routes, SupportedFonts } from '../types';
+import {
+  ContextState,
+  IProviderConfig,
+  ContextInterface,
+  Routes,
+  SupportedFonts,
+} from '../types';
 
 export const ProviderContext = createContext<ContextState | null>(null);
 
@@ -24,12 +30,17 @@ const googleFonts: Record<SupportedFonts, string | null> = {
 
 const getGoogleFontUrl = (fontName: string): string => {
   const fallbackEncoded = fontName.trim().split(' ').join('+');
-  const encodedFont = googleFonts[fontName as SupportedFonts] ?? fallbackEncoded;
+  const encodedFont =
+    googleFonts[fontName as SupportedFonts] ?? fallbackEncoded;
 
   return `https://fonts.googleapis.com/css2?family=${encodedFont}&display=swap`;
 };
 
-export const BluxProvider = ({ config, isDemo, children }: BluxProviderProps) => {
+export const BluxProvider = ({
+  config,
+  isDemo,
+  children,
+}: BluxProviderProps) => {
   if (config.networks.length === 0) {
     throw new Error('no network is set in config.networks');
   }
@@ -113,7 +124,6 @@ export const BluxProvider = ({ config, isDemo, children }: BluxProviderProps) =>
       };
     }
   }, [value.config.appearance.font]);
-
 
   const closeModal = () => {
     setValue((prev) => ({
