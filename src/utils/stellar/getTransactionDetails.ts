@@ -1,9 +1,8 @@
 import { Transaction } from '@stellar/stellar-sdk';
-import { WalletNetwork } from '../../types';
 
-const getTransactionDetails = (xdr: string) => {
+const getTransactionDetails = (xdr: string, network: string) => {
   try {
-    const transaction = new Transaction(xdr, WalletNetwork.PUBLIC);
+    const transaction = new Transaction(xdr, network);
 
     return {
       action: transaction.operations[0].type,

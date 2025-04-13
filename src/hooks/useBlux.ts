@@ -1,6 +1,7 @@
-import { Routes } from '../types';
+import { ISendTransactionOptions, Routes } from '../types';
 import { useProvider } from '../context/provider';
 import getTransactionDetails from '../utils/stellar/getTransactionDetails';
+
 
 export const useBlux = () => {
   const context = useProvider();
@@ -46,13 +47,19 @@ export const useBlux = () => {
     setValue((prev) => ({ ...prev, isModalOpen: true }));
   };
 
-  const sendTransaction = (xdr: string) =>
+  const sendTransaction = (xdr: string, options?: ISendTransactionOptions) =>
     new Promise((resolve, reject) => {
+      let network = value.activeNetwork;
+
+      if (options && options.network) {
+        network = options.network;
+      }
+
       if (!isAuthenticated) {
         reject(new Error('User is not authenticated.'));
       }
 
-      if (!getTransactionDetails(xdr)) {
+      if (!getTransactionDetails(xdr, network)) {
         reject('Invalid XDR');
 
         return;
@@ -66,6 +73,7 @@ export const useBlux = () => {
         signTransaction: {
           ...prev.signTransaction,
           xdr,
+          network,
           resolver: resolve,
         },
       }));

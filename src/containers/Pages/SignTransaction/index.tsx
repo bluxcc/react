@@ -13,14 +13,15 @@ import getTransactionDetails from '../../../utils/stellar/getTransactionDetails'
 const SignTransaction = () => {
   const context = useProvider();
 
-  const { xdr } = context.value.signTransaction;
+  const { xdr, network } = context.value.signTransaction;
+  
   const borderRadius = getBorderRadius(
     context.value.config.appearance.cornerRadius,
   );
-  const txDetails = getTransactionDetails(xdr);
+  const txDetails = getTransactionDetails(xdr, network);
   const { account } = useAccount({
     publicKey: context.value.user.wallet?.address as string,
-    passphrase: context.value.config.networks[0], // todo: fix netweork
+    passphrase: network,
   });
 
   const handleSignTx = async () => {

@@ -1,5 +1,4 @@
 import { WalletInterface } from '../../types';
-import submitTransaction from './submitTransaction';
 
 const signTransaction = async (
   wallet: WalletInterface,
@@ -16,9 +15,7 @@ const signTransaction = async (
     address,
   });
 
-  const result = await submitTransaction(signedXdr, network);
-
-  return result;
+  return signedXdr;
 };
 
 export default signTransaction;

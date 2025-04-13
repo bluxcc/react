@@ -7,6 +7,7 @@ import { useProvider } from '../../../context/provider';
 import { Routes, WalletInterface } from '../../../types';
 import getWalletNetwork from '../../../utils/getWalletNetwork';
 import signTransaction from '../../../utils/stellar/signTransaction';
+import submitTransaction from '../../../utils/stellar/submitTransaction';
 import getMappedWallets, { MappedWallet } from '../../../utils/mappedWallets';
 
 const Waiting = () => {
@@ -18,9 +19,9 @@ const Waiting = () => {
     null,
   );
 
-  const { user } = context.value || {};
+  const { user, config } = context.value;
   const waitingStatus = context.value.waitingStatus;
-  const { xdr, resolver } = context.value.signTransaction;
+  const { xdr, network, resolver } = context.value.signTransaction;
 
   const fetchWallets = async () => {
     const wallets = await getMappedWallets();
@@ -52,12 +53,14 @@ const Waiting = () => {
   const handleAssignment = async (wallet: WalletInterface) => {
     try {
       if (waitingStatus === 'signing') {
-        const result = await signTransaction(
+        const signedXdr = await signTransaction(
           wallet,
           xdr,
           context.value.user.wallet?.address as string,
-          context.value.config.networks[0], // todo: fix network
+          network,
         );
+
+        const result = await submitTransaction(signedXdr, network, config.transports || {});
 
         if (resolver) resolver(result);
 

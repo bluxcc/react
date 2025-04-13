@@ -2,7 +2,6 @@ import { Horizon } from '@stellar/stellar-sdk';
 import { HorizonApi } from '@stellar/stellar-sdk/lib/horizon';
 
 import { Url } from '../utils/network/url';
-import { Fallback } from '../utils/network/fallback';
 
 /**
  * Enum representing the supported wallets in the system.
@@ -37,8 +36,8 @@ export interface AccountData {
 }
 
 interface IServers {
-  horizon?: Url | Fallback;
-  soroban?: Url | Fallback;
+  horizon?: Url;
+  soroban?: Url;
 }
 
 export type ITransports = Record<string, IServers>;
@@ -135,8 +134,10 @@ export interface ContextInterface {
   isAuthenticated: boolean; // User authentication status
   availableWallets: WalletInterface[]; // List of available wallets
   waitingStatus: 'connecting' | 'signing';
+  activeNetwork: string;
   signTransaction: {
     xdr: string; // Transaction details for signing
+    network: string;
     resolver: ((value: HorizonApi.SubmitTransactionResponse) => void) | null; // Transaction signing resolver
     result: HorizonApi.SubmitTransactionResponse | null; // Latest transaction signing result
   };
@@ -196,6 +197,11 @@ export interface SignResult {
 export interface GetNetworkResult {
   network: string;
   passphrase: string;
+}
+
+
+export interface ISendTransactionOptions {
+  network?: string
 }
 
 /**

@@ -47,6 +47,7 @@ export const BluxProvider = ({ config, isDemo, children }: BluxProviderProps) =>
         ...config.appearance,
       },
     },
+    activeNetwork: config.defaultNetwork,
     isDemo: isDemo ?? false,
     user: { wallet: null, phoneNumber: null, email: null },
     isModalOpen: false,
@@ -55,8 +56,9 @@ export const BluxProvider = ({ config, isDemo, children }: BluxProviderProps) =>
     waitingStatus: 'connecting',
     signTransaction: {
       xdr: '',
-      resolver: null,
+      network: '',
       result: null,
+      resolver: null,
     },
     availableWallets: [],
   });
