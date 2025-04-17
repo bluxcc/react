@@ -1,7 +1,7 @@
 import React, { useEffect, useState, useRef } from 'react';
 
 import Button from '../../../components/Button';
-import { Loading } from '../../../assets/Icons';
+import { Loading, RedExclamation } from '../../../assets/Icons';
 import handleLogos from '../../../utils/handleLogos';
 import { useProvider } from '../../../context/provider';
 import { Routes, WalletInterface } from '../../../types';
@@ -119,25 +119,38 @@ const Waiting = () => {
 
   return (
     <div className="bluxcc-mt-4 bluxcc-flex bluxcc-w-full bluxcc-select-none bluxcc-flex-col bluxcc-items-center bluxcc-justify-center">
-      <div
-        className={`bluxcc-mb-6 bluxcc-flex bluxcc-h-20 bluxcc-w-20 bluxcc-items-center bluxcc-justify-center bluxcc-overflow-hidden bluxcc-rounded-full bluxcc-border-2`}
-        style={{
-          borderColor: error ? '#ff9999' : appearance.borderColor,
-        }}
-      >
-        {handleLogos(user?.wallet?.name ?? '')}
-      </div>
+      {error ? (
+        <div
+          className={`bluxcc-mb-6 bluxcc-flex bluxcc-items-center bluxcc-justify-center`}
+        >
+          <RedExclamation />
+        </div>
+      ) : (
+        <div
+          className={`bluxcc-mb-6 bluxcc-flex bluxcc-size-20 bluxcc-items-center bluxcc-justify-center bluxcc-overflow-hidden bluxcc-rounded-full bluxcc-border-2`}
+          style={{
+            borderColor: appearance.borderColor,
+          }}
+        >
+          {handleLogos(user?.wallet?.name ?? '')}
+        </div>
+      )}
 
       <div className="bluxcc-flex-col bluxcc-space-y-1 bluxcc-text-center bluxcc-font-semibold">
         <p className="bluxcc-text-xl">
           {error
-            ? `Failed ${waitingStatus === 'connecting' ? 'connecting to' : 'signing with'}`
-            : `${waitingStatus === 'connecting' ? 'Waiting for' : 'Signing with'}`}{' '}
-          {user?.wallet?.name}
+            ? `${
+                waitingStatus === 'connecting'
+                  ? 'Login failed'
+                  : `Signing with ${user?.wallet?.name} failed`
+              }`
+            : `${
+                waitingStatus === 'connecting' ? 'Waiting for' : `Signing with`
+              } ${user?.wallet?.name}`}
         </p>
         <p className="bluxcc-text-sm">
           {error
-            ? `Please try ${waitingStatus === 'connecting' ? 'connecting' : 'signing'} again.`
+            ? `Please try ${waitingStatus === 'connecting' ? 'logging in' : 'signing'} again.`
             : `${
                 waitingStatus === 'connecting'
                   ? 'Accept connection'
