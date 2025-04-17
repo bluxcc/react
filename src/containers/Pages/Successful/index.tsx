@@ -74,7 +74,10 @@ const Successful = () => {
       )}
 
       <div className="bluxcc-my-4 bluxcc-w-full">
-        <div className="bluxcc-absolute bluxcc-left-0 bluxcc-right-0 bluxcc-h-[1px] bluxcc-bg-primary-100" />
+        <div
+          className="bluxcc-absolute bluxcc-left-0 bluxcc-right-0 bluxcc-h-[1px]"
+          style={{ background: context.value.config.appearance.borderColor }}
+        />
       </div>
 
       {waitingStatus === 'connecting' ? (

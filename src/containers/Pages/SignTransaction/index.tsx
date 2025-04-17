@@ -6,18 +6,15 @@ import useAccount from '../../../hooks/useAccount';
 import { useProvider } from '../../../context/provider';
 import humanizeAmount from '../../../utils/humanizeAmount';
 import shortenAddress from '../../../utils/shortenAddress';
-import getBorderRadius from '../../../utils/getBorderRadius';
+
 import Summary from '../../../components/Transaction/Summery';
 import getTransactionDetails from '../../../utils/stellar/getTransactionDetails';
 
 const SignTransaction = () => {
   const context = useProvider();
-
+  const appearance = context.value.config.appearance;
   const { xdr, network } = context.value.signTransaction;
-  
-  const borderRadius = getBorderRadius(
-    context.value.config.appearance.cornerRadius,
-  );
+
   const txDetails = getTransactionDetails(xdr, network);
   const { account } = useAccount({
     publicKey: context.value.user.wallet?.address as string,
@@ -59,9 +56,10 @@ const SignTransaction = () => {
       />
 
       <div
-        className="bluxcc-mt-4 bluxcc-inline-flex bluxcc-h-14 bluxcc-w-full bluxcc-items-center bluxcc-justify-between bluxcc-border bluxcc-border-primary-100 bluxcc-px-4"
+        className="bluxcc-mt-4 bluxcc-inline-flex bluxcc-h-14 bluxcc-w-full bluxcc-items-center bluxcc-justify-between bluxcc-border bluxcc-px-4"
         style={{
-          borderRadius,
+          borderRadius: appearance.cornerRadius,
+          borderColor: appearance.borderColor,
         }}
       >
         <div className="bluxcc-inline-flex bluxcc-items-center bluxcc-gap-1 bluxcc-whitespace-nowrap bluxcc-font-medium">
@@ -75,7 +73,7 @@ const SignTransaction = () => {
         <div
           className="bluxcc-overflow-hidden bluxcc-bg-lightBlue-100 bluxcc-px-[10px] bluxcc-py-2"
           style={{
-            borderRadius,
+            borderRadius: appearance.cornerRadius,
           }}
         >
           <p className="bluxcc-max-w-[90px] bluxcc-text-xs bluxcc-font-normal bluxcc-text-primary-500">
@@ -86,7 +84,10 @@ const SignTransaction = () => {
 
       {/* divider */}
       <div className="bluxcc-flex bluxcc-h-8 bluxcc-w-full bluxcc-items-center bluxcc-justify-center">
-        <div className="bluxcc-absolute bluxcc-left-0 bluxcc-right-0 bluxcc-h-[1px] bluxcc-bg-primary-100" />
+        <div
+          className="bluxcc-absolute bluxcc-left-0 bluxcc-right-0 bluxcc-h-[1px]"
+          style={{ background: appearance.borderColor }}
+        />
       </div>
 
       <Button

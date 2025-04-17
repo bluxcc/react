@@ -6,7 +6,6 @@ import React, {
   useEffect,
 } from 'react';
 import { useProvider } from '../../context/provider';
-import getBorderRadius from '../../utils/getBorderRadius';
 
 interface OTPInputProps {
   otp: string[];
@@ -19,7 +18,6 @@ const OTPInput: React.FC<OTPInputProps> = ({ otp, setOtp, error }) => {
   const context = useProvider();
   const { appearance } = context.value.config;
   const inputsRef = useRef<(HTMLInputElement | null)[]>([]);
-  const borderRadius = getBorderRadius(appearance.cornerRadius);
 
   useEffect(() => {
     if (error) {
@@ -77,10 +75,14 @@ const OTPInput: React.FC<OTPInputProps> = ({ otp, setOtp, error }) => {
   };
 
   const getInputStyle = (digit: string): React.CSSProperties => ({
-    borderRadius: appearance.cornerRadius === 'full' ? '20px' : borderRadius,
+    borderRadius: appearance.cornerRadius,
     color: appearance.accent,
     background: appearance.background,
-    borderColor: error ? '#FF6666' : digit ? appearance.accent : '#cdceee',
+    borderColor: error
+      ? '#FF6666'
+      : digit
+        ? appearance.accent
+        : appearance.borderColor,
   });
 
   return (

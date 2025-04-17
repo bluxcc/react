@@ -3,6 +3,7 @@ import React from 'react';
 import copyText from '../../../utils/copyText';
 import shortenAddress from '../../../utils/shortenAddress';
 import capitalizeFirstLetter from '../../../utils/capitalizeFirstLetter';
+import { useProvider } from '../../../context/provider';
 
 interface TransactionDetail {
   label: string;
@@ -24,6 +25,7 @@ const Summary = ({
   estimatedFee,
   action,
 }: SummaryProps) => {
+  const context = useProvider();
   const details: TransactionDetail[] = [
     { label: 'Action', value: capitalizeFirstLetter(action) },
     { label: 'Operations', value: operationsCount.toString() },
@@ -43,9 +45,12 @@ const Summary = ({
           key={index}
           className={`bluxcc-flex bluxcc-justify-between bluxcc-px-4 bluxcc-py-2 ${
             index < details.length - 1
-              ? 'bluxcc-border-b bluxcc-border-dashed bluxcc-border-primary-100'
+              ? 'bluxcc-border-b bluxcc-border-dashed'
               : ''
           }`}
+          style={{
+            borderColor: context.value.config.appearance.borderColor,
+          }}
         >
           <span>{label}</span>
           <span

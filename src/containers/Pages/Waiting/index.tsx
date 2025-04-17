@@ -21,6 +21,7 @@ const Waiting = () => {
 
   const { user, config } = context.value;
   const waitingStatus = context.value.waitingStatus;
+  const appearance = context.value.config.appearance;
   const { xdr, network, resolver } = context.value.signTransaction;
 
   const fetchWallets = async () => {
@@ -60,7 +61,11 @@ const Waiting = () => {
           network,
         );
 
-        const result = await submitTransaction(signedXdr, network, config.transports || {});
+        const result = await submitTransaction(
+          signedXdr,
+          network,
+          config.transports || {},
+        );
 
         if (resolver) resolver(result);
 
@@ -115,9 +120,10 @@ const Waiting = () => {
   return (
     <div className="bluxcc-mt-4 bluxcc-flex bluxcc-w-full bluxcc-select-none bluxcc-flex-col bluxcc-items-center bluxcc-justify-center">
       <div
-        className={`bluxcc-mb-6 bluxcc-flex bluxcc-h-20 bluxcc-w-20 bluxcc-items-center bluxcc-justify-center bluxcc-overflow-hidden bluxcc-rounded-full bluxcc-border-2 ${
-          error ? 'bluxcc-border-lightRed-200' : 'bluxcc-border-primary-100'
-        }`}
+        className={`bluxcc-mb-6 bluxcc-flex bluxcc-h-20 bluxcc-w-20 bluxcc-items-center bluxcc-justify-center bluxcc-overflow-hidden bluxcc-rounded-full bluxcc-border-2`}
+        style={{
+          borderColor: error ? '#ff9999' : appearance.borderColor,
+        }}
       >
         {handleLogos(user?.wallet?.name ?? '')}
       </div>
@@ -142,7 +148,10 @@ const Waiting = () => {
 
       {/* divider */}
       <div className="bluxcc-flex bluxcc-h-8 bluxcc-w-full bluxcc-items-center bluxcc-justify-center">
-        <div className="bluxcc-absolute bluxcc-left-0 bluxcc-right-0 bluxcc-h-[1px] bluxcc-bg-primary-100" />
+        <div
+          className="bluxcc-absolute bluxcc-left-0 bluxcc-right-0 !bluxcc-h-[0.75px]"
+          style={{ background: appearance.borderColor }}
+        />
       </div>
 
       {error ? (
@@ -153,7 +162,7 @@ const Waiting = () => {
         <Button
           state="enabled"
           variant="outline"
-          startIcon={<Loading fill={context.value.config.appearance.accent} />}
+          startIcon={<Loading fill={appearance.accent} />}
         >
           {waitingStatus === 'connecting' ? 'Connecting' : 'Signing'}
         </Button>

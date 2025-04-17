@@ -1,7 +1,8 @@
 import React, { useEffect, useRef, useState } from 'react';
+
 import { useProvider } from '../../context/provider';
 import { useModalAnimation } from '../../hooks/useModalAnimation';
-import getBorderRadius from '../../utils/getBorderRadius';
+
 import ModalHeader from './Header';
 import ModalBackdrop from './Backdrop';
 
@@ -36,7 +37,6 @@ const Modal = ({
   const { isOpening, isClosing, handleClose } = useModalAnimation(isOpen);
 
   const { appearance } = context.value.config;
-  const borderRadius = getBorderRadius(appearance.cornerRadius);
 
   useEffect(() => {
     const checkMobile = () => setIsMobile(window.innerWidth < 760);
@@ -85,7 +85,7 @@ const Modal = ({
         onClick={(e) => e.target === e.currentTarget && handleClose(onClose)}
       >
         <div
-          className={`bluxcc-box-border bluxcc-overflow-hidden bluxcc-border bluxcc-border-primary-100 bluxcc-shadow-[0px_4px_80px_0px_#00000008] bluxcc-transition-all ${
+          className={`bluxcc-box-border bluxcc-overflow-hidden bluxcc-shadow-[0px_4px_80px_0px_#00000008] bluxcc-transition-all ${
             isMobile
               ? 'bluxcc-fixed bluxcc-bottom-0 bluxcc-left-0 bluxcc-max-h-[90vh] bluxcc-w-full !bluxcc-rounded-b-none'
               : 'bluxcc-relative !bluxcc-w-[360px]'
@@ -107,7 +107,9 @@ const Modal = ({
             color: appearance.textColor,
             fontFamily: appearance.font,
             letterSpacing: '-0.04px',
-            borderRadius,
+            borderColor: appearance.borderColor,
+            borderWidth: appearance.borderWidth,
+            borderRadius: appearance.cornerRadius,
           }}
         >
           <div ref={contentRef} className="bluxcc-px-6 bluxcc-pb-4">
