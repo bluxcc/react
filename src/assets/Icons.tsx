@@ -80,25 +80,25 @@ export const ArrowLeft = ({ fill = '#5F6367' }: { fill?: string }) => (
 );
 export const Close = ({ fill = '#5F6367' }: { fill?: string }) => (
   <svg
-    width="22"
-    height="22"
-    viewBox="0 0 22 22"
+    width="24"
+    height="24"
+    viewBox="0 0 24 24"
     fill="none"
     xmlns="http://www.w3.org/2000/svg"
   >
     <mask
-      id="mask0_150_17"
+      id="mask0_2032_3674"
       maskUnits="userSpaceOnUse"
       x="0"
       y="0"
-      width="22"
-      height="22"
+      width="24"
+      height="24"
     >
-      <rect width="22" height="22" fill="#D9D9D9" />
+      <rect width="24" height="24" fill="#D9D9D9" />
     </mask>
-    <g mask="url(#mask0_150_17)">
+    <g mask="url(#mask0_2032_3674)">
       <path
-        d="M4.4 19.25L2.75 17.6L9.35 11L2.75 4.4L4.4 2.75L11 9.35L17.6 2.75L19.25 4.4L12.65 11L19.25 17.6L17.6 19.25L11 12.65L4.4 19.25Z"
+        d="M5.26689 20L3.99994 18.7331L10.733 12L3.99994 5.26696L5.26689 4L11.9999 10.733L18.733 4L19.9999 5.26696L13.2669 12L19.9999 18.7331L18.733 20L11.9999 13.267L5.26689 20Z"
         fill={fill}
       />
     </g>

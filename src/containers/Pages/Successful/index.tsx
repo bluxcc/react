@@ -8,6 +8,7 @@ import getExplorerUrl from '../../../utils/stellar/getExplorerUrl';
 
 const Successful = () => {
   const context = useProvider();
+  const appearance = context.value.config.appearance;
   const waitingStatus = context.value.waitingStatus;
 
   useEffect(() => {
@@ -73,10 +74,16 @@ const Successful = () => {
         </Button>
       )}
 
-      <div className="bluxcc-my-4 bluxcc-w-full">
+      {/* divider */}
+      <div className="bluxcc-flex bluxcc-h-8 bluxcc-w-full bluxcc-items-center bluxcc-justify-center">
         <div
-          className="bluxcc-absolute bluxcc-left-0 bluxcc-right-0 bluxcc-h-[1px]"
-          style={{ background: context.value.config.appearance.borderColor }}
+          className="bluxcc-absolute bluxcc-left-0 bluxcc-right-0"
+          style={{
+            background: appearance.borderColor,
+            height: appearance.includeBorders
+              ? `${parseFloat(appearance.borderWidth) - 0.25}px`
+              : '0.75px',
+          }}
         />
       </div>
 

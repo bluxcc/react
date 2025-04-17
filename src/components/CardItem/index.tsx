@@ -67,7 +67,7 @@ const CardItem = ({
   return (
     <div
       onClick={variant === 'input' ? undefined : onClick}
-      className={`bluxcc-flex !bluxcc-h-14 bluxcc-w-full bluxcc-items-center bluxcc-border bluxcc-px-[10px] bluxcc-py-2 bluxcc-transition-all bluxcc-duration-300 ${
+      className={`bluxcc-flex !bluxcc-h-14 bluxcc-w-full bluxcc-items-center bluxcc-border bluxcc-px-[10px] bluxcc-py-2 ${
         variant === 'input' ? 'bluxcc-cursor-text' : 'bluxcc-cursor-pointer'
       }`}
       style={{
@@ -84,7 +84,7 @@ const CardItem = ({
           borderRadius: appearance.cornerRadius,
           borderColor: appearance.borderColor,
         }}
-        className="bluxcc-flex bluxcc-size-10 bluxcc-flex-shrink-0 bluxcc-items-center bluxcc-justify-center bluxcc-overflow-hidden bluxcc-border bluxcc-transition-all bluxcc-duration-300"
+        className="bluxcc-flex bluxcc-size-10 bluxcc-flex-shrink-0 bluxcc-items-center bluxcc-justify-center bluxcc-overflow-hidden bluxcc-border bluxcc-transition-[border-radius] bluxcc-duration-300"
       >
         {startIcon}
       </span>
@@ -112,6 +112,7 @@ const CardItem = ({
               <button
                 disabled={!isValid}
                 onClick={() => onSubmit?.(inputValue)}
+                className={`bluxcc-absolute bluxcc-right-0 bluxcc-flex bluxcc-h-8 !bluxcc-w-[68px] bluxcc-items-center bluxcc-justify-center bluxcc-border bluxcc-text-sm bluxcc-font-medium bluxcc-transition-[border-radius,background,border-color] bluxcc-duration-150`}
                 style={{
                   borderRadius: appearance.cornerRadius,
                   background: isValid ? appearance.accent : 'transparent',
@@ -120,9 +121,8 @@ const CardItem = ({
                     : appearance.borderColor,
                   color: isValid
                     ? getContrastColor(appearance.accent)
-                    : appearance.textColor,
+                    : '#999999',
                 }}
-                className={`bluxcc-absolute bluxcc-right-0 bluxcc-flex bluxcc-h-8 !bluxcc-w-[68px] bluxcc-items-center bluxcc-justify-center bluxcc-border bluxcc-text-sm bluxcc-font-medium bluxcc-transition-all bluxcc-duration-300`}
               >
                 Submit
               </button>

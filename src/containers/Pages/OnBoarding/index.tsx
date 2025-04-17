@@ -74,9 +74,16 @@ const OnBoarding = ({ showAllWallets, setShowAllWallets }: OnBoardingProps) => {
   const renderDivider = () => (
     <div className="bluxcc-my-1 bluxcc-flex bluxcc-h-8 bluxcc-w-full bluxcc-items-center bluxcc-justify-center">
       <div
-        className="bluxcc-absolute bluxcc-left-0 bluxcc-right-0 bluxcc-z-10 bluxcc-border-spacing-2 bluxcc-border-t bluxcc-border-dashed"
-        style={{ borderColor: appearance.borderColor }}
+        className="bluxcc-absolute bluxcc-left-0 bluxcc-right-0 bluxcc-z-10"
+        style={{
+          borderTopWidth: appearance.includeBorders
+            ? appearance.borderWidth
+            : '1px',
+          borderTopStyle: 'dashed',
+          borderTopColor: appearance.borderColor,
+        }}
       />
+
       <span
         className="bluxcc-z-20 bluxcc-w-auto bluxcc-select-none bluxcc-px-2 bluxcc-text-sm bluxcc-font-medium"
         style={{
@@ -134,7 +141,7 @@ const OnBoarding = ({ showAllWallets, setShowAllWallets }: OnBoardingProps) => {
                     label="All Stellar wallets"
                     startIcon={
                       <StellarLogo
-                        fill={getContrastColor(appearance.background)}
+                        fill={getContrastColor(appearance.bgField)}
                       />
                     }
                     onClick={() => setShowAllWallets(true)}
