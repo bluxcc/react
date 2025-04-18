@@ -41,7 +41,7 @@ const ConfirmCode: React.FC = () => {
         style={{ borderColor: appearance.borderColor }}
         className="bluxcc-mb-6 bluxcc-flex bluxcc-h-20 bluxcc-w-20 bluxcc-items-center bluxcc-justify-center bluxcc-overflow-hidden bluxcc-rounded-full bluxcc-border-2"
       >
-        <EmailIcon fill={appearance.accent} />
+        <EmailIcon fill={appearance.textColor} />
       </div>
 
       <div className="bluxcc-flex-col bluxcc-space-y-1 bluxcc-text-center">

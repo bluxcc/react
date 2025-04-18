@@ -73,7 +73,7 @@ const Profile = () => {
         <CardItem
           endArrow
           label="Send"
-          startIcon={<Send fill={appearance.accent} />}
+          startIcon={<Send fill={appearance.textColor} />}
           onClick={() => {
             context.setRoute(Routes.SEND);
           }}
@@ -81,7 +81,7 @@ const Profile = () => {
         <CardItem
           endArrow
           label="Activity"
-          startIcon={<History fill={appearance.accent} />}
+          startIcon={<History fill={appearance.textColor} />}
           onClick={() => {
             context.setRoute(Routes.ACTIVITY);
           }}

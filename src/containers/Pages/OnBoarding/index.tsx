@@ -160,7 +160,7 @@ const OnBoarding = ({ showAllWallets, setShowAllWallets }: OnBoardingProps) => {
                     <CardItem
                       inputType="email"
                       variant="input"
-                      startIcon={<SmallEmailIcon fill={appearance.accent} />}
+                      startIcon={<SmallEmailIcon fill={appearance.textColor} />}
                       onChange={(value) => setInputValue(value)}
                       onEnter={handleConnectEmail}
                       onSubmit={handleConnectEmail}

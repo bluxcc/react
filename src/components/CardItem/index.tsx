@@ -1,7 +1,6 @@
 import React, { useState, MouseEvent } from 'react';
 import { useProvider } from '../../context/provider';
 import { ArrowRight } from '../../assets/Icons';
-import getContrastColor from '../../utils/getContrastColor';
 
 type CardItemProps = {
   variant?: 'social' | 'default' | 'input';
@@ -112,16 +111,13 @@ const CardItem = ({
               <button
                 disabled={!isValid}
                 onClick={() => onSubmit?.(inputValue)}
-                className={`bluxcc-absolute bluxcc-right-0 bluxcc-flex bluxcc-h-8 !bluxcc-w-[68px] bluxcc-items-center bluxcc-justify-center bluxcc-border bluxcc-text-sm bluxcc-font-medium bluxcc-transition-[border-radius,background,border-color] bluxcc-duration-150`}
+                className={`bluxcc-absolute bluxcc-right-0 bluxcc-flex bluxcc-h-8 !bluxcc-w-[68px] bluxcc-items-center bluxcc-justify-center bluxcc-border bluxcc-bg-transparent bluxcc-text-sm bluxcc-font-medium bluxcc-transition-[border-radius,background,border-color] bluxcc-duration-150`}
                 style={{
                   borderRadius: appearance.cornerRadius,
-                  background: isValid ? appearance.accent : 'transparent',
                   borderColor: isValid
                     ? appearance.accent
                     : appearance.borderColor,
-                  color: isValid
-                    ? getContrastColor(appearance.accent)
-                    : '#999999',
+                  color: isValid ? appearance.accent : '#999999',
                 }}
               >
                 Submit
