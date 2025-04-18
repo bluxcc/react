@@ -162,6 +162,7 @@ const Waiting = () => {
         <Button
           state="enabled"
           variant="outline"
+          className='!bluxcc-cursor-default'
           startIcon={<Loading fill={appearance.accent} />}
         >
           {waitingStatus === 'connecting' ? 'Connecting' : 'Signing'}

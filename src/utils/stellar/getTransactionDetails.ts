@@ -11,8 +11,6 @@ const getTransactionDetails = (xdr: string, network: string) => {
       estimatedFee: Number(transaction.fee) / 10000000,
     };
   } catch (error) {
-    console.error('Transaction failed:', error);
-
     return null;
   }
 };

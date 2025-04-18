@@ -17,7 +17,7 @@ interface UseAccountResult {
 
 const useAccount = (params?: UseAccountProps): UseAccountResult => {
   const { value } = useCheckProvider();
-  const { horizon } = useCustomNetwork(params?.network);
+  const { horizon, networkPassphrase } = useCustomNetwork(params?.network);
 
   const [result, setResult] = useState<UseAccountResult>({
     error: null,
@@ -61,7 +61,7 @@ const useAccount = (params?: UseAccountProps): UseAccountResult => {
           account: null,
         });
       });
-  }, [params?.address, params?.network, value.user.wallet]);
+  }, [params?.address, networkPassphrase, value.user.wallet]);
 
   return result;
 };

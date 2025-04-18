@@ -29,7 +29,7 @@ const useCustomNetwork = (network?: string) => {
   const [networkDetails, setNetworkDetails] = useState(getCustomNetworkDetails(value, network));
   
   useEffect(() => {
-    setNetworkDetails(getCustomNetworkDetails(value, network));
+    setNetworkDetails(getCustomNetworkDetails(value, network || value.activeNetwork));
   }, [network, value.activeNetwork]);
 
   return networkDetails;

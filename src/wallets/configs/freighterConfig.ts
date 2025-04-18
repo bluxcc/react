@@ -57,8 +57,6 @@ export const freighterConfig: WalletInterface = {
         return res;
       }
 
-      console.error('Error connecting to Freighter:', error);
-
       throw new Error('Failed to connect to Freighter.');
     }
   },
@@ -76,8 +74,6 @@ export const freighterConfig: WalletInterface = {
 
       return result.signedTxXdr;
     } catch (error) {
-      console.error('Error signing transaction with Freighter:', error);
-
       throw new Error('Failed to sign the transaction with Freighter.');
     }
   },
@@ -98,8 +94,6 @@ export const freighterConfig: WalletInterface = {
         passphrase: network.networkPassphrase,
       };
     } catch (error) {
-      console.error('Error getting network from:', error);
-
       throw new Error('Failed to disconnect from Rabet.');
     }
   },

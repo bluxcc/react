@@ -1,6 +1,6 @@
 import { useProvider } from "../context/provider";
 
-const useSwitchNetwork = (networkPassphrase: string) => {
+const useSwitchNetwork = () => {
   const context = useProvider();
 
   if (!context) {
@@ -9,14 +9,21 @@ const useSwitchNetwork = (networkPassphrase: string) => {
 
   const { value, setValue } = context;
 
-  if (!value.config.networks.includes(networkPassphrase)) {
-    throw new Error('New network must be defined in config.networks');
-  }
+  const switchNetwork = (newNetwork: string) => {
+    if (!value.config.networks.includes(newNetwork)) {
+      throw new Error('New network must be defined in config.networks');
+    }
 
-  setValue({
-    ...value,
-    activeNetwork: networkPassphrase,
-  });
+    setValue({
+      ...value,
+      activeNetwork: newNetwork,
+    });
+  };
+
+  return {
+    switchNetwork,
+    networks: value.config.networks,
+  }
 };
 
 export default useSwitchNetwork;

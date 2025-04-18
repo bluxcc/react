@@ -1,7 +1,6 @@
 import React, { useEffect } from 'react';
 
 import Button from '../../../components/Button';
-
 import { GreenCheck } from '../../../assets/Icons';
 import { useProvider } from '../../../context/provider';
 import getExplorerUrl from '../../../utils/stellar/getExplorerUrl';
@@ -41,6 +40,13 @@ const Successful = () => {
       window.open(explorerUrl, '_blank', 'noopener,noreferrer');
     }
   };
+
+  const closeModal = () => {
+    context.setValue((prev) => ({
+      ...prev,
+      isModalOpen: false,
+    }));
+  }
 
   return (
     <div className="bluxcc-mt-4 bluxcc-flex bluxcc-w-full bluxcc-select-none bluxcc-flex-col bluxcc-items-center bluxcc-justify-center">
@@ -85,7 +91,7 @@ const Successful = () => {
           Logging In
         </Button>
       ) : (
-        <Button state="enabled" variant="fill">
+        <Button state="enabled" variant="fill" onClick={closeModal}>
           Done
         </Button>
       )}

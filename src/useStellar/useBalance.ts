@@ -22,7 +22,7 @@ interface UseBalanceResult {
 
 const useBalance = ({ asset, address, network }: UseBalanceParams) => {
   const { value } = useCheckProvider();
-  const { horizon } = useCustomNetwork(network);
+  const { horizon, networkPassphrase } = useCustomNetwork(network);
 
   const [result, setResult] = useState<UseBalanceResult>({
     error: null,
@@ -80,7 +80,7 @@ const useBalance = ({ asset, address, network }: UseBalanceParams) => {
           balance: null,
         });
       });
-  }, [address, asset, network, value.user.wallet]);
+  }, [address, asset, value.user.wallet, networkPassphrase]);
 
   return result;
 };
