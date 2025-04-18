@@ -130,7 +130,9 @@ const Waiting = () => {
           className={`bluxcc-mb-6 bluxcc-flex bluxcc-size-20 bluxcc-items-center bluxcc-justify-center bluxcc-overflow-hidden bluxcc-rounded-full bluxcc-border`}
           style={{
             borderColor: appearance.borderColor,
-            borderWidth: appearance.borderWidth,
+            borderWidth: appearance.includeBorders
+              ? appearance.borderWidth
+              : '1px',
           }}
         >
           {handleLogos(user?.wallet?.name ?? '')}

@@ -26,6 +26,7 @@ const Summary = ({
   action,
 }: SummaryProps) => {
   const context = useProvider();
+  const appearance = context.value.config.appearance;
   const details: TransactionDetail[] = [
     { label: 'Action', value: capitalizeFirstLetter(action) },
     { label: 'Operations', value: operationsCount.toString() },
@@ -49,8 +50,10 @@ const Summary = ({
               : ''
           }`}
           style={{
-            borderColor: context.value.config.appearance.borderColor,
-            borderWidth: context.value.config.appearance.borderWidth,
+            borderColor: appearance.borderColor,
+            borderWidth: appearance.includeBorders
+              ? appearance.borderWidth
+              : '1px',
           }}
         >
           <span>{label}</span>

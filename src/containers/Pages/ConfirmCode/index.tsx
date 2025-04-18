@@ -40,7 +40,9 @@ const ConfirmCode: React.FC = () => {
       <div
         style={{
           borderColor: appearance.borderColor,
-          borderWidth: appearance.borderWidth,
+          borderWidth: appearance.includeBorders
+            ? appearance.borderWidth
+            : '1px',
         }}
         className="bluxcc-mb-6 bluxcc-flex bluxcc-h-20 bluxcc-w-20 bluxcc-items-center bluxcc-justify-center bluxcc-overflow-hidden bluxcc-rounded-full bluxcc-border-2"
       >
