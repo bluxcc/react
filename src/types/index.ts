@@ -102,7 +102,6 @@ export interface ContextState {
 /**
  * Supported font options for UI customization.
  */
-export type SupportedFonts = 'Manrope' | 'Inter' | 'JetBrains Mono' | 'Lora';
 
 /**
  * Supported corner radius styles for UI elements.
@@ -117,7 +116,7 @@ export interface IAppearance {
   bgField: string; // Background color for input fields or similar UI areas
   accent: string; // Primary accent color
   textColor: string; // Main text color
-  font: SupportedFonts | string; // Selected font family or style
+  font: string; // Selected font family or style
   cornerRadius: string; // Corner radius for UI elements
   borderColor: string; // Border color for elements
   borderWidth: string; // Width of borders (e.g., '1px', '0', etc.)

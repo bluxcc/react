@@ -127,9 +127,10 @@ const Waiting = () => {
         </div>
       ) : (
         <div
-          className={`bluxcc-mb-6 bluxcc-flex bluxcc-size-20 bluxcc-items-center bluxcc-justify-center bluxcc-overflow-hidden bluxcc-rounded-full bluxcc-border-2`}
+          className={`bluxcc-mb-6 bluxcc-flex bluxcc-size-20 bluxcc-items-center bluxcc-justify-center bluxcc-overflow-hidden bluxcc-rounded-full bluxcc-border`}
           style={{
             borderColor: appearance.borderColor,
+            borderWidth: appearance.borderWidth,
           }}
         >
           {handleLogos(user?.wallet?.name ?? '')}

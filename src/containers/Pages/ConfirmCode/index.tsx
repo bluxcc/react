@@ -38,7 +38,10 @@ const ConfirmCode: React.FC = () => {
   return (
     <div className="bluxcc-mt-4 bluxcc-flex bluxcc-w-full bluxcc-select-none bluxcc-flex-col bluxcc-items-center bluxcc-justify-center">
       <div
-        style={{ borderColor: appearance.borderColor }}
+        style={{
+          borderColor: appearance.borderColor,
+          borderWidth: appearance.borderWidth,
+        }}
         className="bluxcc-mb-6 bluxcc-flex bluxcc-h-20 bluxcc-w-20 bluxcc-items-center bluxcc-justify-center bluxcc-overflow-hidden bluxcc-rounded-full bluxcc-border-2"
       >
         <EmailIcon fill={appearance.textColor} />

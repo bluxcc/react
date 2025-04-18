@@ -10,7 +10,6 @@ import {
   IProviderConfig,
   ContextInterface,
   Routes,
-  SupportedFonts,
 } from '../types';
 
 export const ProviderContext = createContext<ContextState | null>(null);
@@ -21,20 +20,12 @@ type BluxProviderProps = {
   children: React.ReactNode | any;
 };
 
-const googleFonts: Record<SupportedFonts, string | null> = {
-  Lora: 'Lora',
-  Inter: 'Inter',
-  Manrope: 'Manrope',
-  'JetBrains Mono': 'JetBrains+Mono',
-};
+// const getGoogleFontUrl = (fontName: string): string => {
+//   const fallbackEncoded = fontName.trim().split(' ').join('+');
+//   const encodedFont = fontName ?? fallbackEncoded;
 
-const getGoogleFontUrl = (fontName: string): string => {
-  const fallbackEncoded = fontName.trim().split(' ').join('+');
-  const encodedFont =
-    googleFonts[fontName as SupportedFonts] ?? fallbackEncoded;
-
-  return `https://fonts.googleapis.com/css2?family=${encodedFont}&display=swap`;
-};
+//   return `https://fonts.googleapis.com/css2?family=${encodedFont}&display=swap`;
+// };
 
 export const BluxProvider = ({
   config,
@@ -115,27 +106,27 @@ export const BluxProvider = ({
     loadWallets();
   }, []);
 
-  useEffect(() => {
-    const font = value.config.appearance.font;
+  // useEffect(() => {
+  //   const font = value.config.appearance.font;
 
-    if (!font) return;
+  //   if (!font) return;
 
-    const existing = document.querySelector(`link[data-font="${font}"]`);
-    if (existing) return;
+  //   const existing = document.querySelector(`link[data-font="${font}"]`);
+  //   if (existing) return;
 
-    const link = document.createElement('link');
-    link.href = getGoogleFontUrl(font);
-    link.rel = 'stylesheet';
-    link.setAttribute('data-font', font);
-    document.head.appendChild(link);
+  //   const link = document.createElement('link');
+  //   link.href = getGoogleFontUrl(font);
+  //   link.rel = 'stylesheet';
+  //   link.setAttribute('data-font', font);
+  //   document.head.appendChild(link);
 
-    return () => {
-      const addedFont = document.querySelector(`link[data-font="${font}"]`);
-      if (addedFont) {
-        document.head.removeChild(addedFont);
-      }
-    };
-  }, [value.config.appearance.font]);
+  //   return () => {
+  //     const addedFont = document.querySelector(`link[data-font="${font}"]`);
+  //     if (addedFont) {
+  //       document.head.removeChild(addedFont);
+  //     }
+  //   };
+  // }, [value.config.appearance.font]);
 
   const closeModal = () => {
     setValue((prev) => ({

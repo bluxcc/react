@@ -41,7 +41,7 @@ const ModalHeader = ({
         <div className="bluxcc-size-5" />
       )}
 
-      <p className="bluxcc-flex-grow bluxcc-select-none bluxcc-text-center bluxcc-text-base bluxcc-font-semibold">
+      <p className="bluxcc-flex-grow bluxcc-select-none bluxcc-text-center bluxcc-text-base bluxcc-font-medium">
         {title}
       </p>
 

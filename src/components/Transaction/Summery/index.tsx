@@ -50,6 +50,7 @@ const Summary = ({
           }`}
           style={{
             borderColor: context.value.config.appearance.borderColor,
+            borderWidth: context.value.config.appearance.borderWidth,
           }}
         >
           <span>{label}</span>

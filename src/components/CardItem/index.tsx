@@ -74,6 +74,7 @@ const CardItem = ({
         color: appearance.textColor,
         borderColor: isFocused ? appearance.accent : appearance.borderColor,
         backgroundColor: appearance.bgField,
+        borderWidth: appearance.borderWidth,
       }}
       onMouseEnter={onMouseEnter}
       onMouseLeave={onMouseLeave}
@@ -82,6 +83,7 @@ const CardItem = ({
         style={{
           borderRadius: appearance.cornerRadius,
           borderColor: appearance.borderColor,
+          borderWidth: appearance.borderWidth,
         }}
         className="bluxcc-flex bluxcc-size-10 bluxcc-flex-shrink-0 bluxcc-items-center bluxcc-justify-center bluxcc-overflow-hidden bluxcc-border bluxcc-transition-[border-radius] bluxcc-duration-300"
       >
@@ -118,6 +120,7 @@ const CardItem = ({
                     ? appearance.accent
                     : appearance.borderColor,
                   color: isValid ? appearance.accent : '#999999',
+                  borderWidth: appearance.borderWidth,
                 }}
               >
                 Submit

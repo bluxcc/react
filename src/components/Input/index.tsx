@@ -36,6 +36,7 @@ const CustomButton = ({
         color: appearance.accent,
         borderColor: appearance.borderColor,
         backgroundColor: appearance.background,
+        borderWidth: appearance.borderWidth,
       }}
       className="bluxcc-border bluxcc-px-3 bluxcc-py-1 bluxcc-text-sm bluxcc-font-semibold bluxcc-transition-all bluxcc-duration-300"
     >
@@ -78,6 +79,7 @@ const InputField = ({
             '--tw-ring-color': !error && context.value.config.appearance.accent,
             borderRadius: appearance.cornerRadius,
             borderColor: error ? '#ec2929' : appearance.borderColor,
+            borderWidth: appearance.borderWidth,
           } as React.CSSProperties
         }
       >

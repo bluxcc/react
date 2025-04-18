@@ -55,6 +55,7 @@ const Button = ({
       border: `1px solid ${appearance.borderColor}`,
       color: appearance.accent,
       backgroundColor: appearance.background,
+      borderWidth: appearance.borderWidth,
     });
   } else if (variant === 'fill') {
     Object.assign(baseStyle, {
