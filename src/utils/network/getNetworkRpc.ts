@@ -1,3 +1,4 @@
+import { url } from "./url";
 import { ITransports } from "../../types";
 import NETWORKS_DETAILS, { NetworkDetails } from "../../constants/networkDetails";
 
@@ -11,6 +12,8 @@ const getNetworkRpc = (network: string, transports: ITransports): NetworkDetails
   } else if (!details && transport) {
     details = {
       name: 'Custom Network',
+      horizon: url(''),
+      soroban: url(''),
     }
   }
 

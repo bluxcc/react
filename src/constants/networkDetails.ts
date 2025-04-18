@@ -3,8 +3,8 @@ import { Url, url } from "../utils/network/url";
 
 export interface NetworkDetails {
   name: string;
-  horizon?: Url;
-  soroban?: Url;
+  horizon: Url;
+  soroban: Url;
 }
 
 const NETWORKS_DETAILS: Record<string, NetworkDetails> = {

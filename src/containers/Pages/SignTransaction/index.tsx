@@ -2,24 +2,21 @@ import React from 'react';
 
 import { Routes } from '../../../types';
 import Button from '../../../components/Button';
-import useAccount from '../../../hooks/useAccount';
+import { useBalance } from '../../../useStellar';
 import { useProvider } from '../../../context/provider';
 import humanizeAmount from '../../../utils/humanizeAmount';
 import shortenAddress from '../../../utils/shortenAddress';
-
 import Summary from '../../../components/Transaction/Summery';
 import getTransactionDetails from '../../../utils/stellar/getTransactionDetails';
 
 const SignTransaction = () => {
   const context = useProvider();
+  const { balance } = useBalance({ asset: 'native' });
+
   const appearance = context.value.config.appearance;
   const { xdr, network } = context.value.signTransaction;
 
   const txDetails = getTransactionDetails(xdr, network);
-  const { account } = useAccount({
-    publicKey: context.value.user.wallet?.address as string,
-    passphrase: network,
-  });
 
   const handleSignTx = async () => {
     context.setValue((prev) => ({
@@ -77,12 +74,11 @@ const SignTransaction = () => {
           }}
         >
           <p className="bluxcc-max-w-[90px] bluxcc-text-xs bluxcc-font-normal bluxcc-text-primary-500">
-            {account ? humanizeAmount(account.xlmBalance) : 'N/A'} XLM
+            {balance ? humanizeAmount(balance) : 'N/A'} XLM
           </p>
         </div>
       </div>
 
-      {/* divider */}
       <div className="bluxcc-flex bluxcc-h-8 bluxcc-w-full bluxcc-items-center bluxcc-justify-center">
         <div
           className="bluxcc-absolute bluxcc-left-0 bluxcc-right-0 bluxcc-h-[1px]"
