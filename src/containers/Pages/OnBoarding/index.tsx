@@ -106,6 +106,11 @@ const OnBoarding = ({ showAllWallets, setShowAllWallets }: OnBoardingProps) => {
             width={152}
             height={60}
             className="bluxcc-max-h-[80px] bluxcc-max-w-[180px]"
+            fetchPriority="high"
+            loading="eager"
+            decoding="async"
+            draggable="false"
+            style={{ contentVisibility: 'auto' }}
           />
         </div>
       )}
