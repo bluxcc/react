@@ -48,7 +48,7 @@ const Successful = () => {
       ...prev,
       isModalOpen: false,
     }));
-  }
+  };
 
   return (
     <div className="bluxcc-mt-4 bluxcc-flex bluxcc-w-full bluxcc-select-none bluxcc-flex-col bluxcc-items-center bluxcc-justify-center">
