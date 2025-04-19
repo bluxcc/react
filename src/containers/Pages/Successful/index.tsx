@@ -21,13 +21,15 @@ const Successful = () => {
         }));
       }, 1000);
     }
+
     if (waitingStatus === 'signing') {
-      setTimeout(() => {
-        context.setValue((prev) => ({
-          ...prev,
-          isModalOpen: false,
-        }));
-      }, 10000);
+      // TODO: ruveyda
+      // setTimeout(() => {
+      //   context.setValue((prev) => ({
+      //     ...prev,
+      //     isModalOpen: false,
+      //   }));
+      // }, 10000);
     }
   }, []);
 
