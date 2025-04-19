@@ -109,10 +109,10 @@ const Send = () => {
         <div
           className="bluxcc-absolute bluxcc-left-0 bluxcc-right-0"
           style={{
-            background: appearance.borderColor,
-            height: appearance.includeBorders
-              ? `${parseFloat(appearance.borderWidth) - 0.4}px`
-              : '0.75px',
+            borderTopWidth: appearance.includeBorders
+              ? appearance.borderWidth
+              : '1px',
+            borderTopColor: appearance.borderColor,
           }}
         />
       </div>

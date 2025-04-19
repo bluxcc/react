@@ -68,13 +68,15 @@ const ConfirmCode: React.FC = () => {
         <OTPInput otp={otp} setOtp={setOtp} error={error} />
       </div>
 
-      {/* Divider */}
+      {/* divider */}
       <div className="bluxcc-flex bluxcc-h-8 bluxcc-w-full bluxcc-items-center bluxcc-justify-center">
         <div
           className="bluxcc-absolute bluxcc-left-0 bluxcc-right-0"
           style={{
-            background: appearance.borderColor,
-            height: appearance.includeBorders ? appearance.borderWidth : '1px',
+            borderTopWidth: appearance.includeBorders
+              ? appearance.borderWidth
+              : '1px',
+            borderTopColor: appearance.borderColor,
           }}
         />
       </div>
