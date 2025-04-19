@@ -29,7 +29,7 @@ const Activity: React.FC = () => {
   // todo: fix history
   return (
     <div>
-      <div className="bluxcc-my-4 bluxcc-h-[248px]">
+      <div className="bluxcc-my-4 bluxcc-h-[250px]">
         {loading ? (
           <div className="bluxcc-flex bluxcc-h-full bluxcc-flex-col bluxcc-items-center bluxcc-justify-center bluxcc-text-center bluxcc-text-gray-700">
             Loading activity...

@@ -52,12 +52,12 @@ const Successful = () => {
         </span>
       </div>
 
-      <div className="bluxcc-w-full bluxcc-flex-col bluxcc-space-y-2 bluxcc-text-center">
-        <p className="bluxcc-text-xl bluxcc-font-semibold">
+      <div className="bluxcc-w-full bluxcc-flex-col bluxcc-space-y-2 bluxcc-text-center bluxcc-font-medium">
+        <p className="bluxcc-text-xl">
           {waitingStatus === 'connecting' ? 'Connection' : 'Transaction'}{' '}
           Successful
         </p>
-        <p className="bluxcc-text-center bluxcc-text-sm bluxcc-font-medium bluxcc-leading-5">
+        <p className="bluxcc-text-center bluxcc-text-sm bluxcc-leading-5">
           {waitingStatus === 'connecting'
             ? `Your account has been successfully connected to ${capitalizeFirstLetter(context.value.config.appName)}`
             : 'Your transaction was successfully completed'}

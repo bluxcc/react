@@ -87,7 +87,6 @@ const Waiting = () => {
 
         if (publicKey && publicKey.trim() !== '') {
           const passphrase = await getWalletNetwork(wallet);
-
           context.setValue((prev) => ({
             ...prev,
             user: {
@@ -99,7 +98,6 @@ const Waiting = () => {
               },
             },
           }));
-
           setTimeout(() => {
             context.setRoute(Routes.SUCCESSFUL);
           }, 400);
@@ -139,7 +137,7 @@ const Waiting = () => {
         </div>
       )}
 
-      <div className="bluxcc-flex-col bluxcc-space-y-1 bluxcc-text-center bluxcc-font-semibold">
+      <div className="bluxcc-flex-col bluxcc-space-y-2 bluxcc-text-center bluxcc-font-medium">
         <p className="bluxcc-text-xl">
           {error
             ? `${
