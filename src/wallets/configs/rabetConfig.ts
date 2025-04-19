@@ -20,10 +20,11 @@ export const rabetConfig: WalletInterface = {
   connect: async () => {
     try {
       if (!window.rabet) throw new Error('Rabet Wallet is not installed.');
+
       const result = await window.rabet.connect();
+
       return { publicKey: result.publicKey };
     } catch (error) {
-      console.error('Error connecting to Rabet:', error);
       throw new Error('Failed to connect to Rabet.');
     }
   },
@@ -41,7 +42,6 @@ export const rabetConfig: WalletInterface = {
 
       return result.xdr;
     } catch (error) {
-      console.error('Error signing transaction with Rabet:', error);
       throw new Error('Failed to sign the transaction with Rabet.');
     }
   },
@@ -49,9 +49,9 @@ export const rabetConfig: WalletInterface = {
   disconnect: async () => {
     try {
       if (!window.rabet) throw new Error('Rabet Wallet is not installed.');
+
       window.rabet.disconnect();
     } catch (error) {
-      console.error('Error disconnecting from Rabet:', error);
       throw new Error('Failed to disconnect from Rabet.');
     }
   },

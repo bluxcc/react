@@ -22,11 +22,13 @@ export const xBullConfig: WalletInterface = {
   connect: async () => {
     try {
       const xbull = new xBullWalletConnect();
+
       const publicKey = await xbull.connect();
+
       xbull.closeConnections();
+
       return { publicKey };
     } catch (error) {
-      console.error('Error connecting to xBull:', error);
       throw new Error('Failed to connect to xBull.');
     }
   },
@@ -34,6 +36,7 @@ export const xBullConfig: WalletInterface = {
   signTransaction: async (xdr: string, options = {}): Promise<string> => {
     try {
       const xbull = new xBullWalletConnect();
+
       const signedXdr = await xbull.sign({
         xdr,
         publicKey: options?.address,
@@ -41,10 +44,11 @@ export const xBullConfig: WalletInterface = {
           options?.networkPassphrase &&
           getNetworkByPassphrase(options?.networkPassphrase),
       });
+
       xbull.closeConnections();
+
       return signedXdr;
     } catch (error) {
-      console.error('Error signing transaction with xBull:', error);
       throw new Error('Failed to sign the transaction with xBull.');
     }
   },

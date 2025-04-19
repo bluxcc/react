@@ -18,7 +18,6 @@ export const albedoConfig: WalletInterface = {
       const result = await albedo.publicKey({ token: 'Connect to Albedo' });
       return { publicKey: result.pubkey };
     } catch (error) {
-      console.error('Error connecting to Albedo:', error);
       throw new Error('Failed to connect to Albedo.');
     }
   },
@@ -38,7 +37,6 @@ export const albedoConfig: WalletInterface = {
 
       return result.signed_envelope_xdr;
     } catch (error) {
-      console.error('Error signing transaction with Albedo:', error);
       throw new Error('Failed to sign the transaction with Albedo.');
     }
   },

@@ -1,4 +1,4 @@
-import { Horizon } from '@stellar/stellar-sdk';
+import { Horizon, rpc } from '@stellar/stellar-sdk';
 import { HorizonApi } from '@stellar/stellar-sdk/lib/horizon';
 
 import { Url } from '../utils/network/url';
@@ -36,8 +36,8 @@ export interface AccountData {
 }
 
 interface IServers {
-  horizon?: Url;
-  soroban?: Url;
+  horizon: Url;
+  soroban: Url;
 }
 
 export type ITransports = Record<string, IServers>;
@@ -143,6 +143,10 @@ export interface ContextInterface {
     resolver: ((value: HorizonApi.SubmitTransactionResponse) => void) | null; // Transaction signing resolver
     result: HorizonApi.SubmitTransactionResponse | null; // Latest transaction signing result
   };
+  servers: {
+    horizon: Horizon.Server,
+    soroban: rpc.Server,
+  },
 }
 
 /**

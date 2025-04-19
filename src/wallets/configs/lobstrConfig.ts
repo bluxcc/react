@@ -21,10 +21,11 @@ export const lobstrConfig: WalletInterface = {
       if (!(await isConnected())) {
         throw new Error('LOBSTR Wallet is not installed or connected.');
       }
+
       const publicKey = await getPublicKey();
+
       return { publicKey };
     } catch (error) {
-      console.error('Error connecting to LOBSTR:', error);
       throw new Error('Failed to connect to LOBSTR.');
     }
   },
@@ -34,9 +35,9 @@ export const lobstrConfig: WalletInterface = {
       if (!signTransaction) {
         throw new Error('LOBSTR Wallet does not support signing transactions.');
       }
+
       return await signTransaction(xdr);
     } catch (error) {
-      console.error('Error signing transaction with LOBSTR:', error);
       throw new Error('Failed to sign the transaction with LOBSTR.');
     }
   },

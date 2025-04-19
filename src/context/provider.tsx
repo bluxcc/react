@@ -1,15 +1,18 @@
+import { Horizon, rpc } from '@stellar/stellar-sdk';
 import React, { createContext, useState, useEffect, useContext } from 'react';
 
 import BluxModal from '../containers/BluxModal';
 import { defaultLightTheme } from '../constants';
 import getMappedWallets from '../utils/mappedWallets';
+import NETWORKS_DETAILS from '../constants/networkDetails';
+import getNetworkRpc from '../utils/network/getNetworkRpc';
 import useCheckWalletNetwork from './useCheckWalletNetwork';
 import initializeRabetMobile from '../utils/initializeRabetMobile';
 import {
+  Routes,
   ContextState,
   IProviderConfig,
   ContextInterface,
-  Routes,
 } from '../types';
 
 export const ProviderContext = createContext<ContextState | null>(null);
@@ -19,13 +22,6 @@ type BluxProviderProps = {
   config: IProviderConfig;
   children: React.ReactNode | any;
 };
-
-// const getGoogleFontUrl = (fontName: string): string => {
-//   const fallbackEncoded = fontName.trim().split(' ').join('+');
-//   const encodedFont = fontName ?? fallbackEncoded;
-
-//   return `https://fonts.googleapis.com/css2?family=${encodedFont}&display=swap`;
-// };
 
 export const BluxProvider = ({
   config,
@@ -39,6 +35,21 @@ export const BluxProvider = ({
   if (!config.networks.includes(config.defaultNetwork)) {
     throw new Error('default network is not listed in networks');
   }
+
+  for (const n of config.networks) {
+    if (!NETWORKS_DETAILS[n]) {
+      if (!config.transports) {
+        throw new Error('Must set transports for custom networks');
+      } else if (!config.transports[n]) {
+        throw new Error('Must set transports for custom networks');
+      }
+    }
+  }
+
+  const { horizon, soroban } = getNetworkRpc(
+    config.defaultNetwork,
+    config.transports ?? {},
+  );
 
   const [route, setRoute] = useState<Routes>(Routes.ONBOARDING);
   const [value, setValue] = useState<ContextInterface>({
@@ -63,6 +74,10 @@ export const BluxProvider = ({
       resolver: null,
     },
     availableWallets: [],
+    servers: {
+      horizon: new Horizon.Server(horizon.url),
+      soroban: new rpc.Server(soroban.url),
+    },
   });
 
   useCheckWalletNetwork(value, setValue, setRoute);
@@ -80,6 +95,21 @@ export const BluxProvider = ({
       },
     }));
   }, [config]);
+
+  useEffect(() => {
+    const { horizon, soroban } = getNetworkRpc(
+      value.activeNetwork,
+      value.config.transports ?? {},
+    );
+
+    setValue((prev) => ({
+      ...prev,
+      servers: {
+        horizon: new Horizon.Server(horizon.url),
+        soroban: new rpc.Server(soroban.url),
+      },
+    }));
+  }, [value.config.transports, value.config.networks, value.activeNetwork]);
 
   useEffect(() => {
     const loadWallets = async () => {
@@ -105,28 +135,6 @@ export const BluxProvider = ({
 
     loadWallets();
   }, []);
-
-  // useEffect(() => {
-  //   const font = value.config.appearance.font;
-
-  //   if (!font) return;
-
-  //   const existing = document.querySelector(`link[data-font="${font}"]`);
-  //   if (existing) return;
-
-  //   const link = document.createElement('link');
-  //   link.href = getGoogleFontUrl(font);
-  //   link.rel = 'stylesheet';
-  //   link.setAttribute('data-font', font);
-  //   document.head.appendChild(link);
-
-  //   return () => {
-  //     const addedFont = document.querySelector(`link[data-font="${font}"]`);
-  //     if (addedFont) {
-  //       document.head.removeChild(addedFont);
-  //     }
-  //   };
-  // }, [value.config.appearance.font]);
 
   const closeModal = () => {
     setValue((prev) => ({

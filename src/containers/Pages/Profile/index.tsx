@@ -1,51 +1,41 @@
-import React, { useEffect, useState } from 'react';
-
-import Button from '../../../components/Button';
-import CardItem from '../../../components/CardItem';
-
-import { useBlux } from '../../../hooks/useBlux';
-import { useProvider } from '../../../context/provider';
-
-import copyText from '../../../utils/copyText';
-import shortenAddress from '../../../utils/shortenAddress';
+import React, { useState } from 'react';
 
 import { Routes } from '../../../types';
-import { Copy, History, LogOut, Send } from '../../../assets/Icons';
-import useAccount from '../../../hooks/useAccount';
+import copyText from '../../../utils/copyText';
+import Button from '../../../components/Button';
+import { useBlux } from '../../../hooks/useBlux';
+import { useBalance } from '../../../useStellar';
+import CardItem from '../../../components/CardItem';
+import { useProvider } from '../../../context/provider';
+import shortenAddress from '../../../utils/shortenAddress';
 import humanizeAmount from '../../../utils/humanizeAmount';
+import { Copy, History, LogOut, Send } from '../../../assets/Icons';
 
 const Profile = () => {
-  const context = useProvider();
-  const appearance = context.value.config.appearance;
   const { logout } = useBlux();
-  const [address, setAddress] = useState(
-    context.value.user.wallet?.address || '',
-  );
+  const context = useProvider();
   const [copied, setCopied] = useState(false);
-  const { account } = useAccount({
-    publicKey: context.value.user.wallet?.address as string,
-    passphrase: context.value.config.networks[0], // todo: fix network
-  });
+  const { balance } = useBalance({ asset: 'native' });
 
-  useEffect(() => {
-    setAddress(context.value.user.wallet?.address as string);
-  }, [context.value.user.wallet?.address]);
+  const address = context.value.user.wallet?.address as string;
+  const appearance = context.value.config.appearance;
 
-  const handleDisconnect = () => {
+  const handleLogout = () => {
     logout();
   };
+
   const handleCopyAddress = () => {
-    copyText(context.value.user.wallet?.address as string)
+    copyText(address)
       .then(() => {
         setCopied(true);
+
         setTimeout(() => {
           setCopied(false);
         }, 1000);
       })
-      .catch((error) => {
-        console.error('Failed to copy code:', error);
-      });
+      .catch(() => {});
   };
+
   return (
     <div className="bluxcc-flex bluxcc-flex-col bluxcc-items-center bluxcc-justify-center">
       <div
@@ -66,7 +56,7 @@ const Profile = () => {
         )}
       </p>
       <p className="bluxcc-text-center" style={{ color: appearance.accent }}>
-        {account ? humanizeAmount(account.xlmBalance) : 'N/A'} XLM
+        {balance ? humanizeAmount(balance) : 'N/A'} XLM
       </p>
 
       <div className="bluxcc-mt-[16px] bluxcc-w-full bluxcc-space-y-2">
@@ -88,7 +78,6 @@ const Profile = () => {
         />
       </div>
 
-      {/* divider */}
       <div className="bluxcc-flex bluxcc-h-8 bluxcc-w-full bluxcc-items-center bluxcc-justify-center">
         <div
           className="bluxcc-absolute bluxcc-left-0 bluxcc-right-0"
@@ -107,9 +96,9 @@ const Profile = () => {
         state="enabled"
         startIcon={<LogOut />}
         className="!bluxcc-text-gray-600"
-        onClick={handleDisconnect}
+        onClick={handleLogout}
       >
-        Disconnect
+        Logout
       </Button>
     </div>
   );
