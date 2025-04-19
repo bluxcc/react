@@ -43,11 +43,19 @@ const Successful = () => {
     }
   };
 
-  const closeModal = () => {
+  const handleDone = () => {
     context.setValue((prev) => ({
       ...prev,
       isModalOpen: false,
     }));
+
+    if (waitingStatus === 'signing') {
+      const { resolver, result } = context.value.signTransaction;
+
+      if (resolver && result) {
+        resolver(result);
+      }
+    }
   };
 
   return (
@@ -99,7 +107,7 @@ const Successful = () => {
           Logging In
         </Button>
       ) : (
-        <Button state="enabled" variant="fill" onClick={closeModal}>
+        <Button state="enabled" variant="fill" onClick={handleDone}>
           Done
         </Button>
       )}

@@ -22,7 +22,7 @@ const Waiting = () => {
   const { user, config } = context.value;
   const waitingStatus = context.value.waitingStatus;
   const appearance = context.value.config.appearance;
-  const { xdr, network, resolver } = context.value.signTransaction;
+  const { xdr, network } = context.value.signTransaction;
 
   const fetchWallets = async () => {
     const wallets = await getMappedWallets();
@@ -66,8 +66,6 @@ const Waiting = () => {
           network,
           config.transports || {},
         );
-
-        if (resolver) resolver(result);
 
         context.setValue((prev) => ({
           ...prev,
