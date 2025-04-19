@@ -104,6 +104,7 @@ const InputField = ({
             '--tw-ring-color': getBorderAndRingColor(),
             borderRadius: appearance.cornerRadius,
             borderColor: getBorderAndRingColor(),
+            backgroundColor: appearance.bgField,
             borderWidth: appearance.includeBorders
               ? appearance.borderWidth
               : '1px',

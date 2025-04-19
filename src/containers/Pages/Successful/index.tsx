@@ -105,7 +105,11 @@ const Successful = () => {
       </div>
 
       {waitingStatus === 'connecting' ? (
-        <Button state="enabled" variant="outline">
+        <Button
+          state="enabled"
+          variant="outline"
+          className="!bluxcc-cursor-default"
+        >
           Logging In
         </Button>
       ) : (

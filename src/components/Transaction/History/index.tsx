@@ -55,7 +55,10 @@ const History = ({ tx }: TransactionProps) => {
           {handleActionLogo(tx.title)}
         </div>
         <div className="bluxcc-flex bluxcc-flex-col bluxcc-justify-start">
-          <p className="bluxcc-text-start bluxcc-text-xs bluxcc-font-medium bluxcc-text-gray-900">
+          <p
+            className="bluxcc-text-start bluxcc-text-xs bluxcc-font-medium"
+            style={{ color: context.value.config.appearance.textColor }}
+          >
             {tx.title}
           </p>
           <p className="bluxcc-text-sm bluxcc-font-medium">{tx.description}</p>
@@ -64,9 +67,10 @@ const History = ({ tx }: TransactionProps) => {
       <div className="bluxcc-flex bluxcc-items-center bluxcc-gap-2 bluxcc-text-xs bluxcc-text-gray-600">
         {formatDate(tx.date)}
         <div
-          className="bluxcc-item-center bluxcc-flex bluxcc-size-8 bluxcc-cursor-pointer bluxcc-justify-center bluxcc-rounded-full bluxcc-bg-gray-50"
+          className="bluxcc-item-center bluxcc-flex bluxcc-size-8 bluxcc-cursor-pointer bluxcc-justify-center bluxcc-rounded-full"
           title="View transaction details"
           onClick={handleGoToExplorer}
+          style={{ backgroundColor: context.value.config.appearance.bgField }}
         >
           <span className="bluxcc-flex bluxcc-items-center bluxcc-justify-center">
             <Globe />
