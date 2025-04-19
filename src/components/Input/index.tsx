@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState, MouseEvent } from 'react';
 
 import { useProvider } from '../../context/provider';
 import { IAppearance } from '../../types';
@@ -36,8 +36,9 @@ const CustomButton = ({
         color: appearance.accent,
         borderColor: appearance.borderColor,
         backgroundColor: appearance.background,
+        borderWidth: appearance.includeBorders ? appearance.borderWidth : '1px',
       }}
-      className="bluxcc-border bluxcc-px-3 bluxcc-py-1 bluxcc-text-sm bluxcc-font-semibold bluxcc-transition-all bluxcc-duration-300"
+      className="bluxcc-border bluxcc-px-3 bluxcc-py-1 bluxcc-text-sm bluxcc-font-medium bluxcc-transition-all bluxcc-duration-300"
     >
       {button}
     </button>
@@ -59,6 +60,27 @@ const InputField = ({
 }: InputFieldProps) => {
   const context = useProvider();
   const appearance = context.value.config.appearance;
+  const [isFocused, setIsFocused] = useState(false);
+
+  const onMouseEnter = (e: MouseEvent<HTMLDivElement>) => {
+    if (!isFocused && !error) {
+      e.currentTarget.style.borderColor = appearance.accent;
+    }
+  };
+
+  const onMouseLeave = (e: MouseEvent<HTMLDivElement>) => {
+    if (!isFocused) {
+      e.currentTarget.style.borderColor = error
+        ? '#ec2929'
+        : appearance.borderColor;
+    }
+  };
+
+  const getBorderAndRingColor = () => {
+    if (error) return '#ec2929';
+    if (isFocused) return appearance.accent;
+    return appearance.borderColor;
+  };
 
   return (
     <div className="bluxcc-flex bluxcc-w-full bluxcc-flex-col">
@@ -72,12 +94,19 @@ const InputField = ({
         </label>
       )}
       <div
-        className={`bluxcc-flex bluxcc-h-14 bluxcc-w-full bluxcc-items-center bluxcc-border bluxcc-px-4 bluxcc-py-2 bluxcc-transition-all ${error && 'focus-within:bluxcc-ring-1'} `}
+        className={`bluxcc-flex bluxcc-h-14 bluxcc-w-full bluxcc-items-center bluxcc-border bluxcc-px-4 bluxcc-py-2 bluxcc-transition-all`}
+        onFocus={() => setIsFocused(true)}
+        onBlur={() => setIsFocused(false)}
+        onMouseEnter={onMouseEnter}
+        onMouseLeave={onMouseLeave}
         style={
           {
-            '--tw-ring-color': !error && context.value.config.appearance.accent,
+            '--tw-ring-color': getBorderAndRingColor(),
             borderRadius: appearance.cornerRadius,
-            borderColor: error ? '#ec2929' : appearance.borderColor,
+            borderColor: getBorderAndRingColor(),
+            borderWidth: appearance.includeBorders
+              ? appearance.borderWidth
+              : '1px',
           } as React.CSSProperties
         }
       >

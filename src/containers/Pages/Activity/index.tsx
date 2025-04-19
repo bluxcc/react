@@ -7,6 +7,7 @@ import { useProvider } from '../../../context/provider';
 import toTitleFormat from '../../../utils/toTitleFormat';
 import getExplorerUrl from '../../../utils/stellar/getExplorerUrl';
 import History, { TxDetail } from '../../../components/Transaction/History';
+import humanizeAmount from '../../../utils/humanizeAmount';
 
 const handleAssetText = (
   op: Horizon.ServerApi.PaymentOperationRecord | any,
@@ -18,13 +19,17 @@ const handleAssetText = (
 };
 
 const Activity: React.FC = () => {
-  const [transactionsDetails, setTransactionsDetails] = useState<TxDetail[]>([]);
-  const { transactions, loading } = useTransactions({ includeOperations: true });
+  const [transactionsDetails, setTransactionsDetails] = useState<TxDetail[]>(
+    [],
+  );
+  const { transactions, loading } = useTransactions({
+    includeOperations: true,
+  });
 
   const { value } = useProvider();
 
   const userAddress = value.user.wallet?.address as string;
-  
+
   const handleGoToExplorer = () => {
     const explorerUrl = getExplorerUrl(
       value.config.networks[0], // todo: fix it to active network
@@ -49,7 +54,7 @@ const Activity: React.FC = () => {
         description: '',
         date: tx.created_at,
         title: toTitleFormat(op.type),
-      }
+      };
 
       if (tx.operations.length > 1) {
         details.title = 'Multi Operation';
@@ -61,7 +66,7 @@ const Activity: React.FC = () => {
         }
 
         details.title = title;
-        details.description = `${op.amount} ${handleAssetText(op)}`;
+        details.description = `${humanizeAmount(op.amount)} ${handleAssetText(op)}`;
       } else if (
         op.type ===
           Horizon.HorizonApi.OperationResponseType.pathPaymentStrictSend ||
@@ -78,40 +83,42 @@ const Activity: React.FC = () => {
   }, [transactions]);
 
   return (
-    <div>
-      <div className="bluxcc-my-4 bluxcc-h-[248px]">
-        {loading ? (
-          <div className="bluxcc-flex bluxcc-h-full bluxcc-flex-col bluxcc-items-center bluxcc-justify-center bluxcc-text-center bluxcc-text-gray-700">
-            Loading activity...
-          </div>
-        ) : transactionsDetails.length > 0 ? (
-          transactionsDetails.map((tx, index) => (
-            <div
-              key={index}
-              className={`bluxcc-p-2 ${
+    <div className="bluxcc-h-[348px]">
+      {loading ? (
+        <div className="bluxcc-flex bluxcc-h-full bluxcc-flex-col bluxcc-items-center bluxcc-justify-center bluxcc-text-center bluxcc-text-gray-700">
+          Loading activity...
+        </div>
+      ) : transactionsDetails.length > 0 ? (
+        transactionsDetails.map((tx, index) => (
+          <div
+            key={index}
+            style={{
+              borderBottomStyle: 'dashed',
+              borderBottomWidth:
                 index < transactionsDetails.length - 1
-                  ? 'bluxcc-border-b bluxcc-border-dashed bluxcc-border-gray-300'
-                  : ''
-              }`}
-            >
-              <History
-                tx={tx}
-              />
-            </div>
-          ))
-        ) : (
-          <div className="bluxcc-flex bluxcc-h-full bluxcc-flex-col bluxcc-items-center bluxcc-justify-center bluxcc-text-center bluxcc-text-gray-700">
-            No activity found
+                  ? value.config.appearance.includeBorders
+                    ? value.config.appearance.borderWidth
+                    : '1px'
+                  : '0px',
+              borderBottomColor: value.config.appearance.borderColor,
+            }}
+            className={`bluxcc-p-2`}
+          >
+            <History tx={tx} />
           </div>
-        )}
-      </div>
+        ))
+      ) : (
+        <div className="bluxcc-flex bluxcc-h-full bluxcc-flex-col bluxcc-items-center bluxcc-justify-center bluxcc-text-center bluxcc-text-gray-700">
+          No activity found
+        </div>
+      )}
 
       {transactionsDetails.length > 0 && (
         <Button
           state="enabled"
           variant="outline"
           size="medium"
-          className="bluxcc-mt-6"
+          className="mt-4"
           onClick={handleGoToExplorer}
         >
           See all in explorer

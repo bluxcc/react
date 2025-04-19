@@ -38,10 +38,15 @@ const ConfirmCode: React.FC = () => {
   return (
     <div className="bluxcc-mt-4 bluxcc-flex bluxcc-w-full bluxcc-select-none bluxcc-flex-col bluxcc-items-center bluxcc-justify-center">
       <div
-        style={{ borderColor: appearance.borderColor }}
+        style={{
+          borderColor: appearance.borderColor,
+          borderWidth: appearance.includeBorders
+            ? appearance.borderWidth
+            : '1px',
+        }}
         className="bluxcc-mb-6 bluxcc-flex bluxcc-h-20 bluxcc-w-20 bluxcc-items-center bluxcc-justify-center bluxcc-overflow-hidden bluxcc-rounded-full bluxcc-border-2"
       >
-        <EmailIcon fill={appearance.accent} />
+        <EmailIcon fill={appearance.textColor} />
       </div>
 
       <div className="bluxcc-flex-col bluxcc-space-y-1 bluxcc-text-center">
@@ -63,11 +68,16 @@ const ConfirmCode: React.FC = () => {
         <OTPInput otp={otp} setOtp={setOtp} error={error} />
       </div>
 
-      {/* Divider */}
+      {/* divider */}
       <div className="bluxcc-flex bluxcc-h-8 bluxcc-w-full bluxcc-items-center bluxcc-justify-center">
         <div
-          className="bluxcc-absolute bluxcc-left-0 bluxcc-right-0 bluxcc-h-[1px]"
-          style={{ background: appearance.borderColor }}
+          className="bluxcc-absolute bluxcc-left-0 bluxcc-right-0"
+          style={{
+            borderTopWidth: appearance.includeBorders
+              ? appearance.borderWidth
+              : '1px',
+            borderTopColor: appearance.borderColor,
+          }}
         />
       </div>
 

@@ -63,7 +63,7 @@ const Profile = () => {
         <CardItem
           endArrow
           label="Send"
-          startIcon={<Send fill={appearance.accent} />}
+          startIcon={<Send fill={appearance.textColor} />}
           onClick={() => {
             context.setRoute(Routes.SEND);
           }}
@@ -71,7 +71,7 @@ const Profile = () => {
         <CardItem
           endArrow
           label="Activity"
-          startIcon={<History fill={appearance.accent} />}
+          startIcon={<History fill={appearance.textColor} />}
           onClick={() => {
             context.setRoute(Routes.ACTIVITY);
           }}
@@ -80,8 +80,13 @@ const Profile = () => {
 
       <div className="bluxcc-flex bluxcc-h-8 bluxcc-w-full bluxcc-items-center bluxcc-justify-center">
         <div
-          className="bluxcc-absolute bluxcc-left-0 bluxcc-right-0 bluxcc-h-[1px]"
-          style={{ background: appearance.borderColor }}
+          className="bluxcc-absolute bluxcc-left-0 bluxcc-right-0"
+          style={{
+            borderTopWidth: appearance.includeBorders
+              ? appearance.borderWidth
+              : '1px',
+            borderTopColor: appearance.borderColor,
+          }}
         />
       </div>
 

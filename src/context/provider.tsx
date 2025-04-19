@@ -11,7 +11,6 @@ import initializeRabetMobile from '../utils/initializeRabetMobile';
 import {
   Routes,
   ContextState,
-  SupportedFonts,
   IProviderConfig,
   ContextInterface,
 } from '../types';
@@ -22,21 +21,6 @@ type BluxProviderProps = {
   isDemo?: boolean;
   config: IProviderConfig;
   children: React.ReactNode | any;
-};
-
-const googleFonts: Record<SupportedFonts, string | null> = {
-  Lora: 'Lora',
-  Inter: 'Inter',
-  Manrope: 'Manrope',
-  'JetBrains Mono': 'JetBrains+Mono',
-};
-
-const getGoogleFontUrl = (fontName: string): string => {
-  const fallbackEncoded = fontName.trim().split(' ').join('+');
-  const encodedFont =
-    googleFonts[fontName as SupportedFonts] ?? fallbackEncoded;
-
-  return `https://fonts.googleapis.com/css2?family=${encodedFont}&display=swap`;
 };
 
 export const BluxProvider = ({
@@ -55,14 +39,17 @@ export const BluxProvider = ({
   for (const n of config.networks) {
     if (!NETWORKS_DETAILS[n]) {
       if (!config.transports) {
-        throw new Error('Must set transports for custom networks')
+        throw new Error('Must set transports for custom networks');
       } else if (!config.transports[n]) {
-        throw new Error('Must set transports for custom networks')
+        throw new Error('Must set transports for custom networks');
       }
     }
   }
 
-  const { horizon, soroban } = getNetworkRpc(config.defaultNetwork, config.transports ?? {});
+  const { horizon, soroban } = getNetworkRpc(
+    config.defaultNetwork,
+    config.transports ?? {},
+  );
 
   const [route, setRoute] = useState<Routes>(Routes.ONBOARDING);
   const [value, setValue] = useState<ContextInterface>({
@@ -110,7 +97,10 @@ export const BluxProvider = ({
   }, [config]);
 
   useEffect(() => {
-    const { horizon, soroban } = getNetworkRpc(value.activeNetwork, value.config.transports ?? {});
+    const { horizon, soroban } = getNetworkRpc(
+      value.activeNetwork,
+      value.config.transports ?? {},
+    );
 
     setValue((prev) => ({
       ...prev,
@@ -145,28 +135,6 @@ export const BluxProvider = ({
 
     loadWallets();
   }, []);
-
-  useEffect(() => {
-    const font = value.config.appearance.font;
-
-    if (!font) return;
-
-    const existing = document.querySelector(`link[data-font="${font}"]`);
-    if (existing) return;
-
-    const link = document.createElement('link');
-    link.href = getGoogleFontUrl(font);
-    link.rel = 'stylesheet';
-    link.setAttribute('data-font', font);
-    document.head.appendChild(link);
-
-    return () => {
-      const addedFont = document.querySelector(`link[data-font="${font}"]`);
-      if (addedFont) {
-        document.head.removeChild(addedFont);
-      }
-    };
-  }, [value.config.appearance.font]);
 
   const closeModal = () => {
     setValue((prev) => ({

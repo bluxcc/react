@@ -21,10 +21,7 @@ const ModalHeader = ({
 }: HeaderProps) => {
   const context = useProvider();
   return (
-    <div
-      className="bluxcc-flex bluxcc-h-[60px] bluxcc-w-full bluxcc-items-center bluxcc-justify-between"
-      style={{ backgroundColor: context.value.config.appearance.background }}
-    >
+    <div className="bluxcc-flex bluxcc-h-[60px] bluxcc-w-full bluxcc-items-center bluxcc-justify-between">
       {icon === 'info' ? (
         <div
           onClick={onInfo}
@@ -44,7 +41,7 @@ const ModalHeader = ({
         <div className="bluxcc-size-5" />
       )}
 
-      <p className="bluxcc-flex-grow bluxcc-select-none bluxcc-text-center bluxcc-text-base bluxcc-font-semibold">
+      <p className="bluxcc-flex-grow bluxcc-select-none bluxcc-text-center bluxcc-text-base bluxcc-font-medium">
         {title}
       </p>
 

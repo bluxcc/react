@@ -102,7 +102,6 @@ export interface ContextState {
 /**
  * Supported font options for UI customization.
  */
-export type SupportedFonts = 'Manrope' | 'Inter' | 'JetBrains Mono' | 'Lora';
 
 /**
  * Supported corner radius styles for UI elements.
@@ -114,13 +113,14 @@ export type SupportedFonts = 'Manrope' | 'Inter' | 'JetBrains Mono' | 'Lora';
 export interface IAppearance {
   theme: 'light' | 'dark'; // Light or dark mode
   background: string; // Background color or image
-  bgField: string; // Background color for fields
+  bgField: string; // Background color for input fields or similar UI areas
   accent: string; // Primary accent color
   textColor: string; // Main text color
-  font: SupportedFonts | string; // Selected font style
-  cornerRadius: string; // Border radius styling
-  borderColor: string; // Optional border color
-  borderWidth: string; // Optional border width
+  font: string; // Selected font family or style
+  cornerRadius: string; // Corner radius for UI elements
+  borderColor: string; // Border color for elements
+  borderWidth: string; // Width of borders (e.g., '1px', '0', etc.)
+  includeBorders: boolean; // Whether to display borders using the specified borderWidth
   logo?: React.ImgHTMLAttributes<HTMLImageElement>['src']; // Optional application logo URL
 }
 

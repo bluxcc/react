@@ -4,18 +4,18 @@ import { useProvider } from '../../../context/provider';
 import getExplorerUrl from '../../../utils/stellar/getExplorerUrl';
 import {
   Globe,
-  RedAlert,
   Upstream,
   Downstream,
   MultiOperation,
 } from '../../../assets/Icons';
+import formatDate from '../../../utils/formatDate';
 
 export type TxDetail = {
   hash: string;
   date: string;
   title: string;
   description: string;
-}
+};
 
 interface TransactionProps {
   tx: TxDetail;
@@ -37,7 +37,7 @@ const History = ({ tx }: TransactionProps) => {
 
   const handleGoToExplorer = () => {
     const explorerUrl = getExplorerUrl(
-      context.value.config.networks[0],
+      context.value.config.networks[0], // todo: network fix
       `tx/${tx.hash}`,
     ); // todo: network fix
     window.open(explorerUrl, '_blank', 'noopener,noreferrer');
@@ -47,7 +47,7 @@ const History = ({ tx }: TransactionProps) => {
     <div className="bluxcc-flex bluxcc-items-center bluxcc-justify-between">
       <div className="bluxcc-flex bluxcc-items-center bluxcc-justify-start bluxcc-gap-3">
         <div
-          className={`bluxcc-flex bluxcc-size-8 bluxcc-items-center bluxcc-justify-center bluxcc-rounded-full`}
+          className={`bluxcc-flex bluxcc-size-10 bluxcc-items-center bluxcc-justify-center bluxcc-rounded-full`}
           style={{
             backgroundColor: context.value.config.appearance.background,
           }}
@@ -55,19 +55,16 @@ const History = ({ tx }: TransactionProps) => {
           {handleActionLogo(tx.title)}
         </div>
         <div className="bluxcc-flex bluxcc-flex-col bluxcc-justify-start">
-          <p className="bluxcc-text-start bluxcc-text-xs bluxcc-font-medium bluxcc-text-gray-700">
+          <p className="bluxcc-text-start bluxcc-text-xs bluxcc-font-medium bluxcc-text-gray-900">
             {tx.title}
           </p>
           <p className="bluxcc-text-sm bluxcc-font-medium">{tx.description}</p>
         </div>
       </div>
-      <div className="bluxcc-flex bluxcc-items-center bluxcc-gap-2 bluxcc-text-xs bluxcc-text-gray-500">
-        {tx.date}
+      <div className="bluxcc-flex bluxcc-items-center bluxcc-gap-2 bluxcc-text-xs bluxcc-text-gray-600">
+        {formatDate(tx.date)}
         <div
           className="bluxcc-item-center bluxcc-flex bluxcc-size-8 bluxcc-cursor-pointer bluxcc-justify-center bluxcc-rounded-full bluxcc-bg-gray-50"
-          style={{
-            backgroundColor: context.value.config.appearance.background,
-          }}
           title="View transaction details"
           onClick={handleGoToExplorer}
         >

@@ -1,7 +1,6 @@
 import React, { useState, MouseEvent } from 'react';
 import { useProvider } from '../../context/provider';
 import { ArrowRight } from '../../assets/Icons';
-import getContrastColor from '../../utils/getContrastColor';
 
 type CardItemProps = {
   variant?: 'social' | 'default' | 'input';
@@ -67,7 +66,7 @@ const CardItem = ({
   return (
     <div
       onClick={variant === 'input' ? undefined : onClick}
-      className={`bluxcc-flex !bluxcc-h-14 bluxcc-w-full bluxcc-items-center bluxcc-border bluxcc-px-[10px] bluxcc-py-2 bluxcc-transition-all bluxcc-duration-300 ${
+      className={`bluxcc-flex !bluxcc-h-14 bluxcc-w-full bluxcc-items-center bluxcc-border bluxcc-px-[10px] bluxcc-py-2 ${
         variant === 'input' ? 'bluxcc-cursor-text' : 'bluxcc-cursor-pointer'
       }`}
       style={{
@@ -75,6 +74,7 @@ const CardItem = ({
         color: appearance.textColor,
         borderColor: isFocused ? appearance.accent : appearance.borderColor,
         backgroundColor: appearance.bgField,
+        borderWidth: appearance.includeBorders ? appearance.borderWidth : '1px',
       }}
       onMouseEnter={onMouseEnter}
       onMouseLeave={onMouseLeave}
@@ -83,8 +83,11 @@ const CardItem = ({
         style={{
           borderRadius: appearance.cornerRadius,
           borderColor: appearance.borderColor,
+          borderWidth: appearance.includeBorders
+            ? appearance.borderWidth
+            : '1px',
         }}
-        className="bluxcc-flex bluxcc-size-10 bluxcc-flex-shrink-0 bluxcc-items-center bluxcc-justify-center bluxcc-overflow-hidden bluxcc-border bluxcc-transition-all bluxcc-duration-300"
+        className="bluxcc-flex bluxcc-size-10 bluxcc-flex-shrink-0 bluxcc-items-center bluxcc-justify-center bluxcc-overflow-hidden bluxcc-border bluxcc-transition-[border-radius] bluxcc-duration-300"
       >
         {startIcon}
       </span>
@@ -112,17 +115,17 @@ const CardItem = ({
               <button
                 disabled={!isValid}
                 onClick={() => onSubmit?.(inputValue)}
+                className={`bluxcc-absolute bluxcc-right-0 bluxcc-flex bluxcc-h-8 !bluxcc-w-[68px] bluxcc-items-center bluxcc-justify-center bluxcc-border bluxcc-bg-transparent bluxcc-text-sm bluxcc-font-medium bluxcc-transition-[border-radius,background,border-color] bluxcc-duration-150`}
                 style={{
                   borderRadius: appearance.cornerRadius,
-                  background: isValid ? appearance.accent : 'transparent',
                   borderColor: isValid
                     ? appearance.accent
                     : appearance.borderColor,
-                  color: isValid
-                    ? getContrastColor(appearance.accent)
-                    : appearance.textColor,
+                  color: isValid ? appearance.accent : '#999999',
+                  borderWidth: appearance.includeBorders
+                    ? appearance.borderWidth
+                    : '1px',
                 }}
-                className={`bluxcc-absolute bluxcc-right-0 bluxcc-flex bluxcc-h-8 !bluxcc-w-[68px] bluxcc-items-center bluxcc-justify-center bluxcc-border bluxcc-text-sm bluxcc-font-medium bluxcc-transition-all bluxcc-duration-300`}
               >
                 Submit
               </button>
