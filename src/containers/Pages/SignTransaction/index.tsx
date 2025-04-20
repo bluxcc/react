@@ -8,6 +8,7 @@ import humanizeAmount from '../../../utils/humanizeAmount';
 import shortenAddress from '../../../utils/shortenAddress';
 import Summary from '../../../components/Transaction/Summery';
 import getTransactionDetails from '../../../utils/stellar/getTransactionDetails';
+import getContrastColor from '../../../utils/getContrastColor';
 
 const SignTransaction = () => {
   const context = useProvider();
@@ -68,12 +69,14 @@ const SignTransaction = () => {
           </p>
         </div>
         <div
-          className="bluxcc-overflow-hidden bluxcc-bg-lightBlue-100 bluxcc-px-[10px] bluxcc-py-2"
+          className="bluxcc-overflow-hidden bluxcc-px-[10px] bluxcc-py-2"
           style={{
             borderRadius: appearance.cornerRadius,
+            backgroundColor: appearance.accent,
+            color: getContrastColor(appearance.accent),
           }}
         >
-          <p className="bluxcc-max-w-[90px] bluxcc-text-xs bluxcc-font-normal bluxcc-text-primary-500">
+          <p className="bluxcc-max-w-[90px] bluxcc-text-xs bluxcc-font-normal">
             {balance ? humanizeAmount(balance) : 'N/A'} XLM
           </p>
         </div>

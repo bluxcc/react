@@ -44,23 +44,21 @@ const Summary = ({
       {details.map(({ label, value, isHighlighted, isCopyable }, index) => (
         <div
           key={index}
-          className={`bluxcc-flex bluxcc-justify-between bluxcc-px-4 bluxcc-py-2 ${
-            index < details.length - 1
-              ? 'bluxcc-border-b bluxcc-border-dashed'
-              : ''
-          }`}
+          className={`bluxcc-flex bluxcc-justify-between bluxcc-px-4 bluxcc-py-2`}
           style={{
             borderColor: appearance.borderColor,
-            borderWidth: appearance.includeBorders
+            borderBottomStyle: 'dashed',
+            borderBottomWidth: appearance.includeBorders
               ? appearance.borderWidth
               : '1px',
           }}
         >
-          <span>{label}</span>
+          <span style={{ color: appearance.textColor }}>{label}</span>
           <span
-            className={`${isHighlighted ? 'bluxcc-text-primary-600' : 'bluxcc-text-gray-700'} ${
-              isCopyable ? 'bluxcc-cursor-pointer' : ''
-            }`}
+            className={`${isCopyable ? 'bluxcc-cursor-pointer' : ''}`}
+            style={{
+              color: isHighlighted ? appearance.accent : appearance.textColor,
+            }}
             onClick={() => isCopyable && copyText(sender)}
           >
             {value}
