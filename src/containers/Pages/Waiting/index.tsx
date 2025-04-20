@@ -52,8 +52,8 @@ const Waiting = () => {
   }, [matchedWallet]);
 
   const handleAssignment = async (wallet: WalletInterface) => {
-    try {
-      if (waitingStatus === 'signing') {
+    if (waitingStatus === 'signing') {
+      try {
         const signedXdr = await signTransaction(
           wallet,
           xdr,
@@ -80,7 +80,13 @@ const Waiting = () => {
         } else {
           setError(true);
         }
-      } else {
+      } catch (error) {
+        setError(true);
+
+        throw error;
+      }
+    } else {
+      try {
         const { publicKey } = await wallet.connect();
 
         if (publicKey && publicKey.trim() !== '') {
@@ -96,14 +102,16 @@ const Waiting = () => {
               },
             },
           }));
+
           setTimeout(() => {
             context.setRoute(Routes.SUCCESSFUL);
           }, 400);
         }
+      } catch (error) {
+        setError(true);
+        
+        throw error;
       }
-    } catch (error) {
-      setError(true);
-      throw error;
     }
   };
 

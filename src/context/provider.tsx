@@ -71,6 +71,7 @@ export const BluxProvider = ({
       xdr: '',
       network: '',
       result: null,
+      rejecter: null,
       resolver: null,
     },
     availableWallets: [],
@@ -111,29 +112,28 @@ export const BluxProvider = ({
     }));
   }, [value.config.transports, value.config.networks, value.activeNetwork]);
 
-  useEffect(() => {
-    const loadWallets = async () => {
-      const mappedWallets = await getMappedWallets();
-
-      const handleLoad = () => initializeRabetMobile();
-      window.addEventListener('load', handleLoad);
-
+  const loadWallets = () => {
+    getMappedWallets().then((mappedWallets) => {
       const available = mappedWallets
-        .filter(({ isAvailable }) => isAvailable)
-        .map(({ wallet }) => wallet);
+        .filter((w) => w.isAvailable)
+        .map((w) => w.wallet);
 
       setValue((prev) => ({
         ...prev,
-        availableWallets: available,
         isReady: true,
+        availableWallets: available,
       }));
 
-      return () => {
-        window.removeEventListener('load', handleLoad);
-      };
-    };
+      initializeRabetMobile();
+    });
+  };
 
-    loadWallets();
+  useEffect(() => {
+    window.addEventListener('load', loadWallets);
+
+    return () => {
+      window.removeEventListener('load', loadWallets);
+    };
   }, []);
 
   const closeModal = () => {

@@ -138,10 +138,11 @@ export interface ContextInterface {
   waitingStatus: 'connecting' | 'signing';
   activeNetwork: string;
   signTransaction: {
-    xdr: string; // Transaction details for signing
     network: string;
-    resolver: ((value: HorizonApi.SubmitTransactionResponse) => void) | null; // Transaction signing resolver
+    xdr: string; // Transaction details for signing
+    rejecter: ((reason: any) => void) | null; // Transaction signing rejecter
     result: HorizonApi.SubmitTransactionResponse | null; // Latest transaction signing result
+    resolver: ((value: HorizonApi.SubmitTransactionResponse) => void) | null; // Transaction signing resolver
   };
   servers: {
     horizon: Horizon.Server,

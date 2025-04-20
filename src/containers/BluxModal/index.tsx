@@ -43,6 +43,20 @@ export default function BluxModal({ isOpen, closeModal }: BluxModalProps) {
     }
   };
 
+  const handleCloseModal = () => {
+    closeModal();
+
+    const waitingStatus = value.waitingStatus;
+
+    if (route === Routes.SUCCESSFUL && waitingStatus === 'signing') {
+      const { resolver, result } = value.signTransaction;
+
+      if (resolver && result) {
+        resolver(result);
+      }
+    }
+  };
+
   const { title, Component, isSticky } = modalContent[route];
 
   const showCloseModalIcon =
@@ -54,7 +68,7 @@ export default function BluxModal({ isOpen, closeModal }: BluxModalProps) {
     <Modal
       isOpen={isOpen}
       onBack={handleBackNavigation}
-      onClose={isSticky ? () => {} : closeModal}
+      onClose={isSticky ? () => {} : handleCloseModal}
       title={title}
       isSticky={isSticky}
       icon={modalIcon}

@@ -75,6 +75,7 @@ export const useBlux = () => {
           xdr,
           network,
           resolver: resolve,
+          rejecter: reject,
         },
       }));
     });
