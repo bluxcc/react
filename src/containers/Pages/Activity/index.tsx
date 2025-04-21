@@ -86,7 +86,7 @@ const Activity: React.FC = () => {
   }, [transactions]);
 
   return (
-    <div className="bluxcc-h-[348px]">
+    <div className="bluxcc-flex bluxcc-h-[348px] bluxcc-flex-col bluxcc-justify-between">
       {loading ? (
         <div className="bluxcc-flex bluxcc-h-full bluxcc-flex-col bluxcc-items-center bluxcc-justify-center bluxcc-text-center bluxcc-text-gray-700">
           Loading activity...
@@ -116,7 +116,7 @@ const Activity: React.FC = () => {
         </div>
       )}
 
-      {(transactionsDetails.length > 0 && explorerUrl) && (
+      {transactionsDetails.length > 0 && explorerUrl && (
         <Button
           state="enabled"
           variant="outline"
