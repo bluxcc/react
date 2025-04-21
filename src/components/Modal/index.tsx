@@ -53,7 +53,6 @@ const Modal = ({
 
     // Initialize height when modal opens
     setHeight(contentRef.current.offsetHeight);
-    console.log(contentRef.current.offsetHeight)
 
     // Set up the resize observer to update height when content changes
     const resizeObserver = new ResizeObserver(() => {

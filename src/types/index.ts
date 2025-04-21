@@ -42,6 +42,8 @@ interface IServers {
 
 export type ITransports = Record<string, IServers>;
 
+export type IExplorers = 'steexp' | 'stellarchain' | 'stellarexpert' | 'lumenscan';
+
 /**
  *  BluxProvider.config
  */
@@ -51,6 +53,7 @@ export interface IProviderConfig {
   defaultNetwork: string; // The default network passphrase
   appearance?: Partial<IAppearance>;
   transports?: ITransports;
+  explorer?: IExplorers;
   loginMethods?: Array<
     | 'wallet'
     | 'email'
@@ -68,6 +71,7 @@ export interface IProviderConfig {
  *  Appearance will be set to default values if the user does not provider appearance (or provides some of the values in Appearance)
  */
 export interface IConfig extends IProviderConfig {
+  explorer: IExplorers;
   appearance: IAppearance;
 }
 

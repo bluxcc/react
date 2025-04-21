@@ -55,6 +55,7 @@ export const BluxProvider = ({
   const [value, setValue] = useState<ContextInterface>({
     config: {
       ...config,
+      explorer: config.explorer || 'stellarchain',
       appearance: {
         ...defaultLightTheme,
         ...config.appearance,

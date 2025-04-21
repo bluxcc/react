@@ -1,11 +1,25 @@
-import getNetworkByPassphrase from './getNetworkByPassphrase';
+import { IExplorers } from '../../types';
+import EXPLORERS from '../../constants/explorers';
 
 const getExplorerUrl = (
   networkPassphrase: string,
-  endpoint: string,
-): string => {
-  const network = getNetworkByPassphrase(networkPassphrase);
-  return `https://stellar.expert/explorer/${network}/${endpoint}`;
+  explorerProvider: IExplorers,
+  endpoint: 'accountUrl' | 'transactionUrl' | 'operationUrl' | 'ledgerUrl',
+  value: string,
+): string | null => {
+  let explorer = EXPLORERS[explorerProvider];
+
+  if (!explorer) {
+    explorer = EXPLORERS.stellarchain;
+  }
+
+  let networkExplorer = explorer[networkPassphrase];
+
+  if (!networkExplorer) {
+    return null;
+  }
+
+  return `${networkExplorer}/${explorer[endpoint]}/${value}`;
 };
 
 export default getExplorerUrl;

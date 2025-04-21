@@ -5,11 +5,34 @@ import { GreenCheck } from '../../../assets/Icons';
 import { useProvider } from '../../../context/provider';
 import getExplorerUrl from '../../../utils/stellar/getExplorerUrl';
 import capitalizeFirstLetter from '../../../utils/capitalizeFirstLetter';
+import { Horizon, rpc } from '@stellar/stellar-sdk';
 
 const Successful = () => {
   const context = useProvider();
-  const appearance = context.value.config.appearance;
   const waitingStatus = context.value.waitingStatus;
+  const appearance = context.value.config.appearance;
+  const { result, options } = context.value.signTransaction;
+
+  let hash;
+
+  if (result) {
+    if (options.isSoroban) {
+      const res = result as rpc.Api.GetSuccessfulTransactionResponse;
+
+      hash = res.txHash;
+    } else {
+      const res = result as Horizon.HorizonApi.SubmitTransactionResponse;
+
+      hash = res.hash;
+    }
+  }
+
+  const explorerUrl = hash ? getExplorerUrl(
+      options.network,
+      context.value.config.explorer,
+      'transactionUrl',
+      hash,
+    ) : null;
 
   useEffect(() => {
     if (waitingStatus === 'connecting') {
@@ -21,27 +44,10 @@ const Successful = () => {
         }));
       }, 1000);
     }
-
-    if (waitingStatus === 'signing') {
-      // TODO: ruveyda
-      // setTimeout(() => {
-      //   context.setValue((prev) => ({
-      //     ...prev,
-      //     isModalOpen: false,
-      //   }));
-      // }, 10000);
-    }
   }, []);
 
   const handleGoToExplorer = () => {
-    const txHash = context.value.signTransaction.result?.hash;
-
-    if (txHash) {
-      const explorerUrl = getExplorerUrl(
-        context.value.config.networks[0],
-        `tx/${txHash}`,
-      ); // todo: fix networks
-
+    if (explorerUrl) {
       window.open(explorerUrl, '_blank', 'noopener,noreferrer');
     }
   };
@@ -80,7 +86,7 @@ const Successful = () => {
             : 'Your transaction was successfully completed'}
         </p>
       </div>
-      {waitingStatus === 'signing' && (
+      {(waitingStatus === 'signing' && hash && typeof explorerUrl == 'string') && (
         <Button
           state="enabled"
           variant="outline"

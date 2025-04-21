@@ -24,6 +24,13 @@ interface TransactionProps {
 const History = ({ tx }: TransactionProps) => {
   const context = useProvider();
 
+  const explorerUrl = getExplorerUrl(
+    context.value.activeNetwork,
+    context.value.config.explorer,
+    'transactionUrl',
+    tx.hash,
+  );
+
   const handleActionLogo = (action: string) => {
     switch (action) {
       case 'Receive':
@@ -36,11 +43,9 @@ const History = ({ tx }: TransactionProps) => {
   };
 
   const handleGoToExplorer = () => {
-    const explorerUrl = getExplorerUrl(
-      context.value.config.networks[0], // todo: network fix
-      `tx/${tx.hash}`,
-    ); // todo: network fix
-    window.open(explorerUrl, '_blank', 'noopener,noreferrer');
+    if (explorerUrl) {
+      window.open(explorerUrl, '_blank', 'noopener,noreferrer');
+    }
   };
 
   return (

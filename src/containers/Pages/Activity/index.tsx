@@ -29,14 +29,17 @@ const Activity: React.FC = () => {
   const { value } = useProvider();
 
   const userAddress = value.user.wallet?.address as string;
+  const explorerUrl = getExplorerUrl(
+    value.activeNetwork,
+    value.config.explorer,
+    'accountUrl',
+    userAddress,
+  );
 
   const handleGoToExplorer = () => {
-    const explorerUrl = getExplorerUrl(
-      value.config.networks[0], // todo: fix it to active network
-      `account/${value.user.wallet?.address}`,
-    );
-
-    window.open(explorerUrl, '_blank', 'noopener,noreferrer');
+    if (explorerUrl) {
+      window.open(explorerUrl, '_blank', 'noopener,noreferrer');
+    }
   };
 
   useEffect(() => {
@@ -113,7 +116,7 @@ const Activity: React.FC = () => {
         </div>
       )}
 
-      {transactionsDetails.length > 0 && (
+      {(transactionsDetails.length > 0 && explorerUrl) && (
         <Button
           state="enabled"
           variant="outline"
