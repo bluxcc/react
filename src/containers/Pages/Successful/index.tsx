@@ -35,6 +35,7 @@ const Successful = () => {
 
   const handleGoToExplorer = () => {
     const txHash = context.value.signTransaction.result?.hash;
+
     if (txHash) {
       const explorerUrl = getExplorerUrl(
         context.value.config.networks[0],

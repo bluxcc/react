@@ -1,11 +1,11 @@
 import React, { useEffect, useState, useRef } from 'react';
 
 import Button from '../../../components/Button';
-import { Loading, RedExclamation } from '../../../assets/Icons';
 import handleLogos from '../../../utils/handleLogos';
 import { useProvider } from '../../../context/provider';
 import { Routes, WalletInterface } from '../../../types';
 import getWalletNetwork from '../../../utils/getWalletNetwork';
+import { Loading, RedExclamation } from '../../../assets/Icons';
 import signTransaction from '../../../utils/stellar/signTransaction';
 import submitTransaction from '../../../utils/stellar/submitTransaction';
 import getMappedWallets, { MappedWallet } from '../../../utils/mappedWallets';
@@ -22,7 +22,7 @@ const Waiting = () => {
   const { user, config } = context.value;
   const waitingStatus = context.value.waitingStatus;
   const appearance = context.value.config.appearance;
-  const { xdr, network } = context.value.signTransaction;
+  const { xdr, options } = context.value.signTransaction;
 
   const fetchWallets = async () => {
     const wallets = await getMappedWallets();
@@ -58,12 +58,12 @@ const Waiting = () => {
           wallet,
           xdr,
           context.value.user.wallet?.address as string,
-          network,
+          options.network,
         );
 
         const result = await submitTransaction(
           signedXdr,
-          network,
+          options,
           config.transports || {},
         );
 
@@ -71,7 +71,7 @@ const Waiting = () => {
           ...prev,
           signTransaction: {
             ...prev.signTransaction,
-            result: result,
+            result,
           },
         }));
 
@@ -91,6 +91,7 @@ const Waiting = () => {
 
         if (publicKey && publicKey.trim() !== '') {
           const passphrase = await getWalletNetwork(wallet);
+
           context.setValue((prev) => ({
             ...prev,
             user: {

@@ -137,13 +137,7 @@ export interface ContextInterface {
   availableWallets: WalletInterface[]; // List of available wallets
   waitingStatus: 'connecting' | 'signing';
   activeNetwork: string;
-  signTransaction: {
-    network: string;
-    xdr: string; // Transaction details for signing
-    rejecter: ((reason: any) => void) | null; // Transaction signing rejecter
-    result: HorizonApi.SubmitTransactionResponse | null; // Latest transaction signing result
-    resolver: ((value: HorizonApi.SubmitTransactionResponse) => void) | null; // Transaction signing resolver
-  };
+  signTransaction: ISignTransaction<boolean>;
   servers: {
     horizon: Horizon.Server,
     soroban: rpc.Server,
@@ -208,6 +202,24 @@ export interface GetNetworkResult {
 
 export interface ISendTransactionOptions {
   network?: string;
+  isSoroban?: boolean;
+}
+
+export type ISendTransactionOptionsInternal = {
+  network: string;
+  isSoroban: boolean;
+};
+
+export type TransactionResponseType<T extends boolean> = 
+  T extends true ? rpc.Api.GetSuccessfulTransactionResponse : HorizonApi.SubmitTransactionResponse;
+
+// Use the generic type parameter to ensure consistency
+export interface ISignTransaction<IsSoroban extends boolean> {
+  options: ISendTransactionOptionsInternal;
+  xdr: string; // Transaction details for signing
+  rejecter: ((reason: any) => void) | null; // Transaction signing rejecter
+  result: TransactionResponseType<IsSoroban> | null; // Conditional response type
+  resolver: ((value: TransactionResponseType<IsSoroban>) => void) | null; // Resolver with matching type
 }
 
 /**

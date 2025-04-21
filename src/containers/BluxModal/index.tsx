@@ -48,11 +48,16 @@ export default function BluxModal({ isOpen, closeModal }: BluxModalProps) {
 
     const waitingStatus = value.waitingStatus;
 
-    if (route === Routes.SUCCESSFUL && waitingStatus === 'signing') {
-      const { resolver, result } = value.signTransaction;
+      const { resolver, rejecter, result } = value.signTransaction;
 
+
+    if (route === Routes.SUCCESSFUL && waitingStatus === 'signing') {
       if (resolver && result) {
         resolver(result);
+      }
+    } else if (route === Routes.SIGN_TRANSACTION) {
+      if (rejecter) {
+        rejecter({ code: 4001, message: 'User rejected the transaction' });
       }
     }
   };

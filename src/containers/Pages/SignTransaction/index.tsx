@@ -15,9 +15,9 @@ const SignTransaction = () => {
   const { balance } = useBalance({ asset: 'native' });
 
   const appearance = context.value.config.appearance;
-  const { xdr, network } = context.value.signTransaction;
+  const { xdr, options } = context.value.signTransaction;
 
-  const txDetails = getTransactionDetails(xdr, network);
+  const txDetails = getTransactionDetails(xdr, options.network);
 
   const handleSignTx = async () => {
     context.setValue((prev) => ({
