@@ -135,7 +135,10 @@ const OnBoarding = ({ showAllWallets, setShowAllWallets }: OnBoardingProps) => {
                     key={wallet.name}
                     {...wallet}
                     label={wallet.name}
-                    startIcon={handleLogos(wallet.name)}
+                    startIcon={handleLogos(
+                      wallet.name,
+                      getContrastColor(appearance.bgField),
+                    )}
                     onClick={() => handleConnect(wallet)}
                   />
                 ))}
@@ -182,10 +185,10 @@ const OnBoarding = ({ showAllWallets, setShowAllWallets }: OnBoardingProps) => {
             return (
               <div
                 key="passkey"
-                className="!bluxcc-mt-6 bluxcc-flex bluxcc-h-6 bluxcc-cursor-pointer bluxcc-items-center bluxcc-justify-center bluxcc-text-sm bluxcc-font-medium bluxcc-leading-[28px]"
+                className="!bluxcc-mt-6 bluxcc-flex bluxcc-h-5 bluxcc-cursor-pointer bluxcc-items-center bluxcc-justify-center bluxcc-text-sm bluxcc-font-medium bluxcc-leading-[28px]"
                 style={{ color: appearance.accent }}
               >
-                Log in with Passkey
+                Log in with passkey
               </div>
             );
           }
@@ -194,23 +197,31 @@ const OnBoarding = ({ showAllWallets, setShowAllWallets }: OnBoardingProps) => {
         })}
       </div>
 
-      <div
-        className={`bluxcc-w-full bluxcc-pt-[8px] bluxcc-text-center bluxcc-text-[12px] bluxcc-font-medium`}
+      <footer
+        className="bluxcc-w-full bluxcc-pt-[15px] bluxcc-text-center bluxcc-text-xs bluxcc-font-medium"
         style={{
           color: appearance.textColor,
         }}
       >
-        Powered by{' '}
         <a
-          aria-label="blux link"
+          aria-label="Blux website"
           href="https://blux.cc"
           target="_blank"
           rel="noreferrer"
-          style={{ color: appearance.accent }}
+          style={{
+            color: appearance.textColor,
+          }}
         >
-          Blux.cc
+          Powered by{' '}
+          <span
+            style={{
+              color: appearance.accent,
+            }}
+          >
+            Blux.cc
+          </span>
         </a>
-      </div>
+      </footer>
     </div>
   );
 };

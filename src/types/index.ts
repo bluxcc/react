@@ -12,6 +12,7 @@ export enum SupportedWallets {
   Freighter = 'Freighter',
   Xbull = 'xBull',
   Lobstr = 'LOBSTR',
+  Ledger = 'Ledger',
 }
 
 /**
@@ -145,9 +146,9 @@ export interface ContextInterface {
     resolver: ((value: HorizonApi.SubmitTransactionResponse) => void) | null; // Transaction signing resolver
   };
   servers: {
-    horizon: Horizon.Server,
-    soroban: rpc.Server,
-  },
+    horizon: Horizon.Server;
+    soroban: rpc.Server;
+  };
 }
 
 /**

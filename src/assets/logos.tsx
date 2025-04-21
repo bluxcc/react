@@ -73,6 +73,33 @@ export const FreighterLogo = () => (
   </svg>
 );
 
+export const LedgerLogo = ({ fill = 'black' }: { fill?: string }) => (
+  <svg
+    width="80"
+    height="80"
+    viewBox="0 0 80 80"
+    fill="none"
+    xmlns="http://www.w3.org/2000/svg"
+  >
+    <g clipPath="url(#clip0_223_2499)">
+      <path
+        d="M17 48.6421V60H34.6787V57.4811H19.5758V48.6421H17ZM61.4242 48.6421V57.4811H46.3213V59.9994H64V48.6421H61.4242ZM34.7044 31.3579V48.6415H46.3213V46.3701H37.2802V31.3579H34.7044ZM17 20V31.3579H19.5758V22.5183H34.6787V20H17ZM46.3213 20V22.5183H61.4242V31.3579H64V20H46.3213Z"
+        fill={fill}
+      />
+    </g>
+    <defs>
+      <clipPath id="clip0_223_2499">
+        <rect
+          width="47"
+          height="40"
+          fill="white"
+          transform="translate(17 20)"
+        />
+      </clipPath>
+    </defs>
+  </svg>
+);
+
 export const XBullLogo = () => (
   <svg
     width="80"

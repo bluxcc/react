@@ -66,7 +66,7 @@ const CardItem = ({
   return (
     <div
       onClick={variant === 'input' ? undefined : onClick}
-      className={`bluxcc-flex !bluxcc-h-14 bluxcc-w-full bluxcc-items-center bluxcc-border bluxcc-px-[10px] bluxcc-py-2 ${
+      className={`bluxcc-flex !bluxcc-h-14 bluxcc-w-full bluxcc-items-center bluxcc-border bluxcc-py-2 bluxcc-pl-[10px] bluxcc-pr-3 ${
         variant === 'input' ? 'bluxcc-cursor-text' : 'bluxcc-cursor-pointer'
       }`}
       style={{
@@ -92,7 +92,7 @@ const CardItem = ({
         {startIcon}
       </span>
 
-      <div className="bluxcc-relative bluxcc-ml-4 bluxcc-mr-1 bluxcc-flex bluxcc-h-full bluxcc-flex-1 bluxcc-items-center">
+      <div className="bluxcc-relative bluxcc-ml-4 bluxcc-flex bluxcc-h-full bluxcc-flex-1 bluxcc-items-center">
         {variant === 'input' ? (
           <>
             <input
@@ -137,7 +137,7 @@ const CardItem = ({
       </div>
 
       {endArrow && (
-        <span className="bluxcc-ml-auto bluxcc-mr-1 bluxcc-flex bluxcc-items-center">
+        <span className="bluxcc-ml-auto bluxcc-flex bluxcc-items-center">
           <ArrowRight fill={appearance.textColor} />
         </span>
       )}

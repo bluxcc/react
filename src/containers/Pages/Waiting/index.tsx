@@ -6,6 +6,7 @@ import handleLogos from '../../../utils/handleLogos';
 import { useProvider } from '../../../context/provider';
 import { Routes, WalletInterface } from '../../../types';
 import getWalletNetwork from '../../../utils/getWalletNetwork';
+import getContrastColor from '../../../utils/getContrastColor';
 import signTransaction from '../../../utils/stellar/signTransaction';
 import submitTransaction from '../../../utils/stellar/submitTransaction';
 import getMappedWallets, { MappedWallet } from '../../../utils/mappedWallets';
@@ -109,7 +110,7 @@ const Waiting = () => {
         }
       } catch (error) {
         setError(true);
-        
+
         throw error;
       }
     }
@@ -139,7 +140,10 @@ const Waiting = () => {
               : '1px',
           }}
         >
-          {handleLogos(user?.wallet?.name ?? '')}
+          {handleLogos(
+            user?.wallet?.name ?? '',
+            getContrastColor(appearance.bgField),
+          )}
         </div>
       )}
 
@@ -187,7 +191,7 @@ const Waiting = () => {
         <Button
           state="enabled"
           variant="outline"
-          className='!bluxcc-cursor-default'
+          className="!bluxcc-cursor-default"
           startIcon={<Loading fill={appearance.accent} />}
         >
           {waitingStatus === 'connecting' ? 'Connecting' : 'Signing'}

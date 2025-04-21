@@ -50,7 +50,7 @@ export default {
     }),
     typescript({
       tsconfig: './tsconfig.json',
-      exclude: ['node_modules', 'motion'],
+      exclude: ['node_modules'],
     }),
   ],
   external: [
