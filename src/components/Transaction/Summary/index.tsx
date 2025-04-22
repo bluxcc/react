@@ -1,10 +1,10 @@
 import React from 'react';
 
 import copyText from '../../../utils/copyText';
-import shortenAddress from '../../../utils/shortenAddress';
-import capitalizeFirstLetter from '../../../utils/capitalizeFirstLetter';
 import { useProvider } from '../../../context/provider';
+import shortenAddress from '../../../utils/shortenAddress';
 import NETWORKS_DETAILS from '../../../constants/networkDetails';
+import capitalizeFirstLetter from '../../../utils/capitalizeFirstLetter';
 
 interface TransactionDetail {
   label: string;

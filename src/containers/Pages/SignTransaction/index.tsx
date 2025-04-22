@@ -6,9 +6,9 @@ import { useBalance } from '../../../useStellar';
 import { useProvider } from '../../../context/provider';
 import humanizeAmount from '../../../utils/humanizeAmount';
 import shortenAddress from '../../../utils/shortenAddress';
-import Summary from '../../../components/Transaction/Summery';
-import getTransactionDetails from '../../../utils/stellar/getTransactionDetails';
+import Summary from '../../../components/Transaction/Summary';
 import getContrastColor from '../../../utils/getContrastColor';
+import getTransactionDetails from '../../../utils/stellar/getTransactionDetails';
 
 const SignTransaction = () => {
   const context = useProvider();
