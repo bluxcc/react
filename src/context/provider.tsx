@@ -79,6 +79,7 @@ export const BluxProvider = ({
       resolver: null,
     },
     availableWallets: [],
+    showAllWallets: false,
     servers: {
       horizon: new Horizon.Server(horizon.url),
       soroban: new rpc.Server(soroban.url),

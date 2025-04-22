@@ -36,10 +36,10 @@ export const useBlux = () => {
   const logout = () => {
     setValue((prev) => ({
       ...prev,
-      user: { ...prev.user, wallet: null },
-      waitingStatus: 'connecting',
       isModalOpen: false,
+      user: { ...prev.user, wallet: null },
       isAuthenticated: false,
+      waitingStatus: 'connecting',
     }));
 
     setRoute(Routes.ONBOARDING);

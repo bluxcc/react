@@ -42,6 +42,7 @@ const Successful = () => {
         context.setValue((prev) => ({
           ...prev,
           isModalOpen: false,
+          showAllWallets: false,
           isAuthenticated: true,
         }));
       }, 1000);

@@ -11,53 +11,48 @@ import ConfirmCode from '../Pages/ConfirmCode';
 import WrongNetwork from '../Pages/WrongNetwork';
 import SignTransaction from '../Pages/SignTransaction';
 
-interface ModalContentProps {
-  showAllWallets: boolean;
-  setShowAllWallets: (show: boolean) => void;
-}
-
 type RouteContent = {
   title: string;
   isSticky?: boolean;
-  Component: React.FC<ModalContentProps>;
-}
+  Component: React.JSX.Element;
+};
 
 export const modalContent: Record<Routes, RouteContent> = {
   [Routes.ONBOARDING]: {
     title: 'Log in or Signup',
-    Component: OnBoarding,
+    Component: <OnBoarding />,
   },
   [Routes.PROFILE]: {
     title: 'Profile',
-    Component: () => <Profile />,
+    Component: <Profile />,
   },
   [Routes.WAITING]: {
     title: '',
-    Component: () => <Waiting />,
+    Component: <Waiting />,
   },
   [Routes.SUCCESSFUL]: {
     title: '',
-    Component: () => <Successful />,
+    Component: <Successful />,
   },
   [Routes.SIGN_TRANSACTION]: {
     title: 'Confirmation',
-    Component: () => <SignTransaction />,
+    Component: <SignTransaction />,
   },
   [Routes.SEND]: {
     title: 'Send',
-    Component: () => <Send />,
+    Component: <Send />,
   },
   [Routes.ACTIVITY]: {
     title: 'Activity',
-    Component: () => <Activity />,
+    Component: <Activity />,
   },
   [Routes.OTP]: {
     title: '',
-    Component: () => <ConfirmCode />,
+    Component: <ConfirmCode />,
   },
   [Routes.WRONG_NETWORK]: {
     isSticky: true,
     title: 'Wrong Network',
-    Component: () => <WrongNetwork />,
+    Component: <WrongNetwork />,
   },
 };
