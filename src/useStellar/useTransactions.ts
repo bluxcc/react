@@ -22,7 +22,7 @@ type TransactionRecord<T extends boolean> = T extends true
 interface UseTransactionsResult<T extends boolean> {
   loading: boolean;
   error: Error | null;
-  transactions: TransactionRecord<T>[] | null;
+  transactions: TransactionRecord<T>[];
 }
 
 const useTransactions =  <T extends boolean = false>(params?: UseTransactionsProps<T>): UseTransactionsResult<T> => {
@@ -32,14 +32,14 @@ const useTransactions =  <T extends boolean = false>(params?: UseTransactionsPro
   const [result, setResult] = useState<UseTransactionsResult<T>>({
     error: null,
     loading: true,
-    transactions: null
+    transactions: [],
   });
 
   useEffect(() => {
     setResult({
       error: null,
       loading: true,
-      transactions: null,
+      transactions: [],
     });
 
     const userAddress = value.user.wallet?.address as string | undefined;
@@ -47,7 +47,7 @@ const useTransactions =  <T extends boolean = false>(params?: UseTransactionsPro
     if (!userAddress && !params?.address) {
       setResult({
         loading: false,
-        transactions: null,
+        transactions: [],
         error: new Error('Both user.wallet.address and address parameter are undefined'),
       });
 
@@ -96,7 +96,7 @@ const useTransactions =  <T extends boolean = false>(params?: UseTransactionsPro
         setResult({
           error: err,
           loading: false,
-          transactions: null,
+          transactions: [],
         });
       });
   }, [params?.address, networkPassphrase, value.user.wallet]);
