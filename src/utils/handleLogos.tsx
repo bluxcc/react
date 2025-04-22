@@ -3,6 +3,7 @@ import React from 'react';
 import {
   AlbedoLogo,
   FreighterLogo,
+  HanaLogo,
   LobstrLogo,
   RabetLogo,
   XBullLogo,
@@ -20,6 +21,8 @@ const handleLogos = (walletName: string) => {
       return <LobstrLogo />;
     case 'xBull':
       return <XBullLogo />;
+    case 'Hana':
+      return <HanaLogo />;
     default:
       return null;
   }

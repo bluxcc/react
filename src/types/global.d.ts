@@ -42,6 +42,16 @@ declare global {
       connect: () => Promise<ConnectResult>;
       getNetwork: () => Promise<{ network: string; passphrase: string }>;
     };
+    hanaWallet?: {
+      stellar?: {
+        getPublicKey(): Promise<string>;
+        signTransaction({
+          xdr,
+          accountToSign,
+          networkPassphrase,
+        }: SignTransactionProps): Promise<string>;
+      };
+    };
   }
 }
 

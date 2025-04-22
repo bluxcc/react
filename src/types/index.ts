@@ -12,6 +12,7 @@ export enum SupportedWallets {
   Freighter = 'Freighter',
   Xbull = 'xBull',
   Lobstr = 'LOBSTR',
+  Hana = 'Hana',
 }
 
 /**
@@ -143,9 +144,9 @@ export interface ContextInterface {
   activeNetwork: string;
   signTransaction: ISignTransaction<boolean>;
   servers: {
-    horizon: Horizon.Server,
-    soroban: rpc.Server,
-  },
+    horizon: Horizon.Server;
+    soroban: rpc.Server;
+  };
 }
 
 /**
