@@ -17,8 +17,8 @@ const Profile = () => {
   const [copied, setCopied] = useState(false);
   const { balance } = useBalance({ asset: 'native' });
 
-  const address = context.value.user.wallet?.address as string;
   const appearance = context.value.config.appearance;
+  const address = context.value.user.wallet?.address as string;
 
   const handleLogout = () => {
     logout();
@@ -55,8 +55,11 @@ const Profile = () => {
           </span>
         )}
       </p>
-      <p className="bluxcc-text-center" style={{ color: appearance.accent }}>
-        {balance ? humanizeAmount(balance) : 'N/A'} XLM
+      <p
+        className="bluxcc-text-center bluxcc-text-base"
+        style={{ color: appearance.accent }}
+      >
+        {balance ? `${humanizeAmount(balance)} XLM` : 'Loading...'}
       </p>
 
       <div className="bluxcc-mt-[16px] bluxcc-w-full bluxcc-space-y-2">

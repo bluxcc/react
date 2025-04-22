@@ -72,10 +72,8 @@ const Successful = () => {
 
   return (
     <div className="bluxcc-mt-4 bluxcc-flex bluxcc-w-full bluxcc-select-none bluxcc-flex-col bluxcc-items-center bluxcc-justify-center">
-      <div className="bluxcc-z-10 bluxcc-mb-6 bluxcc-flex bluxcc-size-[68px] bluxcc-items-center bluxcc-justify-center bluxcc-overflow-hidden bluxcc-rounded-full bluxcc-bg-[#D9FFF3]">
-        <span className="bluxcc-z-20">
-          <GreenCheck />
-        </span>
+      <div className="bluxcc-mb-6 bluxcc-flex bluxcc-size-[68px] bluxcc-items-center bluxcc-justify-center bluxcc-overflow-hidden">
+        <GreenCheck />
       </div>
 
       <div className="bluxcc-w-full bluxcc-flex-col bluxcc-space-y-2 bluxcc-text-center bluxcc-font-medium">
