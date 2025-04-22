@@ -2,7 +2,12 @@ import { Horizon, rpc } from '@stellar/stellar-sdk';
 
 import { useProvider } from '../context/provider';
 import getTransactionDetails from '../utils/stellar/getTransactionDetails';
-import { ISendTransactionOptions, ISendTransactionOptionsInternal, ISignTransaction, Routes } from '../types';
+import {
+  ISendTransactionOptions,
+  ISendTransactionOptionsInternal,
+  ISignTransaction,
+  Routes,
+} from '../types';
 
 export const useBlux = () => {
   const context = useProvider();
@@ -32,6 +37,7 @@ export const useBlux = () => {
     setValue((prev) => ({
       ...prev,
       user: { ...prev.user, wallet: null },
+      waitingStatus: 'connecting',
       isModalOpen: false,
       isAuthenticated: false,
     }));
@@ -48,18 +54,21 @@ export const useBlux = () => {
     setValue((prev) => ({ ...prev, isModalOpen: true }));
   };
 
- function sendTransaction(
-    xdr: string, 
-    options: ISendTransactionOptions & { isSoroban: true }
+  function sendTransaction(
+    xdr: string,
+    options: ISendTransactionOptions & { isSoroban: true },
   ): Promise<rpc.Api.GetSuccessfulTransactionResponse>;
   function sendTransaction(
-    xdr: string, 
-    options?: ISendTransactionOptions & { isSoroban?: false }
+    xdr: string,
+    options?: ISendTransactionOptions & { isSoroban?: false },
   ): Promise<Horizon.HorizonApi.SubmitTransactionResponse>;
   function sendTransaction(
-    xdr: string, 
-    options?: ISendTransactionOptions
-  ): Promise<rpc.Api.GetSuccessfulTransactionResponse | Horizon.HorizonApi.SubmitTransactionResponse> {
+    xdr: string,
+    options?: ISendTransactionOptions,
+  ): Promise<
+    | rpc.Api.GetSuccessfulTransactionResponse
+    | Horizon.HorizonApi.SubmitTransactionResponse
+  > {
     return new Promise((resolve, reject) => {
       let network = value.activeNetwork;
 
@@ -80,40 +89,40 @@ export const useBlux = () => {
       setRoute(Routes.SIGN_TRANSACTION);
 
       if (options?.isSoroban === true) {
-      const sorobanOptions: ISendTransactionOptionsInternal = {
-        network,
-        isSoroban: true,
-      };
-      
-      setValue((prev) => ({
-        ...prev,
-        isModalOpen: true,
-        signTransaction: {
-          xdr,
-          options: sorobanOptions,
-          resolver: resolve,
-          rejecter: reject,
-          result: null
-        } as ISignTransaction<true>,
-      }));
-    } else {
-      const regularOptions: ISendTransactionOptionsInternal = {
-        network,
-        isSoroban: false
-      };
-      
-      setValue((prev) => ({
-        ...prev,
-        isModalOpen: true,
-        signTransaction: {
-          xdr,
-          options: regularOptions,
-          resolver: resolve,
-          rejecter: reject,
-          result: null
-        } as ISignTransaction<false>,
-      }));
-    }
+        const sorobanOptions: ISendTransactionOptionsInternal = {
+          network,
+          isSoroban: true,
+        };
+
+        setValue((prev) => ({
+          ...prev,
+          isModalOpen: true,
+          signTransaction: {
+            xdr,
+            options: sorobanOptions,
+            resolver: resolve,
+            rejecter: reject,
+            result: null,
+          } as ISignTransaction<true>,
+        }));
+      } else {
+        const regularOptions: ISendTransactionOptionsInternal = {
+          network,
+          isSoroban: false,
+        };
+
+        setValue((prev) => ({
+          ...prev,
+          isModalOpen: true,
+          signTransaction: {
+            xdr,
+            options: regularOptions,
+            resolver: resolve,
+            rejecter: reject,
+            result: null,
+          } as ISignTransaction<false>,
+        }));
+      }
     });
   }
 

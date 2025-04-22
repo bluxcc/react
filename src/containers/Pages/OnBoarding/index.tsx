@@ -42,6 +42,7 @@ const OnBoarding = ({ showAllWallets, setShowAllWallets }: OnBoardingProps) => {
           passphrase: '',
           name: wallet.name,
         },
+        waitingStatus: 'connecting',
       },
     }));
 

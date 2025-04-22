@@ -65,7 +65,9 @@ const SignTransaction = () => {
             Your wallet
           </p>
           <p className="bluxcc-text-xs bluxcc-text-gray-700">
-            {shortenAddress(context.value.user.wallet?.address as string, 5)}
+            {context.value.user.wallet?.address
+              ? shortenAddress(context.value.user.wallet.address as string, 5)
+              : 'No address found'}
           </p>
         </div>
         <div
@@ -77,7 +79,7 @@ const SignTransaction = () => {
           }}
         >
           <p className="bluxcc-max-w-[90px] bluxcc-text-xs bluxcc-font-normal">
-            {balance ? humanizeAmount(balance) : 'N/A'} XLM
+            {balance ? humanizeAmount(balance) : '0'} XLM
           </p>
         </div>
       </div>
