@@ -85,13 +85,19 @@ const Activity: React.FC = () => {
     setTransactionsDetails(result);
   }, [transactions]);
 
+  const isEmpty = !loading && transactionsDetails.length === 0;
+
   return (
     <div className="bluxcc-flex bluxcc-h-[348px] bluxcc-flex-col bluxcc-justify-between">
       {loading ? (
         <div className="bluxcc-flex bluxcc-h-full bluxcc-flex-col bluxcc-items-center bluxcc-justify-center bluxcc-text-center bluxcc-text-gray-700">
           Loading activity...
         </div>
-      ) : transactionsDetails.length > 0 ? (
+      ) : isEmpty ? (
+        <div className="bluxcc-flex bluxcc-h-full bluxcc-flex-col bluxcc-items-center bluxcc-justify-center bluxcc-text-center bluxcc-text-gray-700">
+          No activity found
+        </div>
+      ) : (
         transactionsDetails.map((tx, index) => (
           <div
             key={index}
@@ -110,10 +116,6 @@ const Activity: React.FC = () => {
             <History tx={tx} />
           </div>
         ))
-      ) : (
-        <div className="bluxcc-flex bluxcc-h-full bluxcc-flex-col bluxcc-items-center bluxcc-justify-center bluxcc-text-center bluxcc-text-gray-700">
-          No activity found
-        </div>
       )}
 
       {transactionsDetails.length > 0 && explorerUrl && (

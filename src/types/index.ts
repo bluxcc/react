@@ -43,7 +43,11 @@ interface IServers {
 
 export type ITransports = Record<string, IServers>;
 
-export type IExplorers = 'steexp' | 'stellarchain' | 'stellarexpert' | 'lumenscan';
+export type IExplorers =
+  | 'steexp'
+  | 'stellarchain'
+  | 'stellarexpert'
+  | 'lumenscan';
 
 /**
  *  BluxProvider.config
@@ -141,6 +145,7 @@ export interface ContextInterface {
   isAuthenticated: boolean; // User authentication status
   availableWallets: WalletInterface[]; // List of available wallets
   waitingStatus: 'connecting' | 'signing';
+  showAllWallets: boolean; // Flag to show all wallets in the onboarding process
   activeNetwork: string;
   signTransaction: ISignTransaction<boolean>;
   servers: {
@@ -215,8 +220,9 @@ export type ISendTransactionOptionsInternal = {
   isSoroban: boolean;
 };
 
-export type TransactionResponseType<T extends boolean> = 
-  T extends true ? rpc.Api.GetSuccessfulTransactionResponse : HorizonApi.SubmitTransactionResponse;
+export type TransactionResponseType<T extends boolean> = T extends true
+  ? rpc.Api.GetSuccessfulTransactionResponse
+  : HorizonApi.SubmitTransactionResponse;
 
 // Use the generic type parameter to ensure consistency
 export interface ISignTransaction<IsSoroban extends boolean> {

@@ -49,6 +49,8 @@ const SignTransaction = () => {
       <Summary
         operationsCount={txDetails.operations}
         sender={txDetails.sender}
+        receiver={txDetails.receiver}
+        network={options.network}
         estimatedFee={txDetails.estimatedFee.toString()}
         action={txDetails.action}
       />
@@ -64,8 +66,10 @@ const SignTransaction = () => {
           <p className="bluxcc-whitespace-nowrap bluxcc-text-sm bluxcc-font-medium">
             Your wallet
           </p>
-          <p className="bluxcc-text-xs bluxcc-text-gray-700">
-            {shortenAddress(context.value.user.wallet?.address as string, 5)}
+          <p className="bluxcc-mt-0.5 bluxcc-text-xs bluxcc-text-gray-700">
+            {context.value.user.wallet?.address
+              ? shortenAddress(context.value.user.wallet.address as string, 5)
+              : 'No address found'}
           </p>
         </div>
         <div
@@ -77,7 +81,7 @@ const SignTransaction = () => {
           }}
         >
           <p className="bluxcc-max-w-[90px] bluxcc-text-xs bluxcc-font-normal">
-            {balance ? humanizeAmount(balance) : 'N/A'} XLM
+            {balance ? humanizeAmount(balance) : '0'} XLM
           </p>
         </div>
       </div>

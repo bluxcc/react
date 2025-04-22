@@ -27,12 +27,14 @@ const Successful = () => {
     }
   }
 
-  const explorerUrl = hash ? getExplorerUrl(
-      options.network,
-      context.value.config.explorer,
-      'transactionUrl',
-      hash,
-    ) : null;
+  const explorerUrl = hash
+    ? getExplorerUrl(
+        options.network,
+        context.value.config.explorer,
+        'transactionUrl',
+        hash,
+      )
+    : null;
 
   useEffect(() => {
     if (waitingStatus === 'connecting') {
@@ -40,6 +42,7 @@ const Successful = () => {
         context.setValue((prev) => ({
           ...prev,
           isModalOpen: false,
+          showAllWallets: false,
           isAuthenticated: true,
         }));
       }, 1000);
@@ -69,10 +72,8 @@ const Successful = () => {
 
   return (
     <div className="bluxcc-mt-4 bluxcc-flex bluxcc-w-full bluxcc-select-none bluxcc-flex-col bluxcc-items-center bluxcc-justify-center">
-      <div className="bluxcc-z-10 bluxcc-mb-6 bluxcc-flex bluxcc-size-[68px] bluxcc-items-center bluxcc-justify-center bluxcc-overflow-hidden bluxcc-rounded-full bluxcc-bg-[#D9FFF3]">
-        <span className="bluxcc-z-20">
-          <GreenCheck />
-        </span>
+      <div className="bluxcc-mb-6 bluxcc-flex bluxcc-size-[68px] bluxcc-items-center bluxcc-justify-center bluxcc-overflow-hidden">
+        <GreenCheck />
       </div>
 
       <div className="bluxcc-w-full bluxcc-flex-col bluxcc-space-y-2 bluxcc-text-center bluxcc-font-medium">
@@ -86,17 +87,19 @@ const Successful = () => {
             : 'Your transaction was successfully completed'}
         </p>
       </div>
-      {(waitingStatus === 'signing' && hash && typeof explorerUrl == 'string') && (
-        <Button
-          state="enabled"
-          variant="outline"
-          size="small"
-          className="mt-4"
-          onClick={handleGoToExplorer}
-        >
-          See in explorer
-        </Button>
-      )}
+      {waitingStatus === 'signing' &&
+        hash &&
+        typeof explorerUrl == 'string' && (
+          <Button
+            state="enabled"
+            variant="outline"
+            size="small"
+            className="mt-4"
+            onClick={handleGoToExplorer}
+          >
+            See in explorer
+          </Button>
+        )}
 
       {/* divider */}
       <div className="bluxcc-flex bluxcc-h-8 bluxcc-w-full bluxcc-items-center bluxcc-justify-center">
@@ -120,7 +123,12 @@ const Successful = () => {
           Logging In
         </Button>
       ) : (
-        <Button state="enabled" variant="fill" onClick={handleDone}>
+        <Button
+          state="enabled"
+          variant="fill"
+          size="large"
+          onClick={handleDone}
+        >
           Done
         </Button>
       )}
