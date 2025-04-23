@@ -12,6 +12,7 @@ export enum SupportedWallets {
   Freighter = 'Freighter',
   Xbull = 'xBull',
   Lobstr = 'LOBSTR',
+  Hana = 'Hana',
   Ledger = 'Ledger',
 }
 
@@ -43,6 +44,12 @@ interface IServers {
 
 export type ITransports = Record<string, IServers>;
 
+export type IExplorers =
+  | 'steexp'
+  | 'stellarchain'
+  | 'stellarexpert'
+  | 'lumenscan';
+
 /**
  *  BluxProvider.config
  */
@@ -52,6 +59,7 @@ export interface IProviderConfig {
   defaultNetwork: string; // The default network passphrase
   appearance?: Partial<IAppearance>;
   transports?: ITransports;
+  explorer?: IExplorers;
   loginMethods?: Array<
     | 'wallet'
     | 'email'
@@ -69,6 +77,7 @@ export interface IProviderConfig {
  *  Appearance will be set to default values if the user does not provider appearance (or provides some of the values in Appearance)
  */
 export interface IConfig extends IProviderConfig {
+  explorer: IExplorers;
   appearance: IAppearance;
 }
 
@@ -137,14 +146,9 @@ export interface ContextInterface {
   isAuthenticated: boolean; // User authentication status
   availableWallets: WalletInterface[]; // List of available wallets
   waitingStatus: 'connecting' | 'signing';
+  showAllWallets: boolean; // Flag to show all wallets in the onboarding process
   activeNetwork: string;
-  signTransaction: {
-    network: string;
-    xdr: string; // Transaction details for signing
-    rejecter: ((reason: any) => void) | null; // Transaction signing rejecter
-    result: HorizonApi.SubmitTransactionResponse | null; // Latest transaction signing result
-    resolver: ((value: HorizonApi.SubmitTransactionResponse) => void) | null; // Transaction signing resolver
-  };
+  signTransaction: ISignTransaction<boolean>;
   servers: {
     horizon: Horizon.Server;
     soroban: rpc.Server;
@@ -209,6 +213,25 @@ export interface GetNetworkResult {
 
 export interface ISendTransactionOptions {
   network?: string;
+  isSoroban?: boolean;
+}
+
+export type ISendTransactionOptionsInternal = {
+  network: string;
+  isSoroban: boolean;
+};
+
+export type TransactionResponseType<T extends boolean> = T extends true
+  ? rpc.Api.GetSuccessfulTransactionResponse
+  : HorizonApi.SubmitTransactionResponse;
+
+// Use the generic type parameter to ensure consistency
+export interface ISignTransaction<IsSoroban extends boolean> {
+  options: ISendTransactionOptionsInternal;
+  xdr: string; // Transaction details for signing
+  rejecter: ((reason: any) => void) | null; // Transaction signing rejecter
+  result: TransactionResponseType<IsSoroban> | null; // Conditional response type
+  resolver: ((value: TransactionResponseType<IsSoroban>) => void) | null; // Resolver with matching type
 }
 
 /**

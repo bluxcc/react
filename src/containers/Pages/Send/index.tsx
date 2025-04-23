@@ -38,7 +38,6 @@ const Send = () => {
     setErrors(newErrors);
 
     if (Object.keys(newErrors).length === 0) {
-      // console.log('Submitting transaction:', form);
     }
   };
 

@@ -55,6 +55,7 @@ export const BluxProvider = ({
   const [value, setValue] = useState<ContextInterface>({
     config: {
       ...config,
+      explorer: config.explorer || 'stellarchain',
       appearance: {
         ...defaultLightTheme,
         ...config.appearance,
@@ -69,12 +70,16 @@ export const BluxProvider = ({
     waitingStatus: 'connecting',
     signTransaction: {
       xdr: '',
-      network: '',
+      options: {
+        network: '',
+        isSoroban: false,
+      },
       result: null,
       rejecter: null,
       resolver: null,
     },
     availableWallets: [],
+    showAllWallets: false,
     servers: {
       horizon: new Horizon.Server(horizon.url),
       soroban: new rpc.Server(soroban.url),
@@ -88,7 +93,6 @@ export const BluxProvider = ({
       ...prev,
       config: {
         ...prev.config,
-        loginMethods: config.loginMethods,
         appearance: {
           ...defaultLightTheme,
           ...config.appearance,
@@ -129,7 +133,11 @@ export const BluxProvider = ({
   };
 
   useEffect(() => {
-    window.addEventListener('load', loadWallets);
+    if (document.readyState === 'complete') {
+      loadWallets();
+    } else {
+      window.addEventListener('load', loadWallets);
+    }
 
     return () => {
       window.removeEventListener('load', loadWallets);

@@ -24,8 +24,8 @@ const buttonBase =
 
 const sizeClasses: Record<ButtonSize, string> = {
   small: 'bluxcc-h-8 bluxcc-text-sm bluxcc-gap-1',
-  medium: 'bluxcc-h-12 bluxcc-text-sm bluxcc-gap-2',
-  large: 'bluxcc-h-14 bluxcc-text-base bluxcc-gap-2',
+  medium: 'bluxcc-h-10 bluxcc-text-sm bluxcc-gap-2',
+  large: 'bluxcc-h-[52px] bluxcc-text-base bluxcc-gap-2',
 };
 
 const Button = ({

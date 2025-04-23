@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React from 'react';
 
 import Modal from '../../components/Modal';
 import { useProvider } from '../../context/provider';
@@ -12,12 +12,11 @@ interface BluxModalProps {
 }
 
 export default function BluxModal({ isOpen, closeModal }: BluxModalProps) {
-  const { route, setRoute, value } = useProvider();
-  const [showAllWallets, setShowAllWallets] = useState(false);
+  const { route, setRoute, value, setValue } = useProvider();
 
   const shouldShowBackButton =
     (route === Routes.WAITING && value.waitingStatus !== 'signing') ||
-    (route === Routes.ONBOARDING && showAllWallets) ||
+    (route === Routes.ONBOARDING && value.showAllWallets) ||
     route === Routes.ACTIVITY ||
     route === Routes.SEND ||
     route === Routes.OTP;
@@ -36,8 +35,8 @@ export default function BluxModal({ isOpen, closeModal }: BluxModalProps) {
       (route === Routes.OTP && !value.isAuthenticated)
     ) {
       setRoute(Routes.ONBOARDING);
-    } else if (showAllWallets) {
-      setShowAllWallets(false);
+    } else if (value.showAllWallets) {
+      setValue((prev) => ({ ...prev, showAllWallets: false }));
     } else if (route === Routes.SEND || route === Routes.ACTIVITY) {
       setRoute(Routes.PROFILE);
     }
@@ -48,11 +47,15 @@ export default function BluxModal({ isOpen, closeModal }: BluxModalProps) {
 
     const waitingStatus = value.waitingStatus;
 
-    if (route === Routes.SUCCESSFUL && waitingStatus === 'signing') {
-      const { resolver, result } = value.signTransaction;
+    const { resolver, rejecter, result } = value.signTransaction;
 
+    if (route === Routes.SUCCESSFUL && waitingStatus === 'signing') {
       if (resolver && result) {
         resolver(result);
+      }
+    } else if (route === Routes.SIGN_TRANSACTION) {
+      if (rejecter) {
+        rejecter({ code: 4001, message: 'User rejected the transaction' });
       }
     }
   };
@@ -74,10 +77,7 @@ export default function BluxModal({ isOpen, closeModal }: BluxModalProps) {
       icon={modalIcon}
       closeButton={!showCloseModalIcon}
     >
-      <Component
-        showAllWallets={showAllWallets}
-        setShowAllWallets={setShowAllWallets}
-      />
+      {Component}
     </Modal>
   );
 }

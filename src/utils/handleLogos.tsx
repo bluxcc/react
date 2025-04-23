@@ -4,6 +4,7 @@ import {
   AlbedoLogo,
   FreighterLogo,
   LedgerLogo,
+  HanaLogo,
   LobstrLogo,
   RabetLogo,
   XBullLogo,
@@ -22,7 +23,9 @@ const handleLogos = (walletName: string, fill?: string) => {
     case 'xBull':
       return <XBullLogo />;
     case 'Ledger':
-      return <LedgerLogo fill={fill} />; // Assuming Ledger uses the same logo as Rabet for now
+      return <LedgerLogo fill={fill} />;
+    case 'Hana':
+      return <HanaLogo />;
     default:
       return null;
   }

@@ -15,9 +15,9 @@ type UseBalanceParams = {
 };
 
 interface UseBalanceResult {
+  balance: string;
   loading: boolean;
   error: Error | null;
-  balance: string | null;
 }
 
 const useBalance = ({ asset, address, network }: UseBalanceParams) => {
@@ -27,14 +27,14 @@ const useBalance = ({ asset, address, network }: UseBalanceParams) => {
   const [result, setResult] = useState<UseBalanceResult>({
     error: null,
     loading: true,
-    balance: null
+    balance: '0',
   });
 
   useEffect(() => {
     setResult({
       error: null,
       loading: true,
-      balance: null,
+      balance: '0',
     });
 
     const userAddress = value.user.wallet?.address as string | undefined;
@@ -42,7 +42,7 @@ const useBalance = ({ asset, address, network }: UseBalanceParams) => {
     if (!userAddress && !address) {
       setResult({
         loading: false,
-        balance: null,
+        balance: '0',
         error: new Error('Both user.wallet.address and address parameter are undefined'),
       });
 
@@ -59,7 +59,7 @@ const useBalance = ({ asset, address, network }: UseBalanceParams) => {
           setResult({
             error: null,
             loading: false,
-            balance: nativeAsset?.balance || null,
+            balance: nativeAsset?.balance || '0',
           });
         } else if (typeof asset === 'string') {
           const assetDetails = asset.split(':');
@@ -69,7 +69,7 @@ const useBalance = ({ asset, address, network }: UseBalanceParams) => {
           setResult({
             error: null,
             loading: false,
-            balance: foundAsset?.balance || null,
+            balance: foundAsset?.balance || '0',
           });
         }
       })
@@ -77,7 +77,7 @@ const useBalance = ({ asset, address, network }: UseBalanceParams) => {
         setResult({
           error: err,
           loading: false,
-          balance: null,
+          balance: '0',
         });
       });
   }, [address, asset, value.user.wallet, networkPassphrase]);

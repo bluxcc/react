@@ -1,3 +1,4 @@
+import { HanaConfig } from './configs/hanaConfig';
 import { rabetConfig } from './configs/rabetConfig';
 import { xBullConfig } from './configs/xbullConfig';
 import { lobstrConfig } from './configs/lobstrConfig';
@@ -10,7 +11,8 @@ export const walletsConfig: Record<SupportedWallets, WalletInterface> = {
   [SupportedWallets.Freighter]: freighterConfig,
   [SupportedWallets.Ledger]: ledgerConfig,
   [SupportedWallets.Rabet]: rabetConfig,
-  [SupportedWallets.Albedo]: albedoConfig,
+  [SupportedWallets.Hana]: HanaConfig,
   [SupportedWallets.Lobstr]: lobstrConfig,
+  [SupportedWallets.Albedo]: albedoConfig,
   [SupportedWallets.Xbull]: xBullConfig,
 };

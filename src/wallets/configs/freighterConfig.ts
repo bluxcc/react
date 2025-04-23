@@ -14,7 +14,7 @@ export const freighterConfig: WalletInterface = {
     new Promise((resolve) => {
       const timeout = setTimeout(() => {
         resolve(false);
-      }, 1200);
+      }, 1500);
 
       setTimeout(() => {
         freighterApi
@@ -29,7 +29,7 @@ export const freighterConfig: WalletInterface = {
 
             resolve(false);
           });
-      }, 250);
+      }, 500);
     }),
 
   connect: async () => {

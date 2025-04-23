@@ -9,16 +9,11 @@ import getContrastColor from '../../../utils/getContrastColor';
 import { StellarLogo } from '../../../assets/logos';
 import { SmallEmailIcon } from '../../../assets/Icons';
 
-type OnBoardingProps = {
-  showAllWallets: boolean;
-  setShowAllWallets: (value: boolean) => void;
-};
-
-const OnBoarding = ({ showAllWallets, setShowAllWallets }: OnBoardingProps) => {
-  const context = useProvider();
+const OnBoarding = () => {
+  const { value, setValue, setRoute } = useProvider();
   const [inputValue, setInputValue] = useState('');
 
-  const wallets = context.value.availableWallets;
+  const wallets = value.availableWallets;
 
   const hiddenWallets = useMemo(() => {
     return wallets.length > 3 ? wallets.slice(2) : [];
@@ -27,13 +22,13 @@ const OnBoarding = ({ showAllWallets, setShowAllWallets }: OnBoardingProps) => {
   const visibleWallets = useMemo(() => {
     return wallets.length <= 3
       ? wallets
-      : showAllWallets
+      : value.showAllWallets
         ? wallets.slice(2, wallets.length)
         : wallets.slice(0, 2);
-  }, [wallets, showAllWallets]);
+  }, [wallets, value.showAllWallets]);
 
   const handleConnect = (wallet: WalletInterface) => {
-    context.setValue((prev) => ({
+    setValue((prev) => ({
       ...prev,
       user: {
         ...prev.user,
@@ -42,14 +37,15 @@ const OnBoarding = ({ showAllWallets, setShowAllWallets }: OnBoardingProps) => {
           passphrase: '',
           name: wallet.name,
         },
+        waitingStatus: 'connecting',
       },
     }));
 
-    context.setRoute(Routes.WAITING);
+    setRoute(Routes.WAITING);
   };
 
   const handleConnectEmail = () => {
-    context.setValue((prev) => ({
+    setValue((prev) => ({
       ...prev,
       user: {
         ...prev.user,
@@ -57,12 +53,12 @@ const OnBoarding = ({ showAllWallets, setShowAllWallets }: OnBoardingProps) => {
       },
     }));
 
-    context.setRoute(Routes.OTP);
+    setRoute(Routes.OTP);
   };
 
-  const { appearance } = context.value.config;
+  const { appearance } = value.config;
 
-  const loginMethods = context.value.config.loginMethods || [];
+  const loginMethods = value.config.loginMethods || [];
 
   const isPassKeyEnabled = loginMethods.includes('passkey');
 
@@ -98,15 +94,14 @@ const OnBoarding = ({ showAllWallets, setShowAllWallets }: OnBoardingProps) => {
 
   return (
     <div className="bluxcc-w-full">
-      {context.value.config.appearance.logo && (
+      {value.config.appearance.logo && (
         <div className="bluxcc-my-6 bluxcc-flex bluxcc-max-h-[80px] bluxcc-w-full bluxcc-items-center bluxcc-justify-center bluxcc-overflow-hidden">
           <img
-            src={context.value.config.appearance.logo}
-            alt={context.value.config.appName}
+            src={value.config.appearance.logo}
+            alt={value.config.appName}
             width={152}
             height={60}
             className="bluxcc-max-h-[80px] bluxcc-max-w-[180px]"
-            fetchPriority="high"
             loading="eager"
             decoding="async"
             draggable="false"
@@ -122,7 +117,7 @@ const OnBoarding = ({ showAllWallets, setShowAllWallets }: OnBoardingProps) => {
           const walletExists = orderedLoginMethods.includes('wallet');
           const shouldRenderDivider =
             (walletExists &&
-              !showAllWallets &&
+              !value.showAllWallets &&
               method === 'wallet' &&
               nextMethod === 'email') ||
             (walletExists && method === 'email' && prevMethod !== 'wallet');
@@ -143,7 +138,7 @@ const OnBoarding = ({ showAllWallets, setShowAllWallets }: OnBoardingProps) => {
                   />
                 ))}
 
-                {hiddenWallets.length > 0 && !showAllWallets && (
+                {hiddenWallets.length > 0 && !value.showAllWallets && (
                   <CardItem
                     endArrow
                     label="All Stellar wallets"
@@ -152,7 +147,9 @@ const OnBoarding = ({ showAllWallets, setShowAllWallets }: OnBoardingProps) => {
                         fill={getContrastColor(appearance.bgField)}
                       />
                     }
-                    onClick={() => setShowAllWallets(true)}
+                    onClick={() =>
+                      setValue((prev) => ({ ...prev, showAllWallets: true }))
+                    }
                   />
                 )}
 
@@ -160,7 +157,7 @@ const OnBoarding = ({ showAllWallets, setShowAllWallets }: OnBoardingProps) => {
               </React.Fragment>
             );
           }
-          if (!showAllWallets && method === 'email') {
+          if (!value.showAllWallets && method === 'email') {
             return (
               <React.Fragment key="email">
                 {
@@ -181,7 +178,7 @@ const OnBoarding = ({ showAllWallets, setShowAllWallets }: OnBoardingProps) => {
             );
           }
 
-          if (!showAllWallets && method === 'passkey') {
+          if (!value.showAllWallets && method === 'passkey') {
             return (
               <div
                 key="passkey"

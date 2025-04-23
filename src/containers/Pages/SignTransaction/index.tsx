@@ -6,18 +6,18 @@ import { useBalance } from '../../../useStellar';
 import { useProvider } from '../../../context/provider';
 import humanizeAmount from '../../../utils/humanizeAmount';
 import shortenAddress from '../../../utils/shortenAddress';
-import Summary from '../../../components/Transaction/Summery';
-import getTransactionDetails from '../../../utils/stellar/getTransactionDetails';
+import Summary from '../../../components/Transaction/Summary';
 import getContrastColor from '../../../utils/getContrastColor';
+import getTransactionDetails from '../../../utils/stellar/getTransactionDetails';
 
 const SignTransaction = () => {
   const context = useProvider();
   const { balance } = useBalance({ asset: 'native' });
 
   const appearance = context.value.config.appearance;
-  const { xdr, network } = context.value.signTransaction;
+  const { xdr, options } = context.value.signTransaction;
 
-  const txDetails = getTransactionDetails(xdr, network);
+  const txDetails = getTransactionDetails(xdr, options.network);
 
   const handleSignTx = async () => {
     context.setValue((prev) => ({
@@ -49,6 +49,8 @@ const SignTransaction = () => {
       <Summary
         operationsCount={txDetails.operations}
         sender={txDetails.sender}
+        receiver={txDetails.receiver}
+        network={options.network}
         estimatedFee={txDetails.estimatedFee.toString()}
         action={txDetails.action}
       />
@@ -64,8 +66,10 @@ const SignTransaction = () => {
           <p className="bluxcc-whitespace-nowrap bluxcc-text-sm bluxcc-font-medium">
             Your wallet
           </p>
-          <p className="bluxcc-text-xs bluxcc-text-gray-700">
-            {shortenAddress(context.value.user.wallet?.address as string, 5)}
+          <p className="bluxcc-mt-0.5 bluxcc-text-xs bluxcc-text-gray-700">
+            {context.value.user.wallet?.address
+              ? shortenAddress(context.value.user.wallet.address as string, 5)
+              : 'No address found'}
           </p>
         </div>
         <div
@@ -77,7 +81,7 @@ const SignTransaction = () => {
           }}
         >
           <p className="bluxcc-max-w-[90px] bluxcc-text-xs bluxcc-font-normal">
-            {balance ? humanizeAmount(balance) : 'N/A'} XLM
+            {balance ? humanizeAmount(balance) : '0'} XLM
           </p>
         </div>
       </div>
