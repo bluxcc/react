@@ -1,3 +1,4 @@
+import polyfill from '../../polyfill';
 import { Horizon, rpc } from '@stellar/stellar-sdk';
 import React, { createContext, useState, useEffect, useContext } from 'react';
 
@@ -8,6 +9,7 @@ import NETWORKS_DETAILS from '../constants/networkDetails';
 import getNetworkRpc from '../utils/network/getNetworkRpc';
 import useCheckWalletNetwork from './useCheckWalletNetwork';
 import initializeRabetMobile from '../utils/initializeRabetMobile';
+
 import {
   Routes,
   ContextState,

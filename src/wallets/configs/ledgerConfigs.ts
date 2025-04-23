@@ -1,3 +1,4 @@
+import polyfill from '../../polyfill';
 import TransportWebUSB from '@ledgerhq/hw-transport-webusb';
 import Str from '@ledgerhq/hw-app-str';
 import {
