@@ -4,7 +4,7 @@ import resolve from '@rollup/plugin-node-resolve';
 import typescript from '@rollup/plugin-typescript';
 import peerDepsExternal from 'rollup-plugin-peer-deps-external';
 import polyfillNode from 'rollup-plugin-polyfill-node';
-import inject from 'rollup-plugin-inject';
+import inject from '@rollup/plugin-inject';
 
 import tailwindcss from 'tailwindcss';
 import autoprefixer from 'autoprefixer';
