@@ -65,13 +65,17 @@ const Summary = ({
           <div
             key={index}
             className="bluxcc-flex bluxcc-justify-between bluxcc-px-4 bluxcc-py-2"
-            style={{
-              borderColor: appearance.borderColor,
-              borderBottomStyle: 'dashed',
-              borderBottomWidth: appearance.includeBorders
-                ? appearance.borderWidth
-                : '1px',
-            }}
+            style={
+              index === details.length - 1
+                ? {}
+                : {
+                    borderBottomColor: appearance.borderColor,
+                    borderBottomStyle: 'dashed',
+                    borderBottomWidth: appearance.includeBorders
+                      ? appearance.borderWidth
+                      : '1px',
+                  }
+            }
           >
             <span style={{ color: appearance.textColor }}>{label}</span>
             <span

@@ -46,6 +46,7 @@ const Send = () => {
       {/* Amount Input */}
       <div className="bluxcc-mb-4">
         <InputField
+          autoFocus
           type="number"
           label="Amount"
           placeholder="0.00"
