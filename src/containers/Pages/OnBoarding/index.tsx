@@ -8,6 +8,7 @@ import getContrastColor from '../../../utils/getContrastColor';
 
 import { StellarLogo } from '../../../assets/logos';
 import { SmallEmailIcon } from '../../../assets/Icons';
+import isBackgroundDark from '../../../utils/isBackgroundDark';
 
 const OnBoarding = () => {
   const { value, setValue, setRoute } = useProvider();
@@ -130,7 +131,10 @@ const OnBoarding = () => {
                     key={wallet.name}
                     {...wallet}
                     label={wallet.name}
-                    startIcon={handleLogos(wallet.name)}
+                    startIcon={handleLogos(
+                      wallet.name,
+                      isBackgroundDark(appearance.bgField),
+                    )}
                     onClick={() => handleConnect(wallet)}
                   />
                 ))}
@@ -203,7 +207,6 @@ const OnBoarding = () => {
           href="https://blux.cc"
           target="_blank"
           rel="noreferrer"
-          style={{ color: appearance.accent }}
         >
           Blux.cc
         </a>

@@ -2,7 +2,6 @@ import React, { useState } from 'react';
 
 import { Routes } from '../../../types';
 import copyText from '../../../utils/copyText';
-import Button from '../../../components/Button';
 import { useBlux } from '../../../hooks/useBlux';
 import { useBalance } from '../../../useStellar';
 import CardItem from '../../../components/CardItem';
@@ -43,15 +42,16 @@ const Profile = () => {
         style={{ background: appearance.accent }}
       />
       <p
-        className="bluxcc-mb-4 bluxcc-mt-6 bluxcc-inline-flex bluxcc-cursor-pointer bluxcc-text-base bluxcc-text-gray-700"
+        className="bluxcc-mb-4 bluxcc-mt-6 bluxcc-inline-flex bluxcc-cursor-pointer bluxcc-text-base"
         onClick={handleCopyAddress}
+        style={{ color: appearance.textColor }}
       >
         {copied ? (
           'Copied!'
         ) : (
           <span className="bluxcc-flex bluxcc-items-center bluxcc-gap-1">
             {address ? shortenAddress(address, 5) : ''}
-            <Copy />
+            <Copy fill={appearance.textColor} />
           </span>
         )}
       </p>
@@ -93,16 +93,14 @@ const Profile = () => {
         />
       </div>
 
-      <Button
-        size="medium"
-        variant="text"
-        state="enabled"
-        startIcon={<LogOut />}
-        className="!bluxcc-text-gray-600"
+      <div
+        style={{ color: appearance.textColor }}
         onClick={handleLogout}
+        className="bluxcc-flex bluxcc-h-12 bluxcc-w-full bluxcc-cursor-pointer bluxcc-items-center bluxcc-justify-center bluxcc-gap-2"
       >
+        <LogOut fill={appearance.textColor} />
         Logout
-      </Button>
+      </div>
     </div>
   );
 };

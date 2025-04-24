@@ -13,6 +13,7 @@ type InputFieldProps = {
   button?: string | React.ReactNode;
   onButtonClick?: () => void;
   value?: string;
+  autoFocus?: boolean;
   onChange?: (e: React.ChangeEvent<HTMLInputElement>) => void;
   customLabel?: React.ReactNode;
 };
@@ -47,6 +48,7 @@ const CustomButton = ({
 
 const InputField = ({
   label,
+  autoFocus,
   type = 'text',
   placeholder = 'Input',
   error,
@@ -65,6 +67,7 @@ const InputField = ({
   const onMouseEnter = (e: MouseEvent<HTMLDivElement>) => {
     if (!isFocused && !error) {
       e.currentTarget.style.borderColor = appearance.accent;
+      e.currentTarget.style.transition = 'border-color 0.35s ease-in-out';
     }
   };
 
@@ -113,10 +116,12 @@ const InputField = ({
       >
         {iconLeft && <div className="bluxcc-mr-2">{iconLeft}</div>}
         <input
+          min={type === 'number' ? 1 : undefined}
           type={type}
+          autoFocus={autoFocus}
           value={value}
           placeholder={placeholder}
-          className="bluxcc-mr-2 bluxcc-bg-transparent bluxcc-text-gray-700 bluxcc-outline-none placeholder:bluxcc-text-gray-500"
+          className="bluxcc-mr-2 bluxcc-bg-transparent bluxcc-outline-none"
           style={{
             color: appearance.textColor,
             width: !button ? '100%' : '90%',
