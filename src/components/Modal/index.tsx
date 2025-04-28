@@ -110,7 +110,7 @@ const Modal = ({
             outlineStyle: 'solid',
             outlineColor: appearance.borderColor,
             outlineWidth: appearance.borderWidth,
-            borderRadius: appearance.cornerRadius,
+            borderRadius: appearance.borderRadius,
           }}
         >
           <div ref={contentRef} className="bluxcc-px-6 bluxcc-pb-4">

@@ -34,7 +34,7 @@ const CustomButton = ({
     <button
       onClick={onButtonClick}
       style={{
-        borderRadius: appearance.cornerRadius,
+        borderRadius: appearance.borderRadius,
         color: appearance.textColor,
         borderColor: appearance.borderColor,
         backgroundColor: appearance.background,
@@ -107,7 +107,7 @@ const InputField = ({
         style={
           {
             '--tw-ring-color': getBorderAndRingColor(),
-            borderRadius: appearance.cornerRadius,
+            borderRadius: appearance.borderRadius,
             borderColor: getBorderAndRingColor(),
             backgroundColor: appearance.bgField,
             borderWidth: appearance.includeBorders

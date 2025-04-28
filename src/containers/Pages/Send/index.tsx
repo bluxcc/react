@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useRef } from 'react';
+import React, { useState } from 'react';
 
 import Button from '../../../components/Button';
 import InputField from '../../../components/Input';
@@ -11,13 +11,13 @@ import getContrastColor from '../../../utils/getContrastColor';
 const Send = () => {
   const context = useProvider();
   const appearance = context.value.config.appearance;
-  const [openDropDown, setOpenDropDown] = useState(false);
+  // const [openDropDown, setOpenDropDown] = useState(false);
   const [form, setForm] = useState({ amount: '', address: '', memo: '' });
   const [errors, setErrors] = useState<{ amount?: string; address?: string }>(
     {},
   );
-  const containerRef = useRef<HTMLDivElement>(null);
-  const dropdownRef = useRef<HTMLDivElement>(null);
+  // const containerRef = useRef<HTMLDivElement>(null);
+  // const dropdownRef = useRef<HTMLDivElement>(null);
 
   const handleChange =
     (field: keyof typeof form) => (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -26,7 +26,7 @@ const Send = () => {
     };
 
   const handleSetAsset = () => {
-    setOpenDropDown(!openDropDown);
+    // setOpenDropDown(!openDropDown);
   };
 
   const handleMaxClick = () =>
@@ -50,29 +50,29 @@ const Send = () => {
   };
 
   // Close dropdown when clicking outside
-  useEffect(() => {
-    const handleClickOutside = (event: MouseEvent) => {
-      if (
-        dropdownRef.current &&
-        !dropdownRef.current.contains(event.target as Node) &&
-        openDropDown
-      ) {
-        setOpenDropDown(false);
-      }
-    };
+  // useEffect(() => {
+  //   const handleClickOutside = (event: MouseEvent) => {
+  //     if (
+  //       dropdownRef.current &&
+  //       !dropdownRef.current.contains(event.target as Node) &&
+  //       openDropDown
+  //     ) {
+  //       setOpenDropDown(false);
+  //     }
+  //   };
 
-    document.addEventListener('mousedown', handleClickOutside);
-    return () => {
-      document.removeEventListener('mousedown', handleClickOutside);
-    };
-  }, [openDropDown]);
+  //   document.addEventListener('mousedown', handleClickOutside);
+  //   return () => {
+  //     document.removeEventListener('mousedown', handleClickOutside);
+  //   };
+  // }, [openDropDown]);
 
   return (
     <>
       {/* Main Form Content */}
       <div
-        ref={containerRef}
-        className={`bluxcc-relative ${openDropDown ? 'bluxcc-blur-sm' : ''}`}
+      // ref={containerRef}
+      // className={`bluxcc-relative ${openDropDown ? 'bluxcc-blur-sm' : ''}`}
       >
         {/* Amount Input */}
         <div className="bluxcc-relative bluxcc-mb-4">
@@ -153,19 +153,19 @@ const Send = () => {
         </Button>
 
         {/* Overlay to prevent interaction with blurred content */}
-        {openDropDown && (
+        {/* {openDropDown && (
           <div className="bluxcc-absolute bluxcc-inset-0 bluxcc-z-10" />
-        )}
+        )} */}
       </div>
 
       {/* Dropdown positioned above the blur */}
-      {openDropDown && (
+      {/* {openDropDown && (
         <div
           ref={dropdownRef}
           className="bluxcc-absolute bluxcc-left-6 bluxcc-right-6 bluxcc-top-40 bluxcc-z-50 bluxcc-shadow-xl"
           style={{
             backgroundColor: appearance.background,
-            borderRadius: appearance.cornerRadius,
+            borderRadius: appearance.borderRadius,
             color: appearance.textColor,
             borderColor: appearance.borderColor,
             borderWidth: appearance.includeBorders
@@ -183,7 +183,7 @@ const Send = () => {
                 className="bluxcc-group bluxcc-flex bluxcc-h-10 bluxcc-w-full bluxcc-cursor-pointer bluxcc-items-center bluxcc-justify-start bluxcc-gap-2 bluxcc-space-y-2 bluxcc-px-2 bluxcc-py-1 bluxcc-text-xs"
                 style={{
                   backgroundColor: appearance.bgField,
-                  borderRadius: appearance.cornerRadius,
+                  borderRadius: appearance.borderRadius,
                   color: appearance.textColor,
                 }}
                 onClick={() => {
@@ -196,7 +196,7 @@ const Send = () => {
             ))}
           </div>
         </div>
-      )}
+      )} */}
     </>
   );
 };

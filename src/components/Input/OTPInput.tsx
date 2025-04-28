@@ -75,7 +75,7 @@ const OTPInput: React.FC<OTPInputProps> = ({ otp, setOtp, error }) => {
   };
 
   const getInputStyle = (digit: string): React.CSSProperties => ({
-    borderRadius: appearance.cornerRadius,
+    borderRadius: appearance.borderRadius,
     color: appearance.accent,
     background: appearance.bgField,
     '--tw-ring-color': error ? '#FF6666' : appearance.accent,

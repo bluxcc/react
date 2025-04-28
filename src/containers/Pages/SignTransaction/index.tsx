@@ -58,7 +58,7 @@ const SignTransaction = () => {
       <div
         className="bluxcc-mt-4 bluxcc-inline-flex bluxcc-h-14 bluxcc-w-full bluxcc-items-center bluxcc-justify-between bluxcc-border bluxcc-px-4"
         style={{
-          borderRadius: appearance.cornerRadius,
+          borderRadius: appearance.borderRadius,
           borderColor: appearance.borderColor,
         }}
       >
@@ -78,7 +78,7 @@ const SignTransaction = () => {
         <div
           className="bluxcc-overflow-hidden bluxcc-px-[10px] bluxcc-py-2"
           style={{
-            borderRadius: appearance.cornerRadius,
+            borderRadius: appearance.borderRadius,
             backgroundColor: appearance.bgField,
             color: appearance.textColor,
           }}

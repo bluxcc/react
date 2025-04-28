@@ -72,7 +72,7 @@ const CardItem = ({
         variant === 'input' ? 'bluxcc-cursor-text' : 'bluxcc-cursor-pointer'
       }`}
       style={{
-        borderRadius: appearance.cornerRadius,
+        borderRadius: appearance.borderRadius,
         color: appearance.textColor,
         borderColor: isFocused ? appearance.accent : appearance.borderColor,
         backgroundColor: appearance.bgField,
@@ -83,7 +83,7 @@ const CardItem = ({
     >
       <span
         style={{
-          borderRadius: appearance.cornerRadius,
+          borderRadius: appearance.borderRadius,
           borderColor: appearance.borderColor,
           borderWidth: appearance.includeBorders
             ? appearance.borderWidth
@@ -119,7 +119,7 @@ const CardItem = ({
                 onClick={() => onSubmit?.(inputValue)}
                 className={`bluxcc-absolute bluxcc-right-0 bluxcc-flex bluxcc-h-8 !bluxcc-w-[68px] bluxcc-items-center bluxcc-justify-center bluxcc-border bluxcc-bg-transparent bluxcc-text-sm bluxcc-font-medium bluxcc-transition-[border-radius,background,border-color] bluxcc-duration-150`}
                 style={{
-                  borderRadius: appearance.cornerRadius,
+                  borderRadius: appearance.borderRadius,
                   borderColor: isValid
                     ? appearance.accent
                     : appearance.borderColor,
@@ -142,7 +142,7 @@ const CardItem = ({
           className={`bluxcc-mr-2.5 bluxcc-px-2 bluxcc-py-1 bluxcc-text-xs bluxcc-font-normal`}
           style={{
             color: appearance.accent,
-            borderRadius: appearance.cornerRadius,
+            borderRadius: appearance.borderRadius,
             backgroundColor: `${hexToRgba(appearance.accent, 0.1)}`,
           }}
         >
