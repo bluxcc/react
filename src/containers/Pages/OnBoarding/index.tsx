@@ -196,19 +196,18 @@ const OnBoarding = () => {
       </div>
 
       <div
-        className={`bluxcc-w-full bluxcc-pt-[8px] bluxcc-text-center bluxcc-text-[12px] bluxcc-font-medium`}
+        className={`bluxcc-w-full bluxcc-cursor-pointer bluxcc-pt-[8px] bluxcc-text-center bluxcc-text-[12px] bluxcc-font-medium`}
         style={{
           color: appearance.textColor,
         }}
       >
-        Powered by{' '}
         <a
           aria-label="blux link"
           href="https://blux.cc"
           target="_blank"
           rel="noreferrer"
         >
-          Blux.cc
+          Powered by Blux.cc
         </a>
       </div>
     </div>

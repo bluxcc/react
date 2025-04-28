@@ -24,7 +24,7 @@ const ConfirmCode: React.FC = () => {
 
     if (!isValid) {
       setError(true);
-      setTimeout(() => setOtp(Array(6).fill('')), 1000); // Clear OTP after 1 second
+      setTimeout(() => setOtp(Array(6).fill('')), 1000);
     }
   };
 

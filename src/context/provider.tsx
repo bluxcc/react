@@ -97,6 +97,7 @@ export const BluxProvider = ({
           ...defaultLightTheme,
           ...config.appearance,
         },
+        loginMethods: config.loginMethods || [],
       },
     }));
   }, [config]);
@@ -148,6 +149,7 @@ export const BluxProvider = ({
     setValue((prev) => ({
       ...prev,
       isModalOpen: false,
+      showAllWallets: false,
     }));
   };
 
