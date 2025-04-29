@@ -1,3 +1,4 @@
+import inject from '@rollup/plugin-inject';
 import postcss from 'rollup-plugin-postcss';
 import terser from '@rollup/plugin-terser';
 import commonjs from '@rollup/plugin-commonjs';
@@ -27,7 +28,12 @@ export default {
   preserveEntrySignatures: 'strict',
   treeshake: true,
   plugins: [
+    inject({
+      Buffer: ['buffer', 'Buffer'],
+      process: 'process',
+    }),
     peerDepsExternal(),
+
     terser({
       compress: {
         drop_console: true,
@@ -53,8 +59,11 @@ export default {
       exclude: ['node_modules'],
     }),
   ],
-  external: [
-    ...Object.keys(pkg.dependencies || {}),
-    ...Object.keys(pkg.peerDependencies || {}),
-  ],
+  external: (id) => {
+    if (['buffer', 'process'].includes(id)) return false;
+    return [
+      ...Object.keys(pkg.dependencies || {}),
+      ...Object.keys(pkg.peerDependencies || {}),
+    ].includes(id);
+  },
 };

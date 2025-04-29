@@ -1,3 +1,4 @@
+import { Buffer } from 'buffer';
 import TransportWebUSB from '@ledgerhq/hw-transport-webusb';
 import Str from '@ledgerhq/hw-app-str';
 import {
@@ -7,19 +8,26 @@ import {
 } from '../../types';
 import { Keypair, StrKey, Transaction, xdr } from '@stellar/stellar-sdk';
 
+(globalThis as any).Buffer = Buffer;
+
+if (typeof globalThis.Buffer === 'undefined') {
+  globalThis.Buffer = Buffer;
+}
+
 export const ledgerConfig: WalletInterface = {
   name: SupportedWallets.Ledger,
   website: 'https://www.ledger.com',
 
   isAvailable: async () => {
-    try {
-      const devices = await TransportWebUSB.list();
-      console.log('Ledger devices:', devices);
-      return devices.length > 0;
-    } catch (error) {
-      console.error('Error checking Ledger availability:', error);
-      return false;
-    }
+    return true;
+    // try {
+    //   const devices = await TransportWebUSB.list();
+    //   console.log('Ledger devices:', devices);
+    //   return devices.length > 0;
+    // } catch (error) {
+    //   console.error('Error checking Ledger availability:', error);
+    //   return false;
+    // }
   },
 
   connect: async () => {

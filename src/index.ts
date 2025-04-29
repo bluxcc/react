@@ -1,4 +1,7 @@
+import './buffer-polyfill';
+
 import './tailwind.css';
+import './types/buffer-global';
 
 export * from './networks';
 export * from './useStellar';
