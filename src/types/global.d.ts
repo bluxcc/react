@@ -1,9 +1,11 @@
 import { IConnectParams, ISignParams } from '@creit.tech/xbull-wallet-connect';
+import { Buffer } from 'buffer';
 
 declare module '*.css' {
   const content: { [className: string]: string };
   export default content;
 }
+
 interface FreighterApi {
   isConnected: () => Promise<{ isConnected: boolean }>;
   requestAccess: () => Promise<{ address: string }>;
@@ -29,6 +31,10 @@ export type ConnectResult = {
 };
 
 declare global {
+  interface globalThis {
+    Buffer: typeof Buffer;
+  }
+
   interface Window {
     xBullSDK?: {
       connect(params?: IConnectParams): Promise<string>;
@@ -53,6 +59,10 @@ declare global {
       };
     };
   }
+}
+
+if (typeof globalThis.Buffer === 'undefined') {
+  globalThis.Buffer = Buffer;
 }
 
 export {};

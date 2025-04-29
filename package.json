@@ -38,11 +38,15 @@
     "@stellar/freighter-api": "^3.0.0",
     "@stellar/stellar-sdk": "^13.1.0",
     "react": ">=17.0.0",
-    "react-dom": ">=17.0.0"
+    "react-dom": ">=17.0.0",
+    "buffer": "^6.0.3"
   },
   "devDependencies": {
     "@eslint/js": "^9.17.0",
+    "@rollup/plugin-alias": "^5.1.1",
     "@rollup/plugin-commonjs": "^28.0.2",
+    "@rollup/plugin-html": "^2.0.0",
+    "@rollup/plugin-inject": "^5.0.5",
     "@rollup/plugin-node-resolve": "^16.0.0",
     "@rollup/plugin-terser": "^0.4.4",
     "@rollup/plugin-typescript": "^12.1.2",
@@ -51,7 +55,6 @@
     "@typescript-eslint/eslint-plugin": "^8.19.1",
     "@typescript-eslint/parser": "^8.19.1",
     "autoprefixer": "^10.4.20",
-    "buffer": "^6.0.3",
     "eslint": "^9.17.0",
     "eslint-plugin-react": "^7.37.3",
     "eslint-plugin-react-hooks": "^5.1.0",
