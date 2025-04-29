@@ -7,8 +7,8 @@ import { useProvider } from '../../../context/provider';
 import humanizeAmount from '../../../utils/humanizeAmount';
 import shortenAddress from '../../../utils/shortenAddress';
 import Summary from '../../../components/Transaction/Summary';
-import getContrastColor from '../../../utils/getContrastColor';
 import getTransactionDetails from '../../../utils/stellar/getTransactionDetails';
+import hexToRgba from '../../../utils/hexToRgba';
 
 const SignTransaction = () => {
   const context = useProvider();
@@ -66,7 +66,10 @@ const SignTransaction = () => {
           <p className="bluxcc-whitespace-nowrap bluxcc-text-sm bluxcc-font-medium">
             Your wallet
           </p>
-          <p className="bluxcc-mt-0.5 bluxcc-text-xs bluxcc-text-gray-700">
+          <p
+            className="bluxcc-mt-0.5 bluxcc-text-xs"
+            style={{ color: `${hexToRgba(appearance.textColor, 0.8)}` }}
+          >
             {context.value.user.wallet?.address
               ? shortenAddress(context.value.user.wallet.address as string, 5)
               : 'No address found'}
@@ -76,8 +79,8 @@ const SignTransaction = () => {
           className="bluxcc-overflow-hidden bluxcc-px-[10px] bluxcc-py-2"
           style={{
             borderRadius: appearance.cornerRadius,
-            backgroundColor: appearance.accent,
-            color: getContrastColor(appearance.accent),
+            backgroundColor: appearance.bgField,
+            color: appearance.textColor,
           }}
         >
           <p className="bluxcc-max-w-[90px] bluxcc-text-xs bluxcc-font-normal">

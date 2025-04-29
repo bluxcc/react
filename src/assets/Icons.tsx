@@ -159,7 +159,7 @@ export const GreenCheck = () => (
     </g>
   </svg>
 );
-export const LogOut = () => (
+export const LogOut = ({ fill = '#666666' }: { fill?: string }) => (
   <svg
     width="24"
     height="24"
@@ -180,12 +180,12 @@ export const LogOut = () => (
     <g mask="url(#mask0_2054_469)">
       <path
         d="M20.3713 12.75H8.577V11.25H20.3713L18.552 9.43075L19.6057 8.34625L23.2595 12L19.6057 15.6538L18.552 14.5693L20.3713 12.75ZM15.202 8.86525V5H5V19H15.202V15.1348H16.702V20.5H3.5V3.5H16.702V8.86525H15.202Z"
-        fill="#666666"
+        fill={fill}
       />
     </g>
   </svg>
 );
-export const Copy = () => (
+export const Copy = ({ fill = '#4D4D4D' }: { fill?: string }) => (
   <svg
     width="24"
     height="24"
@@ -206,7 +206,7 @@ export const Copy = () => (
     <g mask="url(#mask0_2054_791)">
       <path
         d="M7.25 17.5V2.5H19.25V17.5H7.25ZM8.75 16H17.75V4H8.75V16ZM3.75 21V6.30775H5.25V19.5H15.4423V21H3.75Z"
-        fill="#4D4D4D"
+        fill={fill}
       />
     </g>
   </svg>

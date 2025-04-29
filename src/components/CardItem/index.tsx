@@ -1,6 +1,7 @@
 import React, { useState, MouseEvent } from 'react';
 import { useProvider } from '../../context/provider';
 import { ArrowRight } from '../../assets/Icons';
+import hexToRgba from '../../utils/hexToRgba';
 
 type CardItemProps = {
   variant?: 'social' | 'default' | 'input';
@@ -55,6 +56,7 @@ const CardItem = ({
   const onMouseEnter = (e: MouseEvent<HTMLDivElement>) => {
     if (variant !== 'social' && !isFocused) {
       e.currentTarget.style.borderColor = appearance.accent;
+      e.currentTarget.style.transition = 'border-color 0.35s ease-in-out';
     }
   };
   const onMouseLeave = (e: MouseEvent<HTMLDivElement>) => {
@@ -62,7 +64,7 @@ const CardItem = ({
       e.currentTarget.style.borderColor = appearance.borderColor;
     }
   };
-
+  const recent = label === 'Freighter';
   return (
     <div
       onClick={variant === 'input' ? undefined : onClick}
@@ -101,7 +103,7 @@ const CardItem = ({
               onChange={handleInputChange}
               onKeyDown={handleKeyDown}
               placeholder="Email"
-              className="bluxcc-mr-1 bluxcc-h-full bluxcc-w-full bluxcc-bg-transparent bluxcc-outline-none placeholder:bluxcc-text-gray-400 focus:bluxcc-outline-none"
+              className="bluxcc-mr-1 bluxcc-h-full bluxcc-w-full bluxcc-bg-transparent bluxcc-outline-none focus:bluxcc-outline-none"
               style={{ color: appearance.textColor }}
               onFocus={() => setIsFocused(true)}
               onBlur={() => {
@@ -135,7 +137,18 @@ const CardItem = ({
           <span className="bluxcc-select-none bluxcc-font-medium">{label}</span>
         )}
       </div>
-
+      {recent && (
+        <div
+          className={`bluxcc-mr-2.5 bluxcc-px-2 bluxcc-py-1 bluxcc-text-xs bluxcc-font-normal`}
+          style={{
+            color: appearance.accent,
+            borderRadius: appearance.cornerRadius,
+            backgroundColor: `${hexToRgba(appearance.accent, 0.1)}`,
+          }}
+        >
+          Recent
+        </div>
+      )}
       {endArrow && (
         <span className="bluxcc-ml-auto bluxcc-flex bluxcc-items-center">
           <ArrowRight fill={appearance.textColor} />

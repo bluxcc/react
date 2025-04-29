@@ -5,7 +5,7 @@ import handleLogos from '../../../utils/handleLogos';
 import { useProvider } from '../../../context/provider';
 import { Routes, WalletInterface } from '../../../types';
 import getWalletNetwork from '../../../utils/getWalletNetwork';
-import getContrastColor from '../../../utils/getContrastColor';
+import isBackgroundDark from '../../../utils/isBackgroundDark';
 import { Loading, RedExclamation } from '../../../assets/Icons';
 import signTransaction from '../../../utils/stellar/signTransaction';
 import submitTransaction from '../../../utils/stellar/submitTransaction';
@@ -143,7 +143,7 @@ const Waiting = () => {
         >
           {handleLogos(
             user?.wallet?.name ?? '',
-            getContrastColor(appearance.bgField),
+            isBackgroundDark(appearance.bgField),
           )}
         </div>
       )}
