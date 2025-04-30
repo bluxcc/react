@@ -16,6 +16,7 @@ type InputFieldProps = {
   autoFocus?: boolean;
   onChange?: (e: React.ChangeEvent<HTMLInputElement>) => void;
   customLabel?: React.ReactNode;
+  className?: string;
 };
 
 type CustomButtonProps = {
@@ -33,8 +34,8 @@ const CustomButton = ({
     <button
       onClick={onButtonClick}
       style={{
-        borderRadius: appearance.cornerRadius,
-        color: appearance.accent,
+        borderRadius: appearance.borderRadius,
+        color: appearance.textColor,
         borderColor: appearance.borderColor,
         backgroundColor: appearance.background,
         borderWidth: appearance.includeBorders ? appearance.borderWidth : '1px',
@@ -58,6 +59,7 @@ const InputField = ({
   onButtonClick,
   customLabel,
   value,
+  className,
   onChange,
 }: InputFieldProps) => {
   const context = useProvider();
@@ -97,7 +99,7 @@ const InputField = ({
         </label>
       )}
       <div
-        className={`bluxcc-flex bluxcc-h-14 bluxcc-w-full bluxcc-items-center bluxcc-border bluxcc-px-4 bluxcc-py-2 bluxcc-transition-all`}
+        className={`bluxcc-flex bluxcc-h-14 bluxcc-w-full bluxcc-items-center bluxcc-border bluxcc-px-4 bluxcc-py-2 bluxcc-transition-all ${className}`}
         onFocus={() => setIsFocused(true)}
         onBlur={() => setIsFocused(false)}
         onMouseEnter={onMouseEnter}
@@ -105,7 +107,7 @@ const InputField = ({
         style={
           {
             '--tw-ring-color': getBorderAndRingColor(),
-            borderRadius: appearance.cornerRadius,
+            borderRadius: appearance.borderRadius,
             borderColor: getBorderAndRingColor(),
             backgroundColor: appearance.bgField,
             borderWidth: appearance.includeBorders

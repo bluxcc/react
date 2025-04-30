@@ -109,14 +109,6 @@ export interface ContextState {
 }
 
 /**
- * Supported font options for UI customization.
- */
-
-/**
- * Supported corner radius styles for UI elements.
- */
-
-/**
  * Appearance customization options.
  */
 export interface IAppearance {
@@ -126,7 +118,7 @@ export interface IAppearance {
   accent: string; // Primary accent color
   textColor: string; // Main text color
   font: string; // Selected font family or style
-  cornerRadius: string; // Corner radius for UI elements
+  borderRadius: string; // Border radius for UI elements
   borderColor: string; // Border color for elements
   borderWidth: string; // Width of borders (e.g., '1px', '0', etc.)
   includeBorders: boolean; // Whether to display borders using the specified borderWidth

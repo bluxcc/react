@@ -43,7 +43,7 @@ const Button = ({
   const appearance = context.value.config.appearance;
 
   const baseStyle: React.CSSProperties = {
-    borderRadius: appearance.cornerRadius,
+    borderRadius: appearance.borderRadius,
     cursor: state === 'disabled' ? 'not-allowed' : 'pointer',
     opacity: state === 'disabled' ? 0.5 : 1,
     pointerEvents: state === 'disabled' ? 'none' : undefined,
