@@ -91,7 +91,10 @@ const Modal = ({
               : 'bluxcc-relative !bluxcc-w-[360px]'
           }`}
           style={{
-            height: typeof height === 'number' ? `${height}px` : height,
+            height:
+              typeof height === 'number'
+                ? `${isMobile ? height + 40 : height}px`
+                : height,
             opacity: isClosing && !isSticky ? '0' : '1',
             transform: isMobile
               ? isOpening
