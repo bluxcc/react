@@ -27,7 +27,7 @@ export default {
   preserveEntrySignatures: 'strict',
   treeshake: true,
   plugins: [
-    peerDepsExternal(),
+   // peerDepsExternal(),
     terser({
       compress: {
         drop_console: true,

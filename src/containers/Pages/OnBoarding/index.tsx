@@ -16,6 +16,17 @@ const OnBoarding = () => {
 
   const wallets = value.availableWallets;
 
+  const { appearance } = value.config;
+
+  const loginMethods = value.config.loginMethods || [];
+
+  const isPassKeyEnabled = loginMethods.includes('passkey');
+
+  const orderedLoginMethods = useMemo(() => {
+    const methods = [...loginMethods].filter((method) => method !== 'passkey');
+    return [...methods, ...(isPassKeyEnabled ? ['passkey'] : [])];
+  }, [loginMethods, isPassKeyEnabled]);
+
   const hiddenWallets = useMemo(() => {
     return wallets.length > 3 ? wallets.slice(2) : [];
   }, [wallets]);
@@ -56,17 +67,6 @@ const OnBoarding = () => {
 
     setRoute(Routes.OTP);
   };
-
-  const { appearance } = value.config;
-
-  const loginMethods = value.config.loginMethods || [];
-
-  const isPassKeyEnabled = loginMethods.includes('passkey');
-
-  const orderedLoginMethods = useMemo(() => {
-    const methods = [...loginMethods].filter((method) => method !== 'passkey');
-    return [...methods, ...(isPassKeyEnabled ? ['passkey'] : [])];
-  }, [loginMethods, isPassKeyEnabled]);
 
   const renderDivider = () => (
     <div className="bluxcc-my-1 bluxcc-flex bluxcc-h-8 bluxcc-w-full bluxcc-items-center bluxcc-justify-center">
@@ -126,16 +126,17 @@ const OnBoarding = () => {
           if (method === 'wallet') {
             return (
               <React.Fragment key="wallet">
-                {visibleWallets.map((wallet) => (
+                {visibleWallets.map((checkedWallet) => (
                   <CardItem
-                    key={wallet.name}
-                    {...wallet}
-                    label={wallet.name}
+                    key={checkedWallet.wallet.name}
+                    {...checkedWallet}
+                    label={checkedWallet.wallet.name}
+                    isRecent={checkedWallet.isRecent}
                     startIcon={handleLogos(
-                      wallet.name,
+                      checkedWallet.wallet.name,
                       isBackgroundDark(appearance.bgField),
                     )}
-                    onClick={() => handleConnect(wallet)}
+                    onClick={() => handleConnect(checkedWallet.wallet)}
                   />
                 ))}
 
@@ -143,6 +144,7 @@ const OnBoarding = () => {
                   <CardItem
                     endArrow
                     label="All Stellar wallets"
+                    isRecent={false}
                     startIcon={
                       <StellarLogo
                         fill={getContrastColor(appearance.bgField)}
@@ -166,6 +168,7 @@ const OnBoarding = () => {
                     <CardItem
                       inputType="email"
                       variant="input"
+                      isRecent={false}
                       startIcon={<SmallEmailIcon fill={appearance.textColor} />}
                       onChange={(value) => setInputValue(value)}
                       onEnter={handleConnectEmail}

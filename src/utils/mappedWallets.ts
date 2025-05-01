@@ -1,20 +1,22 @@
-import { WalletInterface } from '../types';
+import { CheckedWallet } from '../types';
 import { walletsConfig } from '../wallets/walletsConfig';
+import { getRecentConnectionMethod } from './setRecentConnectionMethod';
 
-export type MappedWallet = {
-  wallet: WalletInterface;
-  isAvailable: boolean;
+const getMappedWallets = async (): Promise<CheckedWallet[]> => {
+  const recentConnectionMethod = getRecentConnectionMethod();
+
+  return Promise.all(
+    Object.values(walletsConfig).map(async (wallet): Promise<CheckedWallet> => {
+      const isRecent = recentConnectionMethod === wallet.name;
+
+      try {
+        const isAvailable = await wallet.isAvailable();
+        return { wallet, isAvailable, isRecent };
+      } catch (_) {
+        return { wallet, isAvailable: false, isRecent };
+      }
+    }),
+  );
 };
-
-const getMappedWallets = async (): Promise<MappedWallet[]> => Promise.all(
-  Object.values(walletsConfig).map(async (wallet): Promise<MappedWallet> => {
-    try {
-      const isAvailable = await wallet.isAvailable();
-      return { wallet, isAvailable };
-    } catch (error) {
-      return { wallet, isAvailable: false };
-    }
-  }),
-);
 
 export default getMappedWallets;

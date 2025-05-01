@@ -19,7 +19,6 @@ const getTransactionDetails = (xdr: string, network: string) => {
       estimatedFee: Number(transaction.fee) / 1e7,
     };
   } catch (error) {
-    console.error('Failed to parse transaction XDR:', error);
     return null;
   }
 };

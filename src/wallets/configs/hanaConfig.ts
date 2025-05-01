@@ -42,7 +42,6 @@ export const HanaConfig: WalletInterface = {
         networkPassphrase: options.networkPassphrase,
       });
     } catch (error) {
-      console.error(error);
       throw new Error('Failed to sign the transaction with Hana wallet.');
     }
   },

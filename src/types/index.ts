@@ -80,6 +80,12 @@ export interface IConfig extends IProviderConfig {
   appearance: IAppearance;
 }
 
+export type CheckedWallet = {
+  wallet: WalletInterface;
+  isAvailable: boolean;
+  isRecent: boolean;
+};
+
 /**
  * Information about the connected wallet.
  */
@@ -135,7 +141,7 @@ export interface ContextInterface {
   isReady: boolean; // Indicates if the system is ready
   isDemo: boolean; // Specifies if in demo mode
   isAuthenticated: boolean; // User authentication status
-  availableWallets: WalletInterface[]; // List of available wallets
+  availableWallets: CheckedWallet[]; // List of available wallets
   waitingStatus: 'connecting' | 'signing';
   showAllWallets: boolean; // Flag to show all wallets in the onboarding process
   activeNetwork: string;

@@ -3,19 +3,20 @@ import React, { useEffect, useState, useRef } from 'react';
 import Button from '../../../components/Button';
 import handleLogos from '../../../utils/handleLogos';
 import { useProvider } from '../../../context/provider';
-import { Routes, WalletInterface } from '../../../types';
+import { CheckedWallet, Routes, WalletInterface } from '../../../types';
+import getMappedWallets from '../../../utils/mappedWallets';
 import getWalletNetwork from '../../../utils/getWalletNetwork';
 import isBackgroundDark from '../../../utils/isBackgroundDark';
 import { Loading, RedExclamation } from '../../../assets/Icons';
 import signTransaction from '../../../utils/stellar/signTransaction';
 import submitTransaction from '../../../utils/stellar/submitTransaction';
-import getMappedWallets, { MappedWallet } from '../../../utils/mappedWallets';
+import { setRecentConnectionMethod } from '../../../utils/setRecentConnectionMethod';
 
 const Waiting = () => {
   const context = useProvider();
   const hasConnected = useRef(false);
   const [error, setError] = useState(false);
-  const [mappedWallets, setMappedWallets] = useState<MappedWallet[]>([]);
+  const [mappedWallets, setMappedWallets] = useState<CheckedWallet[]>([]);
   const [matchedWallet, setMatchedWallet] = useState<WalletInterface | null>(
     null,
   );
@@ -104,6 +105,8 @@ const Waiting = () => {
               },
             },
           }));
+
+          setRecentConnectionMethod(wallet.name);
 
           setTimeout(() => {
             context.setRoute(Routes.SUCCESSFUL);

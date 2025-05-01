@@ -7,6 +7,7 @@ type CardItemProps = {
   variant?: 'social' | 'default' | 'input';
   startIcon: React.ReactNode;
   endArrow?: boolean;
+  isRecent?: boolean;
   label?: string;
   onClick?: () => void;
   onChange?: (value: string) => void;
@@ -19,6 +20,7 @@ const CardItem = ({
   variant = 'default',
   startIcon,
   endArrow,
+  isRecent,
   label,
   onClick,
   onChange,
@@ -64,7 +66,7 @@ const CardItem = ({
       e.currentTarget.style.borderColor = appearance.borderColor;
     }
   };
-  const recent = label === 'Freighter';
+
   return (
     <div
       onClick={variant === 'input' ? undefined : onClick}
@@ -137,7 +139,7 @@ const CardItem = ({
           <span className="bluxcc-select-none bluxcc-font-medium">{label}</span>
         )}
       </div>
-      {recent && (
+      {isRecent && (
         <div
           className={`bluxcc-mr-2.5 bluxcc-px-2 bluxcc-py-1 bluxcc-text-xs bluxcc-font-normal`}
           style={{
@@ -149,6 +151,7 @@ const CardItem = ({
           Recent
         </div>
       )}
+
       {endArrow && (
         <span className="bluxcc-ml-auto bluxcc-mr-1 bluxcc-flex bluxcc-items-center">
           <ArrowRight fill={appearance.textColor} />

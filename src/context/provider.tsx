@@ -119,9 +119,7 @@ export const BluxProvider = ({
 
   const loadWallets = () => {
     getMappedWallets().then((mappedWallets) => {
-      const available = mappedWallets
-        .filter((w) => w.isAvailable)
-        .map((w) => w.wallet);
+      const available = mappedWallets.filter((w) => w.isAvailable);
 
       setValue((prev) => ({
         ...prev,
@@ -143,7 +141,7 @@ export const BluxProvider = ({
     return () => {
       window.removeEventListener('load', loadWallets);
     };
-  }, []);
+  }, [value.isAuthenticated]);
 
   const closeModal = () => {
     setValue((prev) => ({
