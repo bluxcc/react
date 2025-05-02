@@ -31,6 +31,7 @@ const Modal = ({
 }: ModalProps) => {
   const [height, setHeight] = useState<string | number>('auto');
   const [isMobile, setIsMobile] = useState(false);
+  const [heightReady, setHeightReady] = useState(false);
 
   const contentRef = useRef<HTMLDivElement>(null);
   const context = useProvider();
@@ -53,6 +54,7 @@ const Modal = ({
 
     // Initialize height when modal opens
     setHeight(contentRef.current.offsetHeight);
+    setHeightReady(true);
 
     // Set up the resize observer to update height when content changes
     const resizeObserver = new ResizeObserver(() => {
@@ -95,7 +97,13 @@ const Modal = ({
               typeof height === 'number'
                 ? `${isMobile ? height + 40 : height}px`
                 : height,
-            opacity: isClosing && !isSticky ? '0' : '1',
+            transition: heightReady
+              ? `height 300ms ease-in-out, border-radius 300ms, opacity 300ms ease-out${
+                  isMobile ? ', transform 300ms ease-out' : ''
+                }`
+              : `border-radius 300ms, opacity 300ms ease-out${
+                  isMobile ? ', transform 300ms ease-out' : ''
+                }`,
             transform: isMobile
               ? isOpening
                 ? 'translateY(100%)'
@@ -103,10 +111,8 @@ const Modal = ({
                   ? 'translateY(100%)'
                   : 'translateY(0%)'
               : 'none',
-            transition: `height 300ms ease-in-out, border-radius 300ms, opacity 300ms ease-out ${
-              isMobile ? ', transform 300ms ease-out' : ''
-            }`,
             backgroundColor: appearance.background,
+            opacity: isClosing && !isSticky ? '0' : '1',
             color: appearance.textColor,
             fontFamily: appearance.font,
             letterSpacing: '-0.04px',

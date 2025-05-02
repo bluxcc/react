@@ -134,7 +134,7 @@ const OnBoarding = () => {
                     isRecent={checkedWallet.isRecent}
                     startIcon={handleLogos(
                       checkedWallet.wallet.name,
-                      isBackgroundDark(appearance.bgField),
+                      isBackgroundDark(appearance.background),
                     )}
                     onClick={() => handleConnect(checkedWallet.wallet)}
                   />
