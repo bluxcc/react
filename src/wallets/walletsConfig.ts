@@ -7,8 +7,8 @@ import { SupportedWallets, WalletInterface } from '../types';
 import { HanaConfig } from './configs/hanaConfig';
 
 export const walletsConfig: Record<SupportedWallets, WalletInterface> = {
-  [SupportedWallets.Freighter]: freighterConfig,
   [SupportedWallets.Rabet]: rabetConfig,
+  [SupportedWallets.Freighter]: freighterConfig,
   [SupportedWallets.Hana]: HanaConfig,
   [SupportedWallets.Lobstr]: lobstrConfig,
   [SupportedWallets.Albedo]: albedoConfig,

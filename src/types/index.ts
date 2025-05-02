@@ -83,7 +83,7 @@ export interface IConfig extends IProviderConfig {
 export type CheckedWallet = {
   wallet: WalletInterface;
   isAvailable: boolean;
-  isRecent: boolean;
+  isRecent?: boolean;
 };
 
 /**

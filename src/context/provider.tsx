@@ -14,6 +14,7 @@ import {
   IProviderConfig,
   ContextInterface,
 } from '../types';
+import getSortedCheckedWallets from '../utils/sortWallets';
 
 export const ProviderContext = createContext<ContextState | null>(null);
 
@@ -121,10 +122,12 @@ export const BluxProvider = ({
     getMappedWallets().then((mappedWallets) => {
       const available = mappedWallets.filter((w) => w.isAvailable);
 
+      const sortAvailableWallets = getSortedCheckedWallets(available);
+
       setValue((prev) => ({
         ...prev,
         isReady: true,
-        availableWallets: available,
+        availableWallets: sortAvailableWallets,
       }));
 
       initializeRabetMobile();
