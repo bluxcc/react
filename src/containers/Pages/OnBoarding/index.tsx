@@ -14,9 +14,7 @@ const OnBoarding = () => {
   const { value, setValue, setRoute } = useProvider();
   const [inputValue, setInputValue] = useState('');
 
-  const wallets = value.availableWallets.sort(
-    (a, b) => +b.isRecent - +a.isRecent,
-  );
+  const wallets = value.availableWallets;
 
   const { appearance } = value.config;
 
