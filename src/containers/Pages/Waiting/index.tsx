@@ -146,7 +146,7 @@ const Waiting = () => {
         >
           {handleLogos(
             user?.wallet?.name ?? '',
-            isBackgroundDark(appearance.bgField),
+            isBackgroundDark(appearance.background),
           )}
         </div>
       )}
