@@ -44,7 +44,7 @@ const useAccount = (params?: UseAccountProps): UseAccountResult => {
       return;
     }
 
-    const finalAddress = (!!params?.address ? params.address : userAddress) as string;
+    const finalAddress = (params?.address ? params.address : userAddress) as string;
 
     horizon.loadAccount(finalAddress)
       .then((accountResponse) => {

@@ -2,11 +2,12 @@ import { Horizon, rpc } from '@stellar/stellar-sdk';
 
 import { useProvider } from '../context/provider';
 import getTransactionDetails from '../utils/stellar/getTransactionDetails';
+import handleTransactionSigning from '../utils/stellar/handleTransactionSigning';
 import {
+  Routes,
+  ISignTransaction,
   ISendTransactionOptions,
   ISendTransactionOptionsInternal,
-  ISignTransaction,
-  Routes,
 } from '../types';
 
 export const useBlux = () => {
@@ -86,43 +87,63 @@ export const useBlux = () => {
         return;
       }
 
+      const ops: ISendTransactionOptionsInternal = {
+        network,
+        isSoroban: options?.isSoroban === true,
+      };
+
+      const normalTransactionObject: ISignTransaction<false> = {
+        xdr,
+        options: ops,
+        resolver: resolve,
+        rejecter: reject,
+        result: null,
+      };
+
+      const sorobanTransactionObject: ISignTransaction<true> = {
+        xdr,
+        options: ops,
+        resolver: resolve,
+        rejecter: reject,
+        result: null,
+      };
+
+      const foundWallet = value.availableWallets.find(
+        ({ wallet }) => wallet.name === user?.wallet?.name,
+      )?.wallet;
+
+      if (!foundWallet) {
+        throw new Error('Could not find the connected wallet.');
+      }
+
+      if (!value.config.showWalletUIs) {
+        handleTransactionSigning(
+          foundWallet,
+          xdr,
+          value.user.wallet?.address as string,
+          ops,
+          value.config.transports || {},
+        )
+          .then((result) => {
+            resolve(result);
+          })
+          .catch((err) => {
+            reject(err);
+          });
+
+        return;
+      }
+
       setRoute(Routes.SIGN_TRANSACTION);
 
-      if (options?.isSoroban === true) {
-        const sorobanOptions: ISendTransactionOptionsInternal = {
-          network,
-          isSoroban: true,
-        };
-
-        setValue((prev) => ({
-          ...prev,
-          isModalOpen: true,
-          signTransaction: {
-            xdr,
-            options: sorobanOptions,
-            resolver: resolve,
-            rejecter: reject,
-            result: null,
-          } as ISignTransaction<true>,
-        }));
-      } else {
-        const regularOptions: ISendTransactionOptionsInternal = {
-          network,
-          isSoroban: false,
-        };
-
-        setValue((prev) => ({
-          ...prev,
-          isModalOpen: true,
-          signTransaction: {
-            xdr,
-            options: regularOptions,
-            resolver: resolve,
-            rejecter: reject,
-            result: null,
-          } as ISignTransaction<false>,
-        }));
-      }
+      setValue((prev) => ({
+        ...prev,
+        isModalOpen: true,
+        signTransaction:
+          options?.isSoroban === true
+            ? sorobanTransactionObject
+            : normalTransactionObject,
+      }));
     });
   }
 

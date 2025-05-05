@@ -1,8 +1,8 @@
-import { useEffect, useState } from "react";
-import { Asset } from "@stellar/stellar-sdk";
+import { useEffect, useState } from 'react';
+import { Asset } from '@stellar/stellar-sdk';
 
-import useCheckProvider from "../hooks/useCheckProvider";
-import useCustomNetwork from "../hooks/useCustomNetwork";
+import useCheckProvider from '../hooks/useCheckProvider';
+import useCustomNetwork from '../hooks/useCustomNetwork';
 
 type UseBalanceParams = {
   address?: string;
@@ -43,19 +43,24 @@ const useBalance = ({ asset, address, network }: UseBalanceParams) => {
       setResult({
         loading: false,
         balance: '0',
-        error: new Error('Both user.wallet.address and address parameter are undefined'),
+        error: new Error(
+          'Both user.wallet.address and address parameter are undefined',
+        ),
       });
 
       return;
     }
 
-    const finalAddress = (!!address ? address : userAddress) as string;
+    const finalAddress = (address ? address : userAddress) as string;
 
-    horizon.loadAccount(finalAddress)
+    horizon
+      .loadAccount(finalAddress)
       .then((account) => {
         if (asset === 'native') {
-          const nativeAsset = account.balances.find(x => x.asset_type === 'native');
-         
+          const nativeAsset = account.balances.find(
+            (x) => x.asset_type === 'native',
+          );
+
           setResult({
             error: null,
             loading: false,
@@ -63,8 +68,12 @@ const useBalance = ({ asset, address, network }: UseBalanceParams) => {
           });
         } else if (typeof asset === 'string') {
           const assetDetails = asset.split(':');
-          // @ts-ignore
-          const foundAsset = account.balances.find(x => x.asset_code === assetDetails[0] && x.asset_issuer === assetDetails[1]);
+
+          const foundAsset = account.balances.find(
+            (x) =>
+              x.asset_code === assetDetails[0] &&
+              x.asset_issuer === assetDetails[1],
+          );
 
           setResult({
             error: null,

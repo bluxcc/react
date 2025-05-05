@@ -3,38 +3,27 @@ import React, { useEffect, useState, useRef } from 'react';
 import Button from '../../../components/Button';
 import handleLogos from '../../../utils/handleLogos';
 import { useProvider } from '../../../context/provider';
-import { CheckedWallet, Routes, WalletInterface } from '../../../types';
-import getMappedWallets from '../../../utils/mappedWallets';
+import { Routes, WalletInterface } from '../../../types';
 import getWalletNetwork from '../../../utils/getWalletNetwork';
 import isBackgroundDark from '../../../utils/isBackgroundDark';
 import { Loading, RedExclamation } from '../../../assets/Icons';
-import signTransaction from '../../../utils/stellar/signTransaction';
-import submitTransaction from '../../../utils/stellar/submitTransaction';
 import { setRecentConnectionMethod } from '../../../utils/setRecentConnectionMethod';
+import handleTransactionSigning from '../../../utils/stellar/handleTransactionSigning';
 
 const Waiting = () => {
   const context = useProvider();
   const hasConnected = useRef(false);
   const [error, setError] = useState(false);
-  const [mappedWallets, setMappedWallets] = useState<CheckedWallet[]>([]);
   const [matchedWallet, setMatchedWallet] = useState<WalletInterface | null>(
     null,
   );
+
+  const mappedWallets = context.value.availableWallets;
 
   const { user, config } = context.value;
   const waitingStatus = context.value.waitingStatus;
   const appearance = context.value.config.appearance;
   const { xdr, options } = context.value.signTransaction;
-
-  const fetchWallets = async () => {
-    const wallets = await getMappedWallets();
-
-    setMappedWallets(wallets);
-  };
-
-  useEffect(() => {
-    fetchWallets();
-  }, []);
 
   useEffect(() => {
     if (!user?.wallet?.name) return;
@@ -56,15 +45,10 @@ const Waiting = () => {
   const handleAssignment = async (wallet: WalletInterface) => {
     if (waitingStatus === 'signing') {
       try {
-        const signedXdr = await signTransaction(
+        const result = await handleTransactionSigning(
           wallet,
           xdr,
           context.value.user.wallet?.address as string,
-          options.network,
-        );
-
-        const result = await submitTransaction(
-          signedXdr,
           options,
           config.transports || {},
         );
@@ -77,11 +61,7 @@ const Waiting = () => {
           },
         }));
 
-        if (result) {
-          context.setRoute(Routes.SUCCESSFUL);
-        } else {
-          setError(true);
-        }
+        context.setRoute(Routes.SUCCESSFUL);
       } catch (error) {
         setError(true);
 

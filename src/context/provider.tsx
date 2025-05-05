@@ -61,6 +61,7 @@ export const BluxProvider = ({
         ...defaultLightTheme,
         ...config.appearance,
       },
+      showWalletUIs: config.showWalletUIs === false ? false : true,
     },
     activeNetwork: config.defaultNetwork,
     isDemo: isDemo ?? false,

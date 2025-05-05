@@ -59,6 +59,7 @@ export interface IProviderConfig {
   appearance?: Partial<IAppearance>;
   transports?: ITransports;
   explorer?: IExplorers;
+  showWalletUIs?: boolean;
   loginMethods?: Array<
     | 'wallet'
     | 'email'
@@ -78,6 +79,7 @@ export interface IProviderConfig {
 export interface IConfig extends IProviderConfig {
   explorer: IExplorers;
   appearance: IAppearance;
+  showWalletUIs: boolean;
 }
 
 export type CheckedWallet = {
