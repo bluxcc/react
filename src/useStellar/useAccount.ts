@@ -9,11 +9,21 @@ interface UseAccountProps {
   network?: string;
 }
 
-interface UseAccountResult {
+export interface UseAccountResult {
   loading: boolean;
   error: Error | null;
   account: Horizon.AccountResponse | null;
 }
+
+const loadAccount = async (horizon: Horizon.Server, address: string) => {
+  try {
+    const accountResponse = await horizon.loadAccount(address);
+
+    return accountResponse;
+  } catch {
+    return null;
+  }
+};
 
 const useAccount = (params?: UseAccountProps): UseAccountResult => {
   const { value } = useCheckProvider();
@@ -22,7 +32,7 @@ const useAccount = (params?: UseAccountProps): UseAccountResult => {
   const [result, setResult] = useState<UseAccountResult>({
     error: null,
     loading: true,
-    account: null
+    account: null,
   });
 
   useEffect(() => {
@@ -38,15 +48,19 @@ const useAccount = (params?: UseAccountProps): UseAccountResult => {
       setResult({
         account: null,
         loading: false,
-        error: new Error('Both user.wallet.address and address parameter are undefined'),
+        error: new Error(
+          'Both user.wallet.address and address parameter are undefined',
+        ),
       });
 
       return;
     }
 
-    const finalAddress = (params?.address ? params.address : userAddress) as string;
+    const finalAddress = (
+      params?.address ? params.address : userAddress
+    ) as string;
 
-    horizon.loadAccount(finalAddress)
+    loadAccount(horizon, finalAddress)
       .then((accountResponse) => {
         setResult({
           error: null,

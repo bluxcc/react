@@ -3,19 +3,47 @@ import React, { useState } from 'react';
 import Button from '../../../components/Button';
 import InputField from '../../../components/Input';
 
-import { Routes } from '../../../types';
+import { IAsset } from '../../../types';
+import SelectAssets from '../SelectAsset';
 import { ArrowDropUp } from '../../../assets/Icons';
-import { StellarSmallLogo } from '../../../assets/logos';
 import { useProvider } from '../../../context/provider';
+import { StellarSmallLogo } from '../../../assets/logos';
 import getContrastColor from '../../../utils/getContrastColor';
 
 const Send = () => {
   const context = useProvider();
   const appearance = context.value.config.appearance;
+  const [showSelectAssetPage, setShowSelectAssetPage] = useState(false);
+  const [selectedAsset, setSelectedAsset] = useState<null | IAsset>(null);
   const [form, setForm] = useState({ amount: '', address: '', memo: '' });
   const [errors, setErrors] = useState<{ amount?: string; address?: string }>(
     {},
   );
+
+  let assets: IAsset[] = [];
+
+  if (context.value.account.account) {
+    assets = context.value.account.account.balances
+      .filter((x) => x.asset_type !== 'liquidity_pool_shares')
+      .filter((x) => x.balance !== '0.0000000')
+      .map((asset) => {
+        if (asset.asset_type === 'native') {
+          return {
+            assetIssuer: '',
+            assetCode: 'XLM',
+            balance: asset.balance,
+            assetType: asset.asset_type,
+          };
+        } else {
+          return {
+            balance: asset.balance,
+            assetCode: asset.asset_code,
+            assetType: asset.asset_type,
+            assetIssuer: asset.asset_issuer,
+          };
+        }
+      });
+  }
 
   const handleChange =
     (field: keyof typeof form) => (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -24,7 +52,8 @@ const Send = () => {
     };
 
   const handleOpenAssets = () => {
-    context.setRoute(Routes.SELECT_ASSET);
+    setShowSelectAssetPage(true);
+    // context.setRoute(Routes.SELECT_ASSET);
   };
 
   const handleMaxClick = () =>
@@ -46,6 +75,16 @@ const Send = () => {
       // Submit logic here
     }
   };
+
+  if (showSelectAssetPage) {
+    return (
+      <SelectAssets
+        assets={assets}
+        setSelectedAsset={setSelectedAsset}
+        setShowSelectAssetPage={setShowSelectAssetPage}
+      />
+    );
+  }
 
   return (
     <>
@@ -78,7 +117,7 @@ const Send = () => {
                     fill={getContrastColor(appearance.background)}
                   />
                 </span>
-                XLM
+                {selectedAsset ? selectedAsset.assetCode : 'XLM'}
               </span>
             }
           />

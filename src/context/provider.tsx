@@ -15,6 +15,8 @@ import {
   ContextInterface,
 } from '../types';
 import getSortedCheckedWallets from '../utils/sortWallets';
+import { useAccount } from '../useStellar';
+import getAssetLogos from '../utils/apis/getAssetLogos';
 
 export const ProviderContext = createContext<ContextState | null>(null);
 
@@ -22,6 +24,24 @@ type BluxProviderProps = {
   isDemo?: boolean;
   config: IProviderConfig;
   children: React.ReactNode | any;
+};
+
+const AccountLoader = () => {
+  const context = useProvider();
+  const accountRes = useAccount();
+
+  useEffect(() => {
+    context.setValue((prev) => ({
+      ...prev,
+      account: accountRes,
+    }));
+
+    if (accountRes.account) {
+      // getAssetLogos(accountRes.account.balances);
+    }
+  }, [accountRes]);
+
+  return <></>;
 };
 
 export const BluxProvider = ({
@@ -64,6 +84,7 @@ export const BluxProvider = ({
       showWalletUIs: config.showWalletUIs === false ? false : true,
     },
     activeNetwork: config.defaultNetwork,
+    account: null,
     isDemo: isDemo ?? false,
     user: { wallet: null, phoneNumber: null, email: null },
     isModalOpen: false,
@@ -157,6 +178,8 @@ export const BluxProvider = ({
 
   return (
     <ProviderContext.Provider value={{ value, setValue, route, setRoute }}>
+      <AccountLoader />
+
       {children}
 
       <BluxModal isOpen={value.isModalOpen} closeModal={closeModal} />

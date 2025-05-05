@@ -2,6 +2,7 @@ import { Horizon, rpc } from '@stellar/stellar-sdk';
 import { HorizonApi } from '@stellar/stellar-sdk/lib/horizon';
 
 import { Url } from '../utils/network/url';
+import { UseAccountResult } from '../useStellar/useAccount';
 
 /**
  * Enum representing the supported wallets in the system.
@@ -34,6 +35,14 @@ export interface AccountData {
   balances: Horizon.HorizonApi.BalanceLine[];
   thresholds: Horizon.HorizonApi.AccountThresholds;
   transactions?: Horizon.ServerApi.TransactionRecord[];
+}
+
+export interface IAsset {
+  logo?: string;
+  balance: string;
+  assetCode: string;
+  assetType: string;
+  assetIssuer: string;
 }
 
 interface IServers {
@@ -147,6 +156,7 @@ export interface ContextInterface {
   waitingStatus: 'connecting' | 'signing';
   showAllWallets: boolean; // Flag to show all wallets in the onboarding process
   activeNetwork: string;
+  account: UseAccountResult;
   signTransaction: ISignTransaction<boolean>;
   servers: {
     horizon: Horizon.Server;
