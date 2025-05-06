@@ -3,7 +3,6 @@ import React, { useState } from 'react';
 import { Routes } from '../../../types';
 import copyText from '../../../utils/copyText';
 import { useBlux } from '../../../hooks/useBlux';
-import { useBalance } from '../../../useStellar';
 import CardItem from '../../../components/CardItem';
 import { useProvider } from '../../../context/provider';
 import shortenAddress from '../../../utils/shortenAddress';
@@ -14,7 +13,6 @@ const Profile = () => {
   const { logout } = useBlux();
   const context = useProvider();
   const [copied, setCopied] = useState(false);
-  const { balance } = useBalance({ asset: 'native' });
 
   const appearance = context.value.config.appearance;
   const address = context.value.user.wallet?.address as string;
@@ -34,6 +32,12 @@ const Profile = () => {
       })
       .catch(() => {});
   };
+
+  const balance = context.value.account.account
+    ? context.value.account.account.balances.find(
+        (b) => b.asset_type === 'native',
+      )?.balance
+    : '0';
 
   return (
     <div className="bluxcc-flex bluxcc-flex-col bluxcc-items-center bluxcc-justify-center">

@@ -1,10 +1,6 @@
 import { IAppearance } from '../types';
 
-export const HORIZON_SERVERS = {
-  public: 'https://horizon.stellar.org',
-  testnet: 'https://horizon-testnet.stellar.org',
-  futurenet: 'https://horizon-futurenet.stellar.org',
-};
+export const ASSET_SERVER = 'https://asset.rabet.io/assets';
 
 export const defaultLightTheme: IAppearance = {
   theme: 'light',

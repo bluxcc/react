@@ -74,18 +74,19 @@ const OTPInput: React.FC<OTPInputProps> = ({ otp, setOtp, error }) => {
     }
   };
 
-  const getInputStyle = (digit: string): React.CSSProperties => ({
-    borderRadius: appearance.borderRadius,
-    color: appearance.accent,
-    background: appearance.bgField,
-    '--tw-ring-color': error ? '#FF6666' : appearance.accent,
-    borderColor: error
-      ? '#FF6666'
-      : digit
-        ? appearance.accent
-        : appearance.borderColor,
-    borderWidth: appearance.includeBorders ? appearance.borderWidth : '1px',
-  });
+  const getInputStyle = (digit: string): React.CSSProperties =>
+    ({
+      borderRadius: appearance.borderRadius,
+      color: appearance.accent,
+      background: appearance.bgField,
+      '--tw-ring-color': error ? '#FF6666' : appearance.accent,
+      borderColor: error
+        ? '#FF6666'
+        : digit
+          ? appearance.accent
+          : appearance.borderColor,
+      borderWidth: appearance.includeBorders ? appearance.borderWidth : '1px',
+    }) as React.CSSProperties;
 
   return (
     <div className="bluxcc-flex bluxcc-gap-1">
