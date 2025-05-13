@@ -111,7 +111,7 @@ export const Loading = ({ fill = '#0C1083' }: { fill?: string }) => (
     viewBox="0 0 25 24"
     fill="none"
     xmlns="http://www.w3.org/2000/svg"
-    className="bluxcc-animate-spin"
+    className="bluxcc:animate-spin"
   >
     <mask
       id="mask0_2054_770"

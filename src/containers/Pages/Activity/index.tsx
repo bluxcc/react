@@ -88,13 +88,13 @@ const Activity: React.FC = () => {
   const isEmpty = !loading && transactionsDetails.length === 0;
 
   return (
-    <div className="bluxcc-flex bluxcc-h-[348px] bluxcc-flex-col bluxcc-justify-between">
+    <div className="bluxcc:flex bluxcc:h-[348px] bluxcc:flex-col bluxcc:justify-between">
       {loading ? (
-        <div className="bluxcc-flex bluxcc-h-full bluxcc-flex-col bluxcc-items-center bluxcc-justify-center bluxcc-text-center bluxcc-text-gray-700">
+        <div className="bluxcc:flex bluxcc:h-full bluxcc:flex-col bluxcc:items-center bluxcc:justify-center bluxcc:text-center bluxcc:text-gray-700">
           Loading activity...
         </div>
       ) : isEmpty ? (
-        <div className="bluxcc-flex bluxcc-h-full bluxcc-flex-col bluxcc-items-center bluxcc-justify-center bluxcc-text-center bluxcc-text-gray-700">
+        <div className="bluxcc:flex bluxcc:h-full bluxcc:flex-col bluxcc:items-center bluxcc:justify-center bluxcc:text-center bluxcc:text-gray-700">
           No activity found
         </div>
       ) : (
@@ -111,7 +111,7 @@ const Activity: React.FC = () => {
                   : '0px',
               borderBottomColor: value.config.appearance.borderColor,
             }}
-            className={`bluxcc-p-2`}
+            className={`bluxcc:p-2`}
           >
             <History tx={tx} />
           </div>

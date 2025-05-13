@@ -69,9 +69,9 @@ const OnBoarding = () => {
   };
 
   const renderDivider = () => (
-    <div className="bluxcc-my-1 bluxcc-flex bluxcc-h-8 bluxcc-w-full bluxcc-items-center bluxcc-justify-center">
+    <div className="bluxcc:my-1 bluxcc:flex bluxcc:h-8 bluxcc:w-full bluxcc:items-center bluxcc:justify-center">
       <div
-        className="bluxcc-absolute bluxcc-left-0 bluxcc-right-0 bluxcc-z-10"
+        className="bluxcc:absolute bluxcc:left-0 bluxcc:right-0 bluxcc:z-10"
         style={{
           borderTopWidth: appearance.includeBorders
             ? appearance.borderWidth
@@ -82,7 +82,7 @@ const OnBoarding = () => {
       />
 
       <span
-        className="bluxcc-z-20 bluxcc-w-auto bluxcc-select-none bluxcc-px-2 bluxcc-text-sm bluxcc-font-medium"
+        className="bluxcc:z-20 bluxcc:w-auto bluxcc:select-none bluxcc:px-2 bluxcc:text-sm bluxcc:font-medium"
         style={{
           backgroundColor: appearance.background,
           color: appearance.borderColor,
@@ -94,15 +94,15 @@ const OnBoarding = () => {
   );
 
   return (
-    <div className="bluxcc-w-full">
+    <div className="bluxcc:w-full">
       {value.config.appearance.logo && (
-        <div className="bluxcc-my-6 bluxcc-flex bluxcc-max-h-[80px] bluxcc-w-full bluxcc-items-center bluxcc-justify-center bluxcc-overflow-hidden">
+        <div className="bluxcc:my-6 bluxcc:flex bluxcc:max-h-[80px] bluxcc:w-full bluxcc:items-center bluxcc:justify-center bluxcc:overflow-hidden">
           <img
             src={value.config.appearance.logo}
             alt={value.config.appName}
             width={152}
             height={60}
-            className="bluxcc-max-h-[80px] bluxcc-max-w-[180px]"
+            className="bluxcc:max-h-[80px] bluxcc:max-w-[180px]"
             loading="eager"
             decoding="async"
             draggable="false"
@@ -111,7 +111,7 @@ const OnBoarding = () => {
         </div>
       )}
 
-      <div className="bluxcc-space-y-2">
+      <div className="bluxcc:space-y-2">
         {orderedLoginMethods.map((method, index) => {
           const nextMethod = orderedLoginMethods[index + 1];
           const prevMethod = orderedLoginMethods[index - 1];
@@ -186,7 +186,7 @@ const OnBoarding = () => {
             return (
               <div
                 key="passkey"
-                className="!bluxcc-mt-6 bluxcc-flex bluxcc-h-5 bluxcc-cursor-pointer bluxcc-items-center bluxcc-justify-center bluxcc-text-sm bluxcc-font-medium bluxcc-leading-[28px]"
+                className="bluxcc:mt-6! bluxcc:flex bluxcc:h-5 bluxcc:cursor-pointer bluxcc:items-center bluxcc:justify-center bluxcc:text-sm bluxcc:font-medium bluxcc:leading-[28px]"
                 style={{ color: appearance.accent }}
               >
                 Log in with Passkey
@@ -199,7 +199,7 @@ const OnBoarding = () => {
       </div>
 
       <footer
-        className={`bluxcc-w-full bluxcc-cursor-pointer bluxcc-pt-[15px] bluxcc-text-center bluxcc-text-xs bluxcc-font-medium`}
+        className={`bluxcc:w-full bluxcc:cursor-pointer bluxcc:pt-[15px] bluxcc:text-center bluxcc:text-xs bluxcc:font-medium`}
         style={{
           color: appearance.textColor,
         }}

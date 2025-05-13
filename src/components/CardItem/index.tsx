@@ -70,8 +70,8 @@ const CardItem = ({
   return (
     <div
       onClick={variant === 'input' ? undefined : onClick}
-      className={`bluxcc-flex !bluxcc-h-14 bluxcc-w-full bluxcc-items-center bluxcc-border bluxcc-py-2 bluxcc-pl-[10px] bluxcc-pr-3.5 ${
-        variant === 'input' ? 'bluxcc-cursor-text' : 'bluxcc-cursor-pointer'
+      className={`bluxcc:flex bluxcc:h-14! bluxcc:w-full bluxcc:items-center bluxcc:border bluxcc:py-2 bluxcc:pl-[10px] bluxcc:pr-3.5 ${
+        variant === 'input' ? 'bluxcc:cursor-text' : 'bluxcc:cursor-pointer'
       }`}
       style={{
         borderRadius: appearance.borderRadius,
@@ -92,12 +92,12 @@ const CardItem = ({
             ? appearance.borderWidth
             : '1px',
         }}
-        className="bluxcc-flex bluxcc-size-10 bluxcc-flex-shrink-0 bluxcc-items-center bluxcc-justify-center bluxcc-overflow-hidden bluxcc-border bluxcc-transition-[border-radius] bluxcc-duration-300"
+        className="bluxcc:flex bluxcc:size-10 bluxcc:shrink-0 bluxcc:items-center bluxcc:justify-center bluxcc:overflow-hidden bluxcc:border bluxcc:transition-[border-radius] bluxcc:duration-300"
       >
         {startIcon}
       </span>
 
-      <div className="bluxcc-relative bluxcc-ml-4 bluxcc-flex bluxcc-h-full bluxcc-flex-1 bluxcc-items-center">
+      <div className="bluxcc:relative bluxcc:ml-4 bluxcc:flex bluxcc:h-full bluxcc:flex-1 bluxcc:items-center">
         {variant === 'input' ? (
           <>
             <input
@@ -106,7 +106,7 @@ const CardItem = ({
               onChange={handleInputChange}
               onKeyDown={handleKeyDown}
               placeholder="Email"
-              className="bluxcc-mr-1 bluxcc-h-full bluxcc-w-full bluxcc-bg-transparent bluxcc-outline-none focus:bluxcc-outline-none"
+              className="bluxcc:mr-1 bluxcc:h-full bluxcc:w-full bluxcc:bg-transparent bluxcc:outline-hidden bluxcc:focus:outline-hidden"
               style={{ color: appearance.textColor }}
               onFocus={() => setIsFocused(true)}
               onBlur={() => {
@@ -116,11 +116,11 @@ const CardItem = ({
                 }
               }}
             />
-            <div className="bluxcc-flex bluxcc-h-10 bluxcc-w-[100px] bluxcc-items-center bluxcc-justify-center bluxcc-bg-transparent">
+            <div className="bluxcc:flex bluxcc:h-10 bluxcc:w-[100px] bluxcc:items-center bluxcc:justify-center bluxcc:bg-transparent">
               <button
                 disabled={!isValid}
                 onClick={() => onSubmit?.(inputValue)}
-                className={`bluxcc-absolute bluxcc-right-0 bluxcc-flex bluxcc-h-8 !bluxcc-w-[68px] bluxcc-items-center bluxcc-justify-center bluxcc-border bluxcc-bg-transparent bluxcc-text-sm bluxcc-font-medium bluxcc-transition-[border-radius,background,border-color] bluxcc-duration-150`}
+                className={`bluxcc:absolute bluxcc:right-0 bluxcc:flex bluxcc:h-8 bluxcc:w-[68px]! bluxcc:items-center bluxcc:justify-center bluxcc:border bluxcc:bg-transparent bluxcc:text-sm bluxcc:font-medium bluxcc:transition-[border-radius,background,border-color] bluxcc:duration-150`}
                 style={{
                   borderRadius: appearance.borderRadius,
                   borderColor: isValid
@@ -137,12 +137,12 @@ const CardItem = ({
             </div>
           </>
         ) : (
-          <span className="bluxcc-select-none bluxcc-font-medium">{label}</span>
+          <span className="bluxcc:select-none bluxcc:font-medium">{label}</span>
         )}
       </div>
       {isRecent && (
         <div
-          className={`bluxcc-px-2 bluxcc-py-1 bluxcc-text-xs bluxcc-font-normal`}
+          className={`bluxcc:px-2 bluxcc:py-1 bluxcc:text-xs bluxcc:font-normal`}
           style={{
             color: appearance.accent,
             borderRadius: appearance.borderRadius,
@@ -154,7 +154,7 @@ const CardItem = ({
       )}
 
       {endArrow && (
-        <span className="bluxcc-ml-auto bluxcc-flex bluxcc-items-center">
+        <span className="bluxcc:ml-auto bluxcc:flex bluxcc:items-center">
           <ArrowRight fill={appearance.textColor} />
         </span>
       )}

@@ -177,7 +177,6 @@ export enum Routes {
   SEND = 'SEND', // User sign transaction view
   ACTIVITY = 'ACTIVITY', // User sign transaction view
   OTP = 'OTP', // User Login with Phone ot email
-  SELECT_ASSET = 'SELECT_ASSET', // User select asset view
 }
 
 /**

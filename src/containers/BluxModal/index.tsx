@@ -19,7 +19,6 @@ export default function BluxModal({ isOpen, closeModal }: BluxModalProps) {
     (route === Routes.ONBOARDING && value.showAllWallets) ||
     route === Routes.ACTIVITY ||
     route === Routes.SEND ||
-    route === Routes.SELECT_ASSET ||
     route === Routes.OTP;
 
   let modalIcon: 'back' | 'info' | undefined;
@@ -36,8 +35,6 @@ export default function BluxModal({ isOpen, closeModal }: BluxModalProps) {
       (route === Routes.OTP && !value.isAuthenticated)
     ) {
       setRoute(Routes.ONBOARDING);
-    } else if (route === Routes.SELECT_ASSET) {
-      setRoute(Routes.SEND);
     } else if (value.showAllWallets) {
       setValue((prev) => ({ ...prev, showAllWallets: false }));
     } else if (route === Routes.SEND || route === Routes.ACTIVITY) {

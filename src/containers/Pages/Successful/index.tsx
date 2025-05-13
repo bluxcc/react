@@ -71,17 +71,17 @@ const Successful = () => {
   };
 
   return (
-    <div className="bluxcc-mt-4 bluxcc-flex bluxcc-w-full bluxcc-select-none bluxcc-flex-col bluxcc-items-center bluxcc-justify-center">
-      <div className="bluxcc-mb-6 bluxcc-flex bluxcc-size-[68px] bluxcc-items-center bluxcc-justify-center bluxcc-overflow-hidden">
+    <div className="bluxcc:mt-4 bluxcc:flex bluxcc:w-full bluxcc:select-none bluxcc:flex-col bluxcc:items-center bluxcc:justify-center">
+      <div className="bluxcc:mb-6 bluxcc:flex bluxcc:size-[68px] bluxcc:items-center bluxcc:justify-center bluxcc:overflow-hidden">
         <GreenCheck />
       </div>
 
-      <div className="bluxcc-w-full bluxcc-flex-col bluxcc-space-y-2 bluxcc-text-center bluxcc-font-medium">
-        <p className="bluxcc-text-xl">
+      <div className="bluxcc:w-full bluxcc:flex-col bluxcc:space-y-2 bluxcc:text-center bluxcc:font-medium">
+        <p className="bluxcc:text-xl">
           {waitingStatus === 'connecting' ? 'Connection' : 'Transaction'}{' '}
           Successful
         </p>
-        <p className="bluxcc-text-center bluxcc-text-sm bluxcc-leading-5">
+        <p className="bluxcc:text-center bluxcc:text-sm bluxcc:leading-5">
           {waitingStatus === 'connecting'
             ? `Your account has been successfully connected to ${capitalizeFirstLetter(context.value.config.appName)}`
             : 'Your transaction was successfully completed'}
@@ -102,9 +102,9 @@ const Successful = () => {
         )}
 
       {/* divider */}
-      <div className="bluxcc-flex bluxcc-h-8 bluxcc-w-full bluxcc-items-center bluxcc-justify-center">
+      <div className="bluxcc:flex bluxcc:h-8 bluxcc:w-full bluxcc:items-center bluxcc:justify-center">
         <div
-          className="bluxcc-absolute bluxcc-left-0 bluxcc-right-0"
+          className="bluxcc:absolute bluxcc:left-0 bluxcc:right-0"
           style={{
             borderTopWidth: appearance.includeBorders
               ? appearance.borderWidth
@@ -118,7 +118,7 @@ const Successful = () => {
         <Button
           state="enabled"
           variant="outline"
-          className="!bluxcc-cursor-default"
+          className="bluxcc:cursor-default!"
         >
           Logging In
         </Button>

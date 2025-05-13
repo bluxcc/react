@@ -59,12 +59,12 @@ const Summary = ({
   }
 
   return (
-    <div className="bluxcc-w-full bluxcc-text-sm bluxcc-text-gray-800">
+    <div className="bluxcc:w-full bluxcc:text-sm bluxcc:text-gray-800">
       {details.map(
         ({ label, value, isHighlighted, isCopyable, copyValue }, index) => (
           <div
             key={index}
-            className="bluxcc-flex bluxcc-justify-between bluxcc-px-4 bluxcc-py-2"
+            className="bluxcc:flex bluxcc:justify-between bluxcc:px-4 bluxcc:py-2"
             style={
               index === details.length - 1
                 ? {}
@@ -79,7 +79,7 @@ const Summary = ({
           >
             <span style={{ color: appearance.textColor }}>{label}</span>
             <span
-              className={`${isCopyable ? 'bluxcc-cursor-pointer' : ''}`}
+              className={`${isCopyable ? 'bluxcc:cursor-pointer' : ''}`}
               style={{
                 color: isHighlighted ? appearance.accent : appearance.textColor,
               }}

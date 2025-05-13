@@ -89,7 +89,7 @@ const OTPInput: React.FC<OTPInputProps> = ({ otp, setOtp, error }) => {
     }) as React.CSSProperties;
 
   return (
-    <div className="bluxcc-flex bluxcc-gap-1">
+    <div className="bluxcc:flex bluxcc:gap-1">
       {otp.map((digit, index) => (
         <input
           autoFocus={index === 0}
@@ -104,7 +104,7 @@ const OTPInput: React.FC<OTPInputProps> = ({ otp, setOtp, error }) => {
           onChange={(e) => handleChange(index, e)}
           onPaste={handlePaste}
           onKeyDown={(e) => handleKeyDown(index, e)}
-          className="bluxcc-h-14 bluxcc-w-12 bluxcc-border bluxcc-text-center bluxcc-text-lg bluxcc-outline-none focus:bluxcc-ring-1"
+          className="bluxcc:h-14 bluxcc:w-12 bluxcc:border bluxcc:text-center bluxcc:text-lg bluxcc:outline-hidden bluxcc:focus:ring-1"
           style={getInputStyle(digit)}
         />
       ))}

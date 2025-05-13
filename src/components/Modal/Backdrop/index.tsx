@@ -12,10 +12,10 @@ const ModalBackdrop = ({
   isSticky = false,
 }: BackdropProps) => (
   <div
-    className={`bluxcc-fixed bluxcc-inset-0 bluxcc-z-40 bluxcc-bg-black bluxcc-bg-opacity-10 bluxcc-backdrop-blur-[1px] ${
+    className={`bluxcc:bg-opacity-10 bluxcc:fixed bluxcc:inset-0 bluxcc:z-40 bluxcc:bg-black ${
       isClosing && !isSticky
-        ? 'bluxcc-animate-fadeOut'
-        : 'bluxcc-animate-fadeIn'
+        ? 'bluxcc:animate-fadeOut'
+        : 'bluxcc:animate-fadeIn'
     }`}
     onClick={onClose}
   />

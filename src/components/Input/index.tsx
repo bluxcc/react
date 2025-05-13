@@ -40,7 +40,7 @@ const CustomButton = ({
         backgroundColor: appearance.background,
         borderWidth: appearance.includeBorders ? appearance.borderWidth : '1px',
       }}
-      className="bluxcc-border bluxcc-px-3 bluxcc-py-1 bluxcc-text-sm bluxcc-font-medium bluxcc-transition-all bluxcc-duration-300"
+      className="bluxcc:border bluxcc:px-3 bluxcc:py-1 bluxcc:text-sm bluxcc:font-medium bluxcc:transition-all bluxcc:duration-300"
     >
       {button}
     </button>
@@ -88,18 +88,18 @@ const InputField = ({
   };
 
   return (
-    <div className="bluxcc-flex bluxcc-w-full bluxcc-flex-col">
+    <div className="bluxcc:flex bluxcc:w-full bluxcc:flex-col">
       {label && (
         <label
           style={{ color: error ? '#ec2929' : appearance.textColor }}
-          className={`bluxcc-mb-1 bluxcc-ml-2 bluxcc-flex bluxcc-justify-between bluxcc-text-sm`}
+          className={`bluxcc:mb-1 bluxcc:ml-2 bluxcc:flex bluxcc:justify-between bluxcc:text-sm`}
         >
           <span>{label}</span>
           <span>{customLabel}</span>
         </label>
       )}
       <div
-        className={`bluxcc-flex bluxcc-h-14 bluxcc-w-full bluxcc-items-center bluxcc-border bluxcc-px-4 bluxcc-py-2 bluxcc-transition-all ${className}`}
+        className={`bluxcc:flex bluxcc:h-14 bluxcc:w-full bluxcc:items-center bluxcc:border bluxcc:px-4 bluxcc:py-2 bluxcc:transition-all ${className}`}
         onFocus={() => setIsFocused(true)}
         onBlur={() => setIsFocused(false)}
         onMouseEnter={onMouseEnter}
@@ -116,14 +116,14 @@ const InputField = ({
           } as React.CSSProperties
         }
       >
-        {iconLeft && <div className="bluxcc-mr-2">{iconLeft}</div>}
+        {iconLeft && <div className="bluxcc:mr-2">{iconLeft}</div>}
         <input
           min={type === 'number' ? 1 : undefined}
           type={type}
           autoFocus={autoFocus}
           value={value}
           placeholder={placeholder}
-          className="bluxcc-mr-2 bluxcc-bg-transparent bluxcc-outline-none"
+          className="bluxcc:mr-2 bluxcc:bg-transparent bluxcc:outline-hidden"
           style={{
             color: appearance.textColor,
             width: !button ? '100%' : '90%',
@@ -137,11 +137,11 @@ const InputField = ({
             appearance={appearance}
           />
         )}
-        {iconRight && <div className="bluxcc-ml-2">{iconRight}</div>}
+        {iconRight && <div className="bluxcc:ml-2">{iconRight}</div>}
       </div>
       {error && (
         <p
-          className={`bluxcc-ml-2 bluxcc-mt-1 bluxcc-text-xs bluxcc-text-alert-error`}
+          className={`bluxcc:mt-1 bluxcc:ml-2 bluxcc:text-xs bluxcc:text-alert-error`}
         >
           {error}
         </p>

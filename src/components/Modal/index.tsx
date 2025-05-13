@@ -81,16 +81,16 @@ const Modal = ({
       )}
 
       <div
-        className={`bluxcc-absolute bluxcc-inset-0 bluxcc-z-[9999] bluxcc-flex bluxcc-items-center bluxcc-justify-center ${
-          isClosing && !isSticky && 'bluxcc-animate-fadeOut'
+        className={`bluxcc:absolute bluxcc:inset-0 bluxcc:z-9999 bluxcc:flex bluxcc:items-center bluxcc:justify-center ${
+          isClosing && !isSticky && 'bluxcc:animate-fadeOut'
         }`}
         onClick={(e) => e.target === e.currentTarget && handleClose(onClose)}
       >
         <div
-          className={`bluxcc-box-border bluxcc-overflow-hidden bluxcc-shadow-[0px_4px_80px_0px_#00000008] bluxcc-transition-all ${
+          className={`bluxcc:box-border bluxcc:overflow-hidden bluxcc:shadow-[0px_4px_80px_0px_#00000008] bluxcc:transition-all ${
             isMobile
-              ? 'bluxcc-fixed bluxcc-bottom-0 bluxcc-left-0 bluxcc-max-h-[90vh] bluxcc-w-full !bluxcc-rounded-b-none'
-              : 'bluxcc-relative !bluxcc-w-[360px]'
+              ? 'bluxcc:fixed bluxcc:bottom-0 bluxcc:left-0 bluxcc:max-h-[90vh] bluxcc:w-full bluxcc:rounded-b-none!'
+              : 'bluxcc:relative bluxcc:w-[360px]!'
           }`}
           style={{
             height:
@@ -122,7 +122,7 @@ const Modal = ({
             borderRadius: appearance.borderRadius,
           }}
         >
-          <div ref={contentRef} className="bluxcc-px-6 bluxcc-pb-4">
+          <div ref={contentRef} className="bluxcc:px-6 bluxcc:pb-4">
             <ModalHeader
               icon={icon}
               onInfo={onInfo}
