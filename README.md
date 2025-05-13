@@ -30,16 +30,23 @@ yarn add @bluxcc/react
 Import Blux and set up the authentication flow:
 
 ```tsx
-import { BluxProvider, useBlux } from '@bluxcc/react';
+import { BluxProvider, useBlux, networks } from '@bluxcc/react';
 
 const ConnectButton = () => {
-  const { connect } = useBlux();
-  return <button onClick={connect}>Connect Wallet</button>;
+  const { login } = useBlux();
+
+  return <button onClick={login}>Login</button>;
 };
 
 const App = () => {
+  const config = {
+    appName: 'Your App',
+    networks: [networks.mainnet, networks.testnet],
+    defaultNetwork: networks.mainnet,
+  };
+
   return (
-    <BluxProvider config={{ appName: 'YourApp', network: 'testnet' }}>
+    <BluxProvider config={config}>
       <ConnectButton />
     </BluxProvider>
   );
@@ -70,7 +77,7 @@ Currently supported connection methods:
 - [x] **Albedo**
 - [ ] **Ledger**
 - [ ] **Trezor**
-- [ ] **Hana**
+- [x] **Hana**
 - [ ] **WalletConnect**
 - [ ] **OAuth**
 - [ ] **Email**
