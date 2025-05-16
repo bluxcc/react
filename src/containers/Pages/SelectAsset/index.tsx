@@ -89,7 +89,7 @@ const SelectAssets = ({
         </div>
       </div>
 
-      <div className="bluxcc:absolute bluxcc:left-0 bluxcc:right-0 bluxcc:mt-4 bluxcc:gap-2">
+      <div className="bluxcc:absolute bluxcc:right-0 bluxcc:left-0 bluxcc:mt-4 bluxcc:gap-2 bluxcc:overflow-y-auto">
         {assets.map((asset, index) => (
           <div
             key={asset.assetType + asset.assetIssuer}

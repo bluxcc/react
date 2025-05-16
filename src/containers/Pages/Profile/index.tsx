@@ -46,7 +46,7 @@ const Profile = () => {
         style={{ background: appearance.accent }}
       />
       <p
-        className="bluxcc:mt-6 bluxcc:mb-4 bluxcc:inline-flex bluxcc:cursor-pointer bluxcc:text-base"
+        className="bluxcc:!mt-6 bluxcc:!mb-4 bluxcc:inline-flex bluxcc:cursor-pointer bluxcc:text-base"
         onClick={handleCopyAddress}
         style={{ color: appearance.textColor }}
       >

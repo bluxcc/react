@@ -70,7 +70,7 @@ const CardItem = ({
   return (
     <div
       onClick={variant === 'input' ? undefined : onClick}
-      className={`bluxcc:flex bluxcc:h-14! bluxcc:w-full bluxcc:items-center bluxcc:border bluxcc:py-2 bluxcc:pl-[10px] bluxcc:pr-3.5 ${
+      className={`bluxcc:flex bluxcc:h-14! bluxcc:w-full bluxcc:items-center bluxcc:border bluxcc:py-2 bluxcc:pr-3.5 bluxcc:pl-[10px] ${
         variant === 'input' ? 'bluxcc:cursor-text' : 'bluxcc:cursor-pointer'
       }`}
       style={{
@@ -120,7 +120,7 @@ const CardItem = ({
               <button
                 disabled={!isValid}
                 onClick={() => onSubmit?.(inputValue)}
-                className={`bluxcc:absolute bluxcc:right-0 bluxcc:flex bluxcc:h-8 bluxcc:w-[68px]! bluxcc:items-center bluxcc:justify-center bluxcc:border bluxcc:bg-transparent bluxcc:text-sm bluxcc:font-medium bluxcc:transition-[border-radius,background,border-color] bluxcc:duration-150`}
+                className={`bluxcc:absolute bluxcc:right-0 bluxcc:flex bluxcc:h-8 bluxcc:w-[68px]! bluxcc:items-center bluxcc:justify-center bluxcc:border bluxcc:bg-transparent bluxcc:!text-sm bluxcc:font-medium bluxcc:transition-[border-radius,background,border-color] bluxcc:duration-150`}
                 style={{
                   borderRadius: appearance.borderRadius,
                   borderColor: isValid
@@ -137,7 +137,7 @@ const CardItem = ({
             </div>
           </>
         ) : (
-          <span className="bluxcc:select-none bluxcc:font-medium">{label}</span>
+          <span className="bluxcc:font-medium bluxcc:select-none">{label}</span>
         )}
       </div>
       {isRecent && (

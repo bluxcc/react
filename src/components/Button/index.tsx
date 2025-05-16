@@ -23,9 +23,9 @@ const buttonBase =
   'bluxcc:flex bluxcc:justify-center bluxcc:items-center bluxcc:px-[10px] bluxcc:transition-all bluxcc:w-full';
 
 const sizeClasses: Record<ButtonSize, string> = {
-  small: 'bluxcc:h-8 bluxcc:text-sm bluxcc:gap-1',
-  medium: 'bluxcc:h-10 bluxcc:text-sm bluxcc:gap-2',
-  large: 'bluxcc:h-[52px] bluxcc:text-base bluxcc:gap-2',
+  small: 'bluxcc:h-8 bluxcc:!text-sm bluxcc:gap-1',
+  medium: 'bluxcc:h-10 bluxcc:!text-sm bluxcc:gap-2',
+  large: 'bluxcc:h-[52px] bluxcc:!text-base bluxcc:gap-2',
 };
 
 const Button = ({

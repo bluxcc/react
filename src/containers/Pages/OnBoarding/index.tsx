@@ -71,7 +71,7 @@ const OnBoarding = () => {
   const renderDivider = () => (
     <div className="bluxcc:my-1 bluxcc:flex bluxcc:h-8 bluxcc:w-full bluxcc:items-center bluxcc:justify-center">
       <div
-        className="bluxcc:absolute bluxcc:left-0 bluxcc:right-0 bluxcc:z-10"
+        className="bluxcc:absolute bluxcc:right-0 bluxcc:left-0 bluxcc:z-10"
         style={{
           borderTopWidth: appearance.includeBorders
             ? appearance.borderWidth
@@ -82,7 +82,7 @@ const OnBoarding = () => {
       />
 
       <span
-        className="bluxcc:z-20 bluxcc:w-auto bluxcc:select-none bluxcc:px-2 bluxcc:text-sm bluxcc:font-medium"
+        className="bluxcc:z-20 bluxcc:w-auto bluxcc:px-2 bluxcc:text-sm bluxcc:font-medium bluxcc:select-none"
         style={{
           backgroundColor: appearance.background,
           color: appearance.borderColor,
@@ -186,7 +186,7 @@ const OnBoarding = () => {
             return (
               <div
                 key="passkey"
-                className="bluxcc:mt-6! bluxcc:flex bluxcc:h-5 bluxcc:cursor-pointer bluxcc:items-center bluxcc:justify-center bluxcc:text-sm bluxcc:font-medium bluxcc:leading-[28px]"
+                className="bluxcc:mt-6! bluxcc:flex bluxcc:h-4 bluxcc:cursor-pointer bluxcc:items-center bluxcc:justify-center bluxcc:text-sm bluxcc:leading-[28px] bluxcc:font-medium"
                 style={{ color: appearance.accent }}
               >
                 Log in with Passkey
@@ -199,7 +199,7 @@ const OnBoarding = () => {
       </div>
 
       <footer
-        className={`bluxcc:w-full bluxcc:cursor-pointer bluxcc:pt-[15px] bluxcc:text-center bluxcc:text-xs bluxcc:font-medium`}
+        className={`bluxcc:w-full bluxcc:cursor-pointer bluxcc:pt-[17px] bluxcc:text-center bluxcc:text-xs bluxcc:font-medium`}
         style={{
           color: appearance.textColor,
         }}

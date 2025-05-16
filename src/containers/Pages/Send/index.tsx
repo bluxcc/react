@@ -110,7 +110,7 @@ const Send = () => {
             }
             onButtonClick={handleOpenAssets}
             button={
-              <span className="bluxcc:flex bluxcc:justify-between bluxcc:gap-1">
+              <span className="bluxcc:flex bluxcc:justify-between bluxcc:!gap-1">
                 <span className="bluxcc:flex bluxcc:items-center">
                   <StellarSmallLogo
                     fill={getContrastColor(appearance.background)}
@@ -148,7 +148,7 @@ const Send = () => {
         {/* divider */}
         <div className="bluxcc:flex bluxcc:h-8 bluxcc:w-full bluxcc:items-center bluxcc:justify-center">
           <div
-            className="bluxcc:absolute bluxcc:left-0 bluxcc:right-0"
+            className="bluxcc:absolute bluxcc:right-0 bluxcc:left-0"
             style={{
               borderTopWidth: appearance.includeBorders
                 ? appearance.borderWidth

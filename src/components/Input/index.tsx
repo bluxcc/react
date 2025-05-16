@@ -40,7 +40,7 @@ const CustomButton = ({
         backgroundColor: appearance.background,
         borderWidth: appearance.includeBorders ? appearance.borderWidth : '1px',
       }}
-      className="bluxcc:border bluxcc:px-3 bluxcc:py-1 bluxcc:text-sm bluxcc:font-medium bluxcc:transition-all bluxcc:duration-300"
+      className="bluxcc:border bluxcc:!px-3 bluxcc:!py-1 bluxcc:!text-sm bluxcc:font-medium bluxcc:transition-all bluxcc:duration-300"
     >
       {button}
     </button>
@@ -118,12 +118,13 @@ const InputField = ({
       >
         {iconLeft && <div className="bluxcc:mr-2">{iconLeft}</div>}
         <input
+          id="bluxcc-input"
           min={type === 'number' ? 1 : undefined}
           type={type}
           autoFocus={autoFocus}
           value={value}
           placeholder={placeholder}
-          className="bluxcc:mr-2 bluxcc:bg-transparent bluxcc:outline-hidden"
+          className="bluxcc:!mr-2 bluxcc:bg-transparent bluxcc:outline-hidden"
           style={{
             color: appearance.textColor,
             width: !button ? '100%' : '90%',
