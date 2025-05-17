@@ -53,6 +53,9 @@ const Waiting = () => {
           config.transports || {},
         );
 
+        console.log('result result');
+        console.log(result);
+
         context.setValue((prev) => ({
           ...prev,
           signTransaction: {
@@ -134,23 +137,20 @@ const Waiting = () => {
       <div className="bluxcc-flex-col bluxcc-space-y-2 bluxcc-text-center bluxcc-font-medium">
         <p className="bluxcc-text-xl">
           {error
-            ? `${
-                waitingStatus === 'connecting'
-                  ? 'Login failed'
-                  : `Signing with ${user?.wallet?.name} failed`
-              }`
-            : `${
-                waitingStatus === 'connecting' ? 'Waiting for' : `Signing with`
-              } ${user?.wallet?.name}`}
+            ? `${waitingStatus === 'connecting'
+              ? 'Login failed'
+              : `Signing with ${user?.wallet?.name} failed`
+            }`
+            : `${waitingStatus === 'connecting' ? 'Waiting for' : `Signing with`
+            } ${user?.wallet?.name}`}
         </p>
         <p className="bluxcc-text-sm">
           {error
             ? `Please try ${waitingStatus === 'connecting' ? 'logging in' : 'signing'} again.`
-            : `${
-                waitingStatus === 'connecting'
-                  ? 'Accept connection'
-                  : 'Sign the'
-              } request in your wallet`}
+            : `${waitingStatus === 'connecting'
+              ? 'Accept connection'
+              : 'Sign the'
+            } request in your wallet`}
         </p>
       </div>
 

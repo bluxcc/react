@@ -1,13 +1,13 @@
-import { useEffect, useState } from "react";
+import { useEffect, useState } from 'react';
 
-import { ContextInterface, Routes } from "../types";
+import { ContextInterface, Routes } from '../types';
 import { walletsConfig } from '../wallets/walletsConfig';
 import getWalletNetwork from '../utils/getWalletNetwork';
 
 const useCheckWalletNetwork = (
   value: ContextInterface,
   setValue: React.Dispatch<React.SetStateAction<ContextInterface>>,
-  setRoute: React.Dispatch<React.SetStateAction<Routes>>
+  setRoute: React.Dispatch<React.SetStateAction<Routes>>,
 ) => {
   const [shouldModalOpen, setShouldModalOpen] = useState(false);
 
@@ -17,18 +17,23 @@ const useCheckWalletNetwork = (
         return;
       }
 
-      getWalletNetwork(walletsConfig[value.user.wallet.name]).then((networkPassphrase) => {
-        if (networkPassphrase && !value.config.networks.includes(networkPassphrase)) {
-          setShouldModalOpen(true);
-        } else {
-          setShouldModalOpen(false);
-        }
-      });
-    }, 200);
+      getWalletNetwork(walletsConfig[value.user.wallet.name]).then(
+        (networkPassphrase) => {
+          if (
+            networkPassphrase &&
+            !value.config.networks.includes(networkPassphrase)
+          ) {
+            setShouldModalOpen(true);
+          } else {
+            setShouldModalOpen(false);
+          }
+        },
+      );
+    }, 500);
 
     return () => {
       clearInterval(i);
-      
+
       setShouldModalOpen(false);
     };
   }, [value.isAuthenticated, value.config.networks, value.user.wallet]);

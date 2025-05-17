@@ -1,14 +1,15 @@
 import React from 'react';
 
-import { Routes } from '../../../types';
 import Button from '../../../components/Button';
+import hexToRgba from '../../../utils/hexToRgba';
 import { useBalance } from '../../../useStellar';
 import { useProvider } from '../../../context/provider';
+import { Routes, SupportedWallets } from '../../../types';
 import humanizeAmount from '../../../utils/humanizeAmount';
 import shortenAddress from '../../../utils/shortenAddress';
 import Summary from '../../../components/Transaction/Summary';
+import getActiveNetworkTitle from '../../../utils/network/getNetworkTitle';
 import getTransactionDetails from '../../../utils/stellar/getTransactionDetails';
-import hexToRgba from '../../../utils/hexToRgba';
 
 const SignTransaction = () => {
   const context = useProvider();
@@ -36,6 +37,9 @@ const SignTransaction = () => {
       </div>
     );
   }
+
+  const networkTitle = getActiveNetworkTitle(context.value.activeNetwork);
+  const isLobstr = context.value.user.wallet?.name === SupportedWallets.Lobstr;
 
   return (
     <div className="bluxcc-w-full">
@@ -88,6 +92,20 @@ const SignTransaction = () => {
           </p>
         </div>
       </div>
+
+      {isLobstr && (
+        /* TODO: fox styling */ <p
+          style={{
+            color: 'orangered',
+            fontSize: '12px',
+            textAlign: 'center',
+            paddingTop: '10px',
+          }}
+        >
+          Ensure that your LOBSTR wallet is set to the {networkTitle} network.
+          Otherwise, the transaction will definitely fail.
+        </p>
+      )}
 
       <div className="bluxcc-flex bluxcc-h-8 bluxcc-w-full bluxcc-items-center bluxcc-justify-center">
         <div

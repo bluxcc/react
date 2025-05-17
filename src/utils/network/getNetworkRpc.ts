@@ -1,8 +1,13 @@
-import { url } from "./url";
-import { ITransports } from "../../types";
-import NETWORKS_DETAILS, { NetworkDetails } from "../../constants/networkDetails";
+import { url } from './url';
+import { ITransports } from '../../types';
+import NETWORKS_DETAILS, {
+  NetworkDetails,
+} from '../../constants/networkDetails';
 
-const getNetworkRpc = (network: string, transports: ITransports): NetworkDetails => {
+const getNetworkRpc = (
+  network: string,
+  transports: ITransports,
+): NetworkDetails => {
   let details = NETWORKS_DETAILS[network];
 
   const transport = transports[network];
@@ -14,7 +19,7 @@ const getNetworkRpc = (network: string, transports: ITransports): NetworkDetails
       name: 'Custom Network',
       horizon: url(''),
       soroban: url(''),
-    }
+    };
   }
 
   if (transport) {
@@ -31,4 +36,3 @@ const getNetworkRpc = (network: string, transports: ITransports): NetworkDetails
 };
 
 export default getNetworkRpc;
-

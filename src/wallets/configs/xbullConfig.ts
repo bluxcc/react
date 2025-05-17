@@ -1,10 +1,7 @@
-import { xBullWalletConnect } from '@creit.tech/xbull-wallet-connect';
-
-import getNetworkByPassphrase from '../../utils/stellar/getNetworkByPassphrase';
 import {
+  WalletInterface,
   GetNetworkResult,
   SupportedWallets,
-  WalletInterface,
 } from '../../types';
 
 export const xBullConfig: WalletInterface = {
@@ -13,46 +10,47 @@ export const xBullConfig: WalletInterface = {
 
   isAvailable: () =>
     new Promise((resolve) => {
-      setTimeout(
-        () => resolve(typeof window !== 'undefined' && !!window.xBullSDK),
-        250,
-      );
+      setTimeout(() => {
+        resolve(typeof window !== 'undefined' && !!window.xBullSDK);
+      }, 250);
     }),
 
   connect: async () => {
     try {
-      const xbull = new xBullWalletConnect();
+      await window.xBullSDK.connect({
+        canRequestPublicKey: true,
+        canRequestSign: true,
+      });
 
-      const publicKey = await xbull.connect();
+      const publicKey = await window.xBullSDK.getPublicKey();
 
-      xbull.closeConnections();
-
-      return { publicKey };
-    } catch (error) {
+      return {
+        publicKey,
+      };
+    } catch {
       throw new Error('Failed to connect to xBull.');
     }
   },
 
   signTransaction: async (xdr: string, options = {}): Promise<string> => {
     try {
-      const xbull = new xBullWalletConnect();
-
-      const signedXdr = await xbull.sign({
-        xdr,
-        publicKey: options?.address,
-        network:
-          options?.networkPassphrase &&
-          getNetworkByPassphrase(options?.networkPassphrase),
+      const signedXdr = await window.xBullSDK.signXDR(xdr, {
+        network: options.networkPassphrase,
+        publicKey: options.address,
       });
 
-      xbull.closeConnections();
-
       return signedXdr;
-    } catch (error) {
+    } catch {
       throw new Error('Failed to sign the transaction with xBull.');
     }
   },
   getNetwork: async (): Promise<GetNetworkResult> => {
-    throw new Error('Failed to get network from xBull');
+    try {
+      const networkDetails = await window.xBullSDK.getNetwork();
+
+      return networkDetails.networkPassphrase;
+    } catch {
+      throw new Error('Error getting network from Rabet:');
+    }
   },
 };
