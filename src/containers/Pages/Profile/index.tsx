@@ -30,13 +30,13 @@ const Profile = () => {
           setCopied(false);
         }, 1000);
       })
-      .catch(() => {});
+      .catch(() => { });
   };
 
   const balance = context.value.account.account
     ? context.value.account.account.balances.find(
-        (b) => b.asset_type === 'native',
-      )?.balance
+      (b) => b.asset_type === 'native',
+    )?.balance
     : '0';
 
   return (
@@ -67,6 +67,7 @@ const Profile = () => {
       </p>
 
       <div className="bluxcc-mt-[16px] bluxcc-w-full bluxcc-space-y-2">
+        {/*
         <CardItem
           endArrow
           label="Send"
@@ -75,6 +76,7 @@ const Profile = () => {
             context.setRoute(Routes.SEND);
           }}
         />
+        */}
         <CardItem
           endArrow
           label="Activity"

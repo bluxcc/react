@@ -1,5 +1,3 @@
-import { IConnectParams, ISignParams } from '@creit.tech/xbull-wallet-connect';
-
 declare module '*.css' {
   const content: { [className: string]: string };
   export default content;
@@ -31,9 +29,19 @@ export type ConnectResult = {
 declare global {
   interface Window {
     xBullSDK?: {
-      connect(params?: IConnectParams): Promise<string>;
-      sign(params: ISignParams): Promise<string>;
-      closeConnections(): void;
+      connect(params?: {
+        canRequestPublicKey: boolean;
+        canRequestSign: boolean;
+      }): Promise<string>;
+      getPublicKey(): Promise<string>;
+      signXDR(
+        xdr: string,
+        params?: {
+          network?: string;
+          publicKey?: string;
+        },
+      ): Promise<string>;
+      getNetwork(): Promise<{ networkPassphrase: string; network: string }>;
     };
     freighterApiSDK?: FreighterApi;
     rabet?: {
@@ -45,6 +53,12 @@ declare global {
     hanaWallet?: {
       stellar?: {
         getPublicKey(): Promise<string>;
+        getNetworkDetails(): Promise<{
+          network: string;
+          networkPassphrase: string;
+          networkUrl: string;
+          sorobanRpcUrl: string;
+        }>;
         signTransaction({
           xdr,
           accountToSign,
@@ -55,4 +69,4 @@ declare global {
   }
 }
 
-export {};
+export { };

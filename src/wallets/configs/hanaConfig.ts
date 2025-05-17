@@ -46,6 +46,19 @@ export const HanaConfig: WalletInterface = {
     }
   },
   getNetwork: async (): Promise<GetNetworkResult> => {
-    throw new Error('Failed to get network from Hana wallet');
+    try {
+      if (!window.hanaWallet?.stellar)
+        throw new Error('Hana Wallet is not installed.');
+
+      const networkDetails =
+        await window.hanaWallet.stellar.getNetworkDetails();
+
+      return {
+        network: networkDetails.network,
+        passphrase: networkDetails.networkPassphrase,
+      };
+    } catch {
+      throw new Error('Error getting network from Rabet:');
+    }
   },
 };

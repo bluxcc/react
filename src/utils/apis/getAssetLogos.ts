@@ -24,7 +24,7 @@ const getAssetLogos = async (
     asset_issuer: asset.asset_issuer,
   }));
 
-  const assetImagesResult = await fetch(ASSET_SERVER, {
+  await fetch(ASSET_SERVER, {
     mode: 'no-cors',
     method: 'POST',
     headers: {
@@ -33,8 +33,6 @@ const getAssetLogos = async (
     },
     body: JSON.stringify(assetsJson),
   }).then((res) => res.json());
-
-  console.log(assetImagesResult);
 
   // const assetImages: AssetImage[] = assetImagesResult;
 

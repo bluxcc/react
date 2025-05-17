@@ -17,6 +17,8 @@ export const xBullConfig: WalletInterface = {
 
   connect: async () => {
     try {
+      if (!window.xBullSDK) throw new Error('xBull Wallet is not installed.');
+
       await window.xBullSDK.connect({
         canRequestPublicKey: true,
         canRequestSign: true,
@@ -34,6 +36,8 @@ export const xBullConfig: WalletInterface = {
 
   signTransaction: async (xdr: string, options = {}): Promise<string> => {
     try {
+      if (!window.xBullSDK) throw new Error('xBull Wallet is not installed.');
+
       const signedXdr = await window.xBullSDK.signXDR(xdr, {
         network: options.networkPassphrase,
         publicKey: options.address,
@@ -46,9 +50,14 @@ export const xBullConfig: WalletInterface = {
   },
   getNetwork: async (): Promise<GetNetworkResult> => {
     try {
+      if (!window.xBullSDK) throw new Error('xBull Wallet is not installed.');
+
       const networkDetails = await window.xBullSDK.getNetwork();
 
-      return networkDetails.networkPassphrase;
+      return {
+        network: networkDetails.network,
+        passphrase: networkDetails.networkPassphrase,
+      };
     } catch {
       throw new Error('Error getting network from Rabet:');
     }

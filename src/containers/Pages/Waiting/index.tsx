@@ -53,9 +53,6 @@ const Waiting = () => {
           config.transports || {},
         );
 
-        console.log('result result');
-        console.log(result);
-
         context.setValue((prev) => ({
           ...prev,
           signTransaction: {
