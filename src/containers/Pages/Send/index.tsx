@@ -1,204 +1,22 @@
-import React, { useState } from 'react';
+import React from 'react';
 
-import Button from '../../../components/Button';
-import InputField from '../../../components/Input';
-
-import { IAsset } from '../../../types';
-import SelectAssets from '../SelectAsset';
-import { useBlux } from '../../../hooks/useBlux';
-import { ArrowDropUp } from '../../../assets/Icons';
 import { useProvider } from '../../../context/provider';
-import { StellarSmallLogo } from '../../../assets/logos';
-import getContrastColor from '../../../utils/getContrastColor';
-import paymentTransaction from '../../../utils/stellar/paymentTransaction';
+import SendForm from './SendForm';
 
 const Send = () => {
-  const context = useProvider();
-  const { sendTransaction } = useBlux();
-  const appearance = context.value.config.appearance;
-  const [showSelectAssetPage, setShowSelectAssetPage] = useState(false);
+  const { value } = useProvider();
 
-  const [selectedAsset, setSelectedAsset] = useState<null | IAsset>(null);
-  const [form, setForm] = useState({ amount: '', address: '', memo: '' });
-  const [errors, setErrors] = useState<{ amount?: string; address?: string }>(
-    {},
-  );
+  const { account, loading } = value.account;
 
-  let assets: IAsset[] = [];
-
-  if (context.value.account.account) {
-    assets = context.value.account.account.balances
-      .filter((x) => x.asset_type !== 'liquidity_pool_shares')
-      .filter((x) => x.balance !== '0.0000000')
-      .map((asset) => {
-        if (asset.asset_type === 'native') {
-          return {
-            assetIssuer: '',
-            assetCode: 'XLM',
-            balance: asset.balance,
-            assetType: asset.asset_type,
-          };
-        } else {
-          return {
-            balance: asset.balance,
-            assetCode: asset.asset_code,
-            assetType: asset.asset_type,
-            assetIssuer: asset.asset_issuer,
-          };
-        }
-      });
+  if (loading) {
+    return <p>Loading</p>;
   }
 
-  const handleChange =
-    (field: keyof typeof form) => (e: React.ChangeEvent<HTMLInputElement>) => {
-      setForm((prev) => ({ ...prev, [field]: e.target.value }));
-      setErrors((prev) => ({ ...prev, [field]: '' }));
-    };
-
-  const handleOpenAssets = () => {
-    setShowSelectAssetPage(true);
-  };
-
-  const handleMaxClick = () => {
-    if (!selectedAsset) {
-      return;
-    }
-
-    const balance = Number(selectedAsset.balance).toString();
-
-    setForm((prev) => ({ ...prev, amount: balance }));
-  };
-
-  const handlePasteClick = async () => {
-    const text = await navigator.clipboard.readText();
-
-    setForm((prev) => ({ ...prev, address: text }));
-  };
-
-  const handleSubmit = async () => {
-    const newErrors: typeof errors = {};
-    if (!form.address) newErrors.address = 'Address is required';
-    if (!form.amount) newErrors.amount = 'Amount is required';
-
-    setErrors(newErrors);
-
-    if (Object.keys(newErrors).length === 0) {
-      try {
-        const xdr = await paymentTransaction(
-          form.memo,
-          form.amount,
-          form.address,
-          selectedAsset,
-          context.value.user.wallet?.address,
-          context.value.servers.horizon,
-          context.value.activeNetwork,
-        );
-
-        await sendTransaction(xdr);
-
-        // CHANGE STATUS TO LOADING
-      } catch (e: any) {
-        newErrors.address = e.message;
-
-        setErrors(newErrors);
-      }
-    }
-  };
-
-  if (showSelectAssetPage) {
-    return (
-      <SelectAssets
-        assets={assets}
-        setSelectedAsset={setSelectedAsset}
-        setShowSelectAssetPage={setShowSelectAssetPage}
-      />
-    );
+  if (!account) {
+    return <p>Account is inactive</p>;
   }
 
-  return (
-    <>
-      {/* Main Form Content */}
-      <div>
-        {/* Amount Input */}
-        <div className="bluxcc:relative bluxcc:mb-4">
-          <InputField
-            autoFocus
-            type="number"
-            label="Amount"
-            placeholder="0.00"
-            value={form.amount}
-            onChange={handleChange('amount')}
-            error={errors.amount}
-            customLabel={
-              <span
-                onClick={handleMaxClick}
-                style={{ color: appearance.accent }}
-                className="bluxcc:mr-2 bluxcc:inline-flex bluxcc:cursor-pointer"
-              >
-                Max <ArrowDropUp fill={appearance.accent} />
-              </span>
-            }
-            onButtonClick={handleOpenAssets}
-            button={
-              <span className="bluxcc:flex bluxcc:justify-between bluxcc:!gap-1">
-                <span className="bluxcc:flex bluxcc:items-center">
-                  <StellarSmallLogo
-                    fill={getContrastColor(appearance.background)}
-                  />
-                </span>
-                {selectedAsset ? selectedAsset.assetCode : 'XLM'}
-              </span>
-            }
-          />
-        </div>
-
-        {/* Recipient Address Input */}
-        <div className="bluxcc:mb-4">
-          <InputField
-            label="To"
-            placeholder="Enter address"
-            value={form.address}
-            onChange={handleChange('address')}
-            error={errors.address}
-            button="Paste"
-            onButtonClick={handlePasteClick}
-          />
-        </div>
-
-        {/* Memo Input */}
-        <div>
-          <InputField
-            label="Memo"
-            placeholder="Enter Memo (optional)"
-            value={form.memo}
-            onChange={handleChange('memo')}
-          />
-        </div>
-
-        {/* divider */}
-        <div className="bluxcc:flex bluxcc:h-8 bluxcc:w-full bluxcc:items-center bluxcc:justify-center">
-          <div
-            className="bluxcc:absolute bluxcc:right-0 bluxcc:left-0"
-            style={{
-              borderTopWidth: appearance.includeBorders
-                ? appearance.borderWidth
-                : '1px',
-              borderTopColor: appearance.borderColor,
-            }}
-          />
-        </div>
-
-        <Button
-          size="large"
-          variant="outline"
-          state="enabled"
-          onClick={handleSubmit}
-        >
-          Send
-        </Button>
-      </div>
-    </>
-  );
+  return <SendForm />;
 };
 
 export default Send;

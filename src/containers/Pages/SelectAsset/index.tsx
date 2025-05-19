@@ -8,7 +8,7 @@ import humanizeAmount from '../../../utils/humanizeAmount';
 type SelectAssetsProps = {
   assets: IAsset[];
   setShowSelectAssetPage: React.Dispatch<React.SetStateAction<boolean>>;
-  setSelectedAsset: React.Dispatch<React.SetStateAction<IAsset | null>>;
+  setSelectedAsset: React.Dispatch<React.SetStateAction<IAsset>>;
 };
 
 const SelectAssets = ({
