@@ -140,19 +140,23 @@ export const BluxProvider = ({
   }, [value.config.transports, value.config.networks, value.activeNetwork]);
 
   const loadWallets = () => {
-    getMappedWallets().then((mappedWallets) => {
-      const available = mappedWallets.filter((w) => w.isAvailable);
+    initializeRabetMobile();
 
-      const sortAvailableWallets = getSortedCheckedWallets(available);
+    setTimeout(() => {
+      getMappedWallets().then((mappedWallets) => {
+        const available = mappedWallets.filter((w) => w.isAvailable);
 
-      setValue((prev) => ({
-        ...prev,
-        isReady: true,
-        availableWallets: sortAvailableWallets,
-      }));
+        const sortAvailableWallets = getSortedCheckedWallets(available);
 
-      initializeRabetMobile();
-    });
+        console.log(sortAvailableWallets);
+
+        setValue((prev) => ({
+          ...prev,
+          isReady: true,
+          availableWallets: sortAvailableWallets,
+        }));
+      });
+    }, 150);
   };
 
   useEffect(() => {

@@ -69,5 +69,8 @@
   },
   "sideEffects": [
     "*.css"
-  ]
+  ],
+  "dependencies": {
+    "@hot-wallet/sdk": "^1.0.11"
+  }
 }

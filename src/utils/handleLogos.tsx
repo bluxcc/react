@@ -1,12 +1,13 @@
 import React from 'react';
 
 import {
-  AlbedoLogo,
-  FreighterLogo,
+  HotLogo,
   HanaLogo,
-  LobstrLogo,
   RabetLogo,
   XBullLogo,
+  LobstrLogo,
+  AlbedoLogo,
+  FreighterLogo,
 } from '../assets/logos';
 
 const handleLogos = (walletName: string, isDark: boolean) => {
@@ -23,6 +24,8 @@ const handleLogos = (walletName: string, isDark: boolean) => {
       return <XBullLogo fill={isDark ? '#FFFFFF' : '#C19CFC'} />;
     case 'Hana':
       return <HanaLogo fill={isDark ? '#E6E0F7' : '#221542'} />;
+    case 'Hot':
+      return <HotLogo fill={isDark ? '#E6E0F7' : '#221542'} />;
     default:
       return null;
   }

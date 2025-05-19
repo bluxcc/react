@@ -14,6 +14,7 @@ export enum SupportedWallets {
   Xbull = 'xBull',
   Lobstr = 'LOBSTR',
   Hana = 'Hana',
+  Hot = 'Hot',
 }
 
 /**
