@@ -1,14 +1,15 @@
 import React from 'react';
 
-import { Routes } from '../../../types';
 import Button from '../../../components/Button';
+import hexToRgba from '../../../utils/hexToRgba';
 import { useBalance } from '../../../useStellar';
 import { useProvider } from '../../../context/provider';
+import { Routes, SupportedWallets } from '../../../types';
 import humanizeAmount from '../../../utils/humanizeAmount';
 import shortenAddress from '../../../utils/shortenAddress';
 import Summary from '../../../components/Transaction/Summary';
+import getActiveNetworkTitle from '../../../utils/network/getNetworkTitle';
 import getTransactionDetails from '../../../utils/stellar/getTransactionDetails';
-import hexToRgba from '../../../utils/hexToRgba';
 
 const SignTransaction = () => {
   const context = useProvider();
@@ -37,9 +38,12 @@ const SignTransaction = () => {
     );
   }
 
+  const networkTitle = getActiveNetworkTitle(context.value.activeNetwork);
+  const isLobstr = context.value.user.wallet?.name === SupportedWallets.Lobstr;
+
   return (
     <div className="bluxcc:w-full">
-      <p className="bluxcc:mx-3 bluxcc:my-4 bluxcc:select-none bluxcc:text-center bluxcc:text-sm bluxcc:font-medium">
+      <p className="bluxcc:mx-3 bluxcc:my-4 bluxcc:text-center bluxcc:text-sm bluxcc:font-medium bluxcc:select-none">
         <span className="bluxcc:font-semibold bluxcc:capitalize">
           {context.value.config.appName}{' '}
         </span>
@@ -62,8 +66,8 @@ const SignTransaction = () => {
           borderColor: appearance.borderColor,
         }}
       >
-        <div className="bluxcc:inline-flex bluxcc:items-center bluxcc:gap-1 bluxcc:whitespace-nowrap bluxcc:font-medium">
-          <p className="bluxcc:whitespace-nowrap bluxcc:text-sm bluxcc:font-medium">
+        <div className="bluxcc:inline-flex bluxcc:items-center bluxcc:gap-1 bluxcc:font-medium bluxcc:whitespace-nowrap">
+          <p className="bluxcc:text-sm bluxcc:font-medium bluxcc:whitespace-nowrap">
             Your wallet
           </p>
           <p
@@ -90,25 +94,41 @@ const SignTransaction = () => {
       </div>
 
       <div className="bluxcc:flex bluxcc:h-8 bluxcc:w-full bluxcc:items-center bluxcc:justify-center">
-        <div
-          className="bluxcc:absolute bluxcc:left-0 bluxcc:right-0"
-          style={{
-            borderTopWidth: appearance.includeBorders
-              ? appearance.borderWidth
-              : '1px',
-            borderTopColor: appearance.borderColor,
-          }}
-        />
-      </div>
+        {isLobstr && (
+          /* TODO: fox styling */ <p
+            style={{
+              color: 'orangered',
+              fontSize: '12px',
+              textAlign: 'center',
+              paddingTop: '10px',
+            }}
+          >
+            Ensure that your LOBSTR wallet is set to the {networkTitle} network.
+            Otherwise, the transaction will definitely fail.
+          </p>
+        )}
 
-      <Button
-        size="large"
-        state="enabled"
-        variant="fill"
-        onClick={handleSignTx}
-      >
-        Approve
-      </Button>
+        <div className="bluxcc:flex bluxcc:h-8 bluxcc:w-full bluxcc:items-center bluxcc:justify-center">
+          <div
+            className="bluxcc:absolute bluxcc:right-0 bluxcc:left-0"
+            style={{
+              borderTopWidth: appearance.includeBorders
+                ? appearance.borderWidth
+                : '1px',
+              borderTopColor: appearance.borderColor,
+            }}
+          />
+        </div>
+
+        <Button
+          size="large"
+          state="enabled"
+          variant="fill"
+          onClick={handleSignTx}
+        >
+          Approve
+        </Button>
+      </div>
     </div>
   );
 };

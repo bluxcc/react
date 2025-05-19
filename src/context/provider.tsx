@@ -16,7 +16,6 @@ import {
 } from '../types';
 import getSortedCheckedWallets from '../utils/sortWallets';
 import { useAccount } from '../useStellar';
-import getAssetLogos from '../utils/apis/getAssetLogos';
 
 export const ProviderContext = createContext<ContextState | null>(null);
 

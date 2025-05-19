@@ -5,15 +5,19 @@ import InputField from '../../../components/Input';
 
 import { IAsset } from '../../../types';
 import SelectAssets from '../SelectAsset';
+import { useBlux } from '../../../hooks/useBlux';
 import { ArrowDropUp } from '../../../assets/Icons';
 import { useProvider } from '../../../context/provider';
 import { StellarSmallLogo } from '../../../assets/logos';
 import getContrastColor from '../../../utils/getContrastColor';
+import paymentTransaction from '../../../utils/stellar/paymentTransaction';
 
 const Send = () => {
   const context = useProvider();
+  const { sendTransaction } = useBlux();
   const appearance = context.value.config.appearance;
   const [showSelectAssetPage, setShowSelectAssetPage] = useState(false);
+
   const [selectedAsset, setSelectedAsset] = useState<null | IAsset>(null);
   const [form, setForm] = useState({ amount: '', address: '', memo: '' });
   const [errors, setErrors] = useState<{ amount?: string; address?: string }>(
@@ -55,15 +59,23 @@ const Send = () => {
     setShowSelectAssetPage(true);
   };
 
-  const handleMaxClick = () =>
-    setForm((prev) => ({ ...prev, amount: '345.00' }));
+  const handleMaxClick = () => {
+    if (!selectedAsset) {
+      return;
+    }
+
+    const balance = Number(selectedAsset.balance).toString();
+
+    setForm((prev) => ({ ...prev, amount: balance }));
+  };
 
   const handlePasteClick = async () => {
     const text = await navigator.clipboard.readText();
+
     setForm((prev) => ({ ...prev, address: text }));
   };
 
-  const handleSubmit = () => {
+  const handleSubmit = async () => {
     const newErrors: typeof errors = {};
     if (!form.address) newErrors.address = 'Address is required';
     if (!form.amount) newErrors.amount = 'Amount is required';
@@ -71,7 +83,25 @@ const Send = () => {
     setErrors(newErrors);
 
     if (Object.keys(newErrors).length === 0) {
-      // Submit logic here
+      try {
+        const xdr = await paymentTransaction(
+          form.memo,
+          form.amount,
+          form.address,
+          selectedAsset,
+          context.value.user.wallet?.address,
+          context.value.servers.horizon,
+          context.value.activeNetwork,
+        );
+
+        await sendTransaction(xdr);
+
+        // CHANGE STATUS TO LOADING
+      } catch (e: any) {
+        newErrors.address = e.message;
+
+        setErrors(newErrors);
+      }
     }
   };
 

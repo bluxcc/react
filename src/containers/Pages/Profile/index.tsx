@@ -7,7 +7,7 @@ import CardItem from '../../../components/CardItem';
 import { useProvider } from '../../../context/provider';
 import shortenAddress from '../../../utils/shortenAddress';
 import humanizeAmount from '../../../utils/humanizeAmount';
-import { Copy, History, LogOut, Send } from '../../../assets/Icons';
+import { Copy, History, LogOut } from '../../../assets/Icons';
 
 const Profile = () => {
   const { logout } = useBlux();
@@ -67,6 +67,7 @@ const Profile = () => {
       </p>
 
       <div className="bluxcc:mt-[16px] bluxcc:w-full bluxcc:space-y-2">
+        {/*
         <CardItem
           endArrow
           label="Send"
@@ -75,6 +76,7 @@ const Profile = () => {
             context.setRoute(Routes.SEND);
           }}
         />
+        */}
         <CardItem
           endArrow
           label="Activity"
