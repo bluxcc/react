@@ -1,15 +1,77 @@
-@tailwind base;
-@tailwind components;
-@tailwind utilities;
+@import 'tailwindcss' prefix(bluxcc);
 
-/* Hide arrows in input[type=number] (for Chrome, Safari, Edge, Opera) */
-input[type='number']::-webkit-outer-spin-button,
-input[type='number']::-webkit-inner-spin-button {
-  -webkit-appearance: none;
+@theme {
+  --color-primary-50: #e8e8fd;
+  --color-primary-100: #cdceee;
+  --color-primary-200: #a2a4f6;
+  --color-primary-500: #0c1083;
+  --color-primary-600: #090b5d;
+  --color-primary-700: #04062f;
+
+  --color-light-red-50: #ffe5e5;
+  --color-light-red-100: #ffcccc;
+  --color-light-red-200: #ff9999;
+  --color-light-red-300: #ff6666;
+  --color-light-red-500: #ffcdcd;
+
+  --color-light-blue-50: #e5fbff;
+  --color-light-blue-100: #ccf7ff;
+  --color-light-blue-200: #99f0ff;
+  --color-light-blue-300: #66e8ff;
+  --color-light-blue-500: #52e5ff;
+  --color-light-blue-600: #00adcc;
+
+  --color-gray-50: #f2f2f2;
+  --color-gray-100: #e6e6e6;
+  --color-gray-200: #213123;
+  --color-gray-300: #999999;
+  --color-gray-600: #666666;
+  --color-gray-700: #4d4d4d;
+  --color-gray-800: #333333;
+  --color-gray-900: #1a1a1a;
+  --color-gray-950: #0d0d0d;
+
+  --color-alert-info: #5093ff;
+  --color-alert-error: #ec2929;
+  --color-alert-success: #00bd81;
+  --color-alert-warning: #fa8f02;
+
+  --animate-fade-in: fadeIn 1s ease-in-out;
+  --animate-fade-out: fadeOut 1s ease-in-out;
+}
+
+@keyframes fadeIn {
+  0% {
+    opacity: 0;
+  }
+  100% {
+    opacity: 1;
+  }
+}
+
+@keyframes fadeOut {
+  0% {
+    opacity: 1;
+  }
+  100% {
+    opacity: 0;
+  }
+}
+
+.bluxcc\:animate-fadeIn {
+  animation: fadeIn 0.5s ease-in-out;
+}
+
+.bluxcc\:animate-fadeOut {
+  animation: fadeOut 0.5s ease-in-out;
+}
+
+#bluxcc-input[type='number']::-webkit-outer-spin-button,
+#bluxcc-input[type='number']::-webkit-inner-spin-button {
+  -webkit-appearance: none !important;
   margin: 0;
 }
 
-/* Hide arrows for Firefox */
-input[type='number'] {
-  -moz-appearance: textfield;
+#bluxcc-input[type='number'] {
+  -moz-appearance: textfield !important;
 }

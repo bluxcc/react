@@ -107,16 +107,16 @@ const Waiting = () => {
   };
 
   return (
-    <div className="bluxcc-mt-4 bluxcc-flex bluxcc-w-full bluxcc-select-none bluxcc-flex-col bluxcc-items-center bluxcc-justify-center">
+    <div className="bluxcc:mt-4 bluxcc:flex bluxcc:w-full bluxcc:select-none bluxcc:flex-col bluxcc:items-center bluxcc:justify-center">
       {error ? (
         <div
-          className={`bluxcc-mb-6 bluxcc-flex bluxcc-items-center bluxcc-justify-center`}
+          className={`bluxcc:mb-6 bluxcc:flex bluxcc:items-center bluxcc:justify-center`}
         >
           <RedExclamation />
         </div>
       ) : (
         <div
-          className={`bluxcc-mb-6 bluxcc-flex bluxcc-size-20 bluxcc-items-center bluxcc-justify-center bluxcc-overflow-hidden bluxcc-rounded-full bluxcc-border`}
+          className={`bluxcc:mb-6 bluxcc:flex bluxcc:size-20 bluxcc:items-center bluxcc:justify-center bluxcc:overflow-hidden bluxcc:rounded-full bluxcc:border`}
           style={{
             borderColor: appearance.borderColor,
             borderWidth: appearance.includeBorders
@@ -131,8 +131,8 @@ const Waiting = () => {
         </div>
       )}
 
-      <div className="bluxcc-flex-col bluxcc-space-y-2 bluxcc-text-center bluxcc-font-medium">
-        <p className="bluxcc-text-xl">
+      <div className="bluxcc:flex-col bluxcc:space-y-2 bluxcc:text-center bluxcc:font-medium">
+        <p className="bluxcc:text-xl">
           {error
             ? `${waitingStatus === 'connecting'
               ? 'Login failed'
@@ -141,7 +141,7 @@ const Waiting = () => {
             : `${waitingStatus === 'connecting' ? 'Waiting for' : `Signing with`
             } ${user?.wallet?.name}`}
         </p>
-        <p className="bluxcc-text-sm">
+        <p className="bluxcc:text-sm">
           {error
             ? `Please try ${waitingStatus === 'connecting' ? 'logging in' : 'signing'} again.`
             : `${waitingStatus === 'connecting'
@@ -152,9 +152,9 @@ const Waiting = () => {
       </div>
 
       {/* divider */}
-      <div className="bluxcc-flex bluxcc-h-8 bluxcc-w-full bluxcc-items-center bluxcc-justify-center">
+      <div className="bluxcc:flex bluxcc:h-8 bluxcc:w-full bluxcc:items-center bluxcc:justify-center">
         <div
-          className="bluxcc-absolute bluxcc-left-0 bluxcc-right-0"
+          className="bluxcc:absolute bluxcc:left-0 bluxcc:right-0"
           style={{
             borderTopWidth: appearance.includeBorders
               ? appearance.borderWidth
@@ -172,7 +172,7 @@ const Waiting = () => {
         <Button
           state="enabled"
           variant="outline"
-          className="!bluxcc-cursor-default"
+          className="bluxcc:cursor-default!"
           startIcon={<Loading fill={appearance.accent} />}
         >
           {waitingStatus === 'connecting' ? 'Connecting' : 'Signing'}

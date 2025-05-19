@@ -3,10 +3,9 @@ import terser from '@rollup/plugin-terser';
 import commonjs from '@rollup/plugin-commonjs';
 import resolve from '@rollup/plugin-node-resolve';
 import typescript from '@rollup/plugin-typescript';
-import peerDepsExternal from 'rollup-plugin-peer-deps-external';
+// import peerDepsExternal from 'rollup-plugin-peer-deps-external';
 
-import tailwindcss from 'tailwindcss';
-import autoprefixer from 'autoprefixer';
+import tailwindcss from '@tailwindcss/postcss';
 
 import pkg from './package.json' assert { type: 'json' };
 
@@ -27,7 +26,7 @@ export default {
   preserveEntrySignatures: 'strict',
   treeshake: true,
   plugins: [
-   // peerDepsExternal(),
+    // peerDepsExternal(),
     terser({
       compress: {
         drop_console: true,
@@ -46,7 +45,7 @@ export default {
       extract: false,
       inject: true,
       minimize: true,
-      plugins: [tailwindcss, autoprefixer],
+      plugins: [tailwindcss],
     }),
     typescript({
       tsconfig: './tsconfig.json',

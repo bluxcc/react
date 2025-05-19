@@ -120,7 +120,7 @@ const Send = () => {
       {/* Main Form Content */}
       <div>
         {/* Amount Input */}
-        <div className="bluxcc-relative bluxcc-mb-4">
+        <div className="bluxcc:relative bluxcc:mb-4">
           <InputField
             autoFocus
             type="number"
@@ -133,15 +133,15 @@ const Send = () => {
               <span
                 onClick={handleMaxClick}
                 style={{ color: appearance.accent }}
-                className="bluxcc-mr-2 bluxcc-inline-flex bluxcc-cursor-pointer"
+                className="bluxcc:mr-2 bluxcc:inline-flex bluxcc:cursor-pointer"
               >
                 Max <ArrowDropUp fill={appearance.accent} />
               </span>
             }
             onButtonClick={handleOpenAssets}
             button={
-              <span className="bluxcc-flex bluxcc-justify-between bluxcc-gap-1">
-                <span className="bluxcc-flex bluxcc-items-center">
+              <span className="bluxcc:flex bluxcc:justify-between bluxcc:!gap-1">
+                <span className="bluxcc:flex bluxcc:items-center">
                   <StellarSmallLogo
                     fill={getContrastColor(appearance.background)}
                   />
@@ -153,7 +153,7 @@ const Send = () => {
         </div>
 
         {/* Recipient Address Input */}
-        <div className="bluxcc-mb-4">
+        <div className="bluxcc:mb-4">
           <InputField
             label="To"
             placeholder="Enter address"
@@ -176,9 +176,9 @@ const Send = () => {
         </div>
 
         {/* divider */}
-        <div className="bluxcc-flex bluxcc-h-8 bluxcc-w-full bluxcc-items-center bluxcc-justify-center">
+        <div className="bluxcc:flex bluxcc:h-8 bluxcc:w-full bluxcc:items-center bluxcc:justify-center">
           <div
-            className="bluxcc-absolute bluxcc-left-0 bluxcc-right-0"
+            className="bluxcc:absolute bluxcc:right-0 bluxcc:left-0"
             style={{
               borderTopWidth: appearance.includeBorders
                 ? appearance.borderWidth

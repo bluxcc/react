@@ -50,14 +50,14 @@ const SelectAssets = ({
   }
 
   return (
-    <div className="bluxcc-h-[348px]">
+    <div className="bluxcc:h-[348px]">
       <div>
         <div
           onFocus={() => setIsFocused(true)}
           onBlur={() => setIsFocused(false)}
           onMouseEnter={onMouseEnter}
           onMouseLeave={onMouseLeave}
-          className="bluxcc-flex bluxcc-h-14 bluxcc-items-center bluxcc-gap-2 bluxcc-p-4"
+          className="bluxcc:flex bluxcc:h-14 bluxcc:items-center bluxcc:gap-2 bluxcc:p-4"
           style={
             {
               background: appearance.bgField,
@@ -81,7 +81,7 @@ const SelectAssets = ({
             onChange={(e: ChangeEvent<HTMLInputElement>) =>
               setSearchQuery(e.target.value)
             }
-            className="bluxcc-bg-transparent bluxcc-outline-none"
+            className="bluxcc:bg-transparent bluxcc:outline-hidden"
             style={{
               color: appearance.textColor,
             }}
@@ -89,7 +89,7 @@ const SelectAssets = ({
         </div>
       </div>
 
-      <div className="bluxcc-absolute bluxcc-left-0 bluxcc-right-0 bluxcc-mt-4 bluxcc-gap-2">
+      <div className="bluxcc:absolute bluxcc:right-0 bluxcc:left-0 bluxcc:mt-4 bluxcc:gap-2 bluxcc:overflow-y-auto">
         {assets.map((asset, index) => (
           <div
             key={asset.assetType + asset.assetIssuer}
@@ -98,7 +98,7 @@ const SelectAssets = ({
             }}
             onMouseEnter={() => setHoveredIndex(index)}
             onMouseLeave={() => setHoveredIndex(null)}
-            className="bluxcc-flex bluxcc-cursor-pointer bluxcc-items-center bluxcc-justify-between bluxcc-px-4 bluxcc-py-3"
+            className="bluxcc:flex bluxcc:cursor-pointer bluxcc:items-center bluxcc:justify-between bluxcc:px-4 bluxcc:py-3"
             style={{
               background:
                 hoveredIndex === index ? appearance.bgField : 'transparent',
@@ -114,17 +114,17 @@ const SelectAssets = ({
               transition: 'all 0.2s ease-in-out',
             }}
           >
-            <div className="bluxcc-flex bluxcc-items-center bluxcc-gap-[10px]">
-              <span className="bluxcc-font-medium">{asset.logo}</span>
-              <div className="bluxcc-flex bluxcc-flex-col">
-                <span className="bluxcc-text-xs bluxcc-font-medium">
+            <div className="bluxcc:flex bluxcc:items-center bluxcc:gap-[10px]">
+              <span className="bluxcc:font-medium">{asset.logo}</span>
+              <div className="bluxcc:flex bluxcc:flex-col">
+                <span className="bluxcc:text-xs bluxcc:font-medium">
                   {asset.assetCode}
                 </span>
-                <span className="bluxcc-text-xs">{asset.assetCode}</span>
+                <span className="bluxcc:text-xs">{asset.assetCode}</span>
               </div>
             </div>
 
-            <span className="bluxcc-font-medium">
+            <span className="bluxcc:font-medium">
               {humanizeAmount(asset.balance)}
             </span>
           </div>
@@ -133,7 +133,7 @@ const SelectAssets = ({
         {assets.length === 0 && (
           <div
             style={{ color: appearance.textColor }}
-            className="bluxcc-mt-2 bluxcc-text-center"
+            className="bluxcc:mt-2 bluxcc:text-center"
           >
             No assets found
           </div>

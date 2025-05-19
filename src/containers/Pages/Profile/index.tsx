@@ -7,7 +7,7 @@ import CardItem from '../../../components/CardItem';
 import { useProvider } from '../../../context/provider';
 import shortenAddress from '../../../utils/shortenAddress';
 import humanizeAmount from '../../../utils/humanizeAmount';
-import { Copy, History, LogOut, Send } from '../../../assets/Icons';
+import { Copy, History, LogOut } from '../../../assets/Icons';
 
 const Profile = () => {
   const { logout } = useBlux();
@@ -30,43 +30,43 @@ const Profile = () => {
           setCopied(false);
         }, 1000);
       })
-      .catch(() => { });
+      .catch(() => {});
   };
 
   const balance = context.value.account.account
     ? context.value.account.account.balances.find(
-      (b) => b.asset_type === 'native',
-    )?.balance
+        (b) => b.asset_type === 'native',
+      )?.balance
     : '0';
 
   return (
-    <div className="bluxcc-flex bluxcc-flex-col bluxcc-items-center bluxcc-justify-center">
+    <div className="bluxcc:flex bluxcc:flex-col bluxcc:items-center bluxcc:justify-center">
       <div
-        className="bluxcc-mt-4 bluxcc-size-[73px] bluxcc-rounded-full"
+        className="bluxcc:mt-4 bluxcc:size-[73px] bluxcc:rounded-full"
         style={{ background: appearance.accent }}
       />
       <p
-        className="bluxcc-mb-4 bluxcc-mt-6 bluxcc-inline-flex bluxcc-cursor-pointer bluxcc-text-base"
+        className="bluxcc:!mt-6 bluxcc:!mb-4 bluxcc:inline-flex bluxcc:cursor-pointer bluxcc:text-base"
         onClick={handleCopyAddress}
         style={{ color: appearance.textColor }}
       >
         {copied ? (
           'Copied!'
         ) : (
-          <span className="bluxcc-flex bluxcc-items-center bluxcc-gap-1">
+          <span className="bluxcc:flex bluxcc:items-center bluxcc:gap-1">
             {address ? shortenAddress(address, 5) : ''}
             <Copy fill={appearance.textColor} />
           </span>
         )}
       </p>
       <p
-        className="bluxcc-text-center bluxcc-text-base"
+        className="bluxcc:text-center bluxcc:text-base"
         style={{ color: appearance.accent }}
       >
         {balance ? `${humanizeAmount(balance)} XLM` : 'Loading...'}
       </p>
 
-      <div className="bluxcc-mt-[16px] bluxcc-w-full bluxcc-space-y-2">
+      <div className="bluxcc:mt-[16px] bluxcc:w-full bluxcc:space-y-2">
         {/*
         <CardItem
           endArrow
@@ -87,9 +87,9 @@ const Profile = () => {
         />
       </div>
 
-      <div className="bluxcc-flex bluxcc-h-8 bluxcc-w-full bluxcc-items-center bluxcc-justify-center">
+      <div className="bluxcc:flex bluxcc:h-8 bluxcc:w-full bluxcc:items-center bluxcc:justify-center">
         <div
-          className="bluxcc-absolute bluxcc-left-0 bluxcc-right-0"
+          className="bluxcc:absolute bluxcc:right-0 bluxcc:left-0"
           style={{
             borderTopWidth: appearance.includeBorders
               ? appearance.borderWidth
@@ -102,7 +102,7 @@ const Profile = () => {
       <div
         style={{ color: appearance.textColor }}
         onClick={handleLogout}
-        className="bluxcc-flex bluxcc-h-12 bluxcc-w-full bluxcc-cursor-pointer bluxcc-items-center bluxcc-justify-center bluxcc-gap-2"
+        className="bluxcc:flex bluxcc:h-12 bluxcc:w-full bluxcc:cursor-pointer bluxcc:items-center bluxcc:justify-center bluxcc:gap-2"
       >
         <LogOut fill={appearance.textColor} />
         Logout

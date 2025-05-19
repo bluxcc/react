@@ -10,7 +10,6 @@ import OnBoarding from '../Pages/OnBoarding';
 import ConfirmCode from '../Pages/ConfirmCode';
 import WrongNetwork from '../Pages/WrongNetwork';
 import SignTransaction from '../Pages/SignTransaction';
-import SelectAssets from '../Pages/SelectAsset';
 
 type RouteContent = {
   title: string;
@@ -42,10 +41,6 @@ export const modalContent: Record<Routes, RouteContent> = {
   [Routes.SEND]: {
     title: 'Send',
     Component: <Send />,
-  },
-  [Routes.SELECT_ASSET]: {
-    title: 'Select assets',
-    Component: <SelectAssets />,
   },
   [Routes.ACTIVITY]: {
     title: 'Activity',
