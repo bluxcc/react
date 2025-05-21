@@ -59,9 +59,17 @@ const SignTransaction = () => {
         action={txDetails.action}
       />
 
+      {isLobstr && (
+        <p className="bluxcc:!my-2 bluxcc:flex bluxcc:items-center bluxcc:justify-center bluxcc:text-center bluxcc:!text-xs bluxcc:text-alert-error">
+          Ensure that your LOBSTR wallet is set to the {networkTitle} network.
+          Otherwise, the transaction will definitely fail.
+        </p>
+      )}
+
       <div
-        className="bluxcc:mt-4 bluxcc:inline-flex bluxcc:h-14 bluxcc:w-full bluxcc:items-center bluxcc:justify-between bluxcc:border bluxcc:px-4"
+        className="bluxcc:inline-flex bluxcc:h-14 bluxcc:w-full bluxcc:items-center bluxcc:justify-between bluxcc:border bluxcc:px-4"
         style={{
+          marginTop: isLobstr ? '0px' : '16px',
           borderRadius: appearance.borderRadius,
           borderColor: appearance.borderColor,
         }}
@@ -94,41 +102,25 @@ const SignTransaction = () => {
       </div>
 
       <div className="bluxcc:flex bluxcc:h-8 bluxcc:w-full bluxcc:items-center bluxcc:justify-center">
-        {isLobstr && (
-          /* TODO: fox styling */ <p
-            style={{
-              color: 'orangered',
-              fontSize: '12px',
-              textAlign: 'center',
-              paddingTop: '10px',
-            }}
-          >
-            Ensure that your LOBSTR wallet is set to the {networkTitle} network.
-            Otherwise, the transaction will definitely fail.
-          </p>
-        )}
-
-        <div className="bluxcc:flex bluxcc:h-8 bluxcc:w-full bluxcc:items-center bluxcc:justify-center">
-          <div
-            className="bluxcc:absolute bluxcc:right-0 bluxcc:left-0"
-            style={{
-              borderTopWidth: appearance.includeBorders
-                ? appearance.borderWidth
-                : '1px',
-              borderTopColor: appearance.borderColor,
-            }}
-          />
-        </div>
-
-        <Button
-          size="large"
-          state="enabled"
-          variant="fill"
-          onClick={handleSignTx}
-        >
-          Approve
-        </Button>
+        <div
+          className="bluxcc:absolute bluxcc:right-0 bluxcc:left-0"
+          style={{
+            borderTopWidth: appearance.includeBorders
+              ? appearance.borderWidth
+              : '1px',
+            borderTopColor: appearance.borderColor,
+          }}
+        />
       </div>
+
+      <Button
+        size="large"
+        state="enabled"
+        variant="fill"
+        onClick={handleSignTx}
+      >
+        Approve
+      </Button>
     </div>
   );
 };

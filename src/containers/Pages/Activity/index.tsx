@@ -88,7 +88,7 @@ const Activity: React.FC = () => {
   const isEmpty = !loading && transactionsDetails.length === 0;
 
   return (
-    <div className="bluxcc:flex bluxcc:h-[348px] bluxcc:flex-col bluxcc:justify-between">
+    <div className="bluxcc:flex bluxcc:h-[335px] bluxcc:flex-col">
       {loading ? (
         <div className="bluxcc:flex bluxcc:h-full bluxcc:flex-col bluxcc:items-center bluxcc:justify-center bluxcc:text-center bluxcc:text-gray-700">
           Loading activity...
@@ -119,15 +119,16 @@ const Activity: React.FC = () => {
       )}
 
       {transactionsDetails.length > 0 && explorerUrl && (
-        <Button
-          state="enabled"
-          variant="outline"
-          size="medium"
-          className="mt-4"
-          onClick={handleGoToExplorer}
-        >
-          See all in explorer
-        </Button>
+        <div className="bluxcc:absolute bluxcc:bottom-4 bluxcc:left-1/2 bluxcc:!mt-4 bluxcc:w-[calc(100%-3rem)] bluxcc:-translate-x-1/2 bluxcc:transform">
+          <Button
+            state="enabled"
+            variant="outline"
+            size="medium"
+            onClick={handleGoToExplorer}
+          >
+            See all in explorer
+          </Button>
+        </div>
       )}
     </div>
   );

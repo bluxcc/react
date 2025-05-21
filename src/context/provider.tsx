@@ -148,8 +148,6 @@ export const BluxProvider = ({
 
         const sortAvailableWallets = getSortedCheckedWallets(available);
 
-        console.log(sortAvailableWallets);
-
         setValue((prev) => ({
           ...prev,
           isReady: true,

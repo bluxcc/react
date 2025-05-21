@@ -11,7 +11,6 @@ export const hotConfig: WalletInterface = {
   website: 'https://hot-labs.org/',
 
   isAvailable: () => {
-    console.log('checking hot wallet is available');
     return typeof window !== 'undefined' && !!window.hotExtension;
   },
 
@@ -34,8 +33,6 @@ export const hotConfig: WalletInterface = {
         xdr,
         accountToSign: options.address,
       });
-
-      console.log(result);
 
       return result.signedTxXdr;
     } catch {

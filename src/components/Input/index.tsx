@@ -119,6 +119,7 @@ const InputField = ({
         {iconLeft && <div className="bluxcc:mr-2">{iconLeft}</div>}
         <input
           id="bluxcc-input"
+          autoComplete="off"
           min={type === 'number' ? 1 : undefined}
           type={type}
           autoFocus={autoFocus}
