@@ -1,9 +1,11 @@
-import postcss from 'rollup-plugin-postcss';
+import json from '@rollup/plugin-json';
+import alias from '@rollup/plugin-alias';
 import terser from '@rollup/plugin-terser';
+import postcss from 'rollup-plugin-postcss';
 import commonjs from '@rollup/plugin-commonjs';
 import resolve from '@rollup/plugin-node-resolve';
 import typescript from '@rollup/plugin-typescript';
-// import peerDepsExternal from 'rollup-plugin-peer-deps-external';
+import peerDepsExternal from 'rollup-plugin-peer-deps-external';
 
 import tailwindcss from '@tailwindcss/postcss';
 
@@ -26,7 +28,16 @@ export default {
   preserveEntrySignatures: 'strict',
   treeshake: true,
   plugins: [
-    // peerDepsExternal(),
+    alias({
+      entries: [
+        {
+          find: 'global',
+          replacement: 'globalThis',
+        }
+      ]
+    }),
+    json(),
+    peerDepsExternal(),
     terser({
       compress: {
         drop_console: true,
@@ -53,7 +64,6 @@ export default {
     }),
   ],
   external: [
-    ...Object.keys(pkg.dependencies || {}),
     ...Object.keys(pkg.peerDependencies || {}),
   ],
 };

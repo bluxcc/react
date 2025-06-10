@@ -1,4 +1,4 @@
-// import { HOT } from '@hot-wallet/sdk';
+import { HOT } from '@hot-wallet/sdk';
 
 import {
   WalletInterface,
@@ -16,9 +16,9 @@ export const hotConfig: WalletInterface = {
 
   connect: async () => {
     try {
-      // const result = await HOT.request('stellar:getAddress', {});
-      //
-      // return { publicKey: result.address };
+      const result = await HOT.request('stellar:getAddress', {});
+
+      return { publicKey: result.address };
     } catch {
       throw new Error('Failed to connect to Hana wallet.');
     }
@@ -29,12 +29,12 @@ export const hotConfig: WalletInterface = {
     options: { address?: string; networkPassphrase?: string } = {},
   ): Promise<string> => {
     try {
-      // const result = await HOT.request('stellar:signTransaction', {
-      //   xdr,
-      //   accountToSign: options.address,
-      // });
-      //
-      // return result.signedTxXdr;
+      const result = await HOT.request('stellar:signTransaction', {
+        xdr,
+        accountToSign: options.address,
+      });
+
+      return result.signedTxXdr;
     } catch {
       throw new Error('Failed to sign the transaction with Hana wallet.');
     }
