@@ -120,8 +120,9 @@ const CardItem = ({
               <button
                 disabled={!isValid}
                 onClick={() => onSubmit?.(inputValue)}
-                className={`bluxcc:absolute bluxcc:right-0 bluxcc:flex bluxcc:h-8 bluxcc:w-[68px]! bluxcc:items-center bluxcc:justify-center bluxcc:border bluxcc:bg-transparent bluxcc:!text-sm bluxcc:font-medium bluxcc:transition-[border-radius,background,border-color] bluxcc:duration-150`}
+                className={`bluxcc:absolute bluxcc:right-0 bluxcc:flex bluxcc:h-8 bluxcc:w-[68px]! bluxcc:items-center bluxcc:justify-center bluxcc:border bluxcc:!text-sm bluxcc:font-medium bluxcc:transition-[border-radius,background,border-color] bluxcc:duration-150`}
                 style={{
+                  background: appearance.bgField,
                   borderRadius: appearance.borderRadius,
                   borderColor: isValid
                     ? appearance.accent
