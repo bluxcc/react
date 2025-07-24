@@ -70,7 +70,7 @@ const CardItem = ({
   return (
     <div
       onClick={variant === 'input' ? undefined : onClick}
-      className={`bluxcc:flex bluxcc:h-14! bluxcc:w-full bluxcc:items-center bluxcc:border bluxcc:py-2 bluxcc:pr-3.5 bluxcc:pl-[10px] ${
+      className={`bluxcc:flex bluxcc:!h-14 bluxcc:w-full bluxcc:items-center bluxcc:border bluxcc:py-2 bluxcc:pr-3.5 bluxcc:pl-[10px] ${
         variant === 'input' ? 'bluxcc:cursor-text' : 'bluxcc:cursor-pointer'
       }`}
       style={{

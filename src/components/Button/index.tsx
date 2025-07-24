@@ -20,7 +20,7 @@ interface ButtonProps {
 }
 
 const buttonBase =
-  'bluxcc:flex bluxcc:justify-center bluxcc:items-center bluxcc:px-[10px] bluxcc:transition-all bluxcc:w-full';
+  'bluxcc:flex bluxcc:justify-center bluxcc:items-center bluxcc:px-[10px] bluxcc:transition-all bluxcc:duration-300 bluxcc:w-full';
 
 const sizeClasses: Record<ButtonSize, string> = {
   small: 'bluxcc:h-8 bluxcc:!text-sm bluxcc:gap-1',
