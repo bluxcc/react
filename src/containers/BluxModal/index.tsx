@@ -4,7 +4,8 @@ import Modal from '../../components/Modal';
 import { useProvider } from '../../context/provider';
 
 import { Routes } from '../../types';
-import { modalContent } from './content';
+import { getModalContent } from './content';
+import { LanguageKey } from '../../constants/locales';
 
 interface BluxModalProps {
   isOpen: boolean;
@@ -59,6 +60,7 @@ export default function BluxModal({ isOpen, closeModal }: BluxModalProps) {
       }
     }
   };
+  const modalContent = getModalContent(value.config.lang as LanguageKey);
 
   const { title, Component, isSticky } = modalContent[route];
 

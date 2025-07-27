@@ -11,6 +11,7 @@ import { StellarSmallLogo } from '../../../assets/logos';
 import getContrastColor from '../../../utils/getContrastColor';
 import paymentTransaction from '../../../utils/stellar/paymentTransaction';
 import { StrKey } from '@stellar/stellar-sdk';
+import { useLang } from '../../../hooks/useLang';
 
 type SendFormValues = {
   memo: string;
@@ -19,6 +20,7 @@ type SendFormValues = {
 };
 
 const SendForm = () => {
+  const t = useLang();
   const { value, setValue } = useProvider();
   const { sendTransaction } = useBlux();
   const [errors, setErrors] = useState<Partial<SendFormValues>>({});
@@ -85,15 +87,15 @@ const SendForm = () => {
     const errorMessages: typeof errors = {};
 
     if (!form.amount) {
-      errorMessages.amount = 'Amount is required';
+      errorMessages.amount = t('amountRequired');
     } else if (Number(form.amount) > Number(selectedAsset.balance)) {
-      errorMessages.amount = 'Amount is greater than max balance';
+      errorMessages.amount = t('amountExceedsBalance');
     }
 
     if (!form.address) {
-      errorMessages.address = 'Address is required';
+      errorMessages.address = t('addressRequired');
     } else if (!StrKey.isValidEd25519PublicKey(form.address)) {
-      errorMessages.address = 'Address is invalid';
+      errorMessages.address = t('addressInvalid');
     }
 
     setErrors(errorMessages);
@@ -143,7 +145,7 @@ const SendForm = () => {
           <InputField
             autoFocus
             type="number"
-            label="Amount"
+            label={t('amount')}
             placeholder="0.00"
             value={form.amount}
             onChange={handleChange('amount')}
@@ -154,7 +156,7 @@ const SendForm = () => {
                 style={{ color: appearance.accent }}
                 className="bluxcc:mr-2 bluxcc:inline-flex bluxcc:cursor-pointer"
               >
-                Max <ArrowDropUp fill={appearance.accent} />
+                {t('max')} <ArrowDropUp fill={appearance.accent} />
               </span>
             }
             onButtonClick={handleOpenAssets}
@@ -173,20 +175,20 @@ const SendForm = () => {
 
         <div className="bluxcc:mb-4">
           <InputField
-            label="To"
-            placeholder="Enter address"
+            label={t('to')}
+            placeholder={t('enterAddress')}
             value={form.address}
             onChange={handleChange('address')}
             error={errors.address}
-            button="Paste"
+            button={t('paste')}
             onButtonClick={handlePasteClick}
           />
         </div>
 
         <div>
           <InputField
-            label="Memo"
-            placeholder="Enter Memo (optional)"
+            label={t('memo')}
+            placeholder={t('enterMemo')}
             value={form.memo}
             onChange={handleChange('memo')}
           />
@@ -211,7 +213,7 @@ const SendForm = () => {
           state="enabled"
           onClick={handleSubmit}
         >
-          Send
+          {t('sendButton')}
         </Button>
       </div>
     </>

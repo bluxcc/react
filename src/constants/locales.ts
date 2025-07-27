@@ -60,6 +60,14 @@ const translations: Translations = {
     en: 'Signing',
     es: 'Firmando',
   },
+  or: {
+    en: 'or',
+    es: 'o',
+  },
+  recent: {
+    en: 'recent',
+    es: 'reciente',
+  },
 
   // Onboarding Page
   allStellarWallets: {
@@ -70,9 +78,9 @@ const translations: Translations = {
     en: 'Email',
     es: 'Correo electrónico',
   },
-  passkey: {
-    en: 'Passkey',
-    es: 'Llave de acceso',
+  logInWithPasskey: {
+    en: 'Log in with Passkey',
+    es: 'Iniciar sesión con llave de acceso',
   },
   submit: {
     en: 'Submit',
@@ -115,8 +123,8 @@ const translations: Translations = {
 
   // Sign transaction modal
   signTransactionPrompt: {
-    en: '${appName} wants your permission to approve the following transaction.',
-    es: '${appName} quiere tu permiso para aprobar la siguiente transacción.',
+    en: 'wants your permission to approve the following transaction.',
+    es: 'quiere tu permiso para aprobar la siguiente transacción.',
   },
   invalidXdr: {
     en: 'Invalid XDR',

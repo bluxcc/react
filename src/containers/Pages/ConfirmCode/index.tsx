@@ -1,12 +1,14 @@
 import React, { useState, useEffect } from 'react';
-import { EmailIcon } from '../../../assets/Icons';
+import { useLang } from '../../../hooks/useLang';
 import Button from '../../../components/Button';
+import { EmailIcon } from '../../../assets/Icons';
 import { useProvider } from '../../../context/provider';
 import OTPInput from '../../../components/Input/OTPInput';
 
 const ConfirmCode: React.FC = () => {
   const { value } = useProvider();
   const appearance = value.config.appearance;
+  const t = useLang();
 
   const email = value.user.email;
   const [otp, setOtp] = useState<string[]>(Array(6).fill(''));
@@ -36,7 +38,7 @@ const ConfirmCode: React.FC = () => {
   }, [otp, email]);
 
   return (
-    <div className="bluxcc:mt-4 bluxcc:flex bluxcc:w-full bluxcc:select-none bluxcc:flex-col bluxcc:items-center bluxcc:justify-center">
+    <div className="bluxcc:mt-4 bluxcc:flex bluxcc:w-full bluxcc:flex-col bluxcc:items-center bluxcc:justify-center bluxcc:select-none">
       <div
         style={{
           borderColor: appearance.borderColor,
@@ -51,15 +53,15 @@ const ConfirmCode: React.FC = () => {
 
       <div className="bluxcc:flex-col bluxcc:space-y-1 bluxcc:text-center">
         <p className="bluxcc:text-xl bluxcc:font-medium">
-          Enter confirmation code
+          {t('enterConfirmationCodeTitle')}
         </p>
         {error ? (
           <p className="bluxcc:flex bluxcc:h-10 bluxcc:items-center bluxcc:justify-center bluxcc:text-sm bluxcc:text-alert-error">
-            Invalid code, please try again.
+            {t('invalidCodeError')}
           </p>
         ) : (
           <p className="bluxcc:h-10 bluxcc:text-sm">
-            Please check your email and enter confirmation code below
+            {t('enterConfirmationCodeHelp')}
           </p>
         )}
       </div>
@@ -71,7 +73,7 @@ const ConfirmCode: React.FC = () => {
       {/* divider */}
       <div className="bluxcc:flex bluxcc:h-8 bluxcc:w-full bluxcc:items-center bluxcc:justify-center">
         <div
-          className="bluxcc:absolute bluxcc:left-0 bluxcc:right-0"
+          className="bluxcc:absolute bluxcc:right-0 bluxcc:left-0"
           style={{
             borderTopWidth: appearance.includeBorders
               ? appearance.borderWidth
@@ -90,7 +92,7 @@ const ConfirmCode: React.FC = () => {
           color: appearance.accent,
         }}
       >
-        Resend code
+        {t('resendCode')}
       </Button>
     </div>
   );

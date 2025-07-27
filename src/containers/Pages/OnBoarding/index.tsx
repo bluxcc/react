@@ -2,6 +2,7 @@ import React, { useState, useMemo } from 'react';
 
 import CardItem from '../../../components/CardItem';
 import handleLogos from '../../../utils/handleLogos';
+import { useLang } from '../../../hooks/useLang';
 import { useProvider } from '../../../context/provider';
 import { Routes, WalletInterface } from '../../../types';
 import getContrastColor from '../../../utils/getContrastColor';
@@ -12,6 +13,7 @@ import isBackgroundDark from '../../../utils/isBackgroundDark';
 
 const OnBoarding = () => {
   const { value, setValue, setRoute } = useProvider();
+  const t = useLang();
   const [inputValue, setInputValue] = useState('');
 
   const wallets = value.availableWallets;
@@ -88,7 +90,7 @@ const OnBoarding = () => {
           color: appearance.borderColor,
         }}
       >
-        or
+        {t('or')}
       </span>
     </div>
   );
@@ -143,7 +145,7 @@ const OnBoarding = () => {
                 {hiddenWallets.length > 0 && !value.showAllWallets && (
                   <CardItem
                     endArrow
-                    label="All Stellar wallets"
+                    label={t('allStellarWallets')}
                     isRecent={false}
                     startIcon={
                       <StellarLogo
@@ -189,7 +191,7 @@ const OnBoarding = () => {
                 className="bluxcc:mt-6! bluxcc:flex bluxcc:h-4 bluxcc:cursor-pointer bluxcc:items-center bluxcc:justify-center bluxcc:text-sm bluxcc:leading-[28px] bluxcc:font-medium"
                 style={{ color: appearance.accent }}
               >
-                Log in with Passkey
+                {t('logInWithPasskey')}{' '}
               </div>
             );
           }
@@ -200,17 +202,17 @@ const OnBoarding = () => {
 
       <footer
         className={`bluxcc:w-full bluxcc:cursor-pointer bluxcc:pt-[17px] bluxcc:text-center bluxcc:text-xs bluxcc:font-medium`}
-        style={{
-          color: appearance.textColor,
-        }}
       >
         <a
           aria-label="blux website"
           href="https://blux.cc"
           target="_blank"
           rel="noreferrer"
+          style={{
+            color: appearance.textColor,
+          }}
         >
-          Powered by Blux.cc
+          {t('poweredByBlux')}
         </a>
       </footer>
     </div>
