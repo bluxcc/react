@@ -76,6 +76,7 @@ export const BluxProvider = ({
     config: {
       ...config,
       explorer: config.explorer || 'stellarchain',
+      lang: 'en',
       appearance: {
         ...defaultLightTheme,
         ...config.appearance,

@@ -3,6 +3,7 @@ import { HorizonApi } from '@stellar/stellar-sdk/lib/horizon';
 
 import { Url } from '../utils/network/url';
 import { UseAccountResult } from '../useStellar/useAccount';
+import { LanguageKey } from '../constants/locales';
 
 /**
  * Enum representing the supported wallets in the system.
@@ -69,6 +70,7 @@ export interface IProviderConfig {
   appearance?: Partial<IAppearance>;
   transports?: ITransports;
   explorer?: IExplorers;
+  lang?: LanguageKey;
   showWalletUIs?: boolean;
   loginMethods?: Array<
     | 'wallet'
