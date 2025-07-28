@@ -73,11 +73,12 @@ const Activity: React.FC = () => {
         details.description = `${humanizeAmount(op.amount)} ${handleAssetText(op)}`;
       } else if (
         op.type ===
-          Horizon.HorizonApi.OperationResponseType.pathPaymentStrictSend ||
+        Horizon.HorizonApi.OperationResponseType.pathPaymentStrictSend ||
         op.type === Horizon.HorizonApi.OperationResponseType.pathPayment
       ) {
+        console.log(op);
         details.title = t('swap');
-        details.description = `${op.amount} ${handleAssetText(op)}`;
+        details.description = `Received ${op.amount} ${handleAssetText(op)}`;
       }
 
       result.push(details);
