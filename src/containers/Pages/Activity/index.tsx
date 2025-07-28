@@ -77,10 +77,7 @@ const Activity: React.FC = () => {
         op.type === Horizon.HorizonApi.OperationResponseType.pathPayment
       ) {
         details.title = t('swap');
-        details.description = t('pathPaymentDescription', {
-          amount: op.amount,
-          asset: handleAssetText(op),
-        });
+        details.description = `${op.amount} ${handleAssetText(op)}`;
       }
 
       result.push(details);
