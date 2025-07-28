@@ -2,6 +2,7 @@ import React, { useState, MouseEvent, ChangeEvent } from 'react';
 
 import { IAsset } from '../../../types';
 import { Search } from '../../../assets/Icons';
+import { useLang } from '../../../hooks/useLang';
 import { useProvider } from '../../../context/provider';
 import humanizeAmount from '../../../utils/humanizeAmount';
 
@@ -17,6 +18,7 @@ const SelectAssets = ({
   setShowSelectAssetPage,
 }: SelectAssetsProps) => {
   const context = useProvider();
+  const t = useLang();
   const appearance = context.value.config.appearance;
   const [isFocused, setIsFocused] = useState(false);
   const [searchQuery, setSearchQuery] = useState('');
@@ -46,7 +48,7 @@ const SelectAssets = ({
   };
 
   if (context.value.account.loading) {
-    return <div>Loading</div>;
+    return <div>{t('loading')}</div>;
   }
 
   return (
@@ -76,7 +78,7 @@ const SelectAssets = ({
           <input
             autoFocus
             type="text"
-            placeholder="Search"
+            placeholder={t('search')}
             value={searchQuery}
             onChange={(e: ChangeEvent<HTMLInputElement>) =>
               setSearchQuery(e.target.value)
@@ -135,7 +137,7 @@ const SelectAssets = ({
             style={{ color: appearance.textColor }}
             className="bluxcc:mt-2 bluxcc:text-center"
           >
-            No assets found
+            {t('noAssetsFound')}
           </div>
         )}
       </div>

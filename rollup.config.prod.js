@@ -9,7 +9,7 @@ import peerDepsExternal from 'rollup-plugin-peer-deps-external';
 
 import tailwindcss from '@tailwindcss/postcss';
 
-import pkg from './package.json' assert { type: 'json' };
+import pkg from './package.json' with { type: 'json' };
 
 export default {
   input: 'src/index.ts',
@@ -33,8 +33,8 @@ export default {
         {
           find: 'global',
           replacement: 'globalThis',
-        }
-      ]
+        },
+      ],
     }),
     json(),
     peerDepsExternal(),
@@ -54,7 +54,13 @@ export default {
     commonjs(),
     postcss({
       extract: false,
-      inject: true,
+      extensions: ['.css'],
+      inject: {
+        insertAt: 'top',
+      },
+      config: {
+        path: './postcss.config.mjs',
+      },
       minimize: true,
       plugins: [tailwindcss],
     }),
@@ -63,7 +69,5 @@ export default {
       exclude: ['node_modules', 'motion'],
     }),
   ],
-  external: [
-    ...Object.keys(pkg.peerDependencies || {}),
-  ],
+  external: [...Object.keys(pkg.peerDependencies || {})],
 };

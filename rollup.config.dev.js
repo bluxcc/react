@@ -7,7 +7,7 @@ import resolve from '@rollup/plugin-node-resolve';
 import typescript from '@rollup/plugin-typescript';
 import peerDepsExternal from 'rollup-plugin-peer-deps-external';
 
-import pkg from './package.json' assert { type: 'json' };
+import pkg from './package.json' with { type: 'json' };
 
 export default {
   input: 'src/index.ts',
@@ -30,8 +30,8 @@ export default {
         {
           find: 'global',
           replacement: 'globalThis',
-        }
-      ]
+        },
+      ],
     }),
     json(),
     peerDepsExternal(),
@@ -53,9 +53,7 @@ export default {
       exclude: ['node_modules', 'motion'],
     }),
   ],
-  external: [
-    ...Object.keys(pkg.peerDependencies || {}),
-  ],
+  external: [...Object.keys(pkg.peerDependencies || {})],
   watch: {
     clearScreen: false,
     include: 'src/**',

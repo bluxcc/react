@@ -1,13 +1,13 @@
 import React from 'react';
+import { useLang } from '../../../hooks/useLang';
 
 const WrongNetwork = () => {
+  const t = useLang();
   return (
     <div>
-      <p>You are on a wrong network.</p>
+      <p>{t('wrongNetworkMessage')}</p>
     </div>
-  )
-
+  );
 };
 
 export default WrongNetwork;
-

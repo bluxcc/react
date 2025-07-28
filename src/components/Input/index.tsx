@@ -99,7 +99,7 @@ const InputField = ({
         </label>
       )}
       <div
-        className={`bluxcc:flex bluxcc:h-14 bluxcc:w-full bluxcc:items-center bluxcc:border bluxcc:px-4 bluxcc:py-2 bluxcc:transition-all ${className}`}
+        className={`bluxcc:flex bluxcc:h-14 bluxcc:w-full bluxcc:items-center bluxcc:border bluxcc:px-4 bluxcc:py-2 bluxcc:transition-all bluxcc:duration-300 ${className}`}
         onFocus={() => setIsFocused(true)}
         onBlur={() => setIsFocused(false)}
         onMouseEnter={onMouseEnter}

@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 
 import { Routes } from '../../../types';
 import copyText from '../../../utils/copyText';
+import { useLang } from '../../../hooks/useLang';
 import { useBlux } from '../../../hooks/useBlux';
 import CardItem from '../../../components/CardItem';
 import { useProvider } from '../../../context/provider';
@@ -11,6 +12,7 @@ import { Copy, History, LogOut, Send } from '../../../assets/Icons';
 
 const Profile = () => {
   const { logout } = useBlux();
+  const t = useLang();
   const context = useProvider();
   const [copied, setCopied] = useState(false);
 
@@ -30,13 +32,13 @@ const Profile = () => {
           setCopied(false);
         }, 1000);
       })
-      .catch(() => { });
+      .catch(() => {});
   };
 
   const balance = context.value.account.account
     ? context.value.account.account.balances.find(
-      (b) => b.asset_type === 'native',
-    )?.balance
+        (b) => b.asset_type === 'native',
+      )?.balance
     : '0';
 
   return (
@@ -51,7 +53,7 @@ const Profile = () => {
         style={{ color: appearance.textColor }}
       >
         {copied ? (
-          'Copied!'
+          t('copied')
         ) : (
           <span className="bluxcc:flex bluxcc:items-center bluxcc:gap-1">
             {address ? shortenAddress(address, 5) : ''}
@@ -63,13 +65,13 @@ const Profile = () => {
         className="bluxcc:text-center bluxcc:text-base"
         style={{ color: appearance.accent }}
       >
-        {balance ? `${humanizeAmount(balance)} XLM` : 'Loading...'}
+        {balance ? `${humanizeAmount(balance)} XLM` : t('loading')}
       </p>
 
       <div className="bluxcc:mt-[16px] bluxcc:w-full bluxcc:space-y-2">
         <CardItem
           endArrow
-          label="Send"
+          label={t('send')}
           startIcon={<Send fill={appearance.textColor} />}
           onClick={() => {
             context.setRoute(Routes.SEND);
@@ -78,7 +80,7 @@ const Profile = () => {
 
         <CardItem
           endArrow
-          label="Activity"
+          label={t('activity')}
           startIcon={<History fill={appearance.textColor} />}
           onClick={() => {
             context.setRoute(Routes.ACTIVITY);
@@ -104,7 +106,7 @@ const Profile = () => {
         className="bluxcc:flex bluxcc:h-12 bluxcc:w-full bluxcc:cursor-pointer bluxcc:items-center bluxcc:justify-center bluxcc:gap-2"
       >
         <LogOut fill={appearance.textColor} />
-        Logout
+        {t('logout')}
       </div>
     </div>
   );

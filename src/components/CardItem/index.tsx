@@ -2,6 +2,7 @@ import React, { useState, MouseEvent } from 'react';
 import { useProvider } from '../../context/provider';
 import { ArrowRight } from '../../assets/Icons';
 import hexToRgba from '../../utils/hexToRgba';
+import { useLang } from '../../hooks/useLang';
 
 type CardItemProps = {
   variant?: 'social' | 'default' | 'input';
@@ -30,6 +31,7 @@ const CardItem = ({
 }: CardItemProps) => {
   const context = useProvider();
   const { appearance } = context.value.config;
+  const t = useLang();
 
   const [inputValue, setInputValue] = useState(label || '');
   const [isValid, setIsValid] = useState(false);
@@ -70,7 +72,7 @@ const CardItem = ({
   return (
     <div
       onClick={variant === 'input' ? undefined : onClick}
-      className={`bluxcc:flex bluxcc:h-14! bluxcc:w-full bluxcc:items-center bluxcc:border bluxcc:py-2 bluxcc:pr-3.5 bluxcc:pl-[10px] ${
+      className={`bluxcc:flex bluxcc:!h-14 bluxcc:w-full bluxcc:items-center bluxcc:border bluxcc:py-2 bluxcc:pr-3.5 bluxcc:pl-[10px] ${
         variant === 'input' ? 'bluxcc:cursor-text' : 'bluxcc:cursor-pointer'
       }`}
       style={{
@@ -105,7 +107,7 @@ const CardItem = ({
               value={inputValue}
               onChange={handleInputChange}
               onKeyDown={handleKeyDown}
-              placeholder="Email"
+              placeholder={t('email')}
               className="bluxcc:mr-1 bluxcc:h-full bluxcc:w-full bluxcc:bg-transparent bluxcc:outline-hidden bluxcc:focus:outline-hidden"
               style={{ color: appearance.textColor }}
               onFocus={() => setIsFocused(true)}
@@ -133,7 +135,7 @@ const CardItem = ({
                     : '1px',
                 }}
               >
-                Submit
+                {t('submit')}
               </button>
             </div>
           </>
@@ -150,7 +152,7 @@ const CardItem = ({
             backgroundColor: `${hexToRgba(appearance.accent, 0.1)}`,
           }}
         >
-          Recent
+          {t('recent')}
         </div>
       )}
 

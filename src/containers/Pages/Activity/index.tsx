@@ -2,6 +2,7 @@ import { Horizon } from '@stellar/stellar-sdk';
 import React, { useEffect, useState } from 'react';
 
 import Button from '../../../components/Button';
+import { useLang } from '../../../hooks/useLang';
 import { useTransactions } from '../../../useStellar';
 import { useProvider } from '../../../context/provider';
 import toTitleFormat from '../../../utils/toTitleFormat';
@@ -27,7 +28,7 @@ const Activity: React.FC = () => {
   });
 
   const { value } = useProvider();
-
+  const t = useLang();
   const userAddress = value.user.wallet?.address as string;
   const explorerUrl = getExplorerUrl(
     value.activeNetwork,
@@ -60,12 +61,12 @@ const Activity: React.FC = () => {
       };
 
       if (tx.operations.length > 1) {
-        details.title = 'Multi Operation';
+        details.title = t('multiOperation');
       } else if (op.type === 'payment') {
-        let title = 'Send';
+        let title = t('send');
 
         if (op.to.toLowerCase() === userAddress.toLowerCase()) {
-          title = 'Receive';
+          title = t('receive');
         }
 
         details.title = title;
@@ -75,8 +76,11 @@ const Activity: React.FC = () => {
           Horizon.HorizonApi.OperationResponseType.pathPaymentStrictSend ||
         op.type === Horizon.HorizonApi.OperationResponseType.pathPayment
       ) {
-        details.title = 'Swap';
-        details.description = `Path payment of ${op.amount} ${handleAssetText(op)}`;
+        details.title = t('swap');
+        details.description = t('pathPaymentDescription', {
+          amount: op.amount,
+          asset: handleAssetText(op),
+        });
       }
 
       result.push(details);
@@ -91,11 +95,11 @@ const Activity: React.FC = () => {
     <div className="bluxcc:flex bluxcc:h-[335px] bluxcc:flex-col">
       {loading ? (
         <div className="bluxcc:flex bluxcc:h-full bluxcc:flex-col bluxcc:items-center bluxcc:justify-center bluxcc:text-center bluxcc:text-gray-700">
-          Loading activity...
+          {t('loadingActivity')}
         </div>
       ) : isEmpty ? (
         <div className="bluxcc:flex bluxcc:h-full bluxcc:flex-col bluxcc:items-center bluxcc:justify-center bluxcc:text-center bluxcc:text-gray-700">
-          No activity found
+          {t('noActivityFound')}
         </div>
       ) : (
         transactionsDetails.map((tx, index) => (
@@ -126,7 +130,7 @@ const Activity: React.FC = () => {
             size="medium"
             onClick={handleGoToExplorer}
           >
-            See all in explorer
+            {t('seeAllInExplorer')}
           </Button>
         </div>
       )}

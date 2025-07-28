@@ -10,8 +10,10 @@ import shortenAddress from '../../../utils/shortenAddress';
 import Summary from '../../../components/Transaction/Summary';
 import getActiveNetworkTitle from '../../../utils/network/getNetworkTitle';
 import getTransactionDetails from '../../../utils/stellar/getTransactionDetails';
+import { useLang } from '../../../hooks/useLang';
 
 const SignTransaction = () => {
+  const t = useLang();
   const context = useProvider();
   const { balance } = useBalance({ asset: 'native' });
 
@@ -33,7 +35,7 @@ const SignTransaction = () => {
   if (!txDetails) {
     return (
       <div>
-        <p>Invalid XDR</p>
+        <p>{t('invalidXdr')}</p>
       </div>
     );
   }
@@ -47,7 +49,7 @@ const SignTransaction = () => {
         <span className="bluxcc:font-semibold bluxcc:capitalize">
           {context.value.config.appName}{' '}
         </span>
-        wants your permission to approve the following transaction.
+        {t('signTransactionPrompt')}
       </p>
 
       <Summary
@@ -61,8 +63,7 @@ const SignTransaction = () => {
 
       {isLobstr && (
         <p className="bluxcc:!my-2 bluxcc:flex bluxcc:items-center bluxcc:justify-center bluxcc:text-center bluxcc:!text-xs bluxcc:text-alert-error">
-          Ensure that your LOBSTR wallet is set to the {networkTitle} network.
-          Otherwise, the transaction will definitely fail.
+          {t('lobstrWarning', { network: networkTitle })}
         </p>
       )}
 
@@ -76,7 +77,7 @@ const SignTransaction = () => {
       >
         <div className="bluxcc:inline-flex bluxcc:items-center bluxcc:gap-1 bluxcc:font-medium bluxcc:whitespace-nowrap">
           <p className="bluxcc:text-sm bluxcc:font-medium bluxcc:whitespace-nowrap">
-            Your wallet
+            {t('yourWallet')}
           </p>
           <p
             className="bluxcc:mt-0.5 bluxcc:text-xs"
@@ -84,7 +85,7 @@ const SignTransaction = () => {
           >
             {context.value.user.wallet?.address
               ? shortenAddress(context.value.user.wallet.address as string, 5)
-              : 'No address found'}
+              : t('noAddressFound')}
           </p>
         </div>
         <div
@@ -119,7 +120,7 @@ const SignTransaction = () => {
         variant="fill"
         onClick={handleSignTx}
       >
-        Approve
+        {t('approve')}
       </Button>
     </div>
   );

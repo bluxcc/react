@@ -1,7 +1,5 @@
-import React from 'react';
-
-import Send from '../Pages/Send';
 import { Routes } from '../../types';
+import Send from '../Pages/Send';
 import Profile from '../Pages/Profile';
 import Waiting from '../Pages/Waiting';
 import Activity from '../Pages/Activity';
@@ -10,6 +8,9 @@ import OnBoarding from '../Pages/OnBoarding';
 import ConfirmCode from '../Pages/ConfirmCode';
 import WrongNetwork from '../Pages/WrongNetwork';
 import SignTransaction from '../Pages/SignTransaction';
+import { LanguageKey } from '../../constants/locales';
+import React from 'react';
+import { translate } from '../../utils/translate';
 
 type RouteContent = {
   title: string;
@@ -17,13 +18,15 @@ type RouteContent = {
   Component: React.JSX.Element;
 };
 
-export const modalContent: Record<Routes, RouteContent> = {
+export const getModalContent = (
+  lang: LanguageKey,
+): Record<Routes, RouteContent> => ({
   [Routes.ONBOARDING]: {
-    title: 'Log in or Signup',
+    title: translate('logInOrSignUp', lang),
     Component: <OnBoarding />,
   },
   [Routes.PROFILE]: {
-    title: 'Profile',
+    title: translate('profile', lang),
     Component: <Profile />,
   },
   [Routes.WAITING]: {
@@ -35,24 +38,24 @@ export const modalContent: Record<Routes, RouteContent> = {
     Component: <Successful />,
   },
   [Routes.SIGN_TRANSACTION]: {
-    title: 'Confirmation',
+    title: translate('confirmation', lang),
     Component: <SignTransaction />,
   },
   [Routes.SEND]: {
-    title: 'Send',
+    title: translate('send', lang),
     Component: <Send />,
   },
   [Routes.ACTIVITY]: {
-    title: 'Activity',
+    title: translate('activity', lang),
     Component: <Activity />,
   },
   [Routes.OTP]: {
-    title: '',
+    title: translate('enterConfirmationCodeTitle', lang),
     Component: <ConfirmCode />,
   },
   [Routes.WRONG_NETWORK]: {
     isSticky: true,
-    title: 'Wrong Network',
+    title: translate('wrongNetwork', lang),
     Component: <WrongNetwork />,
   },
-};
+});

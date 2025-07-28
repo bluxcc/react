@@ -9,9 +9,11 @@ import isBackgroundDark from '../../../utils/isBackgroundDark';
 import { Loading, RedExclamation } from '../../../assets/Icons';
 import { setRecentConnectionMethod } from '../../../utils/setRecentConnectionMethod';
 import handleTransactionSigning from '../../../utils/stellar/handleTransactionSigning';
+import { useLang } from '../../../hooks/useLang';
 
 const Waiting = () => {
   const context = useProvider();
+  const t = useLang();
   const hasConnected = useRef(false);
   const [error, setError] = useState(false);
   const [matchedWallet, setMatchedWallet] = useState<WalletInterface | null>(
@@ -107,7 +109,7 @@ const Waiting = () => {
   };
 
   return (
-    <div className="bluxcc:mt-4 bluxcc:flex bluxcc:w-full bluxcc:select-none bluxcc:flex-col bluxcc:items-center bluxcc:justify-center">
+    <div className="bluxcc:mt-4 bluxcc:flex bluxcc:w-full bluxcc:flex-col bluxcc:items-center bluxcc:justify-center bluxcc:select-none">
       {error ? (
         <div
           className={`bluxcc:mb-6 bluxcc:flex bluxcc:items-center bluxcc:justify-center`}
@@ -134,27 +136,32 @@ const Waiting = () => {
       <div className="bluxcc:flex-col bluxcc:space-y-2 bluxcc:text-center bluxcc:font-medium">
         <p className="bluxcc:text-xl">
           {error
-            ? `${waitingStatus === 'connecting'
-              ? 'Login failed'
-              : `Signing with ${user?.wallet?.name} failed`
-            }`
-            : `${waitingStatus === 'connecting' ? 'Waiting for' : `Signing with`
-            } ${user?.wallet?.name}`}
+            ? waitingStatus === 'connecting'
+              ? t('loginFailed')
+              : t('signingFailed', {
+                  walletName: user?.wallet?.name ?? 'wallet',
+                })
+            : waitingStatus === 'connecting'
+              ? t('waitingFor', { walletName: user?.wallet?.name ?? 'wallet' })
+              : t('signingWith', {
+                  walletName: user?.wallet?.name ?? 'wallet',
+                })}
         </p>
         <p className="bluxcc:text-sm">
           {error
-            ? `Please try ${waitingStatus === 'connecting' ? 'logging in' : 'signing'} again.`
-            : `${waitingStatus === 'connecting'
-              ? 'Accept connection'
-              : 'Sign the'
-            } request in your wallet`}
+            ? waitingStatus === 'connecting'
+              ? t('loginRetryMessage')
+              : t('signingRetryMessage')
+            : waitingStatus === 'connecting'
+              ? t('acceptConnection')
+              : t('signRequestInWallet')}
         </p>
       </div>
 
       {/* divider */}
       <div className="bluxcc:flex bluxcc:h-8 bluxcc:w-full bluxcc:items-center bluxcc:justify-center">
         <div
-          className="bluxcc:absolute bluxcc:left-0 bluxcc:right-0"
+          className="bluxcc:absolute bluxcc:right-0 bluxcc:left-0"
           style={{
             borderTopWidth: appearance.includeBorders
               ? appearance.borderWidth
@@ -166,7 +173,7 @@ const Waiting = () => {
 
       {error ? (
         <Button onClick={handleRetry} state="enabled" variant="outline">
-          Try again
+          {t('tryAgain')}
         </Button>
       ) : (
         <Button
@@ -175,7 +182,7 @@ const Waiting = () => {
           className="bluxcc:cursor-default!"
           startIcon={<Loading fill={appearance.accent} />}
         >
-          {waitingStatus === 'connecting' ? 'Connecting' : 'Signing'}
+          {waitingStatus === 'connecting' ? t('connecting') : t('signing')}
         </Button>
       )}
     </div>
