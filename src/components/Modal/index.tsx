@@ -98,12 +98,8 @@ const Modal = ({
                 ? `${isMobile ? height + 40 : height}px`
                 : height,
             transition: heightReady
-              ? `height 300ms ease-in-out, border-radius 300ms, opacity 300ms ease-out${
-                  isMobile ? ', transform 300ms ease-out' : ''
-                }`
-              : `border-radius 300ms, opacity 300ms ease-out ${
-                  isMobile ? ', transform 300ms ease-out' : ''
-                }`,
+              ? `height 300ms ease-in-out, border-radius 300ms, opacity 300ms ease-out${isMobile ? ', transform 300ms ease-out' : ''}`
+              : `border-radius 300ms, opacity 300ms ease-out${isMobile ? ', transform 300ms ease-out' : ''}`,
             transform: isMobile
               ? isOpening
                 ? 'translateY(100%)'
@@ -120,7 +116,7 @@ const Modal = ({
             outlineColor: appearance.borderColor,
             outlineWidth: appearance.borderWidth,
             borderRadius: appearance.borderRadius,
-            // overflow: heightReady ? 'visible' : 'hidden',
+            overflow: 'hidden',
           }}
         >
           <div
@@ -128,7 +124,6 @@ const Modal = ({
             className={`bluxcc:px-6 bluxcc:pb-4`}
             style={{
               opacity: heightReady ? 1 : 0,
-              // overflow: heightReady ? 'visible' : 'hidden',
               transition: 'opacity 300ms ease-in-out',
             }}
           >
