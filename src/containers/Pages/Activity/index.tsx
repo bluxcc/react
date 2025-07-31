@@ -73,7 +73,7 @@ const Activity: React.FC = () => {
         details.description = `${humanizeAmount(op.amount)} ${handleAssetText(op)}`;
       } else if (
         op.type ===
-        Horizon.HorizonApi.OperationResponseType.pathPaymentStrictSend ||
+          Horizon.HorizonApi.OperationResponseType.pathPaymentStrictSend ||
         op.type === Horizon.HorizonApi.OperationResponseType.pathPayment
       ) {
         console.log(op);
@@ -90,7 +90,7 @@ const Activity: React.FC = () => {
   const isEmpty = !loading && transactionsDetails.length === 0;
 
   return (
-    <div className="bluxcc:flex bluxcc:h-[335px] bluxcc:flex-col">
+    <div className="bluxcc:flex bluxcc:h-[355px] bluxcc:flex-col">
       {loading ? (
         <div className="bluxcc:flex bluxcc:h-full bluxcc:flex-col bluxcc:items-center bluxcc:justify-center bluxcc:text-center bluxcc:text-gray-700">
           {t('loadingActivity')}
