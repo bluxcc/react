@@ -3,31 +3,20 @@ import React, { useEffect, useRef, useState } from 'react';
 import { useProvider } from '../../context/provider';
 import { useModalAnimation } from '../../hooks/useModalAnimation';
 
-import ModalHeader from './Header';
 import ModalBackdrop from './Backdrop';
 
 interface ModalProps {
   isOpen: boolean;
   onClose?: () => void;
-  onBack?: () => void;
   children: React.ReactNode;
-  icon?: 'info' | 'back';
-  onInfo?: () => void;
-  closeButton?: boolean;
-  title: string;
   isSticky?: boolean;
 }
 
 const Modal = ({
   isOpen,
   onClose = () => {},
-  onBack,
-  onInfo,
   children,
-  title,
-  icon,
   isSticky = false,
-  closeButton = true,
 }: ModalProps) => {
   const [height, setHeight] = useState<string | number>('auto');
   const [isMobile, setIsMobile] = useState(false);
@@ -52,11 +41,9 @@ const Modal = ({
   useEffect(() => {
     if (!isOpen || !contentRef.current) return;
 
-    // Initialize height when modal opens
     setHeight(contentRef.current.offsetHeight);
     setHeightReady(true);
 
-    // Set up the resize observer to update height when content changes
     const resizeObserver = new ResizeObserver(() => {
       if (contentRef.current) {
         setHeight(contentRef.current.offsetHeight);
@@ -98,8 +85,8 @@ const Modal = ({
                 ? `${isMobile ? height + 40 : height}px`
                 : height,
             transition: heightReady
-              ? `height 300ms ease-in-out, border-radius 300ms, opacity 300ms ease-out, outline 300ms ease-out, color 300ms ease-out${isMobile ? ', transform 300ms ease-out' : ''}`
-              : `border-radius 300ms, opacity 300ms ease-out${isMobile ? ', transform 300ms ease-out' : ''}`,
+              ? `height 250ms ease-in-out, border-radius 250ms, opacity 250ms ease-out, outline 250ms ease-out, color 250ms ease-out${isMobile ? ', transform 250ms ease-out' : ''}`
+              : `border-radius 250ms, opacity 250ms ease-out${isMobile ? ', transform 250ms ease-out' : ''}`,
             transform: isMobile
               ? isOpening
                 ? 'translateY(100%)'
@@ -124,17 +111,9 @@ const Modal = ({
             className={`bluxcc:px-6 bluxcc:pb-4`}
             style={{
               opacity: heightReady ? 1 : 0,
-              transition: 'opacity 300ms ease-in-out',
+              transition: 'opacity 250ms ease-in-out',
             }}
           >
-            <ModalHeader
-              icon={icon}
-              onInfo={onInfo}
-              onBack={onBack}
-              title={title}
-              closeButton={closeButton}
-              onClose={() => handleClose(onClose)}
-            />
             {children}
           </div>
         </div>

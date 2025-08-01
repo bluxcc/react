@@ -6,6 +6,7 @@ import { useProvider } from '../../context/provider';
 import { Routes } from '../../types';
 import { getModalContent } from './content';
 import { LanguageKey } from '../../constants/locales';
+import Header from '../../components/Header';
 
 interface BluxModalProps {
   isOpen: boolean;
@@ -72,13 +73,16 @@ export default function BluxModal({ isOpen, closeModal }: BluxModalProps) {
   return (
     <Modal
       isOpen={isOpen}
-      onBack={handleBackNavigation}
-      onClose={isSticky ? () => {} : handleCloseModal}
-      title={title}
       isSticky={isSticky}
-      icon={modalIcon}
-      closeButton={!showCloseModalIcon}
+      onClose={isSticky ? () => {} : handleCloseModal}
     >
+      <Header
+        onBack={handleBackNavigation}
+        onClose={isSticky ? () => {} : handleCloseModal}
+        title={title}
+        icon={modalIcon}
+        closeButton={!showCloseModalIcon}
+      />
       {Component}
     </Modal>
   );

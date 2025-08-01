@@ -1,6 +1,6 @@
 import React from 'react';
-import { ArrowLeft, Close } from '../../../assets/Icons';
-import { useProvider } from '../../../context/provider';
+import { ArrowLeft, Close } from '../../assets/Icons';
+import { useProvider } from '../../context/provider';
 
 interface HeaderProps {
   icon?: 'info' | 'back';
@@ -41,7 +41,7 @@ const ModalHeader = ({
         <div className="bluxcc:size-5" />
       )}
 
-      <p className="bluxcc:grow bluxcc:select-none bluxcc:text-center bluxcc:text-base bluxcc:font-medium">
+      <p className="bluxcc:grow bluxcc:text-center bluxcc:text-base bluxcc:font-medium bluxcc:select-none">
         {title}
       </p>
 
