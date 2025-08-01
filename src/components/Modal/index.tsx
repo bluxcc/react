@@ -1,9 +1,11 @@
-import React, { useEffect, useRef, useState } from 'react';
+import React, { useRef } from 'react';
 
 import { useProvider } from '../../context/provider';
 import { useModalAnimation } from '../../hooks/useModalAnimation';
 
 import ModalBackdrop from './Backdrop';
+import { useIsMobile } from '../../hooks/useIsMobile';
+import { useDynamicHeight } from '../../hooks/useDynamicHeight';
 
 interface ModalProps {
   isOpen: boolean;
@@ -18,42 +20,17 @@ const Modal = ({
   children,
   isSticky = false,
 }: ModalProps) => {
-  const [height, setHeight] = useState<string | number>('auto');
-  const [isMobile, setIsMobile] = useState(false);
-  const [heightReady, setHeightReady] = useState(false);
-
-  const contentRef = useRef<HTMLDivElement>(null);
   const context = useProvider();
+  const contentRef = useRef<HTMLDivElement>(null);
+
+  const isMobile = useIsMobile();
   const { isOpening, isClosing, handleClose } = useModalAnimation(isOpen);
+  const { height, ready: heightReady } = useDynamicHeight(contentRef, [
+    isOpen,
+    children,
+  ]);
 
   const { appearance } = context.value.config;
-
-  useEffect(() => {
-    const checkMobile = () => setIsMobile(window.innerWidth < 760);
-
-    checkMobile();
-
-    window.addEventListener('resize', checkMobile);
-
-    return () => window.removeEventListener('resize', checkMobile);
-  }, []);
-
-  useEffect(() => {
-    if (!isOpen || !contentRef.current) return;
-
-    setHeight(contentRef.current.offsetHeight);
-    setHeightReady(true);
-
-    const resizeObserver = new ResizeObserver(() => {
-      if (contentRef.current) {
-        setHeight(contentRef.current.offsetHeight);
-      }
-    });
-
-    resizeObserver.observe(contentRef.current);
-
-    return () => resizeObserver.disconnect();
-  }, [isOpen, children]);
 
   if (!isOpen) return null;
 
@@ -82,18 +59,19 @@ const Modal = ({
           style={{
             height:
               typeof height === 'number'
-                ? `${isMobile ? height + 40 : height}px`
+                ? `${isMobile ? height + 20 : height}px`
                 : height,
             transition: heightReady
-              ? `height 250ms ease-in-out, border-radius 250ms, opacity 250ms ease-out, outline 250ms ease-out, color 250ms ease-out${isMobile ? ', transform 250ms ease-out' : ''}`
-              : `border-radius 250ms, opacity 250ms ease-out${isMobile ? ', transform 250ms ease-out' : ''}`,
-            transform: isMobile
-              ? isOpening
+              ? `height 250ms ease-in-out, border-radius 250ms, opacity 250ms ease-out, outline 250ms ease-out, color 250ms ease-out${
+                  isMobile ? ', transform 250ms ease-out' : ''
+                }`
+              : `border-radius 250ms, opacity 250ms ease-out${
+                  isMobile ? ', transform 250ms ease-out' : ''
+                }`,
+            transform:
+              isMobile && (isOpening || isClosing)
                 ? 'translateY(100%)'
-                : isClosing
-                  ? 'translateY(100%)'
-                  : 'translateY(0%)'
-              : 'none',
+                : 'translateY(0%)',
             backgroundColor: appearance.background,
             opacity: isClosing && !isSticky ? '0' : '1',
             color: appearance.textColor,
@@ -108,7 +86,7 @@ const Modal = ({
         >
           <div
             ref={contentRef}
-            className={`bluxcc:px-6 bluxcc:pb-4`}
+            className={`bluxcc:px-6 bluxcc:pt-5 bluxcc:pb-4`}
             style={{
               opacity: heightReady ? 1 : 0,
               transition: 'opacity 250ms ease-in-out',

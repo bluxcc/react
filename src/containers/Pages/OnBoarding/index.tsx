@@ -104,7 +104,7 @@ const OnBoarding = () => {
             alt={value.config.appName}
             width={152}
             height={60}
-            className="bluxcc:max-h-[80px] bluxcc:max-w-[180px]"
+            className="bluxcc:max-h-[80px] bluxcc:max-w-[180px] bluxcc:select-none"
             loading="eager"
             decoding="async"
             draggable="false"

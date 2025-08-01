@@ -1,12 +1,12 @@
 import React from 'react';
 
 import Modal from '../../components/Modal';
+import Header from '../../components/Header';
 import { useProvider } from '../../context/provider';
 
 import { Routes } from '../../types';
 import { getModalContent } from './content';
 import { LanguageKey } from '../../constants/locales';
-import Header from '../../components/Header';
 
 interface BluxModalProps {
   isOpen: boolean;
@@ -61,14 +61,14 @@ export default function BluxModal({ isOpen, closeModal }: BluxModalProps) {
       }
     }
   };
-  const modalContent = getModalContent(value.config.lang as LanguageKey);
-
-  const { title, Component, isSticky } = modalContent[route];
-
   const showCloseModalIcon =
     route === Routes.WRONG_NETWORK ||
     route === Routes.WAITING ||
     route === Routes.SUCCESSFUL;
+
+  const modalContent = getModalContent(value.config.lang as LanguageKey);
+
+  const { title, Component, isSticky } = modalContent[route];
 
   return (
     <Modal

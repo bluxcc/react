@@ -11,7 +11,7 @@ interface HeaderProps {
   onClose: () => void;
 }
 
-const ModalHeader = ({
+const Header = ({
   icon,
   onInfo,
   onBack,
@@ -21,7 +21,7 @@ const ModalHeader = ({
 }: HeaderProps) => {
   const context = useProvider();
   return (
-    <div className="bluxcc:flex bluxcc:h-[60px] bluxcc:w-full bluxcc:items-center bluxcc:justify-between">
+    <div className="bluxcc:flex bluxcc:w-full bluxcc:items-center bluxcc:justify-between bluxcc:pb-5">
       {icon === 'info' ? (
         <div
           onClick={onInfo}
@@ -56,4 +56,4 @@ const ModalHeader = ({
   );
 };
 
-export default ModalHeader;
+export default Header;
