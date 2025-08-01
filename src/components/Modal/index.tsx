@@ -87,7 +87,7 @@ const Modal = ({
         onClick={(e) => e.target === e.currentTarget && handleClose(onClose)}
       >
         <div
-          className={`bluxcc:box-border bluxcc:!shadow-[0px_4px_80px_0px_#00000008] bluxcc:transition-all bluxcc:duration-450 ${
+          className={`bluxcc:box-border bluxcc:!shadow-[0px_4px_80px_0px_#00000008] ${
             isMobile
               ? 'bluxcc:fixed bluxcc:bottom-0 bluxcc:left-0 bluxcc:max-h-[90vh] bluxcc:w-full bluxcc:!rounded-b-none'
               : 'bluxcc:relative bluxcc:!w-[360px]'
@@ -98,7 +98,7 @@ const Modal = ({
                 ? `${isMobile ? height + 40 : height}px`
                 : height,
             transition: heightReady
-              ? `height 300ms ease-in-out, border-radius 300ms, opacity 300ms ease-out${isMobile ? ', transform 300ms ease-out' : ''}`
+              ? `height 300ms ease-in-out, border-radius 300ms, opacity 300ms ease-out, outline 300ms ease-out, color 300ms ease-out${isMobile ? ', transform 300ms ease-out' : ''}`
               : `border-radius 300ms, opacity 300ms ease-out${isMobile ? ', transform 300ms ease-out' : ''}`,
             transform: isMobile
               ? isOpening
