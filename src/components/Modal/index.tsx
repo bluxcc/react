@@ -2,7 +2,6 @@ import React, { useRef } from 'react';
 
 import { useProvider } from '../../context/provider';
 import { useModalAnimation } from '../../hooks/useModalAnimation';
-
 import ModalBackdrop from './Backdrop';
 import { useIsMobile } from '../../hooks/useIsMobile';
 import { useDynamicHeight } from '../../hooks/useDynamicHeight';

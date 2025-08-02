@@ -159,7 +159,7 @@ const CardItem = ({
 
       {endArrow && (
         <span className="bluxcc:ml-auto bluxcc:flex bluxcc:items-center">
-          <ArrowRight fill={appearance.textColor} />
+          <ArrowRight fill={`${hexToRgba(appearance.textColor, 0.7)}`} />
         </span>
       )}
     </div>

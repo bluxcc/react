@@ -1,6 +1,7 @@
 import React from 'react';
 import { ArrowLeft, Close } from '../../assets/Icons';
 import { useProvider } from '../../context/provider';
+import hexToRgba from '../../utils/hexToRgba';
 
 interface HeaderProps {
   icon?: 'info' | 'back';
@@ -20,6 +21,7 @@ const Header = ({
   onClose,
 }: HeaderProps) => {
   const context = useProvider();
+  const { appearance } = context.value.config;
   return (
     <div className="bluxcc:flex bluxcc:w-full bluxcc:items-center bluxcc:justify-between bluxcc:pb-5">
       {icon === 'info' ? (
@@ -35,7 +37,7 @@ const Header = ({
           onClick={onBack}
           className="bluxcc:flex bluxcc:size-5 bluxcc:cursor-pointer bluxcc:items-center bluxcc:justify-center"
         >
-          <ArrowLeft fill={context.value.config.appearance.textColor} />
+          <ArrowLeft fill={`${hexToRgba(appearance.textColor, 0.7)}`} />
         </div>
       ) : (
         <div className="bluxcc:size-5" />
@@ -47,7 +49,7 @@ const Header = ({
 
       {closeButton ? (
         <div onClick={onClose} className="bluxcc:size-5 bluxcc:cursor-pointer">
-          <Close fill={context.value.config.appearance.textColor} />
+          <Close fill={`${hexToRgba(appearance.textColor, 0.7)}`} />
         </div>
       ) : (
         <div className="bluxcc:size-5" />
