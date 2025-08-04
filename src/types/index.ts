@@ -73,14 +73,7 @@ export interface IProviderConfig {
   lang?: LanguageKey;
   showWalletUIs?: boolean;
   loginMethods?: Array<
-    | 'wallet'
-    | 'email'
-    | 'sms'
-    | 'google'
-    | 'twitter'
-    | 'discord'
-    | 'github'
-    | 'passkey'
+    'wallet' | 'email' | 'google' | 'twitter' | 'discord' | 'github' | 'passkey'
   >;
 }
 

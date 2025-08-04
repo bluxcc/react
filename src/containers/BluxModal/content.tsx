@@ -50,7 +50,7 @@ export const getModalContent = (
     Component: <Activity />,
   },
   [Routes.OTP]: {
-    title: translate('enterConfirmationCodeTitle', lang),
+    title: '',
     Component: <ConfirmCode />,
   },
   [Routes.WRONG_NETWORK]: {

@@ -1,6 +1,7 @@
 import React from 'react';
-import { ArrowLeft, Close } from '../../../assets/Icons';
-import { useProvider } from '../../../context/provider';
+import { ArrowLeft, Close } from '../../assets/Icons';
+import { useProvider } from '../../context/provider';
+import hexToRgba from '../../utils/hexToRgba';
 
 interface HeaderProps {
   icon?: 'info' | 'back';
@@ -11,7 +12,7 @@ interface HeaderProps {
   onClose: () => void;
 }
 
-const ModalHeader = ({
+const Header = ({
   icon,
   onInfo,
   onBack,
@@ -20,8 +21,9 @@ const ModalHeader = ({
   onClose,
 }: HeaderProps) => {
   const context = useProvider();
+  const { appearance } = context.value.config;
   return (
-    <div className="bluxcc:flex bluxcc:h-[60px] bluxcc:w-full bluxcc:items-center bluxcc:justify-between">
+    <div className="bluxcc:flex bluxcc:w-full bluxcc:items-center bluxcc:justify-between bluxcc:pb-5">
       {icon === 'info' ? (
         <div
           onClick={onInfo}
@@ -35,19 +37,19 @@ const ModalHeader = ({
           onClick={onBack}
           className="bluxcc:flex bluxcc:size-5 bluxcc:cursor-pointer bluxcc:items-center bluxcc:justify-center"
         >
-          <ArrowLeft fill={context.value.config.appearance.textColor} />
+          <ArrowLeft fill={`${hexToRgba(appearance.textColor, 0.7)}`} />
         </div>
       ) : (
         <div className="bluxcc:size-5" />
       )}
 
-      <p className="bluxcc:grow bluxcc:select-none bluxcc:text-center bluxcc:text-base bluxcc:font-medium">
+      <p className="bluxcc:grow bluxcc:text-center bluxcc:text-base bluxcc:font-medium bluxcc:select-none">
         {title}
       </p>
 
       {closeButton ? (
         <div onClick={onClose} className="bluxcc:size-5 bluxcc:cursor-pointer">
-          <Close fill={context.value.config.appearance.textColor} />
+          <Close fill={`${hexToRgba(appearance.textColor, 0.7)}`} />
         </div>
       ) : (
         <div className="bluxcc:size-5" />
@@ -56,4 +58,4 @@ const ModalHeader = ({
   );
 };
 
-export default ModalHeader;
+export default Header;
