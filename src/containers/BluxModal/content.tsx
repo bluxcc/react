@@ -11,6 +11,7 @@ import SignTransaction from '../Pages/SignTransaction';
 import { LanguageKey } from '../../constants/locales';
 import React from 'react';
 import { translate } from '../../utils/translate';
+import Receive from '../Pages/Receive';
 
 type RouteContent = {
   title: string;
@@ -52,6 +53,18 @@ export const getModalContent = (
   [Routes.OTP]: {
     title: '',
     Component: <ConfirmCode />,
+  },
+  [Routes.RECEIVE]: {
+    title: 'Receive address',
+    Component: <Receive />,
+  },
+  [Routes.SWAP]: {
+    title: 'Swap',
+    Component: <Send />,
+  },
+  [Routes.BALANCES]: {
+    title: 'Balances',
+    Component: <Send />,
   },
   [Routes.WRONG_NETWORK]: {
     isSticky: true,

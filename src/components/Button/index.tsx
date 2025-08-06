@@ -2,9 +2,10 @@ import React from 'react';
 
 import { useProvider } from '../../context/provider';
 import getContrastColor from '../../utils/getContrastColor';
+import hexToRgba from '../../utils/hexToRgba';
 
 type ButtonSize = 'small' | 'medium' | 'large';
-type ButtonVariant = 'outline' | 'text' | 'fill';
+type ButtonVariant = 'outline' | 'text' | 'fill' | 'tonal';
 type ButtonState = 'enabled' | 'disabled' | 'selected';
 
 interface ButtonProps {
@@ -67,6 +68,11 @@ const Button = ({
     Object.assign(baseStyle, {
       color: appearance.accent,
       backgroundColor: 'transparent',
+    });
+  } else if (variant === 'tonal') {
+    Object.assign(baseStyle, {
+      color: appearance.accent,
+      backgroundColor: hexToRgba(appearance.accent, 0.1),
     });
   }
 
