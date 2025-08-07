@@ -3,6 +3,9 @@ import React from 'react';
 import Button from '../../../components/Button';
 import { useProvider } from '../../../context/provider';
 import { LargeCopy } from '../../../assets/Icons';
+import QRCode from '../../../components/QRCode';
+import { SmallBlux } from '../../../assets/bluxLogo';
+import hexToRgba from '../../../utils/hexToRgba';
 
 const Receive = () => {
   const context = useProvider();
@@ -12,8 +15,9 @@ const Receive = () => {
   return (
     <div className="bluxcc:flex bluxcc:w-full bluxcc:flex-col bluxcc:items-center bluxcc:justify-center bluxcc:text-center">
       <div
-        className={`bluxcc:size-[208px] bluxcc:items-center bluxcc:p-2.5`}
+        className={`bluxcc:flex bluxcc:size-[208px] bluxcc:items-center bluxcc:justify-center`}
         style={{
+          position: 'relative',
           borderRadius: appearance.borderRadius,
           color: appearance.textColor,
           borderColor: appearance.borderColor,
@@ -23,10 +27,28 @@ const Receive = () => {
             : '1px',
         }}
       >
-        QR code
+        <QRCode
+          value="https://demo.blux.cc/"
+          size={184}
+          bgColor={appearance.bgField}
+          fgColor={appearance.accent}
+          level="Q"
+        />
+        <div
+          className="bluxcc:z-20"
+          style={{
+            position: 'absolute',
+            top: '50%',
+            left: '50%',
+            transform: 'translate(-50%, -50%)',
+            backgroundColor: appearance.background,
+          }}
+        >
+          <SmallBlux fill={appearance.accent} background={appearance.bgField} />
+        </div>
       </div>
 
-      <div className="bluxcc:mt-4 bluxcc:space-y-2">
+      <div className="bluxcc:mt-4 bluxcc:space-y-2 bluxcc:font-medium">
         <p>Your Address</p>
         <div
           className="bluxcc:w-full bluxcc:px-3 bluxcc:py-2.5 bluxcc:whitespace-normal"
@@ -40,9 +62,17 @@ const Receive = () => {
               : '1px',
           }}
         >
-          <p className="bluxcc:max-w-[292px]">{address}</p>
+          <div
+            className="bluxcc:w-[292px] bluxcc:text-sm bluxcc:break-all"
+            style={{
+              color: hexToRgba(appearance.textColor, 0.7),
+            }}
+          >
+            {address}
+          </div>
         </div>
       </div>
+
       {/* divider */}
       <div className="bluxcc:flex bluxcc:h-8 bluxcc:w-full bluxcc:items-center bluxcc:justify-center">
         <div
