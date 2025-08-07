@@ -52,9 +52,9 @@ const Profile = () => {
 
   return (
     <div className="bluxcc:flex bluxcc:flex-col bluxcc:items-center bluxcc:justify-center">
-      <div className="bluxcc:mb-4 bluxcc:flex bluxcc:flex-col bluxcc:items-center bluxcc:justify-center">
+      <div className="bluxcc:mt-4 bluxcc:mb-6 bluxcc:flex bluxcc:flex-col bluxcc:items-center bluxcc:justify-center">
         <div
-          className="bluxcc:mt-4 bluxcc:size-[64px] bluxcc:rounded-full"
+          className="bluxcc:size-[64px] bluxcc:rounded-full"
           style={{ background: appearance.accent }}
         />
         <p
@@ -64,7 +64,7 @@ const Profile = () => {
           {balance ? `${humanizeAmount(balance)} XLM` : t('loading')}
         </p>
         <p
-          className="bluxcc:!mt-2 bluxcc:inline-flex bluxcc:cursor-pointer bluxcc:text-sm"
+          className="bluxcc:!mt-4 bluxcc:inline-flex bluxcc:cursor-pointer bluxcc:text-sm"
           onClick={handleCopyAddress}
           style={{ color: hexToRgba(appearance.textColor, 0.7) }}
         >
@@ -105,7 +105,7 @@ const Profile = () => {
           }}
         />
       </div>
-      <div className="bluxcc:mt-[16px] bluxcc:w-full bluxcc:space-y-2">
+      <div className="bluxcc:mt-[16px] bluxcc:mb-2 bluxcc:w-full bluxcc:space-y-2">
         <CardItem
           endArrow
           label={t('balances')}

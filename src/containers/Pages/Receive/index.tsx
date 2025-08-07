@@ -15,7 +15,7 @@ const Receive = () => {
   return (
     <div className="bluxcc:flex bluxcc:w-full bluxcc:flex-col bluxcc:items-center bluxcc:justify-center bluxcc:text-center">
       <div
-        className={`bluxcc:flex bluxcc:size-[208px] bluxcc:items-center bluxcc:justify-center`}
+        className={`bluxcc:mt-4 bluxcc:flex bluxcc:size-[208px] bluxcc:items-center bluxcc:justify-center`}
         style={{
           position: 'relative',
           borderRadius: appearance.borderRadius,
