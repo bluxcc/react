@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { useProvider } from '../../../context/provider';
 import Button from '../../../components/Button';
 import hexToRgba from '../../../utils/hexToRgba';
@@ -6,16 +6,25 @@ import { ArrowDropDown, ArrowDropUp, SwapIcon } from '../../../assets/Icons';
 import { StellarLogo } from '../../../assets/logos';
 import getContrastColor from '../../../utils/getContrastColor';
 import { useLang } from '../../../hooks/useLang';
+// import SelectAssets from '../SelectAsset';
 
 const Swap = () => {
+  const [showSelectAssetPage, setShowSelectAssetPage] = useState(false);
+  // const [selectedAsset, setSelectedAsset] = useState<IAsset>(assets[0]);
+
   const context = useProvider();
   const appearance = context.value.config.appearance;
   const t = useLang();
 
   const AssetBox = () => {
+    const handleOpenAssets = () => {
+      setShowSelectAssetPage(true);
+    };
+
     return (
       <div
-        className="bluxcc:flex bluxcc:items-center bluxcc:gap-1 bluxcc:p-1"
+        onClick={handleOpenAssets}
+        className="bluxcc:flex bluxcc:cursor-pointer bluxcc:items-center bluxcc:gap-1 bluxcc:p-1"
         style={{
           backgroundColor: appearance.bgField,
           borderColor: appearance.borderColor,
@@ -44,6 +53,16 @@ const Swap = () => {
     );
   };
 
+  if (showSelectAssetPage) {
+    return (
+      // <SelectAssets
+      //   assets={assets}
+      //   setSelectedAsset={setSelectedAsset}
+      //   setShowSelectAssetPage={setShowSelectAssetPage}
+      // />
+      <p>Assets</p>
+    );
+  }
   return (
     <div className="bluxcc:flex bluxcc:w-full bluxcc:flex-col bluxcc:items-center bluxcc:text-center">
       <div
