@@ -15,6 +15,7 @@ import SignTransaction from '../Pages/SignTransaction';
 import { Routes } from '../../types';
 import { LanguageKey } from '../../constants/locales';
 import { translate } from '../../utils/translate';
+import Balances from '../Pages/Balances';
 
 type RouteContent = {
   title: string;
@@ -67,7 +68,7 @@ export const getModalContent = (
   },
   [Routes.BALANCES]: {
     title: 'Balances',
-    Component: <Send />,
+    Component: <Balances />,
   },
   [Routes.WRONG_NETWORK]: {
     isSticky: true,

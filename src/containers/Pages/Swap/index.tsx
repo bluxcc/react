@@ -2,65 +2,47 @@ import React, { useState } from 'react';
 import { useProvider } from '../../../context/provider';
 import Button from '../../../components/Button';
 import hexToRgba from '../../../utils/hexToRgba';
-import { ArrowDropDown, ArrowDropUp, SwapIcon } from '../../../assets/Icons';
-import { StellarLogo } from '../../../assets/logos';
-import getContrastColor from '../../../utils/getContrastColor';
-import { useLang } from '../../../hooks/useLang';
-// import SelectAssets from '../SelectAsset';
+import { ArrowDropUp, SwapIcon } from '../../../assets/Icons';
 
+import { useLang } from '../../../hooks/useLang';
+import { IAsset } from '../../../types';
+import SelectAssets from '../SelectAsset';
+import AssetBox from './AssetBox';
+
+const mockAssets: IAsset[] = [
+  {
+    assetCode: 'XLM',
+    assetIssuer: 'Stellar Foundation',
+    assetType: 'native',
+    balance: '1000.1234',
+    logo: '🌟',
+  },
+  {
+    assetCode: 'USDC',
+    assetIssuer: 'Centre Consortium',
+    assetType: 'credit_alphanum4',
+    balance: '500.5',
+    logo: '💵',
+  },
+];
 const Swap = () => {
   const [showSelectAssetPage, setShowSelectAssetPage] = useState(false);
-  // const [selectedAsset, setSelectedAsset] = useState<IAsset>(assets[0]);
+  const [selectedAsset, setSelectedAsset] = useState<IAsset>(mockAssets[0]);
 
   const context = useProvider();
   const appearance = context.value.config.appearance;
   const t = useLang();
 
-  const AssetBox = () => {
-    const handleOpenAssets = () => {
-      setShowSelectAssetPage(true);
-    };
-
-    return (
-      <div
-        onClick={handleOpenAssets}
-        className="bluxcc:flex bluxcc:cursor-pointer bluxcc:items-center bluxcc:gap-1 bluxcc:p-1"
-        style={{
-          backgroundColor: appearance.bgField,
-          borderColor: appearance.borderColor,
-          borderRadius: appearance.borderRadius,
-          borderWidth: appearance.includeBorders
-            ? appearance.borderWidth
-            : '1px',
-        }}
-      >
-        <div
-          style={{
-            backgroundColor: appearance.background,
-            borderRadius: appearance.borderRadius,
-            borderColor: appearance.borderColor,
-            borderWidth: appearance.includeBorders
-              ? appearance.borderWidth
-              : '1px',
-          }}
-          className="bluxcc:flex bluxcc:size-10 bluxcc:shrink-0 bluxcc:items-center bluxcc:justify-center bluxcc:overflow-hidden bluxcc:transition-[border-radius] bluxcc:duration-300"
-        >
-          <StellarLogo fill={getContrastColor(appearance.bgField)} />
-        </div>
-        <span>XLM</span>
-        <ArrowDropDown />
-      </div>
-    );
+  const handleOpenAssets = () => {
+    setShowSelectAssetPage(true);
   };
-
   if (showSelectAssetPage) {
     return (
-      // <SelectAssets
-      //   assets={assets}
-      //   setSelectedAsset={setSelectedAsset}
-      //   setShowSelectAssetPage={setShowSelectAssetPage}
-      // />
-      <p>Assets</p>
+      <SelectAssets
+        assets={mockAssets}
+        setSelectedAsset={setSelectedAsset}
+        setShowSelectAssetPage={setShowSelectAssetPage}
+      />
     );
   }
   return (
@@ -98,7 +80,7 @@ const Swap = () => {
             className="bluxcc:w-full bluxcc:bg-transparent bluxcc:text-xl bluxcc:font-medium bluxcc:outline-none"
             style={{ color: appearance.textColor }}
           />
-          <AssetBox />
+          <AssetBox handleOpenAssets={handleOpenAssets} />
         </div>
         <div
           className="bluxcc:mt-1 bluxcc:text-left bluxcc:text-xs"
@@ -148,7 +130,7 @@ const Swap = () => {
             className="bluxcc:w-full bluxcc:bg-transparent bluxcc:text-xl bluxcc:font-medium bluxcc:outline-none"
             style={{ color: appearance.textColor }}
           />
-          <AssetBox />
+          <AssetBox handleOpenAssets={handleOpenAssets} />
         </div>
       </div>
 
