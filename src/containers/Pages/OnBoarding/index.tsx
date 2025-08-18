@@ -7,7 +7,7 @@ import { useProvider } from '../../../context/provider';
 import { Routes, WalletInterface } from '../../../types';
 import getContrastColor from '../../../utils/getContrastColor';
 
-import { StellarLogo } from '../../../assets/logos';
+import { StellarLogo, WalletConnectLogo } from '../../../assets/logos';
 import { SmallEmailIcon } from '../../../assets/Icons';
 import isBackgroundDark from '../../../utils/isBackgroundDark';
 
@@ -128,6 +128,22 @@ const OnBoarding = () => {
           if (method === 'wallet') {
             return (
               <React.Fragment key="wallet">
+                {value.showAllWallets && (
+                  <CardItem
+                    isRecent={false}
+                    label="Wallet Connect"
+                    startIcon={
+                      <WalletConnectLogo
+                        fill={
+                          isBackgroundDark(appearance.background)
+                            ? '#ffffff'
+                            : '#0988f1'
+                        }
+                      />
+                    }
+                    onClick={() => setRoute(Routes.RECEIVE)}
+                  />
+                )}
                 {visibleWallets.map((checkedWallet) => (
                   <CardItem
                     key={checkedWallet.wallet.name}

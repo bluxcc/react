@@ -43,6 +43,7 @@ const Receive = () => {
           <p className="bluxcc:max-w-[292px]">{address}</p>
         </div>
       </div>
+
       {/* divider */}
       <div className="bluxcc:flex bluxcc:h-8 bluxcc:w-full bluxcc:items-center bluxcc:justify-center">
         <div
