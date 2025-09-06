@@ -1,7 +1,7 @@
 {
   "name": "@bluxcc/react",
   "author": "Blux team",
-  "version": "0.1.20",
+  "version": "0.1.22",
   "homepage": "https://blux.cc",
   "description": "Connecting to the Stellar Ecosystem and Beyond",
   "repository": {
@@ -33,7 +33,7 @@
     "@albedo-link/intent": "^0.12.0",
     "@lobstrco/signer-extension-api": "^1.0.0-beta.0",
     "@stellar/freighter-api": "^3.0.0",
-    "@stellar/stellar-sdk": "^13.1.0",
+    "@stellar/stellar-sdk": "^14.1.1",
     "react": ">=17.0.0",
     "react-dom": ">=17.0.0"
   },
