@@ -1,5 +1,8 @@
-import { Routes } from '../../types';
+import React from 'react';
+
+import Swap from '../Pages/Swap';
 import Send from '../Pages/Send';
+import Receive from '../Pages/Receive';
 import Profile from '../Pages/Profile';
 import Waiting from '../Pages/Waiting';
 import Activity from '../Pages/Activity';
@@ -8,9 +11,11 @@ import OnBoarding from '../Pages/OnBoarding';
 import ConfirmCode from '../Pages/ConfirmCode';
 import WrongNetwork from '../Pages/WrongNetwork';
 import SignTransaction from '../Pages/SignTransaction';
+
+import { Routes } from '../../types';
 import { LanguageKey } from '../../constants/locales';
-import React from 'react';
 import { translate } from '../../utils/translate';
+import Balances from '../Pages/Balances';
 
 type RouteContent = {
   title: string;
@@ -52,6 +57,18 @@ export const getModalContent = (
   [Routes.OTP]: {
     title: '',
     Component: <ConfirmCode />,
+  },
+  [Routes.RECEIVE]: {
+    title: 'Receive address',
+    Component: <Receive />,
+  },
+  [Routes.SWAP]: {
+    title: 'Swap',
+    Component: <Swap />,
+  },
+  [Routes.BALANCES]: {
+    title: 'Balances',
+    Component: <Balances />,
   },
   [Routes.WRONG_NETWORK]: {
     isSticky: true,

@@ -173,6 +173,9 @@ export enum Routes {
   SEND = 'SEND', // User sign transaction view
   ACTIVITY = 'ACTIVITY', // User sign transaction view
   OTP = 'OTP', // User Login with Phone ot email
+  RECEIVE = 'RECEIVE', // View for receive page
+  BALANCES = 'BALANCES', // View for balances
+  SWAP = 'SWAP', // View for swap assets
 }
 
 /**

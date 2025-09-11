@@ -38,6 +38,10 @@ const translations: Translations = {
     en: 'Receive',
     es: 'Recibir',
   },
+  balances: {
+    en: 'Balances',
+    es: 'Saldos',
+  },
   wrongNetwork: {
     en: 'Wrong Network',
     es: 'Red incorrecta',

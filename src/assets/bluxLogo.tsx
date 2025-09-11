@@ -71,3 +71,28 @@ const BluxLogo = ({ fill = 'black' }: { fill?: string }) => (
   </svg>
 );
 export default BluxLogo;
+
+export const SmallBlux = ({
+  fill = 'black',
+  background = 'transparent',
+}: {
+  fill?: string;
+  background?: string;
+}) => (
+  <svg
+    width="52"
+    height="52"
+    viewBox="0 0 52 52"
+    fill="none"
+    xmlns="http://www.w3.org/2000/svg"
+  >
+    <rect width="52" height="52" fill={background} />
+    <path d="M39.4391 8H8V12.4539H39.4391V8Z" fill={fill} />
+    <path
+      d="M12.4906 22.1818V8H8V22.1818V23.7749V28.2655V39.495V43.9856V44H12.4906V43.9856H39.3882V39.495H12.4906V28.2655H39.3882V23.7749H12.4906V22.1818Z"
+      fill={fill}
+    />
+    <path d="M43.8933 12.4541H39.4395V23.7198H43.8933V12.4541Z" fill={fill} />
+    <path d="M43.8933 28.1729H39.4395V39.4385H43.8933V28.1729Z" fill={fill} />
+  </svg>
+);
