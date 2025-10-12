@@ -1,83 +1,36 @@
-import { useState, useEffect } from 'react';
-import { Horizon } from '@stellar/stellar-sdk';
+import { core } from '@bluxcc/core';
 
-import useCheckProvider from '../hooks/useCheckProvider';
-import useCustomNetwork from '../hooks/useCustomNetwork';
+import { GetAccountResult } from '../../../core/dist/types';
 
-interface UseAccountProps {
-  address?: string;
-  network?: string;
-}
+import { useEffect, useState } from 'react';
 
-export interface UseAccountResult {
+export type UseAccountResult = {
   loading: boolean;
   error: Error | null;
-  account: Horizon.AccountResponse | null;
-}
-
-const loadAccount = async (horizon: Horizon.Server, address: string) => {
-  try {
-    const accountResponse = await horizon.loadAccount(address);
-
-    return accountResponse;
-  } catch {
-    return null;
-  }
+  result: GetAccountResult;
 };
 
-const useAccount = (params?: UseAccountProps): UseAccountResult => {
-  const { value } = useCheckProvider();
-  const { horizon, networkPassphrase } = useCustomNetwork(params?.network);
-
-  const [result, setResult] = useState<UseAccountResult>({
-    error: null,
-    loading: true,
-    account: null,
-  });
+function useAccount(options: GetAccountOptions): UseAccountResult {
+  const [result, setResult] = useState<GetAccountResult>(null);
+  const [error, setError] = useState<Error | null>(null);
+  const [loading, setLoading] = useState<boolean>(false);
 
   useEffect(() => {
-    setResult({
-      error: null,
-      account: null,
-      loading: true,
-    });
+    setLoading(true);
 
-    const userAddress = value.user.wallet?.address as string | undefined;
-
-    if (!userAddress && !params?.address) {
-      setResult({
-        account: null,
-        loading: false,
-        error: new Error(
-          'Both user.wallet.address and address parameter are undefined',
-        ),
-      });
-
-      return;
-    }
-
-    const finalAddress = (
-      params?.address ? params.address : userAddress
-    ) as string;
-
-    loadAccount(horizon, finalAddress)
-      .then((accountResponse) => {
-        setResult({
-          error: null,
-          loading: false,
-          account: accountResponse,
-        });
+    core
+      .getAccount(options)
+      .then((x) => {
+        setResult(x);
       })
-      .catch((err: Error) => {
-        setResult({
-          error: err,
-          loading: false,
-          account: null,
-        });
+      .catch((e) => {
+        setError(e);
       });
-  }, [params?.address, networkPassphrase, value.user.wallet]);
 
-  return result;
-};
+    setLoading(false);
+  }, [options.address, options.network]);
+
+  return { loading, error, result };
+}
 
 export default useAccount;

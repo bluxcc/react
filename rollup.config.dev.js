@@ -7,8 +7,6 @@ import resolve from '@rollup/plugin-node-resolve';
 import typescript from '@rollup/plugin-typescript';
 import peerDepsExternal from 'rollup-plugin-peer-deps-external';
 
-import pkg from './package.json' with { type: 'json' };
-
 export default {
   input: 'src/index.ts',
   output: [
@@ -16,11 +14,13 @@ export default {
       file: 'dist/index.esm.js',
       format: 'esm',
       sourcemap: true,
+      inlineDynamicImports: true,
     },
     {
       file: 'dist/index.cjs.js',
       format: 'cjs',
       sourcemap: true,
+      inlineDynamicImports: true,
     },
   ],
   preserveEntrySignatures: 'strict',
@@ -53,7 +53,6 @@ export default {
       exclude: ['node_modules', 'motion'],
     }),
   ],
-  external: [...Object.keys(pkg.peerDependencies || {})],
   watch: {
     clearScreen: false,
     include: 'src/**',
