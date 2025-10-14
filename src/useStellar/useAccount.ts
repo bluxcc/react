@@ -1,8 +1,9 @@
-import { core } from '@bluxcc/core';
-
-import { GetAccountResult } from '../../../core/dist/types';
-
+import { getAccount } from '../../../core/dist/index.esm';
 import { useEffect, useState } from 'react';
+import {
+  GetAccountResult,
+  GetAccountOptions,
+} from '@bluxcc/core/dist/exports/core/getAccount';
 
 export type UseAccountResult = {
   loading: boolean;
@@ -10,7 +11,10 @@ export type UseAccountResult = {
   result: GetAccountResult;
 };
 
-function useAccount(options: GetAccountOptions): UseAccountResult {
+export function useAccount(options: GetAccountOptions): UseAccountResult {
+  // TODO: we need the same exact function as the core function here.
+  // Take the options.address, options.network, pass it to it, and wait for changes
+  // In useEffect.
   const [result, setResult] = useState<GetAccountResult>(null);
   const [error, setError] = useState<Error | null>(null);
   const [loading, setLoading] = useState<boolean>(false);
@@ -20,17 +24,16 @@ function useAccount(options: GetAccountOptions): UseAccountResult {
 
     core
       .getAccount(options)
-      .then((x) => {
-        setResult(x);
+      .then((r) => {
+        setResult(r);
+
+        setLoading(false);
       })
       .catch((e) => {
         setError(e);
+        setLoading(false);
       });
-
-    setLoading(false);
   }, [options.address, options.network]);
 
   return { loading, error, result };
 }
-
-export default useAccount;
