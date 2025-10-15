@@ -1,4 +1,4 @@
-import { networks, switchNetwork } from '../../../core/dist/index.esm';
+import { networks, switchNetwork } from '@bluxcc/core';
 
 export const useSwitchNetwork = () => {
   return {

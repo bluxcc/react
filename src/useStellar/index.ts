@@ -1,6 +1,6 @@
-import { core } from '@bluxcc/core';
-
+export { networks } from '@bluxcc/core';
 export * from './useAccount';
+export * from './useNetwork';
 // import useAccounts from './useAccounts';
 // import useAssets from './useAssets';
 // import useBalances from './useBalances';
@@ -19,5 +19,3 @@ export * from './useAccount';
 // import useTrades from './useTrades';
 // import useTransactions from './useTransactions';
 export { useSwitchNetwork } from './useSwitchNetwork';
-
-export const networks = core.networks;

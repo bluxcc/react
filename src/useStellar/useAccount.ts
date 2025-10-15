@@ -1,4 +1,4 @@
-import { getAccount } from '../../../core/dist/index.esm';
+import { getAccount } from '@bluxcc/core';
 import { useEffect, useState } from 'react';
 import {
   GetAccountResult,
@@ -22,8 +22,7 @@ export function useAccount(options: GetAccountOptions): UseAccountResult {
   useEffect(() => {
     setLoading(true);
 
-    core
-      .getAccount(options)
+    getAccount(options)
       .then((r) => {
         setResult(r);
 

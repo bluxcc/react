@@ -9,7 +9,7 @@
     "url": "git+https://github.com/bluxcc/blux"
   },
   "type": "module",
-  "main": "dist/index.esm.js",
+  "main": "dist/index.cjs.js",
   "module": "dist/index.esm.js",
   "types": "dist/index.d.ts",
   "exports": {
@@ -30,7 +30,7 @@
     "build": "rollup -c rollup.config.prod.js"
   },
   "peerDependencies": {
-    "@bluxcc/core": "^0.1.7",
+    "@bluxcc/core": "^0.1.12",
     "react": ">=17.0.0",
     "react-dom": ">=17.0.0"
   },

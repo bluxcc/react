@@ -1,5 +1,5 @@
 import { useEffect, useState } from 'react';
-import { blux, useExportedStore } from '../../../core/dist/index.esm.js';
+import { blux, useExportedStore } from '@bluxcc/core';
 
 export const useBlux = () => {
   const [bluxState, setBluxState] = useState(blux);

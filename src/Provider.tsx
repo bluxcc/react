@@ -1,9 +1,8 @@
 import React, { useEffect } from 'react';
-import { IConfig } from '../../core/dist/types';
-import { createConfig } from '../../core/dist/index.esm.js';
+import { createConfig } from '@bluxcc/core';
+import { IConfig } from '@bluxcc/core/dist/types';
 
 type BluxProviderProps = {
-  isDemo?: boolean;
   config: IConfig;
   children: React.ReactNode | any;
 };
