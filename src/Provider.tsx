@@ -1,5 +1,6 @@
-import React, { useEffect } from 'react';
 import { createConfig } from '@bluxcc/core';
+import React, { useEffect, useRef } from 'react';
+
 import { IConfig } from '@bluxcc/core/dist/types';
 
 type BluxProviderProps = {
@@ -8,9 +9,13 @@ type BluxProviderProps = {
 };
 
 export const BluxProvider = ({ config, children }: BluxProviderProps) => {
-  useEffect(() => {
-    createConfig(config);
-  }, []);
+  const hostRef = useRef<null | HTMLDivElement>(null);
 
-  return <>{children}</>;
+  useEffect(() => {
+    if (hostRef.current) {
+      createConfig(config, hostRef.current);
+    }
+  }, [hostRef, config]);
+
+  return <div ref={hostRef}>{children}</div>;
 };
