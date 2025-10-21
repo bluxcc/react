@@ -1,5 +1,5 @@
-import { createConfig } from '@bluxcc/core';
-import React, { useEffect, useRef } from 'react';
+import React, { useEffect, useMemo, useRef } from 'react';
+import { createConfig, setAppearance } from '@bluxcc/core';
 
 import { IConfig } from '@bluxcc/core/dist/types';
 
@@ -11,11 +11,23 @@ type BluxProviderProps = {
 export const BluxProvider = ({ config, children }: BluxProviderProps) => {
   const hostRef = useRef<null | HTMLDivElement>(null);
 
+  const { appearance, ...restConfig } = config ?? {};
+  const stableRestConfig = useMemo(
+    () => restConfig,
+    [JSON.stringify(restConfig)],
+  );
+
   useEffect(() => {
     if (hostRef.current) {
       createConfig(config, hostRef.current);
     }
-  }, [hostRef, config]);
+  }, [hostRef, stableRestConfig]);
+
+  useEffect(() => {
+    if (hostRef.current) {
+      setAppearance(appearance ?? {});
+    }
+  }, [hostRef, appearance]);
 
   return <div ref={hostRef}>{children}</div>;
 };
