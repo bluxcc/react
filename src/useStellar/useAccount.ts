@@ -12,9 +12,6 @@ export type UseAccountResult = {
 };
 
 export function useAccount(options: GetAccountOptions): UseAccountResult {
-  // TODO: we need the same exact function as the core function here.
-  // Take the options.address, options.network, pass it to it, and wait for changes
-  // In useEffect.
   const [result, setResult] = useState<GetAccountResult>(null);
   const [error, setError] = useState<Error | null>(null);
   const [loading, setLoading] = useState<boolean>(false);
