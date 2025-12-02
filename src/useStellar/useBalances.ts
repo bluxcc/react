@@ -5,18 +5,27 @@ import type {
   GetBalancesOptions,
   GetBalancesResult,
 } from "@bluxcc/core/dist/exports/core/getBalances";
+import { getAddress, getNetwork } from "../utils";
 
 export function useBalances(
   options?: GetBalancesOptions,
   queryOptions?: UseQueryOptions<GetBalancesResult, Error>
 ): UseQueryResult<GetBalancesResult, Error> {
-  const address = options?.address;
 
-  const enabled = Boolean(address && (queryOptions?.enabled ?? true));
+  const address = getAddress(options?.address);
+  const network = getNetwork(options?.network);
+  
+  const enabled = !!address && (queryOptions?.enabled ?? true);
 
   const queryKey = useMemo(
-    () => ["blux", "balances", address ?? null, options?.network ?? null, Boolean(options?.includeZeroBalances)],
-    [address, options?.network, options?.includeZeroBalances]
+    () => [
+      "blux",
+      "balances",
+      address ?? null,
+      network ?? null,
+      Boolean(options?.includeZeroBalances),
+    ],
+    [address, network, options?.includeZeroBalances]
   );
 
   const queryFn = useMemo(
