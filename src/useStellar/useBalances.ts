@@ -1,57 +1,53 @@
-import { useEffect, useState } from "react";
-import { getBalances } from '@bluxcc/core';
+import { useMemo } from "react";
+import { useQuery, UseQueryOptions, UseQueryResult } from "@tanstack/react-query";
+import { getBalances } from "@bluxcc/core";
+import type {
+  GetBalancesOptions,
+  GetBalancesResult,
+} from "@bluxcc/core/dist/exports/core/getBalances";
+import { getAddress, getNetwork } from "../utils";
 
-import { GetBalancesOptions, GetBalancesResult } from '@bluxcc/core/dist/exports/core/getBalances';
+export function useBalances(
+  options?: GetBalancesOptions,
+  queryOptions?: UseQueryOptions<GetBalancesResult, Error>
+): UseQueryResult<GetBalancesResult, Error> {
 
-export type UseBalancesResult = {
-  loading: boolean;
-  error: Error | null;
-  balances: GetBalancesResult;
-};
+  const address = getAddress(options?.address);
+  const network = getNetwork(options?.network);
+  
+  const enabled = !!address && (queryOptions?.enabled ?? true);
 
-export function useBalances(options: GetBalancesOptions | undefined): UseBalancesResult {
-  const [balances, setBalances] = useState<GetBalancesResult>([]);
-  const [error, setError] = useState<Error | null>(null);
-  const [loading, setLoading] = useState<boolean>(false);
+  const queryKey = useMemo(
+    () => [
+      "blux",
+      "balances",
+      address ?? null,
+      network ?? null,
+      Boolean(options?.includeZeroBalances),
+    ],
+    [address, network, options?.includeZeroBalances]
+  );
 
-  useEffect(() => {
-    if (!options?.address) {
-      setBalances([]);
-      setError(null);
-      setLoading(false);
-      return;
-    }
+  const queryFn = useMemo(
+    () => async () => {
+      const opts: GetBalancesOptions = {
+        address: options?.address,
+        network: options?.network,
+        includeZeroBalances: options?.includeZeroBalances,
+      };
+      return getBalances(opts);
+    },
+    [options?.address, options?.network, options?.includeZeroBalances]
+  );
 
-    let cancelled = false;
+  const result = useQuery<GetBalancesResult, Error>({
+    queryKey,
+    queryFn,
+    enabled,
+    ...queryOptions,
+  });
 
-    const run = async () => {
-      try {
-        setLoading(true);
-        setError(null);
-
-        const result = await getBalances(options);
-
-        if (!cancelled) {
-          setBalances(result ?? []);
-        }
-      } catch (e) {
-        if (!cancelled) {
-          setError(e instanceof Error ? e : new Error(String(e)));
-          setBalances([]);
-        }
-      } finally {
-        if (!cancelled) setLoading(false);
-      }
-    };
-
-    run();
-
-    return () => {
-      cancelled = true;
-    };
-  }, [options?.address, options?.network, options?.includeZeroBalances]);
-
-  return { loading, error, balances };
+  return result;
 }
 
 export default useBalances;

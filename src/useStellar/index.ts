@@ -17,5 +17,5 @@ export * from './useLiquidityPools';
 // import useStrictSendPaths from './useStrictSendPaths';
 // import useTradeAggregation from './useTradeAggregation';
 // import useTrades from './useTrades';
-// import useTransactions from './useTransactions';
+// export * from './useTransactions';
 export { useSwitchNetwork } from './useSwitchNetwork';
