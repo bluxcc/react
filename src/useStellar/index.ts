@@ -3,7 +3,7 @@ export * from './useAccount';
 export * from './useNetwork';
 // import useAccounts from './useAccounts';
 // import useAssets from './useAssets';
-// import useBalances from './useBalances';
+export * from './useBalances';
 // import useClaimableBalances from './useClaimableBalances';
 // import useEffects from './useEffects';
 // import useLedgers from './useLedgers';
