@@ -1,55 +1,59 @@
-// Upon testing, it either gives "Bad Request" or "Custom network has no transports."
-
-import { useEffect, useState } from "react";
+import { useMemo } from 'react';
 import { getAssets } from "@bluxcc/core";
-
 import {
-  GetAssetsOptions,
+  useQuery,
+  UseQueryResult,
+  UseQueryOptions,
+} from '@tanstack/react-query';
+import type {
   GetAssetsResult,
+  GetAssetsOptions,
 } from "@bluxcc/core/dist/exports/core/getAssets";
 
-export type UseAssetsResult = {
-  loading: boolean;
-  error: Error | null;
-  result: GetAssetsResult | null;
-};
+import { getNetwork } from '../utils';
 
-export function useAssets(options: GetAssetsOptions): UseAssetsResult {
-  const [result, setResult] = useState<GetAssetsResult | null>(null);
-  const [error, setError] = useState<Error | null>(null);
-  const [loading, setLoading] = useState(false);
+type R = GetAssetsResult;
+type O = GetAssetsOptions;
 
-  useEffect(() => {
-    let cancelled = false;
+export function useAssets(
+  options?: O,
+  queryOptions?: UseQueryOptions<R, Error>,
+): UseQueryResult<R, Error> {
+  const network = getNetwork(options?.network);
+  const enabled = queryOptions?.enabled ?? true;
 
-    setLoading(true);
-    setError(null);
+  const deps = [
+    options?.forCode,
+    options?.forIssuer,
+    options?.cursor,
+    options?.limit,
+    options?.network,
+    options?.order,
+  ];
 
-    getAssets(options)
-      .then((r) => {
-        if (!cancelled) {
-          setResult(r);
-          setLoading(false);
-        }
-      })
-      .catch((err) => {
-        if (!cancelled) {
-          setError(err);
-          setLoading(false);
-        }
-      });
+  const queryKey = useMemo(
+    () => ['blux', 'assets', network, ...deps],
+    [network, options, ...deps],
+  );
 
-    return () => {
-      cancelled = true;
-    };
-  }, [
-    options.network,
-    options.cursor,
-    options.limit,
-    options.order,
-    options.forCode,
-    options.forIssuer,
-  ]);
+  const queryFn = useMemo(
+    () => async () => {
+      const opts: O = {
+        ...options,
+        network,
+      };
 
-  return { loading, error, result };
+      return getAssets(opts);
+    },
+    [network, options, ...deps],
+  );
+
+  const result = useQuery<R, Error>({
+    queryKey,
+    queryFn,
+    enabled,
+    ...queryOptions,
+  });
+
+  return result;
 }

@@ -1,58 +1,59 @@
-// Gives "Issuer is invalid"
-
-import { useEffect, useState } from "react";
+import { useMemo } from 'react';
 import { getLiquidityPools } from "@bluxcc/core";
-
 import {
-  GetLiquidityPoolsOptions,
+  useQuery,
+  UseQueryResult,
+  UseQueryOptions,
+} from '@tanstack/react-query';
+import type {
   GetLiquidityPoolsResult,
+  GetLiquidityPoolsOptions,
 } from "@bluxcc/core/dist/exports/core/getLiquidityPools";
 
-export type UseLiquidityPoolsResult = {
-  loading: boolean;
-  error: Error | null;
-  result: GetLiquidityPoolsResult | null;
-};
+import { getNetwork } from '../utils';
+
+type R = GetLiquidityPoolsResult;
+type O = GetLiquidityPoolsOptions;
 
 export function useLiquidityPools(
-  options: GetLiquidityPoolsOptions
-): UseLiquidityPoolsResult {
-  const [result, setResult] = useState<GetLiquidityPoolsResult | null>(null);
-  const [error, setError] = useState<Error | null>(null);
-  const [loading, setLoading] = useState(false);
+  options?: O,
+  queryOptions?: UseQueryOptions<R, Error>,
+): UseQueryResult<R, Error> {
+  const network = getNetwork(options?.network);
+  const enabled = queryOptions?.enabled ?? true;
 
-  useEffect(() => {
-    let cancelled = false;
+  const deps = [
+    options?.forAccount,
+    options?.forAssets,
+    options?.cursor,
+    options?.limit,
+    options?.network,
+    options?.order,
+  ];
 
-    setLoading(true);
-    setError(null);
-    setResult(null);
+  const queryKey = useMemo(
+    () => ['blux', 'liquidityPools', network, ...deps],
+    [network, ...deps],
+  );
 
-    getLiquidityPools(options)
-      .then((r) => {
-        if (!cancelled) {
-          setResult(r);
-          setLoading(false);
-        }
-      })
-      .catch((err) => {
-        if (!cancelled) {
-          setError(err);
-          setLoading(false);
-        }
-      });
+  const queryFn = useMemo(
+    () => async () => {
+      const opts: O = {
+        ...options,
+        network,
+      };
 
-    return () => {
-      cancelled = true;
-    };
-  }, [
-    options.network,
-    options.cursor,
-    options.limit,
-    options.order,
-    options.forAccount,
-    options.forAssets,
-  ]);
+      return getLiquidityPools(opts);
+    },
+    [network, ...deps],
+  );
 
-  return { loading, error, result };
+  const result = useQuery<R, Error>({
+    queryKey,
+    queryFn,
+    enabled,
+    ...queryOptions,
+  });
+
+  return result;
 }

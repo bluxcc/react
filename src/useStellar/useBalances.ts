@@ -1,46 +1,55 @@
-import { useMemo } from "react";
-import { useQuery, UseQueryOptions, UseQueryResult } from "@tanstack/react-query";
+import { useMemo } from 'react';
 import { getBalances } from "@bluxcc/core";
+import {
+  useQuery,
+  UseQueryResult,
+  UseQueryOptions,
+} from '@tanstack/react-query';
 import type {
-  GetBalancesOptions,
   GetBalancesResult,
+  GetBalancesOptions,
 } from "@bluxcc/core/dist/exports/core/getBalances";
-import { getAddress, getNetwork } from "../utils";
+
+import { getAddress, getNetwork } from '../utils';
+
+type R = GetBalancesResult;
+type O = GetBalancesOptions;
 
 export function useBalances(
-  options?: GetBalancesOptions,
-  queryOptions?: UseQueryOptions<GetBalancesResult, Error>
-): UseQueryResult<GetBalancesResult, Error> {
-
+  options?: O,
+  queryOptions?: UseQueryOptions<R, Error>,
+): UseQueryResult<R, Error> {
   const address = getAddress(options?.address);
   const network = getNetwork(options?.network);
-  
-  const enabled = !!address && (queryOptions?.enabled ?? true);
+  const enabled = queryOptions?.enabled ?? true;
+  const includeZeroBalances = options?.includeZeroBalances ?? true
+
+  const deps = [
+    address,
+    network,
+    includeZeroBalances,
+  ];
 
   const queryKey = useMemo(
-    () => [
-      "blux",
-      "balances",
-      address ?? null,
-      network ?? null,
-      Boolean(options?.includeZeroBalances),
-    ],
-    [address, network, options?.includeZeroBalances]
+    () => ['blux', 'balances', network, ...deps],
+    [network, ...deps],
   );
 
   const queryFn = useMemo(
     () => async () => {
-      const opts: GetBalancesOptions = {
-        address: options?.address,
-        network: options?.network,
-        includeZeroBalances: options?.includeZeroBalances,
+      const opts: O = {
+        ...options,
+        address,
+        includeZeroBalances,
+        network,
       };
+
       return getBalances(opts);
     },
-    [options?.address, options?.network, options?.includeZeroBalances]
+    [network, ...deps],
   );
 
-  const result = useQuery<GetBalancesResult, Error>({
+  const result = useQuery<R, Error>({
     queryKey,
     queryFn,
     enabled,
@@ -49,5 +58,3 @@ export function useBalances(
 
   return result;
 }
-
-export default useBalances;

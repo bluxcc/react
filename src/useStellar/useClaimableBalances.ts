@@ -1,60 +1,62 @@
-// Gives "Issuer is invalid"
-
-import { useEffect, useState } from "react";
+import { useMemo } from 'react';
 import { getClaimableBalances } from "@bluxcc/core";
-
 import {
-  GetClaimableBalancesOptions,
+  useQuery,
+  UseQueryResult,
+  UseQueryOptions,
+} from '@tanstack/react-query';
+import type {
   GetClaimableBalancesResult,
+  GetClaimableBalancesOptions,
 } from "@bluxcc/core/dist/exports/core/getClaimableBalances";
 
-export type UseClaimableBalancesResult = {
-  loading: boolean;
-  error: Error | null;
-  result: GetClaimableBalancesResult | null;
-};
+import { getAddress, getNetwork } from '../utils';
+
+type R = GetClaimableBalancesResult;
+type O = GetClaimableBalancesOptions;
 
 export function useClaimableBalances(
-  options: GetClaimableBalancesOptions
-): UseClaimableBalancesResult {
-  const [result, setResult] = useState<GetClaimableBalancesResult | null>(null);
-  const [error, setError] = useState<Error | null>(null);
-  const [loading, setLoading] = useState(false);
+  options: O,
+  queryOptions?: UseQueryOptions<R, Error>,
+): UseQueryResult<R, Error> {
+  const claimant = getAddress(options.claimant);
+  const network = getNetwork(options?.network);
+  const enabled = queryOptions?.enabled ?? true;
 
-  useEffect(() => {
-    let cancelled = false;
+  const deps = [
+    claimant,
+    options?.asset,
+    options?.sponsor,
+    options?.cursor,
+    options?.limit,
+    options?.network,
+    options?.order,
+  ];
 
-    setLoading(true);
-    setError(null);
-    setResult(null);
+  const queryKey = useMemo(
+    () => ['blux', 'claimableBalances', network, ...deps],
+    [network, ...deps],
+  );
 
-    getClaimableBalances(options)
-      .then((r) => {
-        if (!cancelled) {
-          setResult(r);
-          setLoading(false);
-        }
-      })
-      .catch((err) => {
-        if (!cancelled) {
-          setError(err);
-          setLoading(false);
-        }
-      });
+  const queryFn = useMemo(
+    () => async () => {
+      const opts: O = {
+        ...options,
+        claimant,
+        network,
+      };
 
-    return () => {
-      cancelled = true;
-    };
-  }, [
-    options.network,
-    options.cursor,
-    options.limit,
-    options.order,
-    
-    options.asset,
-    options.claimant,
-    options.sponsor,
-  ]);
+      return getClaimableBalances(opts);
+    },
+    [network, ...deps],
+  );
 
-  return { loading, error, result };
+  const result = useQuery<R, Error>({
+    queryKey,
+    queryFn,
+    enabled,
+    ...queryOptions,
+  });
+
+  return result;
 }

@@ -1,51 +1,61 @@
-import { useState, useEffect } from "react";
-import { getAccounts } from "@bluxcc/core"; // or your local path
+import { useMemo } from 'react';
+import { getAccounts } from '@bluxcc/core';
 import {
-  GetAccountsOptions,
+  useQuery,
+  UseQueryResult,
+  UseQueryOptions,
+} from '@tanstack/react-query';
+import type {
   GetAccountsResult,
-} from "@bluxcc/core/dist/exports/core/getAccounts";
+  GetAccountsOptions,
+} from '@bluxcc/core/dist/exports/core/getAccounts';
 
-export type UseAccountsResult = {
-  loading: boolean;
-  error: Error | null;
-  result: GetAccountsResult | null;
-};
+import { getNetwork } from '../utils';
 
-export function useAccounts(options: GetAccountsOptions): UseAccountsResult {
-  const [result, setResult] = useState<GetAccountsResult | null>(null);
-  const [error, setError] = useState<Error | null>(null);
-  const [loading, setLoading] = useState<boolean>(false);
+type R = GetAccountsResult;
+type O = GetAccountsOptions;
 
-  useEffect(() => {
-    if (!options.network) return;
+export function useAccounts(
+  options?: O,
+  queryOptions?: UseQueryOptions<R, Error>,
+): UseQueryResult<R, Error> {
+  const network = getNetwork(options?.network);
+  const enabled = queryOptions?.enabled ?? true;
 
-    const fetchAccounts = async () => {
-      setLoading(true);
-      setError(null);
+  const deps = [
+    options?.forSigner,
+    options?.forAsset,
+    options?.sponsor,
+    options?.forLiquidityPool,
+    options?.cursor,
+    options?.limit,
+    options?.network,
+    options?.order,
+  ];
 
-      try {
-        const accounts = await getAccounts(options);
-        setResult(accounts);
-      } catch (e) {
-        setError(e instanceof Error ? e : new Error(String(e)));
-        setResult(null);
-      } finally {
-        setLoading(false);
-      }
-    };
+  const queryKey = useMemo(
+    () => ['blux', 'accounts', network, ...deps],
+    [network, ...deps],
+  );
 
-    fetchAccounts();
-  }, [
-    options.network,
-    options.forSigner,
-    options.forAsset?.code,
-    options.forAsset?.issuer,
-    options.forLiquidityPool,
-    options.sponsor,
-    options.cursor,
-    options.limit,
-    options.order,
-  ]);
+  const queryFn = useMemo(
+    () => async () => {
+      const opts: O = {
+        ...options,
+        network,
+      };
+      
+      return getAccounts(opts);
+    },
+    [network, ...deps],
+  );
 
-  return { loading, error, result };
+  const result = useQuery<R, Error>({
+    queryKey,
+    queryFn,
+    enabled,
+    ...queryOptions,
+  });
+
+  return result;
 }

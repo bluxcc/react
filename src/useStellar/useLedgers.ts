@@ -1,47 +1,58 @@
-import { useEffect, useState } from "react";
+import { useMemo } from 'react';
 import { getLedgers } from "@bluxcc/core";
-
 import {
-  GetLedgersOptions,
+  useQuery,
+  UseQueryResult,
+  UseQueryOptions,
+} from '@tanstack/react-query';
+import type {
   GetLedgersResult,
+  GetLedgersOptions,
 } from "@bluxcc/core/dist/exports/core/getLedgers";
 
-export type UseLedgersResult = {
-  loading: boolean;
-  error: Error | null;
-  result: GetLedgersResult | null;
-};
+import { getNetwork } from '../utils';
 
-export function useLedgers(options: GetLedgersOptions): UseLedgersResult {
-  const [result, setResult] = useState<GetLedgersResult | null>(null);
-  const [error, setError] = useState<Error | null>(null);
-  const [loading, setLoading] = useState(false);
+type R = GetLedgersResult;
+type O = GetLedgersOptions;
 
-  useEffect(() => {
-    let cancelled = false;
+export function useLedgers(
+  options?: O,
+  queryOptions?: UseQueryOptions<R, Error>,
+): UseQueryResult<R, Error> {
+  const network = getNetwork(options?.network);
+  const enabled = queryOptions?.enabled ?? true;
 
-    setLoading(true);
-    setError(null);
-    setResult(null);
+  const deps = [
+    options?.ledger,
+    options?.cursor,
+    options?.limit,
+    options?.network,
+    options?.order,
+  ];
 
-    getLedgers(options)
-      .then((r) => {
-        if (!cancelled) {
-          setResult(r);
-          setLoading(false);
-        }
-      })
-      .catch((err) => {
-        if (!cancelled) {
-          setError(err);
-          setLoading(false);
-        }
-      });
+  const queryKey = useMemo(
+    () => ['blux', 'ledgers', network, ...deps],
+    [network, options, ...deps],
+  );
 
-    return () => {
-      cancelled = true;
-    };
-  }, [options.network, options.cursor, options.limit, options.order, options.ledger]);
+  const queryFn = useMemo(
+    () => async () => {
+      const opts: O = {
+        ...options,
+        network,
+      };
 
-  return { loading, error, result };
+      return getLedgers(opts);
+    },
+    [network, options, ...deps],
+  );
+
+  const result = useQuery<R, Error>({
+    queryKey,
+    queryFn,
+    enabled,
+    ...queryOptions,
+  });
+
+  return result;
 }

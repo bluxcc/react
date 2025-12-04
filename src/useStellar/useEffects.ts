@@ -1,57 +1,62 @@
-import { useEffect, useState } from "react";
+import { useMemo } from 'react';
 import { getEffects } from "@bluxcc/core";
-
 import {
-  GetEffectsOptions,
+  useQuery,
+  UseQueryResult,
+  UseQueryOptions,
+} from '@tanstack/react-query';
+import type {
   GetEffectsResult,
+  GetEffectsOptions,
 } from "@bluxcc/core/dist/exports/core/getEffects";
 
-export type UseEffectsResult = {
-  loading: boolean;
-  error: Error | null;
-  result: GetEffectsResult | null;
-};
+import { getNetwork } from '../utils';
 
-export function useEffects(options: GetEffectsOptions): UseEffectsResult {
-  const [result, setResult] = useState<GetEffectsResult | null>(null);
-  const [error, setError] = useState<Error | null>(null);
-  const [loading, setLoading] = useState<boolean>(false);
+type R = GetEffectsResult;
+type O = GetEffectsOptions;
 
-  useEffect(() => {
-    let cancelled = false;
+export function useEffects(
+  options?: O,
+  queryOptions?: UseQueryOptions<R, Error>,
+): UseQueryResult<R, Error> {
+  const network = getNetwork(options?.network);
+  const enabled = queryOptions?.enabled ?? true;
 
-    setLoading(true);
-    setError(null);
-    setResult(null);
+  const deps = [
+    options?.forAccount,
+    options?.forLedger,
+    options?.forTransaction,
+    options?.forOperation,
+    options?.forLiquidityPool,
+    options?.cursor,
+    options?.limit,
+    options?.network,
+    options?.order,
+  ];
 
-    getEffects(options)
-      .then((res) => {
-        if (!cancelled) {
-          setResult(res);
-          setLoading(false);
-        }
-      })
-      .catch((err) => {
-        if (!cancelled) {
-          setError(err);
-          setLoading(false);
-        }
-      });
+  const queryKey = useMemo(
+    () => ['blux', 'effects', network, ...deps],
+    [network, ...deps],
+  );
 
-    return () => {
-      cancelled = true;
-    };
-  }, [
-    options.network,
-    options.cursor,
-    options.limit,
-    options.order,
-    options.forAccount,
-    options.forLedger,
-    options.forTransaction,
-    options.forOperation,
-    options.forLiquidityPool,
-  ]);
+  const queryFn = useMemo(
+    () => async () => {
+      const opts: O = {
+        ...options,
+        network,
+      };
 
-  return { loading, error, result };
+      return getEffects(opts);
+    },
+    [network, ...deps],
+  );
+
+  const result = useQuery<R, Error>({
+    queryKey,
+    queryFn,
+    enabled,
+    ...queryOptions,
+  });
+
+  return result;
 }
