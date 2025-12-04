@@ -1,0 +1,63 @@
+import { useMemo } from 'react';
+import { getOffers } from "@bluxcc/core";
+import {
+  useQuery,
+  UseQueryResult,
+  UseQueryOptions,
+} from '@tanstack/react-query';
+import type {
+  GetOffersResult,
+  GetOffersOptions,
+} from "@bluxcc/core/dist/exports/core/getOffers";
+
+import { getNetwork } from '../utils';
+
+type R = GetOffersResult;
+type O = GetOffersOptions;
+
+export function useOffers(
+  options?: O,
+  queryOptions?: UseQueryOptions<R, Error>,
+): UseQueryResult<R, Error> {
+  const network = getNetwork(options?.network);
+  const enabled = queryOptions?.enabled ?? true;
+
+  const deps = [
+    options?.forAccount,
+    options?.buying,
+    options?.selling,
+    options?.sponsor,
+    options?.seller,
+    options?.forAccount,
+    options?.cursor,
+    options?.limit,
+    options?.network,
+    options?.order,
+  ];
+
+  const queryKey = useMemo(
+    () => ['blux', 'offers', network, ...deps],
+    [network, options, ...deps],
+  );
+
+  const queryFn = useMemo(
+    () => async () => {
+      const opts: O = {
+        ...options,
+        network,
+      };
+
+      return getOffers(opts);
+    },
+    [network, options, ...deps],
+  );
+
+  const result = useQuery<R, Error>({
+    queryKey,
+    queryFn,
+    enabled,
+    ...queryOptions,
+  });
+
+  return result;
+}

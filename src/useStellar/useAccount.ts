@@ -1,38 +1,55 @@
+import { useMemo } from 'react';
 import { getAccount } from '@bluxcc/core';
-import { useEffect, useState } from 'react';
 import {
+  useQuery,
+  UseQueryResult,
+  UseQueryOptions,
+} from '@tanstack/react-query';
+import type {
   GetAccountResult,
   GetAccountOptions,
 } from '@bluxcc/core/dist/exports/core/getAccount';
 
-export type UseAccountResult = {
-  loading: boolean;
-  error: Error | null;
-  result: GetAccountResult;
-};
+import { getNetwork } from '../utils';
 
-export function useAccount(options: GetAccountOptions): UseAccountResult {
-  // TODO: we need the same exact function as the core function here.
-  // Take the options.address, options.network, pass it to it, and wait for changes
-  // In useEffect.
-  const [result, setResult] = useState<GetAccountResult>(null);
-  const [error, setError] = useState<Error | null>(null);
-  const [loading, setLoading] = useState<boolean>(false);
+type R = GetAccountResult;
+type O = GetAccountOptions;
 
-  useEffect(() => {
-    setLoading(true);
+export function useAccount(
+  options?: O,
+  queryOptions?: UseQueryOptions<R, Error>,
+): UseQueryResult<R, Error> {
+  const network = getNetwork(options?.network);
+  const enabled = queryOptions?.enabled ?? true;
 
-    getAccount(options)
-      .then((r) => {
-        setResult(r);
+  const deps = [
+    options?.address,
+    options?.network,
+  ];
 
-        setLoading(false);
-      })
-      .catch((e) => {
-        setError(e);
-        setLoading(false);
-      });
-  }, [options.address, options.network]);
+  const queryKey = useMemo(
+    () => ['blux', 'account', network, ...deps],
+    [network, options, ...deps],
+  );
 
-  return { loading, error, result };
+  const queryFn = useMemo(
+    () => async () => {
+      const opts: O = {
+        ...options,
+        network,
+      };
+
+      return getAccount(opts);
+    },
+    [network, options, ...deps],
+  );
+
+  const result = useQuery<R, Error>({
+    queryKey,
+    queryFn,
+    enabled,
+    ...queryOptions,
+  });
+
+  return result;
 }

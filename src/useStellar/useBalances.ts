@@ -1,5 +1,5 @@
 import { useMemo } from 'react';
-import { getBalances } from '@bluxcc/core';
+import { getBalances } from "@bluxcc/core";
 import {
   useQuery,
   UseQueryResult,
@@ -8,9 +8,9 @@ import {
 import type {
   GetBalancesResult,
   GetBalancesOptions,
-} from '@bluxcc/core/dist/exports/core/getBalances';
+} from "@bluxcc/core/dist/exports/core/getBalances";
 
-import { getAddress, getNetwork } from '../utils';
+import { getNetwork } from '../utils';
 
 type R = GetBalancesResult;
 type O = GetBalancesOptions;
@@ -19,27 +19,30 @@ export function useBalances(
   options?: O,
   queryOptions?: UseQueryOptions<R, Error>,
 ): UseQueryResult<R, Error> {
-  const address = getAddress(options?.address);
   const network = getNetwork(options?.network);
-  const enabled = !!address && (queryOptions?.enabled ?? true);
-  const includeZeroBalances = options?.includeZeroBalances ?? true;
+  const enabled = queryOptions?.enabled ?? true;
+
+  const deps = [
+    options?.address,
+    options?.network,
+    options?.includeZeroBalances
+  ];
 
   const queryKey = useMemo(
-    () => ['blux', 'balances', address, network, includeZeroBalances],
-    [address, network, includeZeroBalances],
+    () => ['blux', 'balances', network, ...deps],
+    [network, options, ...deps],
   );
 
   const queryFn = useMemo(
     () => async () => {
       const opts: O = {
-        address,
+        ...options,
         network,
-        includeZeroBalances,
       };
 
       return getBalances(opts);
     },
-    [address, network, includeZeroBalances],
+    [network, options, ...deps],
   );
 
   const result = useQuery<R, Error>({
