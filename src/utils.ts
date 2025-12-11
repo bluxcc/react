@@ -8,7 +8,7 @@ export type CallBuilderOptions = {
   order?: 'asc' | 'desc';
 };
 
-export type WithoutQueryInternals<T> = Omit<
+export type QueryOptions<T> = Omit<
   UseQueryOptions<T, Error>,
   "queryKey" | "queryFn"
 >;

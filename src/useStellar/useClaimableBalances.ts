@@ -11,14 +11,14 @@ import type {
 } from "@bluxcc/core/dist/exports/core/getClaimableBalances";
 
 import { getAddress, getNetwork } from '../utils';
-import type { WithoutQueryInternals } from '../utils';
+import type { QueryOptions } from '../utils';
 
 type R = GetClaimableBalancesResult;
 type O = GetClaimableBalancesOptions;
 
 export function useClaimableBalances(
   options: O,
-  queryOptions?: WithoutQueryInternals<R>
+  queryOptions?: QueryOptions<R>
 ): UseQueryResult<R, Error> {
   const claimant = getAddress(options.claimant);
   const network = getNetwork(options?.network);

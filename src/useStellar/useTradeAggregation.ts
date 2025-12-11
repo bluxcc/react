@@ -11,7 +11,7 @@ import type {
 
 import { Asset } from '@stellar/stellar-sdk';
 import { CallBuilderOptions, getNetwork } from '../utils';
-import type { WithoutQueryInternals } from '../utils';
+import type { QueryOptions } from '../utils';
 
 type R = GetTradeAggregationResult;
 type O = CallBuilderOptions;
@@ -26,7 +26,7 @@ export function useTradeAggregation(
     offset: number,
   ],
   options?: O,
-  queryOptions?: WithoutQueryInternals<R>
+  queryOptions?: QueryOptions<R>
 ): UseQueryResult<R, Error> {
   const network = getNetwork(options?.network);
   const enabled = queryOptions?.enabled ?? true;
