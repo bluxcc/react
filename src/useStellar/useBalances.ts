@@ -51,10 +51,10 @@ export function useBalances(
   );
 
   const result = useQuery<R, Error>({
+    ...(queryOptions as UseQueryOptions<R, Error> | undefined),
+    enabled,
     queryKey,
     queryFn,
-    enabled,
-    ...(queryOptions as UseQueryOptions<R, Error> | undefined),
   });
 
   return result;

@@ -1,6 +1,10 @@
 import { useMemo } from "react";
 import { getTransactions } from "@bluxcc/core";
-import { useQuery, UseQueryResult, UseQueryOptions } from "@tanstack/react-query";
+import {
+  useQuery,
+  UseQueryResult,
+  UseQueryOptions,
+} from '@tanstack/react-query';
 import type {
   GetTransactionsResult,
   GetTransactionsOptions,
@@ -48,10 +52,10 @@ export function useTransactions(
   );
 
   const result = useQuery<R, Error>({
+    ...(queryOptions as UseQueryOptions<R, Error> | undefined),
+    enabled,
     queryKey,
     queryFn,
-    enabled,
-    ...(queryOptions as UseQueryOptions<R, Error> | undefined),
 });
 
   return result;
