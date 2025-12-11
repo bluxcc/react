@@ -12,6 +12,7 @@ import type {
 import { PaymentCallBuilder } from '@stellar/stellar-sdk/lib/horizon/payment_call_builder';
 import { ServerApi } from '@stellar/stellar-sdk/lib/horizon';
 import { getNetwork } from '../utils';
+import type { WithoutQueryInternals } from '../utils';
 
 type R = {
     builder: PaymentCallBuilder;
@@ -21,7 +22,7 @@ type O = GetPaymentsOptions;
 
 export function usePayments(
   options?: O,
-  queryOptions?: UseQueryOptions<R, Error>,
+  queryOptions?: WithoutQueryInternals<R>
 ): UseQueryResult<R, Error> {
   const network = getNetwork(options?.network);
   const enabled = queryOptions?.enabled ?? true;
@@ -58,7 +59,7 @@ export function usePayments(
     queryKey,
     queryFn,
     enabled,
-    ...queryOptions,
+    ...(queryOptions as UseQueryOptions<R, Error> | undefined),
   });
 
   return result;

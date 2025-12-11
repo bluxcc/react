@@ -11,19 +11,19 @@ import type {
 } from "@bluxcc/core/dist/exports/core/getTrades";
 
 import { getNetwork } from '../utils';
+import type { WithoutQueryInternals } from "../utils";
 
 type R = GetTradesResult;
 type O = GetTradesOptions;
 
 export function useTrades(
   options?: O,
-  queryOptions?: UseQueryOptions<R, Error>,
+  queryOptions?: WithoutQueryInternals<R>
 ): UseQueryResult<R, Error> {
   const network = getNetwork(options?.network);
   const enabled = queryOptions?.enabled ?? true;
 
   const deps = [
-    options?.forAccount,
     options?.forAssetPair,
     options?.forOffer,
     options?.forType,
@@ -56,7 +56,7 @@ export function useTrades(
     queryKey,
     queryFn,
     enabled,
-    ...queryOptions,
+    ...(queryOptions as UseQueryOptions<R, Error> | undefined),
   });
 
   return result;

@@ -11,13 +11,14 @@ import type {
 } from "@bluxcc/core/dist/exports/core/getLiquidityPools";
 
 import { getNetwork } from '../utils';
+import type { WithoutQueryInternals } from '../utils';
 
 type R = GetLiquidityPoolsResult;
 type O = GetLiquidityPoolsOptions;
 
 export function useLiquidityPools(
   options?: O,
-  queryOptions?: UseQueryOptions<R, Error>,
+  queryOptions?: WithoutQueryInternals<R>
 ): UseQueryResult<R, Error> {
   const network = getNetwork(options?.network);
   const enabled = queryOptions?.enabled ?? true;
@@ -52,7 +53,7 @@ export function useLiquidityPools(
     queryKey,
     queryFn,
     enabled,
-    ...queryOptions,
+    ...(queryOptions as UseQueryOptions<R, Error> | undefined),
   });
 
   return result;

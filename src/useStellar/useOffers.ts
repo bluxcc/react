@@ -11,13 +11,14 @@ import type {
 } from "@bluxcc/core/dist/exports/core/getOffers";
 
 import { getNetwork } from '../utils';
+import type { WithoutQueryInternals } from '../utils';
 
 type R = GetOffersResult;
 type O = GetOffersOptions;
 
 export function useOffers(
   options?: O,
-  queryOptions?: UseQueryOptions<R, Error>,
+  queryOptions?: WithoutQueryInternals<R>
 ): UseQueryResult<R, Error> {
   const network = getNetwork(options?.network);
   const enabled = queryOptions?.enabled ?? true;
@@ -28,7 +29,6 @@ export function useOffers(
     options?.selling,
     options?.sponsor,
     options?.seller,
-    options?.forAccount,
     options?.cursor,
     options?.limit,
     options?.network,
@@ -56,7 +56,7 @@ export function useOffers(
     queryKey,
     queryFn,
     enabled,
-    ...queryOptions,
+    ...(queryOptions as UseQueryOptions<R, Error> | undefined),
   });
 
   return result;

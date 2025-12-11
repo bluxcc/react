@@ -11,13 +11,14 @@ import type {
 } from "@bluxcc/core/dist/exports/core/getEffects";
 
 import { getNetwork } from '../utils';
+import type { WithoutQueryInternals } from '../utils';
 
 type R = GetEffectsResult;
 type O = GetEffectsOptions;
 
 export function useEffects(
   options?: O,
-  queryOptions?: UseQueryOptions<R, Error>,
+  queryOptions?: WithoutQueryInternals<R>
 ): UseQueryResult<R, Error> {
   const network = getNetwork(options?.network);
   const enabled = queryOptions?.enabled ?? true;
@@ -55,7 +56,7 @@ export function useEffects(
     queryKey,
     queryFn,
     enabled,
-    ...queryOptions,
+    ...(queryOptions as UseQueryOptions<R, Error> | undefined),
   });
 
   return result;

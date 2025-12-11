@@ -10,8 +10,8 @@ import type {
 } from "@bluxcc/core/dist/exports/core/getTradeAggregation";
 
 import { Asset } from '@stellar/stellar-sdk';
-import { CallBuilderOptions } from '../utils';
-import { getNetwork } from '../utils';
+import { CallBuilderOptions, getNetwork } from '../utils';
+import type { WithoutQueryInternals } from '../utils';
 
 type R = GetTradeAggregationResult;
 type O = CallBuilderOptions;
@@ -26,7 +26,7 @@ export function useTradeAggregation(
     offset: number,
   ],
   options?: O,
-  queryOptions?: UseQueryOptions<R, Error>,
+  queryOptions?: WithoutQueryInternals<R>
 ): UseQueryResult<R, Error> {
   const network = getNetwork(options?.network);
   const enabled = queryOptions?.enabled ?? true;
@@ -65,7 +65,7 @@ export function useTradeAggregation(
     queryKey,
     queryFn,
     enabled,
-    ...queryOptions,
+    ...(queryOptions as UseQueryOptions<R, Error> | undefined),
   });
 
   return result;

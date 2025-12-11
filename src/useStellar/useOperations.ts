@@ -11,13 +11,14 @@ import type {
 } from "@bluxcc/core/dist/exports/core/getOperations";
 
 import { getNetwork } from '../utils';
+import type { WithoutQueryInternals } from '../utils';
 
 type R = GetOperationsResult;
 type O = GetOperationsOptions;
 
 export function useOperations(
   options?: O,
-  queryOptions?: UseQueryOptions<R, Error>,
+  queryOptions?: WithoutQueryInternals<R>
 ): UseQueryResult<R, Error> {
   const network = getNetwork(options?.network);
   const enabled = queryOptions?.enabled ?? true;
@@ -57,7 +58,7 @@ export function useOperations(
     queryKey,
     queryFn,
     enabled,
-    ...queryOptions,
+    ...(queryOptions as UseQueryOptions<R, Error> | undefined),
   });
 
   return result;

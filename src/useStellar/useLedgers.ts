@@ -11,13 +11,14 @@ import type {
 } from "@bluxcc/core/dist/exports/core/getLedgers";
 
 import { getNetwork } from '../utils';
+import type { WithoutQueryInternals } from '../utils';
 
 type R = GetLedgersResult;
 type O = GetLedgersOptions;
 
 export function useLedgers(
   options?: O,
-  queryOptions?: UseQueryOptions<R, Error>,
+  queryOptions?: WithoutQueryInternals<R>
 ): UseQueryResult<R, Error> {
   const network = getNetwork(options?.network);
   const enabled = queryOptions?.enabled ?? true;
@@ -51,7 +52,7 @@ export function useLedgers(
     queryKey,
     queryFn,
     enabled,
-    ...queryOptions,
+    ...(queryOptions as UseQueryOptions<R, Error> | undefined),
   });
 
   return result;

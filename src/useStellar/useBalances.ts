@@ -11,13 +11,14 @@ import type {
 } from "@bluxcc/core/dist/exports/core/getBalances";
 
 import { getAddress, getNetwork } from '../utils';
+import type { WithoutQueryInternals } from '../utils';
 
 type R = GetBalancesResult;
 type O = GetBalancesOptions;
 
 export function useBalances(
   options?: O,
-  queryOptions?: UseQueryOptions<R, Error>,
+  queryOptions?: WithoutQueryInternals<R>
 ): UseQueryResult<R, Error> {
   const address = getAddress(options?.address);
   const network = getNetwork(options?.network);
@@ -53,7 +54,7 @@ export function useBalances(
     queryKey,
     queryFn,
     enabled,
-    ...queryOptions,
+    ...(queryOptions as UseQueryOptions<R, Error> | undefined),
   });
 
   return result;
