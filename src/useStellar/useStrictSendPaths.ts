@@ -10,8 +10,8 @@ import type {
 } from "@bluxcc/core/dist/exports/core/getStrictSendPaths";
 
 import { Asset } from '@stellar/stellar-sdk';
-import { CallBuilderOptions } from '../utils';
-import { getNetwork } from '../utils';
+import { CallBuilderOptions, getNetwork } from '../utils';
+import type { QueryOptions } from '../utils';
 
 type R = GetPaymentPathResult;
 type O = CallBuilderOptions;
@@ -23,7 +23,7 @@ export function useStrictSendPaths(
     destination: string | Asset[],
   ],
   options?: O,
-  queryOptions?: UseQueryOptions<R, Error>,
+  queryOptions?: QueryOptions<R>
 ): UseQueryResult<R, Error> {
   const network = getNetwork(options?.network);
   const enabled = queryOptions?.enabled ?? true;
@@ -56,10 +56,10 @@ export function useStrictSendPaths(
   );
 
   const result = useQuery<R, Error>({
+    ...(queryOptions as UseQueryOptions<R, Error> | undefined),
+    enabled,
     queryKey,
     queryFn,
-    enabled,
-    ...queryOptions,
   });
 
   return result;

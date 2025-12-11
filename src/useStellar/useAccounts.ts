@@ -11,13 +11,14 @@ import type {
 } from '@bluxcc/core/dist/exports/core/getAccounts';
 
 import { getNetwork } from '../utils';
+import type { QueryOptions } from '../utils';
 
 type R = GetAccountsResult;
 type O = GetAccountsOptions;
 
 export function useAccounts(
   options?: O,
-  queryOptions?: UseQueryOptions<R, Error>,
+  queryOptions?: QueryOptions<R>
 ): UseQueryResult<R, Error> {
   const network = getNetwork(options?.network);
   const enabled = queryOptions?.enabled ?? true;
@@ -51,10 +52,10 @@ export function useAccounts(
   );
 
   const result = useQuery<R, Error>({
+    ...(queryOptions as UseQueryOptions<R, Error> | undefined),
+    enabled,
     queryKey,
     queryFn,
-    enabled,
-    ...queryOptions,
   });
 
   return result;

@@ -11,13 +11,14 @@ import type {
 } from "@bluxcc/core/dist/exports/core/getAssets";
 
 import { getNetwork } from '../utils';
+import type { QueryOptions } from '../utils';
 
 type R = GetAssetsResult;
 type O = GetAssetsOptions;
 
 export function useAssets(
   options?: O,
-  queryOptions?: UseQueryOptions<R, Error>,
+  queryOptions?: QueryOptions<R>
 ): UseQueryResult<R, Error> {
   const network = getNetwork(options?.network);
   const enabled = queryOptions?.enabled ?? true;
@@ -49,10 +50,10 @@ export function useAssets(
   );
 
   const result = useQuery<R, Error>({
+    ...(queryOptions as UseQueryOptions<R, Error> | undefined),
+    enabled,
     queryKey,
     queryFn,
-    enabled,
-    ...queryOptions,
   });
 
   return result;

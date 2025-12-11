@@ -10,8 +10,8 @@ import type {
 } from "@bluxcc/core/dist/exports/core/getOrderbook";
 
 import { Asset } from '@stellar/stellar-sdk';
-import { CallBuilderOptions } from '../utils';
-import { getNetwork } from '../utils';
+import { CallBuilderOptions, getNetwork } from '../utils';
+import type { QueryOptions } from '../utils';
 
 type R = GetOrderbookResult;
 type O = CallBuilderOptions;
@@ -19,7 +19,7 @@ type O = CallBuilderOptions;
 export function useOrderbook(
   args: [selling: Asset, buying: Asset],
   options?: O,
-  queryOptions?: UseQueryOptions<R, Error>,
+  queryOptions?: QueryOptions<R>
 ): UseQueryResult<R, Error> {
   const network = getNetwork(options?.network);
   const enabled = queryOptions?.enabled ?? true;
@@ -51,9 +51,9 @@ export function useOrderbook(
   );
 
   return useQuery<R, Error>({
+    ...(queryOptions as UseQueryOptions<R, Error> | undefined),
+    enabled,
     queryKey,
     queryFn,
-    enabled,
-    ...queryOptions,
   });
 }

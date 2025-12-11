@@ -1,4 +1,4 @@
-import { useMemo } from 'react';
+import { useMemo } from "react";
 import { getTransactions } from "@bluxcc/core";
 import {
   useQuery,
@@ -10,14 +10,15 @@ import type {
   GetTransactionsOptions,
 } from "@bluxcc/core/dist/exports/core/getTransactions";
 
-import { getNetwork } from '../utils';
+import { getNetwork } from "../utils";
+import type { QueryOptions } from "../utils";
 
 type R = GetTransactionsResult;
 type O = GetTransactionsOptions;
 
 export function useTransactions(
   options?: O,
-  queryOptions?: UseQueryOptions<R, Error>,
+  queryOptions?: QueryOptions<R>
 ): UseQueryResult<R, Error> {
   const network = getNetwork(options?.network);
   const enabled = queryOptions?.enabled ?? true;
@@ -35,8 +36,8 @@ export function useTransactions(
   ];
 
   const queryKey = useMemo(
-    () => ['blux', 'transactions', network, ...deps],
-    [network, ...deps],
+    () => ["blux", "transactions", network, ...deps],
+    [network, ...deps]
   );
 
   const queryFn = useMemo(
@@ -45,18 +46,17 @@ export function useTransactions(
         ...options,
         network,
       };
-
       return getTransactions(opts);
     },
-    [network, ...deps],
+    [network, ...deps]
   );
 
   const result = useQuery<R, Error>({
+    ...(queryOptions as UseQueryOptions<R, Error> | undefined),
+    enabled,
     queryKey,
     queryFn,
-    enabled,
-    ...queryOptions,
-  });
+});
 
   return result;
 }

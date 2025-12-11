@@ -1,4 +1,5 @@
 import { getState } from '@bluxcc/core';
+import { UseQueryOptions } from '@tanstack/react-query';
 
 export type CallBuilderOptions = {
   cursor?: string;
@@ -6,6 +7,11 @@ export type CallBuilderOptions = {
   network?: string;
   order?: 'asc' | 'desc';
 };
+
+export type QueryOptions<T> = Omit<
+  UseQueryOptions<T, Error>,
+  "queryKey" | "queryFn"
+>;
 
 export const checkConfigCreated = () => {
   const { stellar } = getState();
