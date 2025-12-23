@@ -18,7 +18,7 @@ type O = GetAccountsOptions;
 
 export function useAccounts(
   options?: O,
-  queryOptions?: QueryOptions<R>
+  queryOptions?: QueryOptions<R>,
 ): UseQueryResult<R, Error> {
   const network = getNetwork(options?.network);
   const enabled = queryOptions?.enabled ?? true;
@@ -41,11 +41,12 @@ export function useAccounts(
 
   const queryFn = useMemo(
     () => async () => {
+      // @ts-ignore
       const opts: O = {
         ...options,
         network,
       };
-      
+
       return getAccounts(opts);
     },
     [network, ...deps],
