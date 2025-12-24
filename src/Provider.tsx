@@ -1,6 +1,5 @@
 import React, { useEffect, useMemo, useRef } from 'react';
 import { createConfig, setAppearance } from '@bluxcc/core';
-
 import { IConfig } from '@bluxcc/core/dist/types';
 import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
 
@@ -34,7 +33,7 @@ export const BluxProvider = ({ config, children }: BluxProviderProps) => {
 
   return (
     <QueryClientProvider client={queryClient}>
-      <div ref={hostRef}>{children}</div>;
+      <div ref={hostRef}>{children}</div>
     </QueryClientProvider>
   );
 };

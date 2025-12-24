@@ -1,7 +1,7 @@
 {
   "name": "@bluxcc/react",
   "author": "Blux team",
-  "version": "0.1.31",
+  "version": "0.1.32",
   "homepage": "https://blux.cc",
   "description": "Connecting to the Stellar Ecosystem and Beyond",
   "repository": {
@@ -30,7 +30,7 @@
     "build": "rollup -c rollup.config.prod.js"
   },
   "peerDependencies": {
-    "@bluxcc/core": "^0.1.22",
+    "@bluxcc/core": "^0.1.23",
     "@stellar/stellar-sdk": "^14.4.2",
     "@tanstack/react-query": "^5.90.11",
     "react": ">=17.0.0",

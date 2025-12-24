@@ -3,11 +3,12 @@ import { blux, useExportedStore } from '@bluxcc/core';
 
 export const useBlux = () => {
   const [bluxState, setBluxState] = useState(blux);
-  const store = useExportedStore((state: any) => state);
+  const user = useExportedStore((state) => state.user);
+  const authState = useExportedStore((state) => state.authState);
 
   useEffect(() => {
     setBluxState(blux);
-  }, [store]);
+  }, [user, authState]);
 
   return bluxState;
 };
