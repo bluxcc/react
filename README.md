@@ -79,6 +79,7 @@ Currently supported connection methods:
 - [x] **Ledger**
 - [x] **HotWallet**
 - [x] **WalletConnect**
+- [x] **Klever Wallet**
 - [x] **Email**
 - [ ] **Trezor**
 - [ ] **OAuth**
@@ -94,7 +95,7 @@ Currently supported connection methods:
 For support, licensing, or inquiries, reach out via:
 
 - **Email**: [support@blux.cc](mailto:support@blux.cc)
-- **X (Twitter)**: [@BluxOfficial](https://twitter.com/BluxOfficial)
+- **X**: [@BluxOfficial](https://x.com/bluxofficial)
 
 ## Roadmap & Future Plans
 
