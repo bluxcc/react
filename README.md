@@ -99,7 +99,7 @@ For support, licensing, or inquiries, reach out via:
 
 ## Roadmap & Future Plans
 
-Blux is evolving. Follow our updates on [X (Twitter)](https://twitter.com/BluxOfficial) for:
+Blux is evolving. Follow our updates on [X (Twitter)](https://x.com/BluxOfficial) for:
 
 - **Email & OAuth Authentication (Apple, Meta, Google, etc.)**
 - **More Wallet Integrations**
