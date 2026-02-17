@@ -70,18 +70,18 @@ Configuration options can be set via the `BluxProvider` config or environment va
 
 Currently supported connection methods:
 
+- [x] **Freighter**
 - [x] **Rabet**
+- [x] **Hana**
 - [x] **xBull**
 - [x] **Lobstr**
-- [x] **Freighter**
 - [x] **Albedo**
-- [ ] **Ledger**
+- [x] **Ledger**
+- [x] **HotWallet**
+- [x] **WalletConnect**
+- [x] **Email**
 - [ ] **Trezor**
-- [x] **Hana**
-- [ ] **WalletConnect**
 - [ ] **OAuth**
-- [ ] **Email**
-- [ ] **Phone**
 
 ## License & Usage Restrictions
 
@@ -100,9 +100,6 @@ For support, licensing, or inquiries, reach out via:
 
 Blux is evolving. Follow our updates on [X (Twitter)](https://twitter.com/BluxOfficial) for:
 
-- **OAuth Authentication (Apple, Meta, Google, etc.)**
-- **Email & Phone-Based Authentication**
+- **Email & OAuth Authentication (Apple, Meta, Google, etc.)**
 - **More Wallet Integrations**
 - **Enhanced Customization & Security Features**
-
-Stay tuned. We have many exciting developments ahead!
