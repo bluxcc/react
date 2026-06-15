@@ -41,6 +41,7 @@ const ConnectButton = () => {
 const App = () => {
   const config = {
     appName: 'Your App',
+    appId: 'GET_FROM_BLUX_DASHBOARD',
     networks: [networks.mainnet, networks.testnet],
     defaultNetwork: networks.mainnet,
   };

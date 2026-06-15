@@ -1,5 +1,5 @@
 import { getState } from '@bluxcc/core';
-import { UseQueryOptions } from '@tanstack/react-query';
+import { UseMutationOptions, UseQueryOptions } from '@tanstack/react-query';
 
 export type CallBuilderOptions = {
   cursor?: string;
@@ -11,6 +11,11 @@ export type CallBuilderOptions = {
 export type QueryOptions<T> = Omit<
   UseQueryOptions<T, Error>,
   "queryKey" | "queryFn"
+>;
+
+export type MutationOptions<TData, TVariables> = Omit<
+  UseMutationOptions<TData, Error, TVariables>,
+  "mutationFn"
 >;
 
 export const checkConfigCreated = () => {
