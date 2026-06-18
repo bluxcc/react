@@ -16,6 +16,25 @@ import type { QueryOptions } from '../utils';
 type R = GetOffersResult;
 type O = GetOffersOptions;
 
+/**
+ * Fetches a paginated list of open DEX offers from Horizon.
+ *
+ * Filter by `forAccount` / `seller` (offers created by an account),
+ * `buying` / `selling` (offers on a given asset side), or `sponsor`.
+ *
+ * @param options - `forAccount` / `seller` / `buying` / `selling` / `sponsor`
+ *   filters, plus optional `cursor` / `limit` / `order` and `network` (defaults
+ *   to active).
+ * @param queryOptions - Optional TanStack Query options. `queryKey`/`queryFn`
+ *   are managed by the hook.
+ * @returns A TanStack Query result. `data` is `{ builder, response }`;
+ *   `response.records` holds the offer records (price, amount, assets).
+ *
+ * @example
+ * ```tsx
+ * const { data } = useOffers({ seller: 'GA…' });
+ * ```
+ */
 export function useOffers(
   options?: O,
   queryOptions?: QueryOptions<R>

@@ -16,6 +16,30 @@ import type { QueryOptions } from '../utils';
 type R = GetPaymentPathResult;
 type O = CallBuilderOptions;
 
+/**
+ * Finds payment paths for a fixed destination amount (strict-receive) via
+ * Horizon.
+ *
+ * Use this when you know exactly how much the recipient should receive and want
+ * to discover which source assets/paths can deliver it (and what they would
+ * cost). For the inverse — fixing what the sender spends — use
+ * `useStrictSendPaths`.
+ *
+ * @param args - `[source, destinationAsset, destinationAmount]`: the source
+ *   (a sending `G…` address, or an array of candidate source `Asset`s), the
+ *   asset the destination receives, and the exact amount they receive.
+ * @param options - Optional `cursor` / `limit` / `order` and `network`
+ *   (defaults to active).
+ * @param queryOptions - Optional TanStack Query options. `queryKey`/`queryFn`
+ *   are managed by the hook.
+ * @returns A TanStack Query result. `data` is `{ builder, response }`;
+ *   `response.records` holds each candidate path with its source amount.
+ *
+ * @example
+ * ```tsx
+ * const { data } = useStrictReceivePaths(['GA…', new Asset('USDC', 'GA…'), '100']);
+ * ```
+ */
 export function useStrictReceivePaths(
   args: [
     source: string | Asset[],

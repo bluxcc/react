@@ -16,6 +16,24 @@ import type { QueryOptions } from '../utils';
 type R = GetAssetsResult;
 type O = GetAssetsOptions;
 
+/**
+ * Fetches a paginated list of assets issued on the network from Horizon.
+ *
+ * Optionally narrow the list by `forCode` (asset code, e.g. "USDC") and/or
+ * `forIssuer` (the issuing `G…` address). With no filter it returns all assets.
+ *
+ * @param options - `forCode` / `forIssuer` filters, plus optional
+ *   `cursor` / `limit` / `order` and `network` (defaults to the active network).
+ * @param queryOptions - Optional TanStack Query options. `queryKey`/`queryFn`
+ *   are managed by the hook.
+ * @returns A TanStack Query result. `data` is `{ builder, response }`;
+ *   `response.records` holds the asset records (supply, flags, issuer, …).
+ *
+ * @example
+ * ```tsx
+ * const { data } = useAssets({ forCode: 'USDC' });
+ * ```
+ */
 export function useAssets(
   options?: O,
   queryOptions?: QueryOptions<R>

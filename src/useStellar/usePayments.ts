@@ -20,6 +20,26 @@ type R = {
 }
 type O = GetPaymentsOptions;
 
+/**
+ * Fetches a paginated list of payment operations from Horizon.
+ *
+ * Like `useOperations`, but narrowed to payment-type records (payments,
+ * create-account, path payments, account merges). Filter by `forAccount`,
+ * `forTransaction`, or `forLedger`; set `includeFailed` to include failures.
+ *
+ * @param options - `forAccount` / `forTransaction` / `forLedger` and
+ *   `includeFailed`, plus optional `cursor` / `limit` / `order` and `network`
+ *   (defaults to active).
+ * @param queryOptions - Optional TanStack Query options. `queryKey`/`queryFn`
+ *   are managed by the hook.
+ * @returns A TanStack Query result. `data` is `{ builder, response }`;
+ *   `response.records` holds the payment-related records.
+ *
+ * @example
+ * ```tsx
+ * const { data } = usePayments({ forAccount: 'GA…' });
+ * ```
+ */
 export function usePayments(
   options?: O,
   queryOptions?: QueryOptions<R>

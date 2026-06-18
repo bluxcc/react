@@ -16,6 +16,27 @@ import type { QueryOptions } from '../utils';
 type R = GetEffectsResult;
 type O = GetEffectsOptions;
 
+/**
+ * Fetches a paginated list of effects (the granular results of operations) from
+ * Horizon.
+ *
+ * Effects describe concrete ledger changes — account credited, trustline
+ * created, trade executed, and so on. Filter by `forAccount`, `forLedger`,
+ * `forTransaction`, `forOperation`, or `forLiquidityPool`; with no filter the
+ * full effects feed is returned.
+ *
+ * @param options - One of the `for…` filters, plus optional
+ *   `cursor` / `limit` / `order` and `network` (defaults to active).
+ * @param queryOptions - Optional TanStack Query options. `queryKey`/`queryFn`
+ *   are managed by the hook.
+ * @returns A TanStack Query result. `data` is `{ builder, response }`;
+ *   `response.records` holds the effect records.
+ *
+ * @example
+ * ```tsx
+ * const { data } = useEffects({ forAccount: 'GA…', limit: 50 });
+ * ```
+ */
 export function useEffects(
   options?: O,
   queryOptions?: QueryOptions<R>

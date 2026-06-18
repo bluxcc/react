@@ -16,6 +16,26 @@ import type { QueryOptions } from '../utils';
 type R = GetClaimableBalancesResult;
 type O = GetClaimableBalancesOptions;
 
+/**
+ * Fetches claimable balances addressed to a claimant from Horizon.
+ *
+ * `claimant` defaults to the connected wallet, so by default it lists balances
+ * the current user can claim. `asset` is required; `sponsor` optionally filters
+ * by who reserved the balance.
+ *
+ * @param options - Required: `asset` (the `Asset` to filter by) and `claimant`
+ *   (defaults to the connected wallet). Optional: `sponsor`,
+ *   `cursor` / `limit` / `order`, and `network` (defaults to active).
+ * @param queryOptions - Optional TanStack Query options. `queryKey`/`queryFn`
+ *   are managed by the hook.
+ * @returns A TanStack Query result. `data` is `{ builder, response }`;
+ *   `response.records` holds the claimable balance records.
+ *
+ * @example
+ * ```tsx
+ * const { data } = useClaimableBalances({ asset: Asset.native() });
+ * ```
+ */
 export function useClaimableBalances(
   options: O,
   queryOptions?: QueryOptions<R>

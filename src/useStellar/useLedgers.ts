@@ -16,6 +16,24 @@ import type { QueryOptions } from '../utils';
 type R = GetLedgersResult;
 type O = GetLedgersOptions;
 
+/**
+ * Fetches ledgers from Horizon — either the latest ledgers or a single one.
+ *
+ * Pass `ledger` (a sequence number) to load one specific ledger; omit it to page
+ * through the most recent ledgers.
+ *
+ * @param options - `ledger` (a sequence number for a single ledger), plus
+ *   optional `cursor` / `limit` / `order` and `network` (defaults to active).
+ * @param queryOptions - Optional TanStack Query options. `queryKey`/`queryFn`
+ *   are managed by the hook.
+ * @returns A TanStack Query result. `data` is `{ builder, response }`;
+ *   `response.records` holds the ledger records.
+ *
+ * @example
+ * ```tsx
+ * const { data } = useLedgers({ limit: 10, order: 'desc' });
+ * ```
+ */
 export function useLedgers(
   options?: O,
   queryOptions?: QueryOptions<R>

@@ -16,6 +16,27 @@ import type { QueryOptions } from '../utils';
 type R = GetLiquidityPoolsResult;
 type O = GetLiquidityPoolsOptions;
 
+/**
+ * Fetches a paginated list of liquidity pools from Horizon.
+ *
+ * Optionally filter by `forAssets` (pools containing the given assets) or
+ * `forAccount` (pools an account holds shares in). With no filter it lists all
+ * pools.
+ *
+ * @param options - `forAssets` / `forAccount` filters, plus optional
+ *   `cursor` / `limit` / `order` and `network` (defaults to active).
+ * @param queryOptions - Optional TanStack Query options. `queryKey`/`queryFn`
+ *   are managed by the hook.
+ * @returns A TanStack Query result. `data` is `{ builder, response }`;
+ *   `response.records` holds the liquidity pool records (reserves, shares, …).
+ *
+ * @example
+ * ```tsx
+ * const { data } = useLiquidityPools({
+ *   forAssets: [Asset.native(), new Asset('USDC', 'GA…')],
+ * });
+ * ```
+ */
 export function useLiquidityPools(
   options?: O,
   queryOptions?: QueryOptions<R>

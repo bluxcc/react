@@ -16,6 +16,26 @@ import type { QueryOptions } from '../utils';
 type R = GetOperationsResult;
 type O = GetOperationsOptions;
 
+/**
+ * Fetches a paginated list of operations from Horizon.
+ *
+ * Operations are the individual actions inside transactions (payments, trades,
+ * trustline changes, contract invocations, …). Filter by `forAccount`,
+ * `forTransaction`, `forLedger`, `forClaimableBalance`, or `forLiquidityPool`;
+ * set `includeFailed` to also include operations from failed transactions.
+ *
+ * @param options - The `for…` filters and `includeFailed`, plus optional
+ *   `cursor` / `limit` / `order` and `network` (defaults to active).
+ * @param queryOptions - Optional TanStack Query options. `queryKey`/`queryFn`
+ *   are managed by the hook.
+ * @returns A TanStack Query result. `data` is `{ builder, response }`;
+ *   `response.records` holds the operation records.
+ *
+ * @example
+ * ```tsx
+ * const { data } = useOperations({ forAccount: 'GA…', includeFailed: false });
+ * ```
+ */
 export function useOperations(
   options?: O,
   queryOptions?: QueryOptions<R>

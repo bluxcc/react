@@ -16,6 +16,31 @@ import type { QueryOptions } from '../utils';
 type R = GetAccountResult;
 type O = GetAccountOptions;
 
+/**
+ * Fetches a single account's on-chain state from Horizon.
+ *
+ * Wraps the core `getAccount` call in a TanStack Query. When `address` is
+ * omitted it falls back to the connected wallet's address, so it doubles as a
+ * "current account" hook. Resolves to `null` when the account does not exist on
+ * the target network (e.g. it has never been funded).
+ *
+ * @param options - `address` (the `G…` account to load; defaults to the
+ *   connected wallet) and `network` (defaults to the active network).
+ * @param queryOptions - Optional TanStack Query options (`enabled`, `staleTime`,
+ *   `refetchInterval`, `select`, …). `queryKey`/`queryFn` are managed by the hook.
+ * @returns A TanStack Query result; `data` is the Horizon `AccountResponse`, or
+ *   `null` if the account is not found.
+ *
+ * @example
+ * ```tsx
+ * // Connected wallet's account
+ * const { data: account, isLoading } = useAccount();
+ *
+ * // A specific account
+ * const { data } = useAccount({ address: 'GA…' });
+ * console.log(data?.sequence, data?.balances);
+ * ```
+ */
 export function useAccount(
   options?: O,
   queryOptions?: QueryOptions<R>

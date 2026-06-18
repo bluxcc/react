@@ -16,6 +16,25 @@ import type { QueryOptions } from '../utils';
 type R = GetOrderbookResult;
 type O = CallBuilderOptions;
 
+/**
+ * Fetches the current DEX order book for a `selling`/`buying` asset pair from
+ * Horizon.
+ *
+ * @param args - `[selling, buying]` — the two `Asset`s whose order book to load
+ *   (e.g. `[Asset.native(), usdc]`).
+ * @param options - Optional `cursor` / `limit` / `order` and `network`
+ *   (defaults to active).
+ * @param queryOptions - Optional TanStack Query options. `queryKey`/`queryFn`
+ *   are managed by the hook.
+ * @returns A TanStack Query result. `data` is `{ builder, response }`, where
+ *   `response` holds the `bids` and `asks` arrays.
+ *
+ * @example
+ * ```tsx
+ * const { data } = useOrderbook([Asset.native(), new Asset('USDC', 'GA…')]);
+ * console.log(data?.response.bids, data?.response.asks);
+ * ```
+ */
 export function useOrderbook(
   args: [selling: Asset, buying: Asset],
   options?: O,

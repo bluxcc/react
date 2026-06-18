@@ -1,4 +1,4 @@
-export { setAppearance } from '@bluxcc/core';
+export { setAppearance, ToScVal } from '@bluxcc/core';
 export { Asset } from '@stellar/stellar-sdk';
 
 export * from './useStellar';

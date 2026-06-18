@@ -16,6 +16,31 @@ import type { QueryOptions } from '../utils';
 type R = GetTradeAggregationResult;
 type O = CallBuilderOptions;
 
+/**
+ * Fetches aggregated trade history (OHLC-style time buckets) for an asset pair
+ * from Horizon.
+ *
+ * Useful for building price charts: trades between `base` and `counter` are
+ * grouped into fixed `resolution`-millisecond buckets over the
+ * `start_time`–`end_time` window.
+ *
+ * @param args - `[base, counter, start_time, end_time, resolution, offset]`: the
+ *   two assets, the start/end of the window (ms since epoch), the bucket size
+ *   `resolution` (ms), and a timezone `offset` (ms).
+ * @param options - Optional `cursor` / `limit` / `order` and `network`
+ *   (defaults to active).
+ * @param queryOptions - Optional TanStack Query options. `queryKey`/`queryFn`
+ *   are managed by the hook.
+ * @returns A TanStack Query result whose `data` holds the aggregated trade
+ *   records (open/high/low/close and volume) per time bucket.
+ *
+ * @example
+ * ```tsx
+ * const { data } = useTradeAggregation([
+ *   Asset.native(), new Asset('USDC', 'GA…'), start, end, 3_600_000, 0,
+ * ]);
+ * ```
+ */
 export function useTradeAggregation(
   args: [
     base: Asset,

@@ -18,5 +18,6 @@ export * from './useStrictSendPaths';
 export * from './useTradeAggregation';
 export * from './useTrades';
 export * from './useTransactions';
+export * from './useTransfer';
 export * from './useSwitchNetwork';
 export * from './useWriteContract';
