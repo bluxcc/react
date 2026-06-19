@@ -1,23 +1,28 @@
 import { useMemo } from 'react';
-import { getPayments } from "@bluxcc/core";
+import { getPayments } from '@bluxcc/core';
 import {
   useQuery,
   UseQueryResult,
   UseQueryOptions,
 } from '@tanstack/react-query';
-import type {
-  GetPaymentsOptions,
-} from "@bluxcc/core/dist/exports/core/getPayments";
+import type { GetPaymentsOptions } from '@bluxcc/core/dist/exports/core/getPayments';
+import { ServerApi } from '@stellar/stellar-sdk/lib/esm/horizon';
+import { PaymentCallBuilder } from '@stellar/stellar-sdk/lib/esm/horizon/payment_call_builder';
 
-import { PaymentCallBuilder } from '@stellar/stellar-sdk/lib/horizon/payment_call_builder';
-import { ServerApi } from '@stellar/stellar-sdk/lib/horizon';
 import { getNetwork } from '../utils';
 import type { QueryOptions } from '../utils';
 
 type R = {
-    builder: PaymentCallBuilder;
-    response: ServerApi.CollectionPage<ServerApi.CreateAccountOperationRecord | ServerApi.PaymentOperationRecord | ServerApi.PathPaymentOperationRecord | ServerApi.AccountMergeOperationRecord | ServerApi.PathPaymentStrictSendOperationRecord | ServerApi.InvokeHostFunctionOperationRecord>;
-}
+  builder: PaymentCallBuilder;
+  response: ServerApi.CollectionPage<
+    | ServerApi.CreateAccountOperationRecord
+    | ServerApi.PaymentOperationRecord
+    | ServerApi.PathPaymentOperationRecord
+    | ServerApi.AccountMergeOperationRecord
+    | ServerApi.PathPaymentStrictSendOperationRecord
+    | ServerApi.InvokeHostFunctionOperationRecord
+  >;
+};
 type O = GetPaymentsOptions;
 
 /**
@@ -42,7 +47,7 @@ type O = GetPaymentsOptions;
  */
 export function usePayments(
   options?: O,
-  queryOptions?: QueryOptions<R>
+  queryOptions?: QueryOptions<R>,
 ): UseQueryResult<R, Error> {
   const network = getNetwork(options?.network);
   const enabled = queryOptions?.enabled ?? true;
