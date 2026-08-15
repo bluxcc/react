@@ -159,7 +159,6 @@ Currently supported languages:
 
 ## License & Usage Restrictions
 
-* **No Production Use Until 2028**: This software is provided under the **Blux Team License** with restrictions on production use.
 * **No Forking or Unauthorized Modifications**: Removing references to **Blux Team** or forking without attribution is strictly prohibited.
 * **Custom Licensing Available**: Contact us at [support@blux.cc](mailto:support@blux.cc) to discuss licensing options.
 
