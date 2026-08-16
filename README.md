@@ -142,6 +142,7 @@ Currently supported connection methods:
 * [x] **Trezor**
 * [x] **Email**
 * [x] **Google**
+* [x] **Passkey**
 
 ## Supported Languages
 
@@ -159,7 +160,7 @@ Currently supported languages:
 
 ## License & Usage Restrictions
 
-* **No Forking or Unauthorized Modifications**: Removing references to **Blux Team** or forking without attribution is strictly prohibited.
+* **No Unauthorized Modifications**: Removing references to **Blux Team** or forking without attribution is strictly prohibited.
 * **Custom Licensing Available**: Contact us at [support@blux.cc](mailto:support@blux.cc) to discuss licensing options.
 
 ## Support & Contact
