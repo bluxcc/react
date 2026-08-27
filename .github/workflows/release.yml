@@ -1,0 +1,93 @@
+name: GitHub Release
+
+on:
+  push:
+    branches:
+      - master
+  workflow_dispatch:
+    inputs:
+      recreate:
+        description: Delete and recreate the current package version release
+        type: boolean
+        default: false
+
+permissions:
+  contents: write
+
+jobs:
+  release:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - name: Read package version
+        id: pkg
+        run: |
+          VERSION="$(node -p "require('./package.json').version")"
+          echo "version=${VERSION}" >> "$GITHUB_OUTPUT"
+          echo "tag=v${VERSION}" >> "$GITHUB_OUTPUT"
+
+      - name: Publish GitHub Release
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          TAG: ${{ steps.pkg.outputs.tag }}
+          VERSION: ${{ steps.pkg.outputs.version }}
+          RECREATE: ${{ github.event_name == 'workflow_dispatch' && github.event.inputs.recreate == 'true' }}
+          NOTES: |
+            **@bluxcc/react** `${{ steps.pkg.outputs.version }}` is on npm.
+
+            ```sh
+            npm i @bluxcc/react@${{ steps.pkg.outputs.version }}
+            ```
+
+            [npm package](https://www.npmjs.com/package/@bluxcc/react/v/${{ steps.pkg.outputs.version }})
+        run: |
+          set -euo pipefail
+
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+
+          if ! git rev-parse "$TAG" >/dev/null 2>&1; then
+            git tag -a "$TAG" -m "$TAG"
+            git push origin "$TAG"
+          fi
+
+          should_create=false
+          if ! gh release view "$TAG" >/dev/null 2>&1; then
+            should_create=true
+          else
+            target="$(gh release view "$TAG" --json targetCommitish --jq .targetCommitish)"
+            if [[ "$RECREATE" == "true" || "$target" =~ ^[0-9a-f]{40}$ ]]; then
+              echo "Recreating $TAG (target was ${target})"
+              gh release delete "$TAG" --yes
+              should_create=true
+            fi
+          fi
+
+          if [[ "$should_create" == "true" ]]; then
+            gh release create "$TAG" \
+              --title "$TAG" \
+              --verify-tag \
+              --generate-notes \
+              --notes "$NOTES"
+          else
+            echo "Release $TAG already exists"
+          fi
+
+          # Repair older releases created from a commit SHA. GitHub never
+          # finishes source zip/tar when target_commitish is a SHA.
+          for other in $(git tag -l 'v*'); do
+            [[ "$other" == "$TAG" ]] && continue
+            gh release view "$other" >/dev/null 2>&1 || continue
+            target="$(gh release view "$other" --json targetCommitish --jq .targetCommitish)"
+            [[ "$target" =~ ^[0-9a-f]{40}$ ]] || continue
+
+            echo "Repairing $other (target was ${target})"
+            body="$(gh release view "$other" --json body --jq .body)"
+            name="$(gh release view "$other" --json name --jq .name)"
+            gh release delete "$other" --yes
+            gh release create "$other" --title "$name" --verify-tag --notes "$body"
+          done
