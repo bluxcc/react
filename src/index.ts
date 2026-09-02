@@ -54,5 +54,5 @@ export type {
 export { Asset } from '@stellar/stellar-sdk';
 
 export * from './useStellar';
-export { useBlux } from './hooks/useBlux';
+export * from './hooks';
 export { BluxProvider } from './Provider';
