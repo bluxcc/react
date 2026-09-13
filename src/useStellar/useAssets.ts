@@ -1,5 +1,5 @@
 import { useMemo } from 'react';
-import { getAssets } from "@bluxcc/core";
+import { getAssets } from '@bluxcc/core';
 import {
   useQuery,
   UseQueryResult,
@@ -8,7 +8,7 @@ import {
 import type {
   GetAssetsResult,
   GetAssetsOptions,
-} from "@bluxcc/core/dist/exports/core/getAssets";
+} from '@bluxcc/core/dist/exports/core/getAssets';
 
 import { getNetwork } from '../utils';
 import type { QueryOptions } from '../utils';
@@ -20,7 +20,8 @@ type O = GetAssetsOptions;
  * Fetches a paginated list of assets issued on the network from Horizon.
  *
  * Optionally narrow the list by `forCode` (asset code, e.g. "USDC") and/or
- * `forIssuer` (the issuing `G…` address). With no filter it returns all assets.
+ * `forIssuer` (a `G…`/`M…`, SEP-2, or `.xlm` account). With no filter it
+ * returns all assets.
  *
  * @param options - `forCode` / `forIssuer` filters, plus optional
  *   `cursor` / `limit` / `order` and `network` (defaults to the active network).
@@ -36,7 +37,7 @@ type O = GetAssetsOptions;
  */
 export function useAssets(
   options?: O,
-  queryOptions?: QueryOptions<R>
+  queryOptions?: QueryOptions<R>,
 ): UseQueryResult<R, Error> {
   const network = getNetwork(options?.network);
   const enabled = queryOptions?.enabled ?? true;

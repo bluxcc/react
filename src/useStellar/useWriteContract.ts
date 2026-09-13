@@ -11,7 +11,15 @@ import type {
 
 import type { MutationOptions } from '../utils';
 
-type R = Awaited<ReturnType<typeof writeContract>>;
+type CoreWriteContractResult = Awaited<ReturnType<typeof writeContract>>;
+
+/** Submitted transaction with a caller-specified decoded contract result. */
+export type WriteContractHookResult<TReturnValue = unknown> = Omit<
+  CoreWriteContractResult,
+  'returnValue'
+> & {
+  returnValue: () => Promise<TReturnValue | null>;
+};
 
 /**
  * Variables for {@link useWriteContract}: the contract `call` to invoke and
@@ -26,12 +34,12 @@ type V = WriteContractVariables;
 
 /**
  * Submits a state-changing Soroban contract invocation as a signed, on-chain
- * transaction.
+ * transaction. Native positional arguments are encoded from the deployed
+ * contract ABI; pre-built `xdr.ScVal`s are also accepted.
  *
  * A thin wrapper over TanStack Query's `useMutation`: call `mutate` /
- * `mutateAsync` with the contract call to sign and send it. Build `args` with
- * the exported `ToScVal` helpers. For read-only calls (no signature, no fees)
- * use `useReadContracts` instead.
+ * `mutateAsync` with the contract call to sign and send it. For read-only calls
+ * (no signature, no fees) use `useReadContracts` instead.
  *
  * @param mutationOptions - Optional TanStack Mutation options (`onSuccess`,
  *   `onError`, `onSettled`, …); `mutationFn` is provided by the hook.
@@ -41,26 +49,28 @@ type V = WriteContractVariables;
  *
  * @example
  * ```tsx
- * const { mutate, isPending, data } = useWriteContract();
+ * const { mutateAsync, isPending } = useWriteContract<bigint>();
  *
- * mutate({
+ * const transaction = await mutateAsync({
  *   call: {
- *     address: 'C…',
+ *     address: 'token.xlm',
  *     fn: 'transfer',
- *     args: [
- *       ToScVal.address('GFROM…'),
- *       ToScVal.address('GTO…'),
- *       ToScVal.i128('1000000'),
- *     ],
+ *     args: ['alice.xlm', 'bob.xlm', 1_000_000],
  *   },
  * });
+ * const result = await transaction.returnValue(); // bigint | null
  * ```
  */
-export function useWriteContract(
-  mutationOptions?: MutationOptions<R, V>
-): UseMutationResult<R, Error, V> {
-  return useMutation<R, Error, V>({
-    ...(mutationOptions as UseMutationOptions<R, Error, V> | undefined),
-    mutationFn: async ({ call, options }) => writeContract(call, options),
+export function useWriteContract<TReturnValue = unknown>(
+  mutationOptions?: MutationOptions<WriteContractHookResult<TReturnValue>, V>,
+): UseMutationResult<WriteContractHookResult<TReturnValue>, Error, V> {
+  return useMutation<WriteContractHookResult<TReturnValue>, Error, V>({
+    ...(mutationOptions as
+      | UseMutationOptions<WriteContractHookResult<TReturnValue>, Error, V>
+      | undefined),
+    mutationFn: async ({ call, options }) =>
+      writeContract(call, options) as Promise<
+        WriteContractHookResult<TReturnValue>
+      >,
   });
 }

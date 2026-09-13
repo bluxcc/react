@@ -24,7 +24,7 @@ type O = GetAccountOptions;
  * "current account" hook. Resolves to `null` when the account does not exist on
  * the target network (e.g. it has never been funded).
  *
- * @param options - `address` (the `G…` account to load; defaults to the
+ * @param options - `address` (`G…`/`M…`, SEP-2, or `.xlm`; defaults to the
  *   connected wallet) and `network` (defaults to the active network).
  * @param queryOptions - Optional TanStack Query options (`enabled`, `staleTime`,
  *   `refetchInterval`, `select`, …). `queryKey`/`queryFn` are managed by the hook.
@@ -37,22 +37,19 @@ type O = GetAccountOptions;
  * const { data: account, isLoading } = useAccount();
  *
  * // A specific account
- * const { data } = useAccount({ address: 'GA…' });
+ * const { data } = useAccount({ address: 'alice.xlm' });
  * console.log(data?.sequence, data?.balances);
  * ```
  */
 export function useAccount(
   options?: O,
-  queryOptions?: QueryOptions<R>
+  queryOptions?: QueryOptions<R>,
 ): UseQueryResult<R, Error> {
   const address = getAddress(options?.address);
   const network = getNetwork(options?.network);
   const enabled = queryOptions?.enabled ?? true;
 
-  const deps = [
-    address,
-    network,
-  ];
+  const deps = [address, network];
 
   const queryKey = useMemo(
     () => ['blux', 'account', network, ...deps],

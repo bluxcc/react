@@ -67,14 +67,14 @@ export type UseSwapResult = UseMutationResult<R, Error, V> & {
  *   fromAsset: 'USDC:GA…',
  *   toAsset: 'xlm',
  *   amount: '25',
- *   to: 'GB…',
+ *   to: 'alice.xlm',
  *   slippage: 0.01, // 1%
  *   memo: 'cash out',
  * });
  * ```
  */
 export function useSwap(
-  mutationOptions?: MutationOptions<R, V>
+  mutationOptions?: MutationOptions<R, V>,
 ): UseSwapResult {
   const mutation = useMutation<R, Error, V>({
     ...(mutationOptions as UseMutationOptions<R, Error, V> | undefined),

@@ -13,7 +13,7 @@ type R = Awaited<ReturnType<typeof transfer>>;
 /**
  * Variables for {@link useTransfer} — the core `transfer` options verbatim, so
  * every path it supports (native XLM, issued asset, claimable balance, SEP-41
- * token, federated address) is just a different object passed to
+ * token, federated address, `.xlm` name) is just a different object passed to
  * `transfer({ ... })`.
  */
 export type TransferVariables = TransferOptions;
@@ -63,11 +63,11 @@ export type UseTransferResult = UseMutationResult<R, Error, V> & {
  * transfer({ to: 'GB…', amount: '1000000', token: 'C…' });
  *
  * // Await the result (e.g. in a form submit handler)
- * const tx = await transferAsync({ to: 'alice*example.com', amount: '5' });
+ * const tx = await transferAsync({ to: 'alice.xlm', amount: '5' });
  * ```
  */
 export function useTransfer(
-  mutationOptions?: MutationOptions<R, V>
+  mutationOptions?: MutationOptions<R, V>,
 ): UseTransferResult {
   const mutation = useMutation<R, Error, V>({
     ...(mutationOptions as UseMutationOptions<R, Error, V> | undefined),

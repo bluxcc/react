@@ -35,7 +35,7 @@ type O = GetAccountsOptions;
  *
  * @example
  * ```tsx
- * const { data } = useAccounts({ forSigner: 'GA…', limit: 20 });
+ * const { data } = useAccounts({ forSigner: 'alice.xlm', limit: 20 });
  * data?.response.records.forEach((a) => console.log(a.account_id));
  * ```
  */

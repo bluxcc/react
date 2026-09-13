@@ -27,8 +27,8 @@ type O = GetTokenMetadataOptions;
  * Contracts, which expose `admin()` instead). The query stays disabled until a
  * non-empty `address` is provided.
  *
- * @param address - The token contract id (`C…`), e.g. a SAC from
- *   {@link useSacAddress} / `getSacAddress`.
+ * @param address - A token contract id (`C…`) or `.xlm`/SEP-2 name resolving
+ *   to one, e.g. a SAC from {@link useSacAddress} / `getSacAddress`.
  * @param options - Core read options (currently just `network`, which defaults
  *   to the active network).
  * @param queryOptions - Optional TanStack Query options (`enabled`, `staleTime`,
@@ -52,20 +52,14 @@ type O = GetTokenMetadataOptions;
 export function useTokenMetadata(
   address: string,
   options?: O,
-  queryOptions?: QueryOptions<R>
+  queryOptions?: QueryOptions<R>,
 ): UseQueryResult<R, Error> {
   const network = getNetwork(options?.network);
   const enabled = (queryOptions?.enabled ?? true) && Boolean(address);
 
-  const deps = [
-    address,
-    network,
-  ];
+  const deps = [address, network];
 
-  const queryKey = useMemo(
-    () => ['blux', 'tokenMetadata', ...deps],
-    [...deps],
-  );
+  const queryKey = useMemo(() => ['blux', 'tokenMetadata', ...deps], [...deps]);
 
   const queryFn = useMemo(
     () => async () => {

@@ -1,13 +1,11 @@
 import { useMemo } from 'react';
-import { getStrictReceivePaths } from "@bluxcc/core";
+import { getStrictReceivePaths } from '@bluxcc/core';
 import {
   useQuery,
   UseQueryResult,
   UseQueryOptions,
 } from '@tanstack/react-query';
-import type {
-  GetPaymentPathResult
-} from "@bluxcc/core/dist/exports/core/getStrictReceivePaths";
+import type { GetPaymentPathResult } from '@bluxcc/core/dist/exports/core/getStrictReceivePaths';
 
 import { Asset } from '@stellar/stellar-sdk';
 import { CallBuilderOptions, getNetwork } from '../utils';
@@ -26,8 +24,8 @@ type O = CallBuilderOptions;
  * `useStrictSendPaths`.
  *
  * @param args - `[source, destinationAsset, destinationAmount]`: the source
- *   (a sending `G…` address, or an array of candidate source `Asset`s), the
- *   asset the destination receives, and the exact amount they receive.
+ *   (an account address/SEP-2/`.xlm` name, or an array of candidate source
+ *   `Asset`s), the asset the destination receives, and the exact amount.
  * @param options - Optional `cursor` / `limit` / `order` and `network`
  *   (defaults to active).
  * @param queryOptions - Optional TanStack Query options. `queryKey`/`queryFn`
@@ -47,7 +45,7 @@ export function useStrictReceivePaths(
     destinationAmount: string,
   ],
   options?: O,
-  queryOptions?: QueryOptions<R>
+  queryOptions?: QueryOptions<R>,
 ): UseQueryResult<R, Error> {
   const network = getNetwork(options?.network);
   const enabled = queryOptions?.enabled ?? true;

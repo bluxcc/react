@@ -8,6 +8,8 @@ export * from './useEffects';
 export * from './useLedgers';
 export * from './useLiquidityPools';
 export * from './useNetwork';
+export * from './useResolveXlmName';
+export * from './useResolveXlmNameByAddress';
 export * from './useOffers';
 export * from './useOperations';
 export * from './useOrderbook';

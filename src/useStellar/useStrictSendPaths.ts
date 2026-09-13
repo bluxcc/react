@@ -1,13 +1,11 @@
 import { useMemo } from 'react';
-import { getStrictSendPaths } from "@bluxcc/core";
+import { getStrictSendPaths } from '@bluxcc/core';
 import {
   useQuery,
   UseQueryResult,
   UseQueryOptions,
 } from '@tanstack/react-query';
-import type {
-  GetPaymentPathResult
-} from "@bluxcc/core/dist/exports/core/getStrictSendPaths";
+import type { GetPaymentPathResult } from '@bluxcc/core/dist/exports/core/getStrictSendPaths';
 
 import { Asset } from '@stellar/stellar-sdk';
 import { CallBuilderOptions, getNetwork } from '../utils';
@@ -24,8 +22,8 @@ type O = CallBuilderOptions;
  * inverse — fixing the received amount — use `useStrictReceivePaths`.
  *
  * @param args - `[sourceAsset, sourceAmount, destination]`: the asset the sender
- *   spends, the exact amount they spend, and the destination (a `G…` address, or
- *   an array of candidate destination `Asset`s).
+ *   spends, the exact amount they spend, and the destination (an account
+ *   address/SEP-2/`.xlm` name, or candidate destination `Asset`s).
  * @param options - Optional `cursor` / `limit` / `order` and `network`
  *   (defaults to active).
  * @param queryOptions - Optional TanStack Query options. `queryKey`/`queryFn`
@@ -35,7 +33,7 @@ type O = CallBuilderOptions;
  *
  * @example
  * ```tsx
- * const { data } = useStrictSendPaths([Asset.native(), '50', 'GA…']);
+ * const { data } = useStrictSendPaths([Asset.native(), '50', 'alice.xlm']);
  * ```
  */
 export function useStrictSendPaths(
@@ -45,7 +43,7 @@ export function useStrictSendPaths(
     destination: string | Asset[],
   ],
   options?: O,
-  queryOptions?: QueryOptions<R>
+  queryOptions?: QueryOptions<R>,
 ): UseQueryResult<R, Error> {
   const network = getNetwork(options?.network);
   const enabled = queryOptions?.enabled ?? true;
