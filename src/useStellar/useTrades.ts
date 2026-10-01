@@ -8,7 +8,7 @@ import {
 import type {
   GetTradesResult,
   GetTradesOptions,
-} from "@bluxcc/core/dist/exports/core/getTrades";
+} from "@bluxcc/core";
 
 import { getNetwork } from '../utils';
 import type { QueryOptions } from "../utils";

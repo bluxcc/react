@@ -8,7 +8,7 @@ import {
 import type {
   GetOperationsResult,
   GetOperationsOptions,
-} from "@bluxcc/core/dist/exports/core/getOperations";
+} from "@bluxcc/core";
 
 import { getNetwork } from '../utils';
 import type { QueryOptions } from '../utils';

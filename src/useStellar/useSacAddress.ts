@@ -1,6 +1,6 @@
 import { useMemo } from 'react';
 import { getSacAddress } from '@bluxcc/core';
-import type { AssetArg } from '@bluxcc/core/dist/exports/core/helpers';
+import type { AssetArg } from '@bluxcc/core';
 
 import { getNetwork } from '../utils';
 
@@ -25,7 +25,7 @@ export type UseSacAddressResult = {
  * actually deployed), so this hook is synchronous: it returns the value right
  * away rather than a TanStack query result. Feed the result into
  * {@link useTokenMetadata}, `transfer`'s `token` option, or
- * `useReadContracts` / `useWriteContract`.
+ * `useReadContract` / `useReadContracts` / `useWriteContract`.
  *
  * Errors are captured rather than thrown during render: an invalid asset or a
  * missing network passphrase surfaces as `{ data: undefined, error }`.

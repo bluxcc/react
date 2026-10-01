@@ -8,7 +8,7 @@ import {
 import type {
   GetLiquidityPoolsResult,
   GetLiquidityPoolsOptions,
-} from "@bluxcc/core/dist/exports/core/getLiquidityPools";
+} from "@bluxcc/core";
 
 import { getNetwork } from '../utils';
 import type { QueryOptions } from '../utils';

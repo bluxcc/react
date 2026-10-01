@@ -4,7 +4,7 @@ import {
   UseMutationResult,
   UseMutationOptions,
 } from '@tanstack/react-query';
-import type { SwapOptions } from '@bluxcc/core/dist/exports/core/swap';
+import type { SwapOptions } from '@bluxcc/core';
 
 import type { MutationOptions } from '../utils';
 

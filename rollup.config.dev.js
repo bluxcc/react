@@ -6,6 +6,7 @@ import tailwindcss from '@tailwindcss/postcss';
 import resolve from '@rollup/plugin-node-resolve';
 import typescript from '@rollup/plugin-typescript';
 import peerDepsExternal from 'rollup-plugin-peer-deps-external';
+import { inlinePublicTypesPlugin } from './rollup-inline-public-types.mjs';
 
 export default {
   input: 'src/index.ts',
@@ -52,6 +53,7 @@ export default {
       target: 'es2022',
       exclude: ['node_modules', 'motion'],
     }),
+    inlinePublicTypesPlugin(),
   ],
   watch: {
     clearScreen: false,

@@ -8,7 +8,7 @@ import {
 import type {
   TokenMetadata,
   GetTokenMetadataOptions,
-} from '@bluxcc/core/dist/exports/core/getTokenMetadata';
+} from '@bluxcc/core';
 
 import { getNetwork } from '../utils';
 import type { QueryOptions } from '../utils';

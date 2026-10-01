@@ -8,7 +8,7 @@ import {
 import type {
   GetAssetsResult,
   GetAssetsOptions,
-} from '@bluxcc/core/dist/exports/core/getAssets';
+} from '@bluxcc/core';
 
 import { getNetwork } from '../utils';
 import type { QueryOptions } from '../utils';

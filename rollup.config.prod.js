@@ -6,6 +6,7 @@ import commonjs from '@rollup/plugin-commonjs';
 import resolve from '@rollup/plugin-node-resolve';
 import typescript from '@rollup/plugin-typescript';
 import peerDepsExternal from 'rollup-plugin-peer-deps-external';
+import { inlinePublicTypesPlugin } from './rollup-inline-public-types.mjs';
 
 import tailwindcss from '@tailwindcss/postcss';
 
@@ -68,5 +69,6 @@ export default {
       tsconfig: './tsconfig.json',
       exclude: ['node_modules', 'motion'],
     }),
+    inlinePublicTypesPlugin(),
   ],
 };

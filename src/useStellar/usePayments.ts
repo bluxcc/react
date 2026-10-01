@@ -5,7 +5,7 @@ import {
   UseQueryResult,
   UseQueryOptions,
 } from '@tanstack/react-query';
-import type { GetPaymentsOptions } from '@bluxcc/core/dist/exports/core/getPayments';
+import type { GetPaymentsOptions } from '@bluxcc/core';
 import { ServerApi } from '@stellar/stellar-sdk/lib/esm/horizon';
 import { PaymentCallBuilder } from '@stellar/stellar-sdk/lib/esm/horizon/payment_call_builder';
 

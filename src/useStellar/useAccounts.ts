@@ -8,7 +8,7 @@ import {
 import type {
   GetAccountsResult,
   GetAccountsOptions,
-} from '@bluxcc/core/dist/exports/core/getAccounts';
+} from '@bluxcc/core';
 
 import { getNetwork } from '../utils';
 import type { QueryOptions } from '../utils';

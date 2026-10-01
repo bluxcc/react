@@ -8,7 +8,7 @@ import {
 import type {
   GetTransactionsResult,
   GetTransactionsOptions,
-} from "@bluxcc/core/dist/exports/core/getTransactions";
+} from "@bluxcc/core";
 
 import { getNetwork } from "../utils";
 import type { QueryOptions } from "../utils";

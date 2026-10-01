@@ -8,7 +8,7 @@ import {
 import type {
   IContractCall,
   ReadContractsOptions,
-} from '@bluxcc/core/dist/exports/utils';
+} from '@bluxcc/core';
 
 import { getNetwork } from '../utils';
 import type { QueryOptions } from '../utils';

@@ -7,7 +7,7 @@ import {
 import type {
   IContractCall,
   WriteContractsOptions,
-} from '@bluxcc/core/dist/exports/utils';
+} from '@bluxcc/core';
 
 import type { MutationOptions } from '../utils';
 
@@ -39,7 +39,7 @@ type V = WriteContractVariables;
  *
  * A thin wrapper over TanStack Query's `useMutation`: call `mutate` /
  * `mutateAsync` with the contract call to sign and send it. For read-only calls
- * (no signature, no fees) use `useReadContracts` instead.
+ * (no signature, no fees) use `useReadContract` or `useReadContracts` instead.
  *
  * @param mutationOptions - Optional TanStack Mutation options (`onSuccess`,
  *   `onError`, `onSettled`, …); `mutationFn` is provided by the hook.

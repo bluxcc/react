@@ -8,7 +8,7 @@ import {
 import type {
   GetLedgersResult,
   GetLedgersOptions,
-} from "@bluxcc/core/dist/exports/core/getLedgers";
+} from "@bluxcc/core";
 
 import { getNetwork } from '../utils';
 import type { QueryOptions } from '../utils';

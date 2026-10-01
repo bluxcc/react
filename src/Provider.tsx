@@ -1,6 +1,5 @@
 import React, { useEffect, useMemo, useRef } from 'react';
-import { createConfig, setAppearance } from '@bluxcc/core';
-import { IConfig } from '@bluxcc/core/dist/types';
+import { createConfig, setAppearance, type IConfig } from '@bluxcc/core';
 import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
 
 type BluxProviderProps = {

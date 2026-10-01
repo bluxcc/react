@@ -1,6 +1,8 @@
 import {
+  useReadContract,
   useReadContracts,
   useWriteContract,
+  type ReadContractHookResult,
   type ReadContractsHookResult,
   type WriteContractHookResult,
 } from '../dist';
@@ -39,8 +41,19 @@ type WriteHookReturnIsGenericAndNullable = Expect<
   Equal<WriteReturn, bigint | null>
 >;
 
+type ReadOneHook = ReturnType<typeof useReadContract<string | null>>;
+type ReadOneData = NonNullable<ReadOneHook['data']>;
+type ReadOneValue = ReadOneData['value'];
+
+type ReadOneResultAliasIsGeneric = Expect<
+  Equal<ReadContractHookResult<string | null>['value'], string | null>
+>;
+type ReadOneHookValueIsGeneric = Expect<Equal<ReadOneValue, string | null>>;
+
 export type ContractHookTypeAssertions =
   | ReadResultAliasIsGeneric
   | ReadHookTupleIsPreserved
+  | ReadOneResultAliasIsGeneric
+  | ReadOneHookValueIsGeneric
   | WriteResultAliasIsGeneric
   | WriteHookReturnIsGenericAndNullable;

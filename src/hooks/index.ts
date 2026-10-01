@@ -1,4 +1,5 @@
 export { useBlux } from './useBlux';
+export { useJwt } from './useJwt';
 export { useLoginEmail } from './useLoginEmail';
 export type {
   UseLoginEmailOptions,

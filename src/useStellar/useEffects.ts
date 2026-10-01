@@ -8,7 +8,7 @@ import {
 import type {
   GetEffectsResult,
   GetEffectsOptions,
-} from "@bluxcc/core/dist/exports/core/getEffects";
+} from "@bluxcc/core";
 
 import { getNetwork } from '../utils';
 import type { QueryOptions } from '../utils';

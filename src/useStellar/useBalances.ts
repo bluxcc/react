@@ -8,7 +8,7 @@ import {
 import type {
   GetBalancesResult,
   GetBalancesOptions,
-} from "@bluxcc/core/dist/exports/core/getBalances";
+} from "@bluxcc/core";
 
 import { getAddress, getNetwork } from '../utils';
 import type { QueryOptions } from '../utils';

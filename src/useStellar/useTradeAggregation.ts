@@ -7,7 +7,7 @@ import {
 } from '@tanstack/react-query';
 import type {
   GetTradeAggregationResult
-} from "@bluxcc/core/dist/exports/core/getTradeAggregation";
+} from "@bluxcc/core";
 
 import { Asset } from '@stellar/stellar-sdk';
 import { CallBuilderOptions, getNetwork } from '../utils';

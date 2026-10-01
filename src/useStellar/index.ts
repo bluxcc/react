@@ -14,6 +14,7 @@ export * from './useOffers';
 export * from './useOperations';
 export * from './useOrderbook';
 export * from './usePayments';
+export * from './useReadContract';
 export * from './useReadContracts';
 export * from './useStrictReceivePaths';
 export * from './useStrictSendPaths';

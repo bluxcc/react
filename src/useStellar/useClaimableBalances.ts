@@ -8,7 +8,7 @@ import {
 import type {
   GetClaimableBalancesResult,
   GetClaimableBalancesOptions,
-} from "@bluxcc/core/dist/exports/core/getClaimableBalances";
+} from "@bluxcc/core";
 
 import { getAddress, getNetwork } from '../utils';
 import type { QueryOptions } from '../utils';

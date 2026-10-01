@@ -5,7 +5,7 @@ import {
   UseQueryResult,
   UseQueryOptions,
 } from '@tanstack/react-query';
-import type { GetPaymentPathResult } from '@bluxcc/core/dist/exports/core/getStrictReceivePaths';
+import type { GetPaymentPathResult } from '@bluxcc/core';
 
 import { Asset } from '@stellar/stellar-sdk';
 import { CallBuilderOptions, getNetwork } from '../utils';
