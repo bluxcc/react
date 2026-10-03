@@ -1,194 +1,147 @@
-import { readdir, readFile, writeFile } from 'node:fs/promises';
+import { readdir, realpath, writeFile } from 'node:fs/promises';
 import path from 'node:path';
 import ts from 'typescript';
 
-const BUILTINS = new Set([
-  'string',
-  'number',
-  'boolean',
-  'bigint',
-  'symbol',
-  'undefined',
-  'null',
-  'void',
-  'any',
-  'unknown',
-  'never',
-  'object',
-  'HTMLElement',
-  'Promise',
-  'Array',
-  'ReadonlyArray',
-  'Record',
-  'Map',
-  'Set',
-  'Date',
-  'Error',
-  'Uint8Array',
-  'Partial',
-  'Required',
-  'Pick',
-  'Omit',
-  'Exclude',
-  'Extract',
-  'NonNullable',
-  'ReturnType',
-  'Parameters',
-  'Readonly',
-  'Function',
-  'Object',
-  'String',
-  'Number',
-  'Boolean',
-]);
-
 const MAX_FIELDS = 40;
 const MAX_DEPTH = 2;
+const printer = ts.createPrinter();
+const compilerOptions = {
+  noEmit: true,
+  strict: true,
+  exactOptionalPropertyTypes: true,
+  skipLibCheck: false,
+  esModuleInterop: true,
+  jsx: ts.JsxEmit.ReactJSX,
+  module: ts.ModuleKind.ESNext,
+  target: ts.ScriptTarget.ES2020,
+  moduleResolution: ts.ModuleResolutionKind.Node10,
+};
 
-function collectDts(dir, acc = []) {
-  return readdir(dir, { withFileTypes: true }).then(async (entries) => {
-    await Promise.all(
-      entries.map(async (entry) => {
-        const full = path.join(dir, entry.name);
+async function collectDts(dir) {
+  const files = await Promise.all(
+    (await readdir(dir, { withFileTypes: true })).map(async (entry) => {
+      const full = path.join(dir, entry.name);
+      if (entry.isDirectory()) {
+        return entry.name === 'node_modules' ? [] : collectDts(full);
+      }
+      return entry.name.endsWith('.d.ts') ? [full] : [];
+    }),
+  );
+  return files.flat().sort();
+}
 
-        if (entry.isDirectory()) {
-          if (entry.name === 'node_modules') return;
-          await collectDts(full, acc);
-          return;
-        }
+function createProgram(files, contents = new Map()) {
+  const host = ts.createCompilerHost(compilerOptions);
+  const readFile = host.readFile;
+  host.readFile = (file) => contents.get(path.resolve(file)) ?? readFile(file);
+  return ts.createProgram(files, compilerOptions, host);
+}
 
-        if (entry.name.endsWith('.d.ts')) acc.push(full);
-      }),
+function assertValid(program, files, semantic = true) {
+  const diagnostics = files.flatMap((file) => {
+    const source = program.getSourceFile(file);
+    return [
+      ...program.getSyntacticDiagnostics(source),
+      ...(semantic ? program.getSemanticDiagnostics(source) : []),
+    ];
+  });
+  if (diagnostics.length) {
+    throw new Error(
+      'Invalid published TypeScript declarations:\n' +
+        ts.formatDiagnostics(diagnostics, {
+          getCanonicalFileName: (file) => file,
+          getCurrentDirectory: () => process.cwd(),
+          getNewLine: () => '\n',
+        }),
     );
-
-    return acc;
-  });
+  }
 }
 
-function packageName(fileName) {
-  const normalized = fileName.split(path.sep).join('/');
-  const marker = '/node_modules/';
-  const index = normalized.lastIndexOf(marker);
-
-  if (index < 0) return null;
-
-  const rest = normalized.slice(index + marker.length);
-  const parts = rest.split('/');
-
-  if (parts[0] === '@types') return parts[1] || null;
-  if (parts[0].startsWith('@')) return `${parts[0]}/${parts[1]}`;
-
-  return parts[0];
+export async function validatePublicTypes(distDir = 'dist') {
+  const files = await collectDts(await realpath(distDir));
+  if (!files.length)
+    throw new Error(`No TypeScript declarations in ${distDir}`);
+  assertValid(createProgram(files), files);
 }
 
-function isExportedStatement(node) {
-  return (
-    ts.canHaveModifiers(node) &&
-    ts.getModifiers(node)?.some((modifier) => modifier.kind === ts.SyntaxKind.ExportKeyword)
-  );
-}
-
-function commentBlock(decl) {
-  const source = decl.getSourceFile().text;
-  const trivia = source.slice(decl.getFullStart(), decl.getStart());
-  const match = trivia.match(/\/\*\*[\s\S]*?\*\//);
-
-  return match ? match[0] : '';
-}
-
-function propertyDeclaration(prop) {
-  return prop.declarations?.find(
-    (decl) => ts.isPropertySignature(decl) || ts.isPropertyDeclaration(decl),
-  );
-}
-
-/**
- * Rewrites published function parameters so editor hover lists every field.
- * Named interfaces such as `IConfig` stay exported for `import type`, but a
- * parameter typed as that interface is expanded to the object itself — otherwise
- * hover only shows the name, and `package.json` `exports` hides the file the
- * name points at.
- */
+/** Expand owned object types for editor hints without changing their meaning. */
 export async function inlinePublicTypes(distDir = 'dist') {
-  const root = path.resolve(distDir);
+  const root = await realpath(distDir);
   const files = await collectDts(root);
+  if (!files.length)
+    throw new Error(`No TypeScript declarations in ${distDir}`);
 
-  if (!files.length) return;
-
-  const program = ts.createProgram(files, {
-    noEmit: true,
-    strict: true,
-    skipLibCheck: true,
-    jsx: ts.JsxEmit.ReactJSX,
-    module: ts.ModuleKind.ESNext,
-    target: ts.ScriptTarget.ES2020,
-    moduleResolution: ts.ModuleResolutionKind.Node10,
-  });
+  const program = createProgram(files);
+  assertValid(program, files, false);
   const checker = program.getTypeChecker();
+  const contents = new Map(
+    files.map((file) => [file, inlineFile(program, checker, file, root)]),
+  );
 
-  await Promise.all(files.map((file) => inlineFile(program, checker, file, root)));
+  // Check the final declarations before writing any of them. skipLibCheck in
+  // the source build otherwise hides missing imports and lost generic types.
+  assertValid(createProgram(files, contents), files);
+  await Promise.all(
+    files.map((file) =>
+      contents.get(file) === program.getSourceFile(file).text
+        ? undefined
+        : writeFile(file, contents.get(file)),
+    ),
+  );
 }
 
 function inlineFile(program, checker, file, distDir) {
   const source = program.getSourceFile(file);
-
-  if (!source) return Promise.resolve();
-
-  const inScope = namesInScope(source);
   const edits = [];
+  const publicPaths = new Map();
 
   for (const statement of source.statements) {
-    if (!isExportedStatement(statement)) continue;
+    if (
+      !ts
+        .getModifiers(statement)
+        ?.some((m) => m.kind === ts.SyntaxKind.ExportKeyword)
+    ) {
+      continue;
+    }
 
     if (
       ts.isTypeAliasDeclaration(statement) &&
       !statement.typeParameters &&
-      statement.type &&
       (ts.isTypeReferenceNode(statement.type) ||
         ts.isIntersectionTypeNode(statement.type) ||
         ts.isImportTypeNode(statement.type))
     ) {
       const rendered = renderObject(
         checker.getTypeFromTypeNode(statement.type),
+        statement,
         0,
         new Set(),
       );
-
-      if (rendered && rendered.text !== statement.type.getText()) {
-        edits.push({
-          start: statement.type.getStart(source),
-          end: statement.type.getEnd(),
-          text: rendered.text,
-          imports: rendered.imports,
-        });
+      if (rendered && rendered !== statement.type.getText(source)) {
+        addEdit(statement.type, rendered);
+        // Child edits would overlap the replacement and corrupt its offsets.
+        continue;
       }
     }
-
     walk(statement);
   }
 
-  if (!edits.length) return Promise.resolve();
-
-  edits.sort((a, b) => b.start - a.start);
-
   let text = source.text;
-
-  for (const edit of edits) {
+  let boundary = text.length;
+  for (const edit of edits.sort((a, b) => b.start - a.start)) {
+    if (edit.end > boundary)
+      throw new Error(`Overlapping type edits in ${file}`);
     text = text.slice(0, edit.start) + edit.text + text.slice(edit.end);
+    boundary = edit.start;
   }
+  return withRelativeExtensions(text, file);
 
-  const imports = mergeImports(edits.flatMap((edit) => edit.imports));
-  const missing = imports.filter((item) => !inScope.has(item.name));
-
-  if (missing.length) {
-    text = insertImports(text, missing) + text;
+  function addEdit(node, text) {
+    edits.push({ start: node.getStart(source), end: node.getEnd(), text });
   }
-
-  if (text === source.text) return Promise.resolve();
-
-  return writeFile(file, text);
 
   function walk(node) {
+    if (ts.isTypeLiteralNode(node)) return;
     if (
       ts.isFunctionTypeNode(node) ||
       ts.isFunctionDeclaration(node) ||
@@ -197,275 +150,312 @@ function inlineFile(program, checker, file, distDir) {
       ts.isConstructorTypeNode(node)
     ) {
       for (const param of node.parameters) {
-        if (!param.type) continue;
         if (
-          !ts.isTypeReferenceNode(param.type) &&
-          !ts.isImportTypeNode(param.type)
+          !param.type ||
+          (!ts.isTypeReferenceNode(param.type) &&
+            !ts.isImportTypeNode(param.type))
         ) {
           continue;
         }
-
         const rendered = renderObject(
           checker.getTypeFromTypeNode(param.type),
+          param,
           0,
           new Set(),
         );
-
-        if (!rendered) continue;
-
-        edits.push({
-          start: param.type.getStart(source),
-          end: param.type.getEnd(),
-          text: rendered.text,
-          imports: rendered.imports,
-        });
+        if (rendered) addEdit(param.type, rendered);
       }
-
       return;
     }
-
     ts.forEachChild(node, walk);
   }
 
-  function renderObject(type, depth, seen) {
+  function renderObject(type, context, depth, seen) {
     if (!type || seen.has(type) || depth > MAX_DEPTH) return null;
-    if (type.flags & (ts.TypeFlags.Union | ts.TypeFlags.Never)) return null;
-    if (type.getCallSignatures().length || type.getConstructSignatures().length) {
-      return null;
-    }
-
-    const objectFlags = type.objectFlags ?? 0;
-
-    if (objectFlags & (ts.ObjectFlags.Mapped | ts.ObjectFlags.Tuple)) return null;
-
-    const symbolName = type.symbol?.getName();
-
     if (
-      symbolName === 'Array' ||
-      symbolName === 'ReadonlyArray' ||
-      symbolName === 'Promise'
+      type.flags &
+      (ts.TypeFlags.Union | ts.TypeFlags.Never | ts.TypeFlags.TypeParameter)
     ) {
       return null;
     }
+    if (
+      type.getCallSignatures().length ||
+      type.getConstructSignatures().length ||
+      checker.getIndexInfosOfType(type).length
+    )
+      return null;
+    if (
+      (type.objectFlags ?? 0) &
+      (ts.ObjectFlags.Mapped | ts.ObjectFlags.Tuple)
+    )
+      return null;
+    if (['Array', 'ReadonlyArray', 'Promise'].includes(type.symbol?.getName()))
+      return null;
 
     const props = type.getProperties();
-
     if (!props.length || props.length > MAX_FIELDS) return null;
-
     const fields = [];
-
     for (const prop of props) {
-      const decl = propertyDeclaration(prop);
-
-      if (!decl?.type) return null;
-      if (!isOwnedFile(decl.getSourceFile().fileName, distDir)) return null;
-
+      const decl = prop.declarations?.find(ts.isPropertySignature);
+      if (
+        !decl?.type ||
+        ts.isComputedPropertyName(decl.name) ||
+        !isOwnedFile(decl.getSourceFile().fileName, distDir)
+      )
+        return null;
       fields.push({ prop, decl });
     }
 
-    const nextSeen = new Set(seen);
-
-    nextSeen.add(type);
-
-    const indent = depth * 4;
-    const pad = ' '.repeat(indent);
-    const inner = ' '.repeat(indent + 4);
+    const nextSeen = new Set(seen).add(type);
+    const pad = ' '.repeat(depth * 4);
+    const inner = pad + '    ';
     const lines = ['{'];
-    const imports = [];
-
     for (const { prop, decl } of fields) {
-      const comment = commentBlock(decl);
-
+      const trivia = decl
+        .getSourceFile()
+        .text.slice(decl.getFullStart(), decl.getStart());
+      const comment = trivia.match(/\/\*\*[\s\S]*?\*\//)?.[0];
       if (comment) {
         for (const line of comment.split('\n')) {
           const trimmed = line.trim();
-
-          if (!trimmed) continue;
-
-          const body =
-            trimmed.startsWith('*') && !trimmed.startsWith('/**')
-              ? ` ${trimmed}`
-              : trimmed;
-
-          lines.push(inner + body);
+          if (trimmed)
+            lines.push(inner + (trimmed.startsWith('*') ? ' ' : '') + trimmed);
         }
       }
+
+      // Use the instantiated property type. Copying decl.type's text leaks
+      // generic parameters such as TData out of their original scope.
+      const propType = checker.getTypeOfSymbolAtLocation(prop, context);
+      const nested =
+        depth < MAX_DEPTH
+          ? renderObject(propType, context, depth + 1, nextSeen)
+          : null;
+      const typeText = nested ?? renderType(propType, context);
+      if (!typeText) return null;
 
       const optional = prop.flags & ts.SymbolFlags.Optional ? '?' : '';
-      const readonly =
-        ts.isPropertySignature(decl) &&
-        decl.modifiers?.some((modifier) => modifier.kind === ts.SyntaxKind.ReadonlyKeyword)
-          ? 'readonly '
-          : '';
-      const name = decl.name.getText();
-      let typeText = decl.type.getText().replace(/\bLooseString\b/g, '(string & {})');
-      const propType = checker.getTypeFromTypeNode(decl.type);
-      const nested =
-        depth < MAX_DEPTH ? renderObject(propType, depth + 1, nextSeen) : null;
-
-      const collected = nested ? nested.imports : importsFor(decl.type);
-
-      if (collected.some((item) => item.error)) return null;
-
-      if (nested) typeText = nested.text;
-
-      imports.push(...collected);
-
-      lines.push(`${inner}${readonly}${name}${optional}: ${typeText};`);
+      const readonly = decl.modifiers?.some(
+        (m) => m.kind === ts.SyntaxKind.ReadonlyKeyword,
+      )
+        ? 'readonly '
+        : '';
+      lines.push(
+        `${inner}${readonly}${decl.name.getText()}${optional}: ${typeText};`,
+      );
     }
-
     lines.push(`${pad}}`);
-
-    return { text: lines.join('\n'), imports };
+    return lines.join('\n');
   }
 
-  function importsFor(typeNode) {
-    const found = [];
+  function renderType(type, context) {
+    const node = checker.typeToTypeNode(
+      type,
+      context,
+      ts.NodeBuilderFlags.NoTruncation |
+        ts.NodeBuilderFlags.AllowNodeModulesRelativePaths,
+    );
+    if (!node) return null;
+    let portable = true;
+    const transformed = ts.transform(node, [
+      (context) =>
+        normalizeImports(context, () => {
+          portable = false;
+        }),
+    ]);
+    const text = portable
+      ? printer.printNode(
+          ts.EmitHint.Unspecified,
+          transformed.transformed[0],
+          source,
+        )
+      : null;
+    transformed.dispose();
+    return text;
+  }
 
+  function normalizeImports(context, unsupported) {
     function visit(node) {
-      if (ts.isImportTypeNode(node)) return;
-
-      if (ts.isTypeReferenceNode(node) && ts.isIdentifier(node.typeName)) {
-        const name = node.typeName.text;
-
-        if (!BUILTINS.has(name) && name !== 'LooseString') {
-          const symbol = checker.getSymbolAtLocation(node.typeName);
-
-          if (symbol) found.push(symbol);
-        }
+      // Keep this private completion helper structural when moving its type.
+      if (
+        (ts.isTypeReferenceNode(node) &&
+          ts.isIdentifier(node.typeName) &&
+          node.typeName.text === 'LooseString') ||
+        (ts.isImportTypeNode(node) && node.qualifier?.text === 'LooseString')
+      ) {
+        return ts.factory.createIntersectionTypeNode([
+          ts.factory.createKeywordTypeNode(ts.SyntaxKind.StringKeyword),
+          ts.factory.createTypeLiteralNode([]),
+        ]);
       }
-
-      ts.forEachChild(node, visit);
+      if (
+        ts.isImportTypeNode(node) &&
+        ts.isLiteralTypeNode(node.argument) &&
+        ts.isStringLiteral(node.argument.literal) &&
+        path.isAbsolute(node.argument.literal.text)
+      ) {
+        const target = node.argument.literal.text;
+        const pkg = packageName(target);
+        let spec =
+          pkg ??
+          path.relative(path.dirname(file), target).split(path.sep).join('/');
+        spec = spec.replace(/\.d\.ts$/, '');
+        if (!pkg && !spec.startsWith('.')) spec = `./${spec}`;
+        let qualifier = node.qualifier;
+        if (pkg && qualifier) {
+          const names = exportedPath(pkg, target, qualifier);
+          if (!names) {
+            unsupported();
+            return node;
+          }
+          qualifier = names
+            .map((name) => ts.factory.createIdentifier(name))
+            .reduce((left, right) =>
+              ts.factory.createQualifiedName(left, right),
+            );
+        }
+        node = ts.factory.updateImportTypeNode(
+          node,
+          ts.factory.createLiteralTypeNode(
+            ts.factory.createStringLiteral(spec),
+          ),
+          node.attributes,
+          qualifier,
+          node.typeArguments,
+          node.isTypeOf,
+        );
+      }
+      return ts.visitEachChild(node, visit, context);
     }
-
-    visit(typeNode);
-
-    return found.flatMap((symbol) => {
-      const resolved = specifierFor(symbol, checker, file, distDir);
-
-      if (!resolved || resolved.local) return [];
-      if (resolved.error) return [{ name: symbol.getName(), spec: null, error: true }];
-
-      return [{ name: symbol.getName(), spec: resolved.spec }];
-    });
+    return (node) => ts.visitNode(node, visit);
   }
+
+  function exportedPath(pkg, target, qualifier) {
+    const names = entityName(qualifier);
+    const key = `${pkg}:${target}:${names}`;
+    if (publicPaths.has(key)) return publicPaths.get(key);
+    const targetSource = [
+      target,
+      `${target}.d.ts`,
+      path.join(target, 'index.d.ts'),
+    ]
+      .map((file) => program.getSourceFile(file))
+      .find(Boolean);
+    const resolved = ts.resolveModuleName(
+      pkg,
+      file,
+      compilerOptions,
+      ts.sys,
+    ).resolvedModule;
+    const packageSource =
+      resolved && program.getSourceFile(resolved.resolvedFileName);
+    let symbol = targetSource && checker.getSymbolAtLocation(targetSource);
+    for (const name of names.split('.')) {
+      symbol =
+        symbol &&
+        checker.getExportsOfModule(symbol).find((item) => item.name === name);
+      if (symbol?.flags & ts.SymbolFlags.Alias)
+        symbol = checker.getAliasedSymbol(symbol);
+    }
+    const module = packageSource && checker.getSymbolAtLocation(packageSource);
+    const result =
+      symbol && module ? findExportPath(module, symbol, new Set()) : null;
+    publicPaths.set(key, result);
+    return result;
+  }
+
+  function findExportPath(module, target, seen) {
+    if (seen.has(module)) return null;
+    seen.add(module);
+    const exports = checker.getExportsOfModule(module).map((symbol) => ({
+      name: symbol.name,
+      resolved:
+        symbol.flags & ts.SymbolFlags.Alias
+          ? checker.getAliasedSymbol(symbol)
+          : symbol,
+    }));
+    const direct = exports.find((item) => item.resolved === target);
+    if (direct) return [direct.name];
+    for (const item of exports) {
+      if (!(item.resolved.flags & ts.SymbolFlags.Module)) continue;
+      const nested = findExportPath(item.resolved, target, seen);
+      if (nested) return [item.name, ...nested];
+    }
+    return null;
+  }
+}
+
+function entityName(node) {
+  return ts.isIdentifier(node)
+    ? node.text
+    : `${entityName(node.left)}.${node.right.text}`;
+}
+
+// NodeNext requires explicit extensions, including imports inside .d.ts files.
+function withRelativeExtensions(text, file) {
+  const source = ts.createSourceFile(file, text, ts.ScriptTarget.Latest, true);
+  const edits = [];
+  function walk(node) {
+    let literal;
+    if (ts.isImportDeclaration(node) || ts.isExportDeclaration(node)) {
+      literal = node.moduleSpecifier;
+    } else if (
+      ts.isImportTypeNode(node) &&
+      ts.isLiteralTypeNode(node.argument)
+    ) {
+      literal = node.argument.literal;
+    }
+    if (
+      literal &&
+      ts.isStringLiteral(literal) &&
+      (literal.text.startsWith('./') || literal.text.startsWith('../')) &&
+      !/\.(?:[cm]?js|json|css)$/.test(literal.text)
+    ) {
+      const resolved = ts.resolveModuleName(
+        literal.text,
+        file,
+        compilerOptions,
+        ts.sys,
+      ).resolvedModule;
+      const spec = literal.text.replace(/\.d\.ts$|\/$/, '');
+      const suffix =
+        resolved?.resolvedFileName.endsWith('/index.d.ts') &&
+        !spec.endsWith('/index')
+          ? '/index.js'
+          : '.js';
+      edits.push({
+        start: literal.getStart(source),
+        end: literal.getEnd(),
+        text: JSON.stringify(spec + suffix),
+      });
+    }
+    ts.forEachChild(node, walk);
+  }
+  walk(source);
+  for (const edit of edits.sort((a, b) => b.start - a.start)) {
+    text = text.slice(0, edit.start) + edit.text + text.slice(edit.end);
+  }
+  return text;
+}
+
+function packageName(fileName) {
+  const normalized = fileName.split(path.sep).join('/');
+  if (!normalized.includes('/node_modules/')) return null;
+  const parts = normalized.split('/node_modules/').at(-1).split('/');
+  if (parts[0] === '@types') return parts[1];
+  return parts[0].startsWith('@') ? `${parts[0]}/${parts[1]}` : parts[0];
 }
 
 function isOwnedFile(fileName, distDir) {
   const normalized = path.resolve(fileName);
-
-  if (normalized.startsWith(path.resolve(distDir) + path.sep)) return true;
-
-  const asPosix = normalized.split(path.sep).join('/');
-
-  return (
-    asPosix.includes('/node_modules/@bluxcc/core/') ||
-    asPosix.includes('/node_modules/@bluxcc/react/')
-  );
-}
-
-function specifierFor(symbol, checker, fromFile, distDir) {
-  let resolved = symbol;
-
-  if (resolved.flags & ts.SymbolFlags.Alias) {
-    resolved = checker.getAliasedSymbol(resolved);
-  }
-
-  const declaration = resolved.declarations?.find(
-    (decl) =>
-      ts.isInterfaceDeclaration(decl) ||
-      ts.isTypeAliasDeclaration(decl) ||
-      ts.isEnumDeclaration(decl) ||
-      ts.isClassDeclaration(decl),
-  ) ?? resolved.declarations?.[0];
-
-  if (!declaration) return { error: true };
-
-  const fileName = declaration.getSourceFile().fileName;
-
-  if (path.resolve(fileName) === path.resolve(fromFile)) return { local: true };
-
-  const insidePackage =
-    isOwnedFile(fileName, distDir) &&
-    !fileName.includes(`${path.sep}node_modules${path.sep}`);
-
-  if (insidePackage) {
-    let relative = path
-      .relative(path.dirname(fromFile), fileName)
-      .split(path.sep)
-      .join('/')
-      .replace(/\.d\.ts$/, '');
-
-    if (!relative.startsWith('.')) relative = `./${relative}`;
-
-    return { spec: relative };
-  }
-
-  const pkg = packageName(fileName);
-
-  if (!pkg) return { error: true };
-
-  return { spec: pkg };
-}
-
-function namesInScope(source) {
-  const names = new Set(BUILTINS);
-
-  for (const statement of source.statements) {
-    if (!ts.isImportDeclaration(statement) || !statement.importClause) continue;
-
-    const clause = statement.importClause;
-
-    if (clause.name) names.add(clause.name.text);
-
-    const bindings = clause.namedBindings;
-
-    if (bindings && ts.isNamespaceImport(bindings)) names.add(bindings.name.text);
-
-    if (bindings && ts.isNamedImports(bindings)) {
-      for (const element of bindings.elements) names.add(element.name.text);
-    }
-  }
-
-  return names;
-}
-
-function mergeImports(items) {
-  const byKey = new Map();
-
-  for (const item of items) {
-    if (!item?.spec || item.error) continue;
-    byKey.set(`${item.spec}::${item.name}`, item);
-  }
-
-  return [...byKey.values()];
-}
-
-function insertImports(sourceText, items) {
-  const groups = new Map();
-
-  for (const item of items) {
-    const list = groups.get(item.spec) ?? [];
-
-    list.push(item.name);
-    groups.set(item.spec, list);
-  }
-
-  const lines = [...groups.entries()]
-    .map(([spec, names]) => {
-      const unique = [...new Set(names)].sort();
-
-      return `import type { ${unique.join(', ')} } from '${spec}';\n`;
-    })
-    .join('');
-
-  return lines;
+  if (normalized.startsWith(distDir + path.sep)) return true;
+  return ['@bluxcc/core', '@bluxcc/react'].includes(packageName(normalized));
 }
 
 export function inlinePublicTypesPlugin(dir = 'dist') {
   return {
     name: 'inline-public-types',
-    async writeBundle() {
+    // Both Rollup outputs must finish emitting before declarations are changed.
+    async closeBundle() {
       await inlinePublicTypes(dir);
     },
   };
